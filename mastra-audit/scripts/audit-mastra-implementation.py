@@ -8,6 +8,7 @@ import fnmatch
 import json
 import os
 import re
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -362,13 +363,42 @@ def is_within(path: Path, parent: Path) -> bool:
         return False
 
 
+GIT_IGNORE_CACHE: dict[tuple[str, str], bool] = {}
+
+
+def is_git_ignored(root: Path, path: Path) -> bool:
+    if not (root / ".git").exists():
+        return False
+
+    relative = path.relative_to(root).as_posix()
+    key = (str(root), relative)
+    if key in GIT_IGNORE_CACHE:
+        return GIT_IGNORE_CACHE[key]
+
+    result = subprocess.run(
+        ["git", "-C", str(root), "check-ignore", "-q", "--", relative],
+        check=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    ignored = result.returncode == 0
+    GIT_IGNORE_CACHE[key] = ignored
+    return ignored
+
+
 def iter_source_files(root: Path) -> list[Path]:
     files = []
     for current_root, dirnames, filenames in os.walk(root):
-        dirnames[:] = [name for name in dirnames if name not in IGNORED_DIRS]
         current_path = Path(current_root)
+        dirnames[:] = [
+            name
+            for name in dirnames
+            if name not in IGNORED_DIRS and not is_git_ignored(root, current_path / name)
+        ]
         for filename in filenames:
             path = current_path / filename
+            if is_git_ignored(root, path):
+                continue
             if path.suffix in SOURCE_EXTENSIONS:
                 files.append(path)
     return sorted(files)
@@ -475,8 +505,12 @@ def structure_matches(path: Path, package_root: Path) -> bool:
 def scan_structure_boundaries(root: Path, packages: list[Package], allowed: Package | None) -> list[Finding]:
     findings = []
     for current_root, dirnames, filenames in os.walk(root):
-        dirnames[:] = [name for name in dirnames if name not in IGNORED_DIRS]
         current_path = Path(current_root)
+        dirnames[:] = [
+            name
+            for name in dirnames
+            if name not in IGNORED_DIRS and not is_git_ignored(root, current_path / name)
+        ]
         package = package_for_path(packages, current_path)
         if package is None:
             continue
@@ -484,6 +518,8 @@ def scan_structure_boundaries(root: Path, packages: list[Package], allowed: Pack
             continue
         for filename in filenames:
             path = current_path / filename
+            if is_git_ignored(root, path):
+                continue
             if structure_matches(path, package.path):
                 findings.append(
                     finding(
@@ -641,9 +677,10 @@ def scan_domain_structure(root: Path, allowed: Package | None) -> list[Finding]:
             content = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
+        implementation_content = strip_jsonc(content)
         rel = relative_to_package(path, allowed)
         for domain, rule in DOMAIN_RULES.items():
-            if any(re.search(pattern, content) for pattern in rule["patterns"]):
+            if any(re.search(pattern, implementation_content) for pattern in rule["patterns"]):
                 domain_hits[domain].append(path)
                 if has_prefix(rel, DOMAIN_SUPPORT_PREFIXES):
                     continue
