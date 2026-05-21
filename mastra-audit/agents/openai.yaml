@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mastra Audit"
+  short_description: "Audit Mastra implementation quality"
+  default_prompt: "Use $mastra-audit to audit this codebase for current Mastra API usage, package boundaries, and domain-folder organization."

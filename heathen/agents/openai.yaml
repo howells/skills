@@ -1,0 +1,4 @@
+interface:
+  display_name: "Heathen"
+  short_description: "No gods, no god files"
+  default_prompt: "Use $heathen to audit god components, oversized scripts, and duplicated code, then propose a safe split order."

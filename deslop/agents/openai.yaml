@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deslop"
+  short_description: "Rewrite AI-sounding prose"
+  default_prompt: "Use $deslop to audit this draft for AI-writing tells and rewrite it in a more grounded voice."

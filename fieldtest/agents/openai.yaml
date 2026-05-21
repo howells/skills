@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fieldtest"
+  short_description: "Rendered app QA in browser"
+  default_prompt: "Use $fieldtest to test this app in the browser and report findings."

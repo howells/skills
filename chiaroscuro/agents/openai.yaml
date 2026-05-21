@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chiaroscuro"
+  short_description: "Distinctive Tailwind v4 UI direction"
+  default_prompt: "Use $chiaroscuro to create a distinctive Tailwind v4 design direction for this interface."

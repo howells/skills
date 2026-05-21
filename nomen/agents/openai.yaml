@@ -1,0 +1,4 @@
+interface:
+  display_name: "Nomen"
+  short_description: "Generate and validate product names"
+  default_prompt: "Use $nomen to generate and validate project name candidates."
