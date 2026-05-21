@@ -1,9 +1,9 @@
 ---
-name: mastra-audit
+name: mastraudit
 description: Audit Mastra implementations in JavaScript/TypeScript codebases. Use when checking whether a codebase follows current Mastra guidance from the $mastra skill, keeps all direct mastra/@mastra dependencies and imports inside one approved package, organizes Mastra code into domain folders such as agents, tools, workflows, prompts, memory, storage, runtime, observability, MCP, and scorers, and reports concrete remediation steps.
 ---
 
-# Mastra Audit
+# Mastraudit
 
 Audit a codebase for two things:
 
@@ -44,7 +44,7 @@ Audit a codebase for two things:
 4. Run the scanner:
 
    ```bash
-   python3 /path/to/mastra-audit/scripts/audit-mastra-implementation.py /path/to/repo --allowed-package packages/mastra
+   python3 /path/to/mastraudit/scripts/audit-mastra-implementation.py /path/to/repo --allowed-package packages/mastra
    ```
 
    Omit `--allowed-package` only when auto-detection is acceptable.
