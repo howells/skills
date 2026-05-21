@@ -35,6 +35,7 @@ Use `--copy` if you want independent files rather than symlinks.
 - `aperture` — extract reusable packages, features, components, hooks, or utilities.
 - `chiaroscuro` — create distinctive Tailwind v4 UI design direction and polish.
 - `deslop` — rewrite prose that carries AI-writing tells.
+- `fenceline` — add and check JavaScript/TypeScript architecture boundaries.
 - `fieldtest` — test rendered web apps in a browser with evidence-backed findings.
 - `foundry` — define Tailwind v4 visual identity and brand systems.
 - `heathen` — find and split god components, scripts, and duplicated logic.

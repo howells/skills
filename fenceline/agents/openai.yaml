@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fenceline"
+  short_description: "JavaScript and TypeScript architecture boundary checks"
+  default_prompt: "Use $fenceline to add, check, explain, or repair package and source architecture boundaries in this workspace."
