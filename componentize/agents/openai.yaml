@@ -1,0 +1,4 @@
+interface:
+  display_name: "Componentize"
+  short_description: "Find reusable UI components and reduce duplication"
+  default_prompt: "Use $componentize to find duplicated UI, choose canonical shared components, and migrate the highest-value reuse opportunity."
