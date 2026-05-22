@@ -1,4 +1,0 @@
-interface:
-  display_name: "Northstar"
-  short_description: "Project vision and north-star docs"
-  default_prompt: "Use $northstar to create a concise project vision document."

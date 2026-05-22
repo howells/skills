@@ -25,7 +25,7 @@ npx skills@latest add howells/skills --skill '*' --agent codex --global
 Install one skill globally for Codex:
 
 ```bash
-npx skills@latest add howells/skills --skill northstar --agent codex --global
+npx skills@latest add howells/skills --skill chiaroscuro --agent codex --global
 ```
 
 Use `--copy` if you want independent files rather than symlinks.
@@ -43,6 +43,5 @@ Use `--copy` if you want independent files rather than symlinks.
 - `marginalia` — add concise JSDoc to APIs, exports, and complex code.
 - `mastraudit` — audit Mastra implementations, package boundaries, and domain folders.
 - `nomen` — generate and validate names.
-- `northstar` — create or revise project vision documents.
 
 Restart your agent after installing new skills.
