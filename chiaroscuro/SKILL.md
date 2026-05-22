@@ -33,7 +33,6 @@ For full design direction, read:
 - `references/ux-laws.md`
 - `references/typography-opentype.md`
 - `references/ascii-ui-patterns.md`
-- `references/wiretext.md`
 - `references/tailwind-v4.md`
 - `references/interface/index.md`
 - `references/interface/tailwind-authoring.md`
@@ -125,6 +124,15 @@ Do not ask for aesthetic choices already implied by the product domain or existi
 
 If the work is greenfield, substantial, and direction is unclear, offer to explore multiple directions before committing. Create up to five genuinely different directions only when the user chooses that path; vary typography, palette, layout structure, density, shape language, surface treatment, and personality. Do not present five minor theme tweaks.
 
+When exploring alternatives:
+
+- Define each decision point with a human-readable label, such as `Hero style`, `Navigation model`, or `Pricing layout`.
+- Unless the user asks for a different count, generate 3-4 options.
+- When iterating on existing UI, make option 1 the current implementation and label it `(current)`.
+- Write a style definition before implementation for each option: layout, typography, color, spacing, surfaces, shape language, and personality.
+- New options must be faithful executions of their style definition. Existing-design options should vary layout and component choices while still belonging to the current aesthetic.
+- After the user selects an option, remove unselected variant scaffolding and any temporary comments or wrappers created only for comparison.
+
 ### 4. Optional Inspiration Research
 
 Use inspiration research when it will sharpen concrete choices, not as procrastination.
@@ -160,19 +168,14 @@ Avoid:
 - generic centered hero plus cards layout unless the product truly needs it
 - decorative cards inside cards
 - uppercase wide-tracked eyebrows on sans/serif headings
+- overused mono small-caps labels; use monospace uppercase labels sparingly, usually no more than one recurring label style per screen
 - icon-only controls without accessible names
 
 ### 6. Wireframe
 
 Create a low-fidelity structure before implementation.
 
-Prefer WireText when available for structural wireframes. If WireText is unavailable, use ASCII wireframes from `references/ascii-ui-patterns.md`.
-
-If WireText is used:
-
-- save the editable URL when the tool provides one
-- include the exported text wireframe or a short structural summary in the spec
-- treat WireText as layout structure, not visual fidelity
+Use ASCII wireframes from `references/ascii-ui-patterns.md`.
 
 Include:
 
@@ -303,6 +306,7 @@ The design is not complete until these are true:
 - zero purple-blue gradient defaults
 - zero generic admin-template or AI landing-page feel
 - zero repeated uppercase tracked eyebrows on sans/serif headings
+- zero decorative overuse of mono small caps; use them only for functional labels, sparse section markers, or data-like metadata
 - zero inaccessible icon-only controls
 - all critical states accounted for
 - contrast requirements named
@@ -345,6 +349,11 @@ Keep changes behavior-preserving unless the user asked for redesign.
 - Prefer existing design-system primitives.
 - Ensure reusable React components accept `className` when local conventions expect it.
 - Keep layout responsibility with the caller where possible.
+- Never bake margins into reusable components; apply outer spacing at the call site.
+- Use `clsx` or the project's existing class-merge helper when components need conditional classes.
+- Extract form controls by HTML element, not by use case: one `Input` for text/email/password/etc., one `Select`, one `Textarea`. Do not create `EmailInput`/`PasswordInput` variants unless the domain behavior is genuinely different.
+- When two or more elements share structure and styling but differ only by labels, placeholders, icons, or types, extract one prop-driven component.
+- After extracting, scan again for repeated section containers, heading groups, card shells, button styles, and form controls.
 - Avoid introducing compatibility shims or old/new comments.
 
 ### 3. Clean Tailwind Authoring
@@ -355,6 +364,8 @@ Read `references/interface/tailwind-authoring.md`.
 - Remove conflicting utilities.
 - Replace arbitrary values with scale values when the exact value is not meaningful.
 - Consolidate repeated class shapes into components or small helpers only when it reduces real duplication.
+- When available, use `npx @tailwindcss/cli canonicalize` to normalize class lists. Pass the project's CSS entry file with `--css path/to/input.css` when custom Tailwind v4 tokens or utilities are required for accurate output.
+- Use structured output such as `--format json` or `--format jsonl` when processing many class strings.
 
 ### 4. Verify
 
