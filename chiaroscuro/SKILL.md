@@ -33,6 +33,7 @@ For full design direction, read:
 - `references/ux-laws.md`
 - `references/typography-opentype.md`
 - `references/ascii-ui-patterns.md`
+- `references/wiretext.md`
 - `references/tailwind-v4.md`
 - `references/interface/index.md`
 - `references/interface/tailwind-authoring.md`
@@ -117,11 +118,26 @@ For most work, resolve:
 - tone: minimal, bold, editorial, playful, luxury, brutalist, industrial, organic, retro, quiet operational, or another specified direction
 - density: sparse, balanced, or dense
 - memorable element: typography, layout structure, interaction model, data treatment, imagery, motion, or navigation
+- frame/chrome: standard site chrome, app-like focus, or hybrid navigation
 - constraints: existing brand, component library, accessibility, responsive needs, performance, implementation stack
 
 Do not ask for aesthetic choices already implied by the product domain or existing design context.
 
-### 4. Make Concrete Visual Decisions
+If the work is greenfield, substantial, and direction is unclear, offer to explore multiple directions before committing. Create up to five genuinely different directions only when the user chooses that path; vary typography, palette, layout structure, density, shape language, surface treatment, and personality. Do not present five minor theme tweaks.
+
+### 4. Optional Inspiration Research
+
+Use inspiration research when it will sharpen concrete choices, not as procrastination.
+
+- For websites and marketing surfaces, use curated examples such as Siteinspire when available.
+- For app UI, mobile screens, onboarding, dashboards, settings, and interaction patterns, use product UI references such as Mobbin when available.
+- If the user provides a reference URL, screenshot or inspect it immediately when a browser tool is available.
+- Summarize observed typography, color relationships, layout patterns, spacing, and interaction details.
+- Translate useful observations into Tailwind v4 tokens, class shapes, and component patterns.
+
+Do not copy another design. Use references to identify reusable structural ideas and visual constraints.
+
+### 5. Make Concrete Visual Decisions
 
 Produce specific decisions, not mood-board language.
 
@@ -146,11 +162,17 @@ Avoid:
 - uppercase wide-tracked eyebrows on sans/serif headings
 - icon-only controls without accessible names
 
-### 5. Wireframe
+### 6. Wireframe
 
 Create a low-fidelity structure before implementation.
 
-Use ASCII wireframes from `references/ascii-ui-patterns.md`.
+Prefer WireText when available for structural wireframes. If WireText is unavailable, use ASCII wireframes from `references/ascii-ui-patterns.md`.
+
+If WireText is used:
+
+- save the editable URL when the tool provides one
+- include the exported text wireframe or a short structural summary in the spec
+- treat WireText as layout structure, not visual fidelity
 
 Include:
 
@@ -161,7 +183,7 @@ Include:
 
 Ask whether the structure feels right before writing a final design spec when the user is actively collaborating.
 
-### 6. Write the Change Spec
+### 7. Write the Change Spec
 
 Translate the direction into measurable implementation changes.
 
@@ -197,7 +219,7 @@ Rules:
 - Reference the local rule or reference file that justifies each meaningful change.
 - If the spec only changes padding, spacing, or copy, stop and deepen the design.
 
-### 7. Save the Design Spec
+### 8. Save the Design Spec
 
 For substantial work, create `docs/design/specs/design-[name].md`.
 
@@ -214,6 +236,8 @@ Include:
 - state designs
 - implementation notes tied to the project's component system
 - anti-patterns to avoid
+- complexity guardrails
+- interactive state requirements
 - contrast and accessibility requirements
 - verification checklist
 
@@ -249,10 +273,16 @@ Use this compact structure:
 
 ## Implementation Notes
 ## Anti-Patterns
+## Complexity Guardrails
+## Interactive States
 ## Verification Checklist
 ```
 
-### 8. Critique Before Handoff
+In complexity guardrails, name concrete limits for the implementation: avoid wrapper elements with no purpose, cards inside cards, excessive nesting for simple content, too many font sizes, too many accent colors, arbitrary spacing values, and Tailwind class strings that should become reusable components.
+
+In interactive states, specify expectations for default, hover, focus, active, disabled, loading, error, and success states when the UI includes controls or forms.
+
+### 9. Critique Before Handoff
 
 Review the draft like a design lead:
 
@@ -265,20 +295,21 @@ Review the draft like a design lead:
 
 Revise the spec before handoff if the answer is weak.
 
-### 9. Verify Against Red Flags
+### 10. Verify Against Red Flags
 
 The design is not complete until these are true:
 
 - zero default-font-as-design decisions
 - zero purple-blue gradient defaults
 - zero generic admin-template or AI landing-page feel
+- zero repeated uppercase tracked eyebrows on sans/serif headings
 - zero inaccessible icon-only controls
 - all critical states accounted for
 - contrast requirements named
 - mobile and desktop structures both considered
 - implementation notes are specific enough to guide code
 
-### 10. Continue Into Implementation When Asked
+### 11. Continue Into Implementation When Asked
 
 If the user asked to design and implement in the same request:
 
