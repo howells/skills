@@ -43,5 +43,6 @@ Use `--copy` if you want independent files rather than symlinks.
 - `marginalia` — add concise JSDoc to APIs, exports, and complex code.
 - `mastraudit` — audit Mastra implementations, package boundaries, and domain folders.
 - `nomen` — generate and validate names.
+- `polyplugin` — create and validate dual Claude Code and Codex plugins.
 
 Restart your agent after installing new skills.
