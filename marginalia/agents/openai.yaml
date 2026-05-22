@@ -1,0 +1,4 @@
+interface:
+  display_name: "Marginalia"
+  short_description: "Add concise IDE-helpful JSDoc to APIs and complex code"
+  default_prompt: "Use $marginalia to inspect the requested target and add concise IDE-helpful JSDoc only where it materially improves public APIs, exported symbols, or complex code."

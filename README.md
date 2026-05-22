@@ -40,6 +40,7 @@ Use `--copy` if you want independent files rather than symlinks.
 - `fieldtest` — test rendered web apps in a browser with evidence-backed findings.
 - `foundry` — define Tailwind v4 visual identity and brand systems.
 - `heathen` — find and split god components, scripts, and duplicated logic.
+- `marginalia` — add concise JSDoc to APIs, exports, and complex code.
 - `mastraudit` — audit Mastra implementations, package boundaries, and domain folders.
 - `nomen` — generate and validate names.
 - `northstar` — create or revise project vision documents.
