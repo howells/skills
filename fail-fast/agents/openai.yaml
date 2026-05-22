@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fail Fast"
+  short_description: "Remove unsafe fallbacks and compatibility paths"
+  default_prompt: "Use $fail-fast to audit this codebase for unnecessary fallbacks and replace them with deterministic errors."
