@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brand"
+  short_description: "Create distinctive visual identity systems"
+  default_prompt: "Use $brand to create a distinctive visual identity system for this project."
