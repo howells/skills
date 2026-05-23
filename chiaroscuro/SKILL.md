@@ -1,11 +1,13 @@
 ---
 name: chiaroscuro
-description: Create distinctive, non-generic UI design direction, wireframes, Tailwind v4 visual systems, Tailwind @theme tokens, design specs, and post-implementation UI polish. Use when asked to design a UI, create a layout, make a page or app screen memorable, establish a visual direction, produce a design spec before implementation, clean up AI-looking interface work, componentize UI code, deduplicate repeated UI patterns, or polish Tailwind/React frontend code after implementation. This skill assumes Tailwind v4 as the mandatory styling target.
+description: Create distinctive, non-generic, user-centered UI design direction, wireframes, Tailwind v4 visual systems, Tailwind @theme tokens, design specs, and post-implementation UI polish. Use when asked to design a UI, create a layout, remove decorative UI furniture, prevent implementation/system leakage, make a page or app screen memorable, establish a visual direction, produce a design spec before implementation, clean up AI-looking interface work, componentize UI code, deduplicate repeated UI patterns, or polish Tailwind/React frontend code after implementation. This skill assumes Tailwind v4 as the mandatory styling target.
 ---
 
 # Chiaroscuro
 
 Use this skill to make UI design concrete before code, and to polish UI code after it exists. The goal is not decoration; it is specific visual direction that another agent or engineer can implement without drifting into generic AI output.
+
+Design for the user's task, not for the implementation underneath it. Chiaroscuro must produce interfaces that feel like coherent products, not exposed schemas, prompt scaffolds, agent logs, or ornamental screenshots.
 
 Announce at start: "I'm using the chiaroscuro skill to create a distinctive UI direction."
 
@@ -18,6 +20,8 @@ Announce at start: "I'm using the chiaroscuro skill to create a distinctive UI d
 - Use the project's existing design system, components, and domain rules before inventing new primitives, but express all styling through Tailwind v4.
 - Project-local visual tokens may inform values, but they do not override the Tailwind v4 requirement. Translate them into Tailwind v4 `@theme` tokens where needed.
 - Do not default to marketing-page structure for apps, tools, games, dashboards, or workflows. Design the actual usable surface first.
+- Do not add "UI furniture": decorative chrome, wrapper panels, floating badges, ornamental dividers, status strips, fake controls, empty accent shapes, or visual clutter that does not clarify hierarchy, affordance, state, navigation, or domain meaning.
+- Do not leak underlying systems into the interface. Hide implementation concepts, prompt/workflow mechanics, database schemas, API names, internal state machines, and agent reasoning behind user-centered nouns, verbs, progressive disclosure, and task-focused states.
 - Do not let the design spec contradict existing `docs/brand-system.md`, `docs/design-context.md`, project rules, or implemented design tokens.
 - For substantial UI work, save the design spec to `docs/design/specs/design-[name].md`. For small components, an inline spec is acceptable unless the user wants a file.
 
@@ -159,6 +163,7 @@ Include:
 - layout: grid, asymmetry, density, scrolling model, mobile adaptation, state placement
 - motion: where motion clarifies interaction, timing, easing, reduced-motion behavior
 - content/state design: empty, loading, error, success, dense data, long text, and user-generated content behavior
+- abstraction: user-facing labels, navigation, states, and workflows that describe what people are trying to do, not how the software is implemented
 
 Avoid:
 
@@ -167,6 +172,8 @@ Avoid:
 - white background plus gray cards as the whole interface
 - generic centered hero plus cards layout unless the product truly needs it
 - decorative cards inside cards
+- UI furniture: chrome, decorations, separator bars, visual effects, or repeated wrappers that exist only to make the screen look more designed
+- exposed internals: raw schema fields, API names, prompt/agent mechanics, "step 1/2/3" workflow scaffolds, debug statuses, or system terminology unless the target user explicitly needs them
 - uppercase wide-tracked eyebrows on sans/serif headings
 - overused mono small-caps labels; use monospace uppercase labels sparingly, usually no more than one recurring label style per screen
 - icon-only controls without accessible names
@@ -214,6 +221,10 @@ Use this structure:
 ### Motion
 | Element | Before | After | Reference |
 | --- | --- | --- | --- |
+
+### Abstraction
+| Exposed implementation detail | User-centered replacement | Reference |
+| --- | --- | --- |
 ```
 
 Rules:
@@ -239,6 +250,7 @@ Include:
 - state designs
 - implementation notes tied to the project's component system
 - anti-patterns to avoid
+- abstraction rules: user-facing language, hidden implementation details, and what can be progressively disclosed
 - complexity guardrails
 - interactive state requirements
 - contrast and accessibility requirements
@@ -276,12 +288,15 @@ Use this compact structure:
 
 ## Implementation Notes
 ## Anti-Patterns
+## Abstraction Rules
 ## Complexity Guardrails
 ## Interactive States
 ## Verification Checklist
 ```
 
-In complexity guardrails, name concrete limits for the implementation: avoid wrapper elements with no purpose, cards inside cards, excessive nesting for simple content, too many font sizes, too many accent colors, arbitrary spacing values, and Tailwind class strings that should become reusable components.
+In complexity guardrails, name concrete limits for the implementation: avoid wrapper elements with no purpose, cards inside cards, excessive nesting for simple content, UI furniture, too many font sizes, too many accent colors, arbitrary spacing values, and Tailwind class strings that should become reusable components.
+
+In abstraction rules, name which internal details must be hidden, translated, or deferred. Replace implementation-first copy with domain language: `API key created` can become `Connection ready`; `vector index sync failed` can become `Search is still updating`; `agent step running` can become `Checking the next section`. Keep debug details available only behind explicit affordances when the user needs diagnosis.
 
 In interactive states, specify expectations for default, hover, focus, active, disabled, loading, error, and success states when the UI includes controls or forms.
 
@@ -295,6 +310,8 @@ Review the draft like a design lead:
 - Would a real user in this product domain find it plausible?
 - Can the implementation be built cleanly with the target component system?
 - Are there any cards, wrappers, arbitrary values, or decorative fragments that exist only to make the screenshot feel busier?
+- Does any visible text expose the database, API, prompt, model, chain, agent, workflow engine, or internal state instead of explaining the user's task?
+- Would a non-engineer target user understand what to do without reading implementation vocabulary?
 
 Revise the spec before handoff if the answer is weak.
 
@@ -308,6 +325,8 @@ The design is not complete until these are true:
 - zero repeated uppercase tracked eyebrows on sans/serif headings
 - zero decorative overuse of mono small caps; use them only for functional labels, sparse section markers, or data-like metadata
 - zero inaccessible icon-only controls
+- zero UI furniture
+- zero unnecessary system leakage in visible labels, navigation, empty states, errors, or progress states
 - all critical states accounted for
 - contrast requirements named
 - mobile and desktop structures both considered

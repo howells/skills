@@ -9,6 +9,7 @@ Before any visual decisions, answer explicitly:
 - **Who is this human?** Specific role and context, not "users"
 - **What must they accomplish?** Specific verb — create, monitor, configure, analyze
 - **What should this feel like?** Concrete descriptors, not clichés
+- **What should stay hidden?** Implementation details, system mechanics, or diagnostic data the user does not need for the task
 
 If your answer is "it's common" or "it's clean" — you haven't chosen. You've defaulted.
 
@@ -32,6 +33,16 @@ For every visual choice, ask: if I substituted the alternative, would the design
 - Same gray palette with blue accent → defaulted
 
 If the swap wouldn't matter, the choice isn't a choice.
+
+## Abstraction Test
+
+For every label, navigation item, status, empty state, and error, ask: does this describe the user's work or the software's internals?
+
+- MUST: Prefer user outcomes over implementation steps
+- MUST: Make primary actions verbs from the user's domain
+- MUST: Hide setup, orchestration, schema, prompt, model, and API mechanics until they are needed for diagnosis or configuration
+- SHOULD: Use progressive disclosure for technical details: summary first, details on demand
+- NEVER: Make the primary UI read like logs, traces, database tables, queue states, or agent plans unless those are the product's core objects
 
 ## Depth Strategy
 
@@ -64,6 +75,7 @@ Navigation teaches users how to think about the product space. It IS the product
 - SHOULD: Breadcrumbs for 3+ level depth
 - SHOULD: Navigation structure mirrors the mental model of the domain, not the database schema
 - NEVER: Navigation that requires scrolling to find
+- NEVER: Navigation that exposes implementation modules when users think in tasks, projects, documents, customers, runs, or outcomes
 
 ## Information Density
 
