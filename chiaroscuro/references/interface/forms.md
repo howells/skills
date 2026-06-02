@@ -1,5 +1,11 @@
 # Interface: Forms
 
+## Labels
+
+- MUST: Use clear, readable text for form labels — same typeface family as body text, legible size.
+- MUST NOT: Apply mono small-caps, uppercase tracking, or decorative typographic treatments to form labels. Labels communicate field identity, not brand texture.
+- SHOULD: Position labels above inputs. Side-aligned labels create scanning friction on narrow viewports.
+
 ## Input Types
 
 - MUST: Correct `type` for keyboard/validation: `email`, `tel`, `url`, `number`, `search`, `password`

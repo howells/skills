@@ -88,14 +88,14 @@ See [Animation Patterns Reference](animation-patterns.md) for comprehensive guid
 - Generous negative space OR controlled density
 - Never predictable/cookie-cutter
 
-## Backgrounds and Details
+## Atmosphere and Character
 
-Create atmosphere and depth:
+When the aesthetic direction calls for visual texture, choose treatments that reinforce the product's meaning, interaction model, or brand character:
 - Gradient meshes, noise textures, geometric patterns
 - Layered transparencies, dramatic shadows
-- Custom cursors, grain overlays where appropriate
+- Custom cursors, grain overlays
 
-These details must support the product's meaning or interaction model. If a detail can be removed without changing comprehension, priority, or brand character, remove it.
+Every detail must earn its place. If it can be removed without changing comprehension, priority, or brand character, it's furniture — remove it.
 
 ## Implementation Matching
 

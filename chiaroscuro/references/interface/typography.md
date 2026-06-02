@@ -169,6 +169,7 @@ Tools like [Fontaine](https://github.com/unjs/fontaine) or Next.js `next/font` c
 - MUST NOT: Use `uppercase` eyebrow text on sans or serif fonts. Reserve uppercase eyebrows for **monospace** fonts only.
 - SHOULD: When uppercase monospace eyebrows are used, pair with `tracking-wide` and use them sparingly (typically one per page, not as a section-divider habit).
 - SHOULD: Prefer alternatives to the uppercase eyebrow — numeric labels (`01 / Pricing`), sentence-case kickers in the display font at smaller weight, a colored dot + label, or no eyebrow at all.
+- MUST NOT: Use mono small-caps as a default label style. Mono small-caps are a high-signal treatment for numeric content and short data-adjacent labels (`v2.4.1`, `$49/mo`, `ID`, `STATUS`, `ETA`). When they appear on more than a few elements per screen — card labels, sidebar headings, tags, general metadata — they lose signal and become wallpaper. Before applying, ask: would sentence-case in the body font at a lighter weight work just as well? If yes, use that.
 - SHOULD: Constrain long-form text with `max-w-[*ch]` or equivalent directly on the text element.
 
 ## Content Formatting

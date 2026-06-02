@@ -1,6 +1,6 @@
 # Interface: Surfaces
 
-Surface treatment communicates depth, grouping, and pace. Use it sparingly and consistently.
+Surface treatment communicates depth, grouping, and pace. Every surface must earn its place — the default is flat content on the canvas, not content inside a container.
 
 ## Surface Ladder
 
@@ -10,10 +10,10 @@ Surface treatment communicates depth, grouping, and pace. Use it sparingly and c
 
 ## Cards, Panels, And Dividers
 
-- MUST NOT: Wrap every content block in a card.
-- SHOULD: Use open layouts with spacing and dividers for routine sectioning.
-- SHOULD: Reserve card treatments for repeated items, settings clusters, or genuinely framed tools.
-- MUST: Divider treatments stay quiet; they support grouping, not visual branding.
+- MUST: The default is no container. Content lives on the canvas until a card or panel earns its place by solving a real grouping, interaction, or hierarchy problem.
+- SHOULD: Use open layouts with spacing and background shifts for routine sectioning. Dividers are an escalation, not a default.
+- SHOULD: Cards earn their place when they represent repeated items, interactive clusters, or genuinely framed tools — not when empty space feels uncomfortable.
+- MUST: Dividers are a last resort after spacing and surface shifts. When used, they stay quiet — they support grouping, not visual branding.
 - MUST: Nested cards need a strong product reason.
 
 ## Breakpoint Reconfiguration
@@ -35,6 +35,6 @@ Surface treatment communicates depth, grouping, and pace. Use it sparingly and c
 
 ## Review Questions
 
-- Could whitespace or a divider replace this card?
+- Can this container be removed entirely? If not, could whitespace or a surface shift replace it?
 - Does the current surface treatment make scanning faster?
 - Is any surface visually louder than the content it contains?

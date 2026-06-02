@@ -261,13 +261,14 @@ When overlapping images, add an invisible border (matching the background) to pr
 
 ## Finishing Touches
 
-### Add Color with Accent Borders
+### Accent Borders Must Communicate
 
-A single colored border transforms plain elements:
-- Top of cards
-- Left side of alerts or notifications
-- Under active navigation items
-- Top of the entire layout (brand strip)
+A colored border can strengthen hierarchy or communicate state — but only when it carries meaning:
+- **Left side of alerts or notifications** — communicates severity
+- **Under active navigation items** — communicates location
+- **Top of a card** — communicates category (only when distinguishing between types)
+
+An accent border added to "make it feel more finished" is furniture. Brand strips across the top of a layout, accent lines on every card, and colored borders that don't encode meaning add visual weight without adding clarity.
 
 ### Don't Overlook Empty States
 

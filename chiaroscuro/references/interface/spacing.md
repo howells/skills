@@ -12,6 +12,17 @@ MUST start with more whitespace than you think you need. Remove space only when 
 
 "It feels empty" is not a reason. "These items need to appear grouped" is.
 
+### Whitespace Is the First Grouping Tool
+
+MUST use spacing to create visual groups before reaching for borders, containers, or background changes. The grouping escalation order:
+
+1. **Spacing alone** — tighter within groups, wider between groups
+2. **Typography and weight** — shared text styles reinforce belonging
+3. **Subtle dividers** — only when spacing is ambiguous
+4. **Containers/cards** — only when content is actionable, comparable, or needs an interaction boundary
+
+If spacing creates clear grouping, a border or card around it is furniture.
+
 ---
 
 ## Base Unit
@@ -58,7 +69,9 @@ Reference: [Tailwind Spacing Scale](https://tailwindcss.com/docs/customizing-spa
 <button class="px-6 py-3">  <!-- Large -->
 ```
 
-### Cards
+### Cards (When Earned)
+
+Cards must earn their place — see layout guidance. When a card is justified, use consistent internal padding:
 
 ```html
 <div class="p-4">  <!-- Compact -->
@@ -132,7 +145,7 @@ The ratio between adjacent gaps matters more than the absolute values. Pick a ra
 
 ### Group Boundaries
 
-When a content group meets a different functional group (e.g., copy → action buttons), the gap SHOULD be equal to or greater than the largest within-group gap. Borders, dividers, or background changes reinforce group boundaries and reduce the space needed.
+When a content group meets a different functional group (e.g., copy → action buttons), the gap SHOULD be equal to or greater than the largest within-group gap. If spacing alone doesn't make the boundary clear, a subtle divider or background change can reinforce it — but try spacing first.
 
 ---
 

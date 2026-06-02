@@ -13,10 +13,13 @@
 
 ## CSS
 
+Decorative elements are doubly costly — they are UI furniture AND performance drains. Every blur, shadow, gradient, and backdrop effect that doesn't serve clarity, hierarchy, or state is a wasted frame budget. Remove the element before optimizing it.
+
 - SHOULD: Avoid large `blur()` values (GPU-heavy)
 - SHOULD: Replace blurred rectangles with radial gradients
 - SHOULD: `transform: translateZ(0)` sparingly for GPU layer promotion
 - SHOULD: Toggle `will-change` only during scroll, then remove
+- SHOULD: Audit decorative `backdrop-blur-*`, `shadow-*`, and `bg-gradient-*` — if they don't earn their place functionally, removal is the best optimization
 
 ### CSS Variables
 

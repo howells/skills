@@ -1,6 +1,6 @@
 # Interface: Marketing Pages
 
-**Quality bar:** Build marketing sites worthy of [siteinspire.com](https://siteinspire.com). Distinctive, refined, memorable — not generic template work.
+**Quality bar:** Build marketing sites worthy of [siteinspire.com](https://siteinspire.com). Distinctive, refined, memorable — not generic template work. Every element earns its place; decorative furniture erodes credibility.
 
 ## Hero Section
 
@@ -32,6 +32,7 @@ Marketing pages are narratives. Each section advances the story.
 - SHOULD: Visual transitions between sections — background color shifts, not just whitespace
 - NEVER: Cookie-cutter repeating layout (3-column cards, 3-column cards, 3-column cards)
 - NEVER: More than 7-8 sections total (if you need more, you're not editing)
+- NEVER: Decorative filler — gradient blobs, floating shapes, ornamental dividers, accent badges, or background effects that exist to fill space rather than communicate meaning
 
 **Section rhythm matters more than individual section design.** A page with 5 well-paced sections beats a page with 10 beautifully designed sections that feel relentless.
 

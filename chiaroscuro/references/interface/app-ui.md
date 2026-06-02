@@ -9,7 +9,7 @@ Before any visual decisions, answer explicitly:
 - **Who is this human?** Specific role and context, not "users"
 - **What must they accomplish?** Specific verb — create, monitor, configure, analyze
 - **What should this feel like?** Concrete descriptors, not clichés
-- **What should stay hidden?** Implementation details, system mechanics, or diagnostic data the user does not need for the task
+- **What should stay hidden?** System internals the user doesn't need for the task — prompt scaffolds, agent steps, schema names, API mechanics, diagnostic data
 
 If your answer is "it's common" or "it's clean" — you haven't chosen. You've defaulted.
 

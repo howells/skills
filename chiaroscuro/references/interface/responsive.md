@@ -147,6 +147,19 @@ SHOULD test on: one real iPhone, one real Android, a tablet if relevant. Cheap A
 
 ---
 
+## Strip Chrome at Smaller Breakpoints
+
+The earn-its-place bar rises as space shrinks. Elements that justified themselves on a wide screen may become furniture on mobile.
+
+- SHOULD: Remove decorative borders, dividers, and container chrome that don't aid comprehension at small sizes
+- SHOULD: Collapse wrapper panels into flat content stacks — padding and spacing group content without visual framing
+- SHOULD: Simplify multi-level hierarchy to fewer levels on mobile — two levels of nesting rarely survive a narrow viewport
+- SHOULD: Let content fill the viewport edge-to-edge where appropriate, rather than inset into cards or panels
+
+The goal is not a stripped-down version — it's the essential version. Mobile should feel intentionally designed, not desktop with pieces removed.
+
+---
+
 ## Anti-Patterns
 
 - NEVER: Desktop-first CSS (base styles should be mobile)
@@ -154,3 +167,4 @@ SHOULD test on: one real iPhone, one real Android, a tablet if relevant. Cheap A
 - NEVER: Separate mobile/desktop codebases
 - NEVER: Ignore tablet and landscape orientations
 - NEVER: Assume all mobile devices are powerful
+- NEVER: Keep decorative containers or visual framing that only served the desktop layout

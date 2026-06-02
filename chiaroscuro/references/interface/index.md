@@ -30,10 +30,11 @@ UI/UX guidelines for building polished, accessible interfaces.
 |-----------|-------------|
 | [design-philosophy.md](../../references/design-philosophy.md) | Timeless design principles |
 | [frontend-design.md](../../references/frontend-design.md) | Fonts, component checklist, anti-patterns |
-| [animation-patterns.md](../../references/animation-patterns.md) | Deep animation patterns and frameworks |
-| [component-design.md](../../references/component-design.md) | React component patterns |
 | [ascii-ui-patterns.md](../../references/ascii-ui-patterns.md) | ASCII wireframe patterns |
 | [tailwind-v4.md](../../references/tailwind-v4.md) | Tailwind v4 migration guide |
+| [brand-identity.md](../../references/brand-identity.md) | Brand and identity typography |
+| [typography-opentype.md](../../references/typography-opentype.md) | OpenType features and fine typography |
+| [ux-laws.md](../../references/ux-laws.md) | UX heuristics and laws |
 
 ## Quick Reference
 

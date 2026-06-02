@@ -1,5 +1,7 @@
 <overview>
 ASCII UI wireframes force clear thinking about layout and flow. Create them during design, reference them during implementation.
+
+Every element in a wireframe must earn its place. Only depict elements that serve clarity, hierarchy, affordance, state, navigation, or domain meaning. Do not wireframe decorative chrome, filler panels, ornamental dividers, or wrapper boxes that exist only for visual padding — those are UI furniture and should not survive the wireframe stage.
 </overview>
 
 <box_drawing_characters>

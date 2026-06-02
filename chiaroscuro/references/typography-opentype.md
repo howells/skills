@@ -103,15 +103,15 @@ body {
 | Large display text (>48px) | Tighter (`-0.02em` to `-0.04em`) | Large text has too much visual space |
 | Body text (14-18px) | Default (0) | Designed for this range |
 | Small text (<12px) | Looser (`0.01em` to `0.02em`) | Improves legibility at small sizes |
-| All caps | Looser (`0.05em` to `0.1em`) | Caps need more breathing room |
-| Buttons/labels (caps) | Looser (`0.02em` to `0.05em`) | Improves readability |
+| All caps (when justified) | Looser (`0.05em` to `0.1em`) | Caps need more breathing room |
+| Short caps UI text (rare) | Looser (`0.02em` to `0.05em`) | Improves readability when caps are used |
 
 ```css
 /* Headline */
 h1 { letter-spacing: -0.02em; }
 
-/* All-caps label */
-.label {
+/* When uppercase is justified (not a default — see typography.md rules) */
+.mono-eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }

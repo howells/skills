@@ -75,7 +75,7 @@ Concrete patterns that signal AI-generated design. Grep-friendly — each is a s
 | Gratuitous gradients | `bg-gradient-to-*` or `linear-gradient` used decoratively, not functionally | AI defaults to gradients for "visual interest" instead of actual design |
 | Glow effects | `shadow-[0_0_*]`, `drop-shadow`, `box-shadow` with blur >20px and color | Glow as decoration is a ChatGPT-era tell — real UIs use shadows for depth |
 | `transition: all` | `transition-all` or `transition: all` | Lazy blanket transitions cause jank and unintended animations; specify properties |
-| Visual monotony | Every card/section uses identical padding, radius, shadow | AI reuses the same container recipe everywhere — vary visual weight |
+| Visual monotony | Every card/section uses identical padding, radius, shadow | AI reuses the same container recipe everywhere — hierarchy should come from content and spacing, not uniform container dressing |
 | Placeholder text shipped | `"Lorem ipsum"`, `"Your text here"`, `"Description goes here"` | AI leaves placeholder copy; real products have real content |
 | Emoji as design | Emoji used as section icons or feature illustrations | AI substitutes emoji for actual iconography or illustration |
 
@@ -98,7 +98,8 @@ Concrete patterns that signal AI-generated design. Grep-friendly — each is a s
 
 ## Decorative Elements
 
-- MUST: `pointer-events: none` on decorative overlays
+- MUST: Question whether any decorative element earns its place — overlays, background shapes, and accent graphics are furniture by default. If it can be removed without reducing comprehension, remove it.
+- MUST: `pointer-events: none` on any decorative overlay that survives the cut
 - SHOULD: `user-select: none` on code illustrations
 
 ## Primitives

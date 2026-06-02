@@ -63,14 +63,14 @@ Common patterns that fail accessibility, mapped to WCAG success criteria. Use as
 
 Follow the [Chicago Manual of Style](https://www.chicagomanualofstyle.org/) for UX copy (labels, tooltips, empty states, error messages, marketing pages). For fiction-specific CMOS rules, see `~/Sites/fiction/skills/references/style-guides/chicago-manual.md`.
 
-### User-Centered Abstraction
+### No System Leakage
 
-UI copy must describe the user's objects, decisions, and next actions. Do not expose internals unless the product is explicitly for technical operators who need those internals.
+UI copy describes the user's objects, decisions, and next actions. System internals — database tables, API mechanics, agent steps, model names, orchestration states — stay hidden unless the target user is a technical operator whose work requires them.
 
 - MUST: Translate implementation states into user outcomes: `sync failed` → `Updates are paused`; `indexing` → `Search is updating`; `agent step running` → `Checking the next section`
 - MUST: Use domain nouns and verbs from the user's work, not database tables, API endpoints, prompt stages, model names, or workflow engine states
 - MUST: Put technical diagnostics behind explicit affordances such as "View details", "Copy error", or "Open logs" when they are useful
-- NEVER: Surface chain-of-thought, prompt scaffolding, hidden system instructions, raw orchestration steps, or internal scoring as primary UI
+- NEVER: Surface chain-of-thought, prompt scaffolding, hidden system instructions, raw orchestration steps, or internal scoring
 - NEVER: Let navigation mirror the implementation architecture unless the target user's mental model genuinely matches it
 
 ### Avoid LLM-Sounding Copy

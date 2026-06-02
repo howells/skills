@@ -51,8 +51,17 @@ Class-level Tailwind guidance for writing cleaner, more consistent UI code.
 
 - MUST: Put remote `@import` URLs at the top of the stylesheet, before `@import "tailwindcss"`.
 
+## Decorative Utility Discipline
+
+- MUST NOT: Add cosmetic utilities that serve no clarity, hierarchy, affordance, or state purpose. Every `shadow-*`, `blur-*`, `bg-gradient-*`, `ring-*`, `border-*`, and `rounded-*` must justify why it exists.
+- MUST NOT: Stack decorative layers (gradient + shadow + ring + glow) — this is UI furniture in class form.
+- MUST NOT: Apply uniform `rounded-*` / `shadow-*` / `p-*` to every card or surface — vary visual weight to signal hierarchy.
+- SHOULD: Question every `opacity-*`, `backdrop-blur-*`, and `bg-*` on wrapper elements. If the wrapper can be removed without losing comprehension, remove it.
+
 ## Review Questions
 
 - Are repeated child spacing rules expressed as parent `gap-*`?
 - Are arbitrary values justified, or should they be promoted to tokens or scale values?
 - Would a second engineer read this class string and immediately understand the intended hierarchy?
+- Does every cosmetic utility (`shadow-*`, `blur-*`, `ring-*`, `bg-gradient-*`) earn its place, or is it decoration?
+- Can any wrapper `<div>` with only visual styling be removed without losing clarity or structure?

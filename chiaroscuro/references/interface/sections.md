@@ -22,11 +22,11 @@ Sections set the page rhythm. They should feel like part of one system, not inde
 
 ## Transitions Between Sections
 
-- SHOULD: Section transitions come from pacing, surface shifts, or content contrast rather than ornamental separators.
+- MUST: Section transitions come from pacing, surface shifts, or content contrast — not ornamental separators. Decorative rules, gradient dividers, and patterned strips between sections are furniture.
 - MUST: If a section uses a strong background or surface change, the next section should visibly reset the rhythm.
 
 ## Review Questions
 
 - Does this section pattern belong to the same product as the others?
-- Is the transition from one section to the next helping comprehension?
+- Could any separator between sections be removed without reducing comprehension?
 - Would the page still feel structured if the color treatments disappeared?
