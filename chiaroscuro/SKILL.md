@@ -143,12 +143,39 @@ For most work, resolve:
 
 Do not ask for aesthetic choices already implied by the product domain or existing design context.
 
-If the work is greenfield, substantial, and direction is unclear, offer to explore multiple directions before committing. Create up to five genuinely different directions only when the user chooses that path; vary typography, palette, layout structure, density, shape language, surface treatment, and personality. Do not present five minor theme tweaks.
+### Design Routes (5 Directions)
 
-When exploring alternatives:
+When the user asks for a broad-strokes redesign — a whole page, a full view, a screen, a design system overhaul, or any work that sets visual direction for an entire surface — present **5 visually distinct design routes** before committing to implementation.
+
+This is the default behavior for page-level and system-level design work. Do not wait for the user to ask for alternatives. Do not skip this step unless:
+- The user explicitly says they already know the direction they want, or
+- The work is a single component, a small fragment, or a contained piece (use the component fast-path instead).
+
+Each route must be genuinely different — not five minor theme tweaks or color swaps on the same layout. Vary across these axes:
+- Typography pairing and hierarchy
+- Palette mood and contrast model
+- Layout structure and density
+- Shape language and radius
+- Surface treatment and depth
+- Motion personality
+- Overall character (e.g., one route could be editorial and typographic, another dense and tool-like, another bold and graphic, another quiet and spacious, another brutalist and high-contrast)
+
+**Route format:**
+
+For each route, provide:
+1. A short evocative name (e.g., "Swiss Utility", "Dark Editorial", "Soft Spatial")
+2. 2-3 sentence personality description
+3. Key decisions: display font, body font, palette direction (warm/cool/neutral, light/dark), density (sparse/balanced/dense), shape language (sharp/soft/mixed), surface model (flat/layered/elevated), and memorable element
+4. A rough wireframe sketch showing how layout differs from the other routes
+
+Keep each route description concise — the goal is quick visual differentiation, not a full spec. The user picks one (or mixes elements), and only then do you develop the full design spec.
+
+### Exploring Alternatives (General)
+
+For smaller decision points within a chosen direction, or when iterating on an existing design:
 
 - Define each decision point with a human-readable label, such as `Hero style`, `Navigation model`, or `Pricing layout`.
-- Unless the user asks for a different count, generate 3-4 options.
+- Unless the user asks for a different count, generate 3-4 options per decision point.
 - When iterating on existing UI, make option 1 the current implementation and label it `(current)`.
 - Write a style definition before implementation for each option: layout, typography, color, spacing, surfaces, shape language, and personality.
 - New options must be faithful executions of their style definition. Existing-design options should vary layout and component choices while still belonging to the current aesthetic.
