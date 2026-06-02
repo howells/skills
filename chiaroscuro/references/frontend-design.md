@@ -6,7 +6,7 @@ Create distinctive, production-grade frontend interfaces. Avoid generic AI aesth
 
 Frontend work requires intentional aesthetic direction. Generic "AI slop" (purple gradients, predictable layouts) is unacceptable. Every UI decision should be deliberate and memorable.
 
-Distinctive does not mean decorative. Every visible element must earn its place by clarifying hierarchy, affordance, state, navigation, content meaning, or domain character. Remove UI furniture: ornamental badges, empty accent panels, fake controls, filler separators, floating chrome, and background effects that exist only to make a screenshot look richer.
+Distinctive does not mean decorative. **Everything must earn its place.** Every visible element — every panel, badge, divider, label, shadow, wrapper, and typographic treatment — must justify itself by serving clarity, utility, hierarchy, affordance, state, navigation, content meaning, or domain character. If an element can be removed without reducing comprehension, remove it. The default is removal, not addition. UI furniture — ornamental badges, empty accent panels, fake controls, filler separators, floating chrome, background effects, and decorative typographic treatments like mono small caps sprayed across every label — exists only to make a screenshot look richer. Cut it.
 
 Design the abstraction, not the machinery. Users should see goals, objects, actions, and outcomes from their world, not prompt scaffolds, agent steps, schema names, API mechanics, internal statuses, or implementation vocabulary. Expose diagnostics only when the target user needs them and only behind a clear affordance.
 
@@ -152,6 +152,7 @@ These indicate generic "AI slop" design:
 - [ ] No discernible aesthetic direction
 - [ ] Cookie-cutter hero → features → testimonials → CTA layout
 - [ ] UI furniture present: decorative chrome, filler panels, fake controls, or visual effects with no user-facing purpose
+- [ ] Mono small-caps used as a general label style — appearing on section eyebrows, card labels, sidebar headings, tags, or most metadata rather than limited to numeric content and short data-adjacent labels
 - [ ] System internals leak into navigation, labels, empty states, errors, or progress copy
 
 ### Yellow Flags (Question)

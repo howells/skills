@@ -11,6 +11,14 @@ Design for the user's task, not for the implementation underneath it. Chiaroscur
 
 Announce at start: "I'm using the chiaroscuro skill to create a distinctive UI direction."
 
+## First Principles
+
+**Everything must earn its place.** The default is removal, not addition. Every visible element — every panel, badge, divider, label, shadow, wrapper, and typographic treatment — must justify itself by serving clarity, utility, hierarchy, affordance, state communication, navigation, or domain meaning. If an element can be removed without reducing comprehension, remove it. Optimise for clarity and utility above all.
+
+**No UI furniture.** Decorative chrome, wrapper panels, floating badges, ornamental dividers, status strips, fake controls, empty accent shapes, background effects, and visual clutter are furniture — they fill space without serving the user. The instinct to make a screen "look more designed" by adding visual weight is the instinct to reach for furniture. Resist it. A screen with fewer elements and better hierarchy always beats a screen with more elements and equal hierarchy.
+
+**No system leakage.** Hide implementation concepts, prompt/workflow mechanics, database schemas, API names, internal state machines, and agent reasoning behind user-centered nouns, verbs, progressive disclosure, and task-focused states.
+
 ## Operating Rules
 
 - Keep design creation collaborative. Ask short questions one at a time when direction is missing.
@@ -20,8 +28,7 @@ Announce at start: "I'm using the chiaroscuro skill to create a distinctive UI d
 - Use the project's existing design system, components, and domain rules before inventing new primitives, but express all styling through Tailwind v4.
 - Project-local visual tokens may inform values, but they do not override the Tailwind v4 requirement. Translate them into Tailwind v4 `@theme` tokens where needed.
 - Do not default to marketing-page structure for apps, tools, games, dashboards, or workflows. Design the actual usable surface first.
-- Do not add "UI furniture": decorative chrome, wrapper panels, floating badges, ornamental dividers, status strips, fake controls, empty accent shapes, or visual clutter that does not clarify hierarchy, affordance, state, navigation, or domain meaning.
-- Do not leak underlying systems into the interface. Hide implementation concepts, prompt/workflow mechanics, database schemas, API names, internal state machines, and agent reasoning behind user-centered nouns, verbs, progressive disclosure, and task-focused states.
+- Apply the "earn its place" test to every element. If you cannot name what the element clarifies, cut it.
 - Do not let the design spec contradict existing `docs/brand-system.md`, `docs/design-context.md`, project rules, or implemented design tokens.
 - For substantial UI work, save the design spec to `docs/design/specs/design-[name].md`. For small components, an inline spec is acceptable unless the user wants a file.
 
@@ -64,13 +71,23 @@ Do not produce framework-agnostic, CSS Modules, styled-components, emotion, or p
 
 Choose a mode before loading heavy references.
 
-**Design mode:** The user wants visual direction, a page/screen layout, a wireframe, a design doc, or a new interface concept.
+**Design mode:** The user wants visual direction, a page/screen layout, a wireframe, a design doc, or a new interface concept. Load the full reference set as listed below.
 
-**Component fast-path:** The user wants a single component or small UI fragment. Compress discovery, skip external inspiration unless useful, and keep output implementation-ready.
+**Component fast-path:** The user wants a single component or small UI fragment. Load only `references/frontend-design.md` plus 2-3 relevant interface files — do not load the full reference set.
 
 **Polish mode:** The user wants to clean up, componentize, deduplicate, organize, or improve existing UI code without changing product direction.
 
 Announce the chosen mode.
+
+## Component Fast-Path Workflow
+
+Use this for a single component, a small UI fragment, or a contained piece like a card, input, modal, or data row.
+
+1. **Load light context.** Read `references/frontend-design.md` and 1-3 interface files relevant to the component type (e.g. `buttons.md` for a button, `forms.md` for an input, `surfaces.md` for a card). Check for `docs/brand-system.md` or `docs/design-context.md` to inherit existing tokens. Do not load the full reference set.
+2. **Check what exists.** Search for existing shared components, tokens, and patterns in the project before proposing anything new. If a design system is in place, work within it.
+3. **Make decisions, not specs.** Skip wireframes and multi-step direction gathering. Decide: font, size, weight, color tokens, spacing, radius, states (default, hover, focus, active, disabled, loading, error). Name each decision concretely.
+4. **Build.** Implement directly with Tailwind v4 utilities and project conventions. Apply the earn-its-place test — no decorative wrappers, no furniture, no mono small-caps unless the component contains numeric or data-like content.
+5. **Verify.** Run typecheck and lint. Screenshot if a browser tool is available.
 
 ## Design Mode Workflow
 
@@ -120,7 +137,7 @@ For most work, resolve:
 - UI type: app UI, marketing/site, component, tool, game, or content surface
 - tone: minimal, bold, editorial, playful, luxury, brutalist, industrial, organic, retro, quiet operational, or another specified direction
 - density: sparse, balanced, or dense
-- memorable element: typography, layout structure, interaction model, data treatment, imagery, motion, or navigation
+- memorable element: typography, layout structure, interaction model, data treatment, imagery, motion, or navigation — the memorable element must serve comprehension or utility, not just visual interest
 - frame/chrome: standard site chrome, app-like focus, or hybrid navigation
 - constraints: existing brand, component library, accessibility, responsive needs, performance, implementation stack
 
@@ -165,18 +182,28 @@ Include:
 - content/state design: empty, loading, error, success, dense data, long text, and user-generated content behavior
 - abstraction: user-facing labels, navigation, states, and workflows that describe what people are trying to do, not how the software is implemented
 
-Avoid:
+Never:
 
 - purple-to-blue gradients as a default flourish
 - default system fonts as the design answer
 - white background plus gray cards as the whole interface
-- generic centered hero plus cards layout unless the product truly needs it
-- decorative cards inside cards
 - UI furniture: chrome, decorations, separator bars, visual effects, or repeated wrappers that exist only to make the screen look more designed
 - exposed internals: raw schema fields, API names, prompt/agent mechanics, "step 1/2/3" workflow scaffolds, debug statuses, or system terminology unless the target user explicitly needs them
 - uppercase wide-tracked eyebrows on sans/serif headings
-- overused mono small-caps labels; use monospace uppercase labels sparingly, usually no more than one recurring label style per screen
 - icon-only controls without accessible names
+
+Mono small-caps discipline:
+
+- Mono small-caps (`font-variant-caps: all-small-caps` on a monospace face, or uppercase monospace at reduced size) is a refined, high-signal typographic treatment. It is not a default label style.
+- Appropriate uses: numeric metadata (`v2.4.1`, `$49/mo`, `3 min read`), short data-adjacent labels in dense UI (`ID`, `STATUS`, `ETA`), and sparse section markers where a quiet structural cue is needed (typically one per screen, not one per section).
+- Inappropriate uses: every section eyebrow, every card label, every sidebar heading, every tag, every piece of metadata. When mono small-caps appear on more than a few elements per screen, the treatment loses its signal and becomes wallpaper.
+- Before applying mono small-caps, ask: is this label numeric or data-like? Is it short (1-3 words)? Would sentence-case in the body font at a lighter weight work just as well? If the answer to the last question is yes, use sentence-case.
+- The test: if you removed all mono small-caps from the screen, would the hierarchy collapse? If not, most of them are decorative.
+
+Avoid:
+
+- generic centered hero plus cards layout unless the product truly needs it
+- decorative cards inside cards
 
 ### 6. Wireframe
 
@@ -294,7 +321,7 @@ Use this compact structure:
 ## Verification Checklist
 ```
 
-In complexity guardrails, name concrete limits for the implementation: avoid wrapper elements with no purpose, cards inside cards, excessive nesting for simple content, UI furniture, too many font sizes, too many accent colors, arbitrary spacing values, and Tailwind class strings that should become reusable components.
+In complexity guardrails, name concrete limits for the implementation. Every element must earn its place — cut wrapper elements with no purpose, cards inside cards, excessive nesting for simple content, decorative chrome, too many font sizes, too many accent colors, arbitrary spacing values, mono small-caps used as a general label style rather than for numeric or data-adjacent content, and Tailwind class strings that should become reusable components.
 
 In abstraction rules, name which internal details must be hidden, translated, or deferred. Replace implementation-first copy with domain language: `API key created` can become `Connection ready`; `vector index sync failed` can become `Search is still updating`; `agent step running` can become `Checking the next section`. Keep debug details available only behind explicit affordances when the user needs diagnosis.
 
@@ -304,16 +331,18 @@ In interactive states, specify expectations for default, hover, focus, active, d
 
 Review the draft like a design lead:
 
+- Does every visible element earn its place? For each panel, badge, divider, label, shadow, and wrapper: what does it clarify? If nothing, cut it.
 - Does the layout have rhythm, or is every block the same weight?
 - Is priority clear from proportion, spacing, contrast, and placement?
-- Does the design have one memorable element that is actually visible?
+- Does the design have one memorable element that is actually visible — and does that element serve comprehension, not just visual interest?
 - Would a real user in this product domain find it plausible?
 - Can the implementation be built cleanly with the target component system?
 - Are there any cards, wrappers, arbitrary values, or decorative fragments that exist only to make the screenshot feel busier?
+- Are mono small-caps limited to numeric content and short data labels, or have they spread to every label on the screen?
 - Does any visible text expose the database, API, prompt, model, chain, agent, workflow engine, or internal state instead of explaining the user's task?
 - Would a non-engineer target user understand what to do without reading implementation vocabulary?
 
-Revise the spec before handoff if the answer is weak.
+Revise the spec before handoff if any answer is weak.
 
 ### 10. Verify Against Red Flags
 
@@ -323,10 +352,10 @@ The design is not complete until these are true:
 - zero purple-blue gradient defaults
 - zero generic admin-template or AI landing-page feel
 - zero repeated uppercase tracked eyebrows on sans/serif headings
-- zero decorative overuse of mono small caps; use them only for functional labels, sparse section markers, or data-like metadata
 - zero inaccessible icon-only controls
-- zero UI furniture
+- zero UI furniture — every visible element passes the "earn its place" test: it serves clarity, utility, hierarchy, affordance, state, navigation, or domain meaning
 - zero unnecessary system leakage in visible labels, navigation, empty states, errors, or progress states
+- mono small-caps used only for numeric content and short data-adjacent labels, not sprayed across section eyebrows, card labels, sidebar headings, or general metadata
 - all critical states accounted for
 - contrast requirements named
 - mobile and desktop structures both considered

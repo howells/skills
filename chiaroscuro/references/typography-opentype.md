@@ -72,12 +72,15 @@ code, pre {
   font-variant-caps: small-caps;
 }
 
-/* Labels, dates, abbreviations */
+/* Appropriate: numeric content, abbreviations, short data labels */
 <span class="small-caps">NASA</span>
 <time class="small-caps">3:45 PM</time>
+<span class="small-caps">v2.4.1</span>
 ```
 
 Only use if the font has designed small cap glyphs. Faked small caps (scaled capitals) look bad.
+
+**Restraint is critical.** Small caps (especially mono small caps) are a high-signal typographic treatment for numeric content, abbreviations, and short data-adjacent labels. They are not a default style for every label, eyebrow, tag, or metadata field. When small caps appear on more than a few elements per screen, the treatment loses its signal and becomes decorative noise. Before applying, ask: would sentence-case in the body font at a lighter weight work just as well? If yes, use that instead.
 
 ---
 

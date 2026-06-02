@@ -111,7 +111,7 @@ Navigation teaches users how to think about the product space. It IS the product
 ## Typography
 
 - SHOULD: Body text 14-16px (not smaller for prolonged use)
-- SHOULD: Labels 12-13px, medium weight or caps for differentiation
+- SHOULD: Labels 12-13px, medium weight for differentiation. Reserve uppercase monospace or small-caps for numeric and short data-adjacent labels only — not as a general label style
 - SHOULD: Monospace for data that needs alignment (IDs, timestamps, code)
 - SHOULD: Tabular numerals for columns of numbers
 - NEVER: Display-size fonts in app chrome (save for marketing)
