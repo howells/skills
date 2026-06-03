@@ -27,12 +27,45 @@ When invoked:
 Prefer adaptation over addition:
 
 1. Reuse an existing component unchanged.
-2. Add a prop, variant, slot, render prop, or composition point to an existing component.
-3. Extract a shared primitive from two or more local implementations.
-4. Create a new shared component only when no existing component can be honestly adapted.
-5. Create a new shared UI package only when reuse crosses app/package boundaries and the candidate API is domain-independent.
+2. Replace duplicate markup or one-off local components with the existing component that already owns the pattern.
+3. Add a prop, variant, slot, render prop, or composition point to an existing component.
+4. Extract a shared primitive from two or more local implementations.
+5. Create a new shared component only when no existing component can be honestly adapted.
+6. Create a new shared UI package only when reuse crosses app/package boundaries and the candidate API is domain-independent.
 
 Do not create parallel components that differ only by copy, spacing, icon, color, or minor layout. Fold those differences into a single API unless doing so would make the component vague or overloaded.
+When an existing component already matches the behavior and accessibility contract, migrate call sites to that component instead of extracting another one.
+
+## Atomic Component Standard
+
+Aim for the smallest useful component boundary. Extract primitives before extracting composed product UI, and make composed components depend on primitives rather than duplicating their markup or class strings.
+
+Prefer this hierarchy:
+
+1. token or class helper: shared spacing, typography, color, or focus-ring rules
+2. primitive: Button, Input, Badge, TooltipTrigger, DialogContent
+3. compound primitive: Field, Menu, Tabs, Select, DataList
+4. composed surface: Toolbar, EmptyState, PageHeader, FilterBar
+5. app-specific composition: route-aware shells, business workflows, copy-heavy panels
+
+Atomic does not mean tiny files for their own sake. A component is atomic when it has one stable responsibility, one accessibility contract, no hidden domain behavior, and an API that can be reused without dragging product assumptions into other call sites.
+
+## Variant And Composition Conventions
+
+Follow the component conventions already present in the repo before introducing a new one:
+
+- If the repo uses shadcn-style primitives, prefer `class-variance-authority` (`cva`) plus `VariantProps` for semantic variants and sizes, `cn`/`twMerge` for consumer `className` merging, and Radix `Slot`/`asChild` for polymorphic leaf components such as buttons, links, triggers, and menu items.
+- If the repo uses Base UI from `@base-ui/react`, prefer its `render` prop composition model. For custom primitives that need the same polymorphism, use Base UI's `useRender` and `mergeProps` patterns rather than inventing an `asChild` clone.
+- If the repo uses older MUI Base-style components, respect its `slots` and `slotProps` customization model instead of mixing in Radix `Slot` or Base UI `render` patterns.
+- If the repo uses `tailwind-variants`, Stitches, Vanilla Extract, CSS modules, Panda, or another established variant system, extend that system instead of adding `cva` for one extraction.
+- If there is no established pattern, use `cva` only when the component has observed semantic variants or sizes across multiple call sites. Use a plain `cn(...)` class merge for one-off primitives with no variant matrix.
+
+For polymorphic components:
+
+- expose `asChild` only when the implementation uses a Slot-compatible library and the component can safely pass props, events, refs, accessibility attributes, and data attributes to exactly one child
+- expose Base UI-style `render` only when the repo uses `@base-ui/react` conventions or the component genuinely needs render-prop composition
+- avoid polymorphism for components with required native-only props, internal DOM structure, or accessibility semantics that would become invalid on arbitrary elements
+- document or type the default element and required child/ref behavior in the component API
 
 ## Reconnaissance
 
@@ -61,16 +94,18 @@ Check:
 - `components/`, `ui/`, `design-system/`, `shared/`, `lib/`, and package entrypoints
 - imports from local components, package components, shadcn/radix/headless libraries, icon libraries, and CSS utilities
 - repeated class strings and repeated JSX structures
+- existing components whose props and accessibility contract already cover duplicated local code
 - whether components accept `className`, `children`, `asChild`, variant props, size props, state props, and accessible labels
+- whether the existing stack uses `cva`, `tailwind-variants`, Radix `Slot`/`asChild`, Base UI `render`/`useRender`, MUI Base `slots`/`slotProps`, CSS modules, or another variant/composition convention
 
 Useful searches:
 
 ```sh
 rg --files -g '*.{tsx,jsx,ts,js}' | rg '(^|/)(components|ui|design-system|shared|app|pages|src)/'
 rg "className=['\"][^'\"]{60,}['\"]" -g '*.{tsx,jsx}'
-rg 'className=\{|cn\(|clsx\(|cva\(|data-slot=' -g '*.{tsx,jsx}'
+rg 'className=\{|cn\(|clsx\(|cva\(|tv\(|data-slot=' -g '*.{tsx,jsx}'
 rg '(Button|Card|Modal|Dialog|Input|Select|Badge|Avatar|Tabs|Table|Toast|Tooltip)' -g '*.{tsx,jsx}'
-rg '@radix-ui|class-variance-authority|cmdk|tailwind-variants|variant' -g '*.{tsx,jsx,ts,js}'
+rg '@radix-ui|@base-ui/react|@mui/base|class-variance-authority|tailwind-variants|Slot|asChild|useRender|slotProps|variant' -g '*.{tsx,jsx,ts,js}'
 rg --files -g '*.{tsx,jsx}' | sed 's#.*/##' | sort | uniq -d
 ```
 
@@ -136,14 +171,18 @@ Shared components should:
 
 - accept `className` unless there is a strong reason not to
 - keep layout margins with callers; components may own internal padding and gaps
-- expose variants for real semantic differences, not every visual one-off
+- expose variants for real semantic differences, not every visual one-off; when using `cva` or an equivalent, keep variant names semantic (`intent`, `tone`, `size`) rather than tied to one caller
 - map every new prop or variant to observed call-site differences; reject speculative options until another concrete consumer needs them
 - prefer `children`, slots, or composition for complex content
+- keep primitives leaf-like and slot-friendly when the stack supports it; avoid baking icons, labels, links, or layout wrappers into the primitive when those can be composed by the caller
+- forward refs and spread valid DOM props for primitives that wrap an interactive or focusable element
+- merge event handlers, refs, `className`, `style`, data attributes, and ARIA props using the repo's existing helper (`cn`, `mergeProps`, Slot, or equivalent)
 - preserve accessibility names, focus states, keyboard behavior, and ARIA contracts
 - avoid importing app-only modules, route helpers, environment variables, or server-only code
 - keep dependency weight low; app frameworks should be peer dependencies when appropriate
 
 Do not make a component so configurable that it hides five unrelated designs. If variants conflict conceptually, split the component or extract a smaller primitive.
+Do not use `asChild`, `render`, or slot props as an escape hatch for unclear ownership. They are for preserving valid semantics and composition, not for hiding unrelated components behind one API.
 
 ## Workflow
 
@@ -153,6 +192,7 @@ Produce a concise inventory:
 
 - existing shared UI locations
 - duplicated patterns and where they appear
+- existing components that can replace duplicate code without API changes
 - components that should be adapted with props
 - components that should be extracted
 - components that should remain app-local
@@ -172,8 +212,8 @@ For each candidate, choose one:
 Define the public component API before moving files:
 
 - component name and import path
-- props and variants
-- composition/slot model
+- props and variants, including whether variants are implemented with `cva`, `tailwind-variants`, CSS modules, or an existing local helper
+- composition/slot model, including whether polymorphism uses Radix/shadcn `asChild`, Base UI `render`/`useRender`, MUI Base `slots`/`slotProps`, or no polymorphism
 - styling/theming contract
 - accessibility contract
 - examples or tests that prove expected usage
