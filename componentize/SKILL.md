@@ -67,6 +67,22 @@ For polymorphic components:
 - avoid polymorphism for components with required native-only props, internal DOM structure, or accessibility semantics that would become invalid on arbitrary elements
 - document or type the default element and required child/ref behavior in the component API
 
+## Server And Client Boundaries
+
+In React Server Component frameworks such as Next.js App Router, prefer Server Components by default and keep client boundaries as small as the interaction requires.
+
+When componentizing in an RSC-aware app:
+
+- identify files marked with `'use client'` and inspect their import trees before extracting or moving UI
+- avoid turning a large route, layout, shell, table, form, or panel into a Client Component only because one nested control needs state, effects, browser APIs, context, or event handlers
+- extract the interactive part into the smallest practical Client Component and render it inside a Server Component that owns data fetching, server-only modules, secrets, routing params, static markup, and non-interactive layout
+- pass serializable data from Server Components into Client Components; do not pass functions, class instances, server-only objects, or non-serializable data across the boundary
+- use `children` or explicit slots to visually nest server-rendered UI inside a small client wrapper when the interaction is only a shell such as a modal, disclosure, tabs state, or popover
+- keep providers and third-party client-only wrappers as deep in the tree as possible instead of wrapping an entire app, layout, or page by default
+- preserve `server-only` and `client-only` guard imports when they exist, and add them only if the repo already uses that convention or boundary mistakes are a concrete risk
+
+If duplicate code exists because a server file cannot import a client-only component, do not solve it by making everything client-side. Split the shared presentational primitive into an environment-agnostic component when possible, then layer a small Client Component around the interactive behavior.
+
 ## Reconnaissance
 
 Read the code, not just filenames.
@@ -97,6 +113,7 @@ Check:
 - existing components whose props and accessibility contract already cover duplicated local code
 - whether components accept `className`, `children`, `asChild`, variant props, size props, state props, and accessible labels
 - whether the existing stack uses `cva`, `tailwind-variants`, Radix `Slot`/`asChild`, Base UI `render`/`useRender`, MUI Base `slots`/`slotProps`, CSS modules, or another variant/composition convention
+- whether the framework uses Server Components, `'use client'` directives, `server-only`/`client-only` guard imports, server actions, route handlers, or serializable Server-to-Client props
 
 Useful searches:
 
@@ -106,6 +123,7 @@ rg "className=['\"][^'\"]{60,}['\"]" -g '*.{tsx,jsx}'
 rg 'className=\{|cn\(|clsx\(|cva\(|tv\(|data-slot=' -g '*.{tsx,jsx}'
 rg '(Button|Card|Modal|Dialog|Input|Select|Badge|Avatar|Tabs|Table|Toast|Tooltip)' -g '*.{tsx,jsx}'
 rg '@radix-ui|@base-ui/react|@mui/base|class-variance-authority|tailwind-variants|Slot|asChild|useRender|slotProps|variant' -g '*.{tsx,jsx,ts,js}'
+rg "['\"]use client['\"]|['\"]use server['\"]|server-only|client-only|useState\\(|useEffect\\(|window\\.|document\\.|localStorage" -g '*.{tsx,jsx,ts,js}'
 rg --files -g '*.{tsx,jsx}' | sed 's#.*/##' | sort | uniq -d
 ```
 
@@ -178,11 +196,13 @@ Shared components should:
 - forward refs and spread valid DOM props for primitives that wrap an interactive or focusable element
 - merge event handlers, refs, `className`, `style`, data attributes, and ARIA props using the repo's existing helper (`cn`, `mergeProps`, Slot, or equivalent)
 - preserve accessibility names, focus states, keyboard behavior, and ARIA contracts
+- keep environment-agnostic primitives free of `'use client'` unless they directly use client-only APIs; create a thin client wrapper for stateful behavior instead of marking a broad shared component client-side
 - avoid importing app-only modules, route helpers, environment variables, or server-only code
 - keep dependency weight low; app frameworks should be peer dependencies when appropriate
 
 Do not make a component so configurable that it hides five unrelated designs. If variants conflict conceptually, split the component or extract a smaller primitive.
 Do not use `asChild`, `render`, or slot props as an escape hatch for unclear ownership. They are for preserving valid semantics and composition, not for hiding unrelated components behind one API.
+Do not move a component across a server/client boundary until you know whether its imports, props, and children are valid in the target environment.
 
 ## Workflow
 
@@ -214,6 +234,7 @@ Define the public component API before moving files:
 - component name and import path
 - props and variants, including whether variants are implemented with `cva`, `tailwind-variants`, CSS modules, or an existing local helper
 - composition/slot model, including whether polymorphism uses Radix/shadcn `asChild`, Base UI `render`/`useRender`, MUI Base `slots`/`slotProps`, or no polymorphism
+- server/client boundary, including whether the component stays server-rendered, remains environment-agnostic, or needs a small `'use client'` wrapper
 - styling/theming contract
 - accessibility contract
 - examples or tests that prove expected usage
@@ -236,6 +257,7 @@ Run the narrowest meaningful checks:
 - consumer import smoke test proving exported JS, types, and styles resolve when a shared package changed
 - rendered UI smoke check for affected pages/components when a runnable app or Storybook exists
 - keyboard/focus checks for interactive primitives such as dialogs, selects, tabs, and buttons
+- bundle or build smoke check when a change moves `'use client'` boundaries, imports client-only libraries from server code, or changes package entrypoints used by Server Components
 
 If checks are unavailable or too broad, say exactly what was and was not verified.
 
@@ -262,6 +284,7 @@ Evidence should include representative `file:line` references, occurrence or cal
 - Use existing package / create `packages/ui` / keep app-local
 - Export strategy
 - Dependency changes
+- Server/client boundary notes for RSC-aware apps
 
 ### Migration Plan
 1. Extract/adapt component
