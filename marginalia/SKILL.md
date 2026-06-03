@@ -7,6 +7,8 @@ description: Add useful, concise JSDoc to JavaScript and TypeScript code, especi
 
 Use this skill to add high-signal JSDoc that helps readers, IDEs, declaration files, and generated API docs. The goal is not comments everywhere; the goal is concise documentation at the right boundaries. Overly long JSDoc makes IDE hovers harder to use, so prefer the shortest comment that explains the missing context.
 
+For TypeScript package APIs, treat JSDoc as the source of truth for API reference material, not as a replacement for authored docs. Props, exported types, defaults, constraints, callback contracts, and deprecations belong close to the public declarations so IDE hovers, `.d.ts` output, and generated docs agree. Usage guides, examples, conceptual explanations, migration notes, and recipes usually belong in README or site documentation.
+
 ## Start
 
 When invoked:
@@ -48,6 +50,8 @@ Prioritize:
 - deprecations, experimental APIs, and internal-only exports when the repo uses those conventions
 
 For published packages, focus on symbols included in `exports` and generated `.d.ts` files. Internal helpers only need JSDoc when they are complex enough that maintainers benefit.
+
+For generated API docs, make defaults and behavioral constraints explicit in comments when they are not visible from the type alone. Prefer standard TSDoc-compatible tags such as `@remarks`, `@defaultValue`, `@example`, `@deprecated`, `@see`, and release tags when the repo's tooling recognizes them.
 
 ## Comment Rules
 
@@ -96,6 +100,24 @@ Rules:
 - Do not change runtime behavior while documenting.
 
 When TypeDoc, API Extractor, or TSDoc conventions are present, follow the repo's established tag style, preserve release tags, avoid nonstandard tags unless configured, and run the existing docs or API report check when practical.
+
+For TypeScript code, prefer TSDoc-compatible JSDoc: do not duplicate TypeScript type annotations inside `@param` or `@returns` tags, keep summaries short, and use block tags only when they add information the type system cannot express.
+
+## Generated API Reference
+
+When the documentation target is generated API docs or single-source package documentation:
+
+- Treat public source declarations as the canonical input for API reference.
+- Inspect existing docs tooling first, such as TypeDoc, API Extractor, React docgen, declaration rollups, or custom site generators.
+- Prefer structured tooling over parsing comments with ad hoc string matching.
+- Keep generated API tables/reference data separate from authored examples, guides, and conceptual copy.
+- Verify comments survive the package's declaration or docs pipeline before calling the pass complete.
+- If no docs tooling exists, recommend a generated-docs plan but do not add new tooling unless the user asked for implementation.
+
+Common split:
+
+- **JSDoc/TSDoc:** API tables, prop descriptions, exported type docs, callback contracts, defaults, constraints, IDE hover text.
+- **Authored docs:** installation, quick starts, composition examples, design rationale, migration guidance, recipes, and screenshots.
 
 ## Package API Workflow
 
