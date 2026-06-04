@@ -158,7 +158,7 @@ npx skills@latest add howells/skills --skill nomen --agent codex --global
 
 ### `polyplugin`
 
-Create, audit, or migrate agent plugins that work across Claude Code and Codex. Use it for dual-runtime manifests, shared plugin metadata, marketplace packaging, and deciding whether a skill collection should become a plugin.
+Create, audit, or migrate agent plugins that work across Claude Code, Codex, and Cursor. Use it for multi-host manifests, shared plugin metadata, Cursor `.cursor-plugin` packaging, marketplace entries, and deciding whether a skill collection should become a plugin.
 
 Install globally for Codex:
 

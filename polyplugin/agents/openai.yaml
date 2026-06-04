@@ -1,4 +1,4 @@
 interface:
   display_name: "Polyplugin"
-  short_description: "Create dual Claude and Codex plugins"
-  default_prompt: "Use $polyplugin to make this agent plugin valid for both Claude Code and Codex."
+  short_description: "Create multi-host Claude, Codex, and Cursor plugins"
+  default_prompt: "Use $polyplugin to make this agent plugin valid across Claude Code, Codex, and Cursor."
