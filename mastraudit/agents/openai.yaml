@@ -1,4 +1,4 @@
 interface:
   display_name: "Mastraudit"
   short_description: "Audit Mastra implementation quality"
-  default_prompt: "Use $mastraudit to audit this codebase for current Mastra API usage, package boundaries, and domain-folder organization."
+  default_prompt: "Use $mastraudit to audit this codebase for current Mastra API usage, package boundaries, domain-folder organization, and thin runtime-owned implementation."
