@@ -42,6 +42,7 @@ For full design direction, read:
 - `references/brand-identity.md` if no project brand system exists
 - `references/design-philosophy.md`
 - `references/ux-laws.md`
+- `references/font-recommendations.md`
 - `references/typography-opentype.md`
 - `references/ascii-ui-patterns.md`
 - `references/tailwind-v4.md`
@@ -199,7 +200,7 @@ Produce specific decisions, not mood-board language.
 
 Include:
 
-- typography: exact display/body/mono font choices and where each is used
+- typography: exact display/body/mono font choices and where each is used. Consult fontsinuse.com and typewolf.com to validate pairings with real-world evidence before committing.
 - color: Tailwind v4 `@theme` tokens in OKLCH, including neutrals, surfaces, text, accents, hover states, and destructive states
 - spacing: base unit, section gaps, component padding, layout rhythm
 - surface system: canvas, surface, raised, overlay, borders, shadows, radius scale
@@ -211,6 +212,7 @@ Include:
 
 Never:
 
+- Instrument Serif as a display or brand font — it is the number one AI-slop serif, used on every generated landing page
 - purple-to-blue gradients as a default flourish
 - default system fonts as the design answer
 - white background plus gray cards as the whole interface

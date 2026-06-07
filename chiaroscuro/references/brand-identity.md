@@ -18,60 +18,18 @@ A project typically needs both: a brand font for display/identity and a UI font 
 
 These fonts signal "no one made a choice here":
 
-- **Instrument Serif** — the default AI serif. Every AI-generated landing page uses it.
+- **Instrument Serif** — the number one AI-slop serif. Every AI-generated landing page uses it.
 - **Playfair Display** — template-tier. Beautiful in isolation, generic in practice.
 - **Poppins** — geometric sans that's everywhere. Indistinguishable from a thousand other sites.
 - **Montserrat** — massively overexposed. Was distinctive in 2016.
 - **Roboto** — Android default. Choosing it says "I didn't choose."
 - **Arial** — the non-choice.
 
-### Recommended Brand Fonts
+### Font Selection and Pairing
 
-**Distinctive sans-serif (for brands that want modern + personality):**
+For the full curated font list covering both UI and brand fonts — including commercial foundry recommendations, Google Fonts picks, proven pairings, and pairing research guidance — see `references/font-recommendations.md`.
 
-| Font | Character | Good for |
-|------|-----------|----------|
-| Sohne | Quiet confidence, Klim precision | Premium, understated brands |
-| Scto Grotesk | Industrial warmth | Craft, studio, honest brands |
-| Space Grotesk | Technical, geometric with quirk | Dev tools, technical products |
-| Bricolage Grotesque | Playful geometry, not childish | Creative tools, consumer products |
-| General Sans | Clean but not invisible | Brands that want clarity with presence |
-| Rethink Sans | Friendly precision | Approachable professional brands |
-
-**Serif (for brands that want editorial, warmth, or authority):**
-
-| Font | Character | Good for |
-|------|-----------|----------|
-| Newsreader | Editorial authority | Publishing, journalism, serious tools |
-| Fraunces | Warmth, craft, slight quirk | Artisanal, food, creative brands |
-| Cormorant | Elegant, high contrast | Luxury, fashion, high-end products |
-| Crimson Pro | Readable authority | Long-form content, institutional brands |
-| Libre Baskerville | Classical, bookish | Academic, legal, traditional brands |
-
-**Display (for headlines and hero moments):**
-
-| Font | Character | Good for |
-|------|-----------|----------|
-| Novarese | Retro warmth, distinctive | Brands with a nostalgic or craft angle |
-| Editorial New | Dramatic, editorial | Magazine-style, bold statements |
-
-**Commercial foundries (require license, worth it for serious brand work):**
-
-| Foundry | Fonts | Character |
-|---------|-------|-----------|
-| **Klim** | Söhne, Untitled Sans, Tiempos | Refined, quiet authority |
-| **Grilli Type** | GT America, GT Walsheim, GT Sectra | Versatile, well-engineered |
-| **Commercial Type** | Graphik, Canela, Dala Floda, Austin | Editorial, distinctive |
-| **Colophon** | Apercu, Reader, Basis Grotesque | Contemporary, characterful |
-| **Dinamo** | ABC Favorit, ABC Diatype, ABC Arizona | Bold, modern |
-| **Sharp Type** | Sharp Grotesk, Sharp Sans | Precise, confident |
-
-### Font Pairing Principles
-
-- **Contrast, not conflict.** Pair a serif with a sans, or a display with a body font. Two similar fonts compete.
-- **One does the talking.** The brand/display font carries personality; the body font stays quiet.
-- **Weight matters more than family.** A bold condensed heading + light body text creates hierarchy regardless of font family.
-- **Test at real sizes.** A font that looks great at 72px may look wrong at 16px. Always check both.
+Before committing to any font or pairing, validate with real-world evidence at **fontsinuse.com** and **typewolf.com**.
 
 ---
 

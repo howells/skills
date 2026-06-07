@@ -37,16 +37,9 @@ Design the abstraction, not the machinery. Users should see goals, objects, acti
 
 ## Typography
 
-**Never use:** Roboto, Arial, system-ui defaults
+**Never use:** Roboto, Arial, Instrument Serif, Playfair Display, Poppins, Montserrat.
 
-**Recommended UI fonts:**
-
-| Category | Options |
-|----------|---------|
-| Sans | Inter, Geist, DM Sans, Instrument Sans, Outfit |
-| Mono | Geist Mono, IBM Plex Mono, JetBrains Mono, Fira Code |
-
-For brand/identity typography (display, headlines, wordmarks), see `references/brand-identity.md`.
+For the full curated font list — UI fonts, brand fonts, mono, Google Fonts picks, commercial foundries, and proven pairings — see `references/font-recommendations.md`.
 
 **If user has a fonts folder**, check it for available licensed fonts before selecting.
 

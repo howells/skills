@@ -94,12 +94,7 @@ NEVER pair fonts that are similar but not identical (e.g., two geometric sans-se
 
 ### Better Google Fonts Alternatives
 
-| Instead of | Try |
-|---|---|
-| Inter | Instrument Sans, Plus Jakarta Sans, Outfit |
-| Roboto | Onest, Figtree, Urbanist |
-| Open Sans | Source Sans 3, Nunito Sans, DM Sans |
-| Editorial/premium | Fraunces, Newsreader, Lora |
+For the full curated font list — including commercial foundries, Google Fonts picks, proven pairings, and pairing research guidance — see `references/font-recommendations.md`.
 
 ## Font Loading
 
