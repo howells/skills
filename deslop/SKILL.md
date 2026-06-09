@@ -7,14 +7,20 @@ description: "Audit and rewrite prose that carries AI-writing tells: inflated si
 
 Review, diagnose, and rewrite prose that carries common AI-writing tells. Treat patterns as clues, not proof of authorship.
 
+The tell taxonomy in `references/signs-of-ai-writing.md` encapsulates [*Wikipedia:Signs of AI writing*](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), adapted for general prose. That article is the source of record; keep the reference in sync with it.
+
 ## Guardrails
 
 - Do not claim a text is AI-generated from a single tell.
-- Do not rely on detector tools alone.
+- Do not rely on detector tools alone; they are fooled by light edits and unseen models.
 - Prefer clusters of indicators over isolated phrases.
 - Do not flatten strong human prose just because it is polished.
 - Preserve meaning, but do not preserve synthetic cadence.
-- If the text predates public ChatGPT use, weigh that against an AI-origin claim.
+- Weigh counter-signals before concluding: text predating broad LLM use (ChatGPT
+  launched November 2022), an author who can explain their choices, and idiosyncratic
+  non-standard syntax all argue against an AI origin.
+- Ignore the "ineffective indicators" (a lone buzzword, em dash, or rule-of-three;
+  mere polish) unless a supporting cluster is present.
 - If the user only asks for a rewrite, keep diagnosis brief.
 
 ## Input Handling
@@ -42,9 +48,11 @@ Look first for clusters of:
 - source-listing or media-name dropping used as a substitute for substance,
 - vague attribution such as "experts say" or "observers note",
 - negative parallelisms such as "not just X, but Y",
-- assistant-style formatting: Markdown leakage, bold sprawl, title case drift, ornamental lists,
+- outline-style "Despite its X, faces challenges" endings and bolt-on "Future Prospects" sections,
+- assistant-style formatting: Markdown leakage, bold sprawl, title case drift, curly quotes, ornamental lists,
+- a pronounced style or register shift between sections (pasted-in passage),
 - leaked model artifacts such as `oaicite`, `contentReference`, or `turn0search0`,
-- broken citations, suspicious links, or placeholder markup.
+- broken citations, `utm_source` tracking params, suspicious links, or placeholder markup.
 
 ## Rewrite Rules
 
