@@ -11,6 +11,27 @@
 - SHOULD: Optical alignment: ±1px when perception beats geometry
 - SHOULD: Balance icon/text lockups (stroke, weight, size, spacing, color)
 
+## Flex Sizing
+
+- MUST: Add `min-w-0` to flex children that must shrink below their content size. Flex items default to `min-width: auto` and will not shrink past their content without it — applies from page-level layouts (fluid content area next to a fixed `flex-1` sidebar) down to small pieces (a truncated label in a row, a flexible input beside a fixed button).
+- MUST: Add `shrink-0` to flex children that must never compress — icons, SVGs, images, logos, avatars, and any fixed-size control that distorts when squeezed.
+
+## Constrained Sections
+
+- MUST: Use a two-element pattern for constrained page sections — the outer element handles background and vertical padding; the inner element handles `max-width`, centering, and horizontal padding. Apply it consistently across a page so content edges align while scrolling.
+
+  ```html
+  <section class="{vertical-padding}">
+    <div class="{max-width} mx-auto {horizontal-padding}">
+      ...
+    </div>
+  </section>
+  ```
+
+- MUST: Left-aligned sections align to the page container edge — never narrow `max-w-* mx-auto` to fake it. Set `max-w-*` at the page level and constrain inner content separately.
+- SHOULD: Align containers that occupy the same proportion across stacked sections so their column edges line up — share grid definitions and gap values.
+- SHOULD: Avoid nested `max-w-*` on grids/lists that already fill their container; let them align to the page edges. Nested `max-w-*` is fine for self-contained units meant to feel bounded (pricing cards, forms, comparison tables, centered media).
+
 ## Viewport
 
 - MUST: `h-dvh` not `h-screen` (respects mobile browser chrome)

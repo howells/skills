@@ -28,6 +28,12 @@ Surface treatment communicates depth, grouping, and pace. Every surface must ear
 - SHOULD: Let whitespace do work before adding more borders or fills.
 - MUST NOT: Create a checkerboard of alternating panels without information hierarchy to justify it.
 
+## Shadows And Elevation
+
+- MUST NOT: Pair a shadow with a solid gray border. Use `ring-1 ring-black/5` or `ring-1 ring-black/10` (or the `950` step of the neutral) instead.
+- MUST NOT: Make an elevated element (card, modal, popover with `shadow-*`) darker than its canvas. Use `white` or the lightest neutral, not `gray-100`/`gray-50`. Darker fills are fine for inset panels and wells that have no outer shadow.
+- MUST: Remove all shadows in dark mode — use `dark:shadow-none` and lean on the surface ladder and faint inset rings for separation. See [dark-mode.md](./dark-mode.md).
+
 ## Empty And Loading States
 
 - MUST: Empty and loading states inherit the same surface ladder as the populated state.

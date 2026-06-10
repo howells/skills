@@ -19,15 +19,22 @@ Common miss: Designing hover without focus, or vice versa. Keyboard users never 
 
 ## Touch Targets
 
-- MUST: Minimum `min-h-6 min-w-6` (24px), mobile `min-h-11 min-w-11` (44px)
-- MUST: Expand hit area if visual element is smaller:
+Canonical touch-target spec for the whole skill — `responsive.md` defers here.
+
+- MUST: On coarse pointers (touch), interactive targets are at least 48×48px. A 24px visual minimum is fine on fine pointers (mouse/trackpad).
+- MUST: When the visual element is smaller than 48px, keep it visually small but expand the hit area with a child span, gated so it only applies on coarse pointers:
 
 ```jsx
 <button className="relative">
-  <span className="absolute -inset-2.5" /> {/* Expands hit area */}
+  <span
+    className="absolute top-1/2 left-1/2 size-[max(100%,3rem)] -translate-1/2 pointer-fine:hidden"
+    aria-hidden="true"
+  />
   <Icon className="size-4" />
 </button>
 ```
+
+`3rem` = 48px; `pointer-fine:hidden` removes the padded hit area on mouse/trackpad where it isn't needed. Define `@custom-variant pointer-fine (@media (pointer: fine))` if the project doesn't already.
 
 ## Input
 
@@ -203,3 +210,5 @@ NEVER rely on gestures as the only way to perform actions.
 - SHOULD: `select-none` on buttons, tabs
 - MUST: `pointer-events-none` on decorative overlays
 - SHOULD: Toggles take effect immediately (no confirmation)
+- MUST NOT: Add `hover:*` states to non-interactive elements — reserve them for buttons, links, and other genuinely clickable elements.
+- MUST NOT: Add `transition-*` for hover color or background changes — reserve transitions for elements that actually move or transform. Color swaps should be instant.

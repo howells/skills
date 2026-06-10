@@ -1,6 +1,6 @@
 ---
 name: chiaroscuro
-description: Create distinctive, non-generic, user-centered UI design direction, wireframes, Tailwind v4 visual systems, Tailwind @theme tokens, design specs, and post-implementation UI polish. Use when asked to design a UI, create a layout, remove decorative UI furniture, prevent implementation/system leakage, make a page or app screen memorable, establish a visual direction, produce a design spec before implementation, clean up AI-looking interface work, componentize UI code, deduplicate repeated UI patterns, or polish Tailwind/React frontend code after implementation. This skill assumes Tailwind v4 as the mandatory styling target.
+description: Create distinctive, non-generic, user-centered UI design direction, wireframes, Tailwind v4 visual systems, Tailwind @theme tokens, design specs, and post-implementation UI polish. Use when asked to design a UI, create a layout, remove decorative UI furniture, prevent implementation/system leakage, make a page or app screen memorable, establish a visual direction, produce a design spec before implementation, clean up AI-looking interface work, componentize UI code, deduplicate repeated UI patterns, add dark mode to an existing UI, make a desktop-oriented UI responsive across mobile/tablet/desktop breakpoints, compare multiple UI variants live in the browser, or polish Tailwind/React frontend code after implementation. This skill assumes Tailwind v4 as the mandatory styling target.
 ---
 
 # Chiaroscuro
@@ -61,8 +61,18 @@ Then read the relevant interface rules:
 - Forms: `references/interface/forms.md`
 - Interactions: `references/interface/interactions.md`
 - Motion: `references/interface/animation.md`
+- Dark mode: `references/interface/dark-mode.md`
 - Accessibility/content: `references/interface/content-accessibility.md`
 - Performance-heavy UI: `references/interface/performance.md`
+- In-browser variant comparison: `references/interface/ui-picker.md`
+
+Component-specific references — load only the ones present in the work, not the whole set:
+
+- Structure/sections: `section` patterns live in `layout.md`; page-wide consistency in `references/interface/landing-pages.md`
+- Marketing components: `references/interface/headers.md`, `footers.md`, `heading-groups.md`, `feature-lists.md`, `pricing-cards.md`, `testimonials.md`, `team-sections.md`, `logo-clouds.md`, `login-pages.md`
+- Data/app components: `references/interface/tables.md`, `dashboards.md`, `navigation.md`, `pagination.md`, `description-lists.md`
+- Primitives: `references/interface/badges.md`, `avatars.md`, `icons.md`, `images.md`, `svg.md`, `border-radius.md`
+- Type/content: `references/interface/copywriting.md`, `prose-content.md`, `custom-fonts.md`, `font-recommendations.md`
 
 For a single component or small fragment, read only `frontend-design.md` plus the 2-3 most relevant interface files.
 
@@ -181,6 +191,14 @@ For smaller decision points within a chosen direction, or when iterating on an e
 - Write a style definition before implementation for each option: layout, typography, color, spacing, surfaces, shape language, and personality.
 - New options must be faithful executions of their style definition. Existing-design options should vary layout and component choices while still belonging to the current aesthetic.
 - After the user selects an option, remove unselected variant scaffolding and any temporary comments or wrappers created only for comparison.
+
+### In-Browser Comparison (Variant Picker)
+
+When the project runs in a browser and the user wants to compare the design routes or alternatives as *real rendered UI* rather than in chat or ASCII, use the in-browser variant picker to toggle between annotated variants live, then keep only the chosen one.
+
+- Read `references/interface/ui-picker.md` for the full mechanism: `data-uidotsh-pick` / `data-uidotsh-option` annotations, the `contents` class, framework-native toolbar injection, and the select-and-clean-up flow.
+- This is the execution mechanism for the routes and alternatives above — annotate the variants you already generated, let the user pick in-browser, then remove the unselected branches and picker scaffolding.
+- Skip it for ASCII-only exploration, non-browser targets, or when the user already knows the direction.
 
 ### 4. Optional Inspiration Research
 
@@ -444,7 +462,16 @@ Read `references/interface/tailwind-authoring.md`.
 - When available, use `npx @tailwindcss/cli canonicalize` to normalize class lists. Pass the project's CSS entry file with `--css path/to/input.css` when custom Tailwind v4 tokens or utilities are required for accurate output.
 - Use structured output such as `--format json` or `--format jsonl` when processing many class strings.
 
-### 4. Verify
+### 4. Dark Mode (When In Scope)
+
+When the request includes dark mode — adding it, improving an existing treatment, or converting a light-only UI — read `references/interface/dark-mode.md` and run a dedicated pass:
+
+- Re-derive colors to preserve light-mode contrast relationships; do not invert.
+- Default to `prefers-color-scheme` via Tailwind's `dark:` variant; add a manual toggle only if the user asks.
+- Remove shadows (`dark:shadow-none`) and lean on the surface ladder and faint inset rings for separation.
+- Audit raster images and external SVGs for dark variants. Chiaroscuro identifies and wires them in; generating raster assets is a handoff to an image-generation workflow (out of scope here).
+
+### 5. Verify
 
 Run scoped checks appropriate to the changed project:
 
