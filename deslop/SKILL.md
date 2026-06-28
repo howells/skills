@@ -63,7 +63,18 @@ Look first for clusters of:
 - Prefer direct verbs over "serves as", "stands as", "represents", or "underscores".
 - Rewrite fake contrasts as direct statements.
 - Remove conclusion-style recaps unless the genre needs them.
+- Cut the crutch phrases below on sight.
 - Preserve the host document's native markup.
+
+## Overused Crutch Phrases (Cut On Sight)
+
+These assert rigour or candour instead of demonstrating it. They are filler: delete them and state the thing plainly.
+
+- **"load-bearing"** (load-bearing assumption / definition / detail / word / line). Say what the thing does or why it matters, not that it is structurally important.
+- **The honesty family** — "keep (it / the model / us) honest", "the honest part", "to be honest", "honestly", "honest about its gaps / limits", "the honest answer". State the limitation or fact directly; announcing honesty adds nothing.
+- **Related self-framing** — "to its credit", "the hard truth", "let's be real", "the uncomfortable truth", "make no mistake". Cut the preamble, keep the claim.
+
+These rarely carry meaning the surrounding sentence does not already hold. Treat them as deletions, not rewrites.
 
 ## Output Shape
 
