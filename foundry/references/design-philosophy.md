@@ -169,57 +169,7 @@ Good: [Header]
 
 ## Working with Color
 
-### Ditch Hex for OKLCH
-
-OKLCH is more useful than Hex or HSL for production palette work:
-- **Lightness** (0-1): Perceived brightness
-- **Chroma** (0-0.4+): Color intensity
-- **Hue** (0-360): Position on the color wheel
-
-Use HSL only as a conceptual sketching model. Define final UI and brand tokens in OKLCH so shade steps look visually even.
-
-### You Need More Colors Than You Think
-
-A complete palette includes:
-- **Greys**: 8-10 shades (used most frequently)
-- **Primary**: 5-10 shades
-- **Semantic colors**: Red, yellow, green—5-10 shades each
-- **Accent colors**: Any additional hues—5-10 shades each
-
-### Don't Let Lightness Kill Saturation
-
-As OKLCH lightness approaches 0 or 1, high chroma becomes harsh or clips out of gamut. To maintain usable color at the extremes:
-- Reduce chroma for very light shades
-- Reduce chroma for very dark shades
-
-A mid-lightness blue can carry more chroma than a very pale or very dark blue. Extremes should usually become quieter, not louder.
-
-### Use Perceived Brightness
-
-Different hues have different perceived brightness in older color models:
-- **Bright hues**: Yellow (60°), Cyan (180°), Magenta (300°)
-- **Dark hues**: Red (0°), Green (120°), Blue (240°)
-
-To create lighter shades, rotate hue toward the nearest bright point. To create darker shades, rotate toward the nearest dark point.
-
-Don't rotate more than 20-30 degrees—you'll shift the color's identity.
-
-### Greys Don't Have to Be Grey
-
-Pure grey (0% saturation) often feels cold or dead. Saturate your greys:
-
-- **Cool greys**: Add blue for professional, tech, modern feel
-- **Warm greys**: Add yellow/orange for friendly, inviting feel
-
-Match grey temperature to your brand. A legal site wants cool; a bakery wants warm.
-
-### Don't Rely on Color Alone
-
-Red/green colorblind users need alternative signals:
-- Icons alongside color (checkmark for success, X for error)
-- Position and grouping
-- Text labels
-- Patterns or textures for data visualization
+Color mechanics — OKLCH definition, chroma-at-extremes, hue rotation for shade ramps, tinted (non-grey) greys, and never-rely-on-color-alone — live in `interface-colors.md`. This file owns only the taste-level point: **color is a personality decision, not a decoration.** Pick a palette that commits to a temperature and a worldview; a brand that could take any hue has no identity. Match grey temperature to the brand (cool for tech/legal, warm for friendly/craft), and let semantic roles — not raw palette names — carry meaning.
 
 ---
 

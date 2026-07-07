@@ -81,44 +81,45 @@ Lightness 0.92 + chroma 0.04 → usable tint
 
 ## Starter Palette: Blue-Grey
 
+Define the scale in OKLCH (perceptually even lightness steps); hex is a fallback comment only.
+
 ```css
---grey-50: #F0F4F8;
---grey-100: #D9E2EC;
---grey-200: #BCCCDC;
---grey-300: #9FB3C8;
---grey-400: #829AB1;
---grey-500: #627D98;
---grey-600: #486581;
---grey-700: #334E68;
---grey-800: #243B53;
---grey-900: #102A43;
+--grey-50:  oklch(0.97 0.010 250); /* #F0F4F8 */
+--grey-100: oklch(0.93 0.020 250); /* #D9E2EC */
+--grey-200: oklch(0.86 0.030 250); /* #BCCCDC */
+--grey-300: oklch(0.77 0.040 250); /* #9FB3C8 */
+--grey-400: oklch(0.66 0.045 250); /* #829AB1 */
+--grey-500: oklch(0.56 0.050 250); /* #627D98 */
+--grey-600: oklch(0.47 0.050 250); /* #486581 */
+--grey-700: oklch(0.38 0.045 250); /* #334E68 */
+--grey-800: oklch(0.30 0.040 253); /* #243B53 */
+--grey-900: oklch(0.23 0.038 255); /* #102A43 */
 ```
 
 ## Dark Mode
 
-Use numerical scale (1-12) so variables flip cleanly:
+Keep the same 50-950 role scale and drive dark mode with Tailwind's `dark:` variant (default to `prefers-color-scheme`). Rebalance dark values — do not simply invert — and remember that Tailwind's `dark:` variant, not a `[data-theme]` variable flip, is the canonical strategy across these skills.
 
 ```css
-:root {
-  --gray-1: #fafafa;
-  --gray-12: #171717;
+@theme {
+  --color-surface: oklch(0.99 0.004 250);
+  --color-text: oklch(0.23 0.038 255);
 }
 
-[data-theme="dark"] {
-  --gray-1: #171717;
-  --gray-12: #fafafa;
+@custom-variant dark (&:where(.dark, .dark *));
+
+.dark {
+  --color-surface: oklch(0.21 0.010 255);
+  --color-text: oklch(0.93 0.020 250);
 }
 ```
 
-- NEVER: Use Tailwind `dark:` modifier. Flip variables instead:
-
-```css
-/* Good */
-.button { background: var(--gray-12); color: var(--gray-1); }
-
-/* Avoid */
-.button { @apply bg-gray-900 dark:bg-gray-100; }
+```html
+<!-- Good: semantic tokens flip with the variant, and utilities can opt in where needed -->
+<button class="bg-surface text-text dark:shadow-none">Save</button>
 ```
+
+Reach for a raw `dark:` utility (`dark:bg-…`) only for one-off adjustments a token does not cover; prefer semantic tokens that rebalance automatically.
 
 ## OKLCH-First Color Definition
 

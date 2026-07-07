@@ -143,7 +143,7 @@ Tools like [Fontaine](https://github.com/unjs/fontaine) or Next.js `next/font` c
 
 ```css
 ::selection {
-  background: hsl(var(--primary) / 0.2);
+  background: oklch(0.65 0.12 250 / 0.2); /* brand hue at low alpha; match your --color-brand hue */
   color: inherit;
 }
 ```

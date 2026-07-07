@@ -1,4 +1,4 @@
 interface:
   display_name: "Foundry"
-  short_description: "Tailwind v4 brand identity systems"
-  default_prompt: "Use $foundry to create a Tailwind v4 brand identity system."
+  short_description: "Create, review, or revise visual identity systems"
+  default_prompt: "Use $foundry to create a distinctive visual identity system with rendered directions and Tailwind v4 tokens."

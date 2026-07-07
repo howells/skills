@@ -1,6 +1,6 @@
 # Brand Identity Reference
 
-Opinionated guidance for creating distinctive visual identities. This reference owns brand-level taste: typography personality, color psychology, visual character. For UI implementation concerns (spacing, states, contrast), see `frontend-design.md`.
+Opinionated guidance for creating distinctive visual identities. This reference owns brand-level taste: typography personality, color psychology, visual character. For UI implementation concerns, see `interface-colors.md` (palette, contrast, dark mode) and `interface-typography.md` (type hierarchy, readable UI type).
 
 ---
 
