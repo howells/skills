@@ -37,6 +37,12 @@ Common checks:
 
 ## Codex Surface
 
+Authoritative sources (verify the `.codex-plugin/plugin.json` schema against these before relying on it; Codex plugins are new and still changing):
+
+- Codex plugins docs: `https://developers.openai.com/codex/plugins`
+- Build and publish plugins: `https://developers.openai.com/codex/plugins/build`
+- `plugin-creator` sample skill shipped with Codex: `https://github.com/openai/codex/blob/main/codex-rs/skills/src/assets/samples/plugin-creator/SKILL.md`
+
 Expected files:
 
 - `.codex-plugin/plugin.json`
@@ -47,7 +53,7 @@ Common checks:
 - The manifest uses only fields accepted by Codex validation.
 - Optional folders such as MCP, apps, scripts, or assets are declared only when they exist.
 - Marketplace entries include required policy/category fields when that marketplace format requires them.
-- If the local `plugin-creator` skill is available, use its validator or scaffold scripts instead of guessing the exact schema.
+- Use the `plugin-creator` sample skill that ships with Codex (`openai/codex`, path above) to scaffold and validate the manifest instead of guessing the exact schema.
 
 ## Cursor Surface
 

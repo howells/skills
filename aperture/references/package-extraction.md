@@ -26,7 +26,7 @@ Build a concrete inventory:
 - external dependencies
 - app-only dependencies that need to be removed
 
-Useful commands:
+Useful commands (substitute the actual symbol and file names for the placeholders below):
 
 ```bash
 rg -n "ComponentName|useThing|from \".*thing" .

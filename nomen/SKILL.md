@@ -11,7 +11,7 @@ Name availability changes over time. When validating real candidates, search cur
 
 ## References
 
-Load `references/name-strategies.md` when generating candidates or explaining the naming approach.
+Load `references/name-strategies.md` when generating candidates, explaining the naming approach, or validating a name (its Validation Caveats section applies to Validate Mode).
 
 ## Start
 
@@ -66,8 +66,8 @@ Avoid filler. Do not include joke names unless the user asks for them.
 When validating names, check current sources appropriate to the request:
 
 - General web search for exact name and adjacent terms.
-- GitHub repository and organization conflicts when developer-facing.
-- Package registries when relevant, such as npm, PyPI, crates.io, or RubyGems.
+- GitHub repository and organization conflicts when developer-facing. Concretely: `gh api "repos/OWNER/NAME"` (404 = free, 200 = taken) for an exact owner/name, and `gh search repos NAME --limit 20` to gauge how crowded the name is.
+- Package registries when relevant. Concretely: `npm view NAME name` (a non-zero exit / `404` means unpublished), `pip index versions NAME`, `cargo search NAME`, or a `gem list -r -e NAME`. **A registry 404 does not mean the name is registrable** — npm rejects names too similar to existing packages (punctuation/typo-squat rules), and spam-reserved or unpublished names also 404. Treat 404 as "not currently published," not "yours to claim."
 - Domain and DNS signals for requested TLDs.
 - **App stores** — check whenever the thing being named is, or might become, a mobile
   or desktop app (see "App Store checks" below). This is easy to forget and expensive
@@ -78,15 +78,17 @@ When validating names, check current sources appropriate to the request:
 
 ### App Store checks
 
-Apple's public iTunes Search API needs no key and answers in one request:
+Apple's public iTunes Search API needs no key and answers in one request. URL-encode the term (a raw space silently truncates the query) and widen `country` beyond `us` if the app targets other regions — region-exclusive apps won't otherwise appear:
 
 ```
-curl -s "https://itunes.apple.com/search?term=NAME&entity=software&limit=20&country=us"
+curl -s -G "https://itunes.apple.com/search" \
+  --data-urlencode "term=NAME" \
+  --data "entity=software&limit=20&country=us"
 ```
 
 From the JSON `results[]`, inspect each `trackName` / `sellerName` and report:
 
-- an **exact** name match (`trackName` == the name) → the App Store name is taken;
+- an **exact** name match (`trackName` equals the name, compared case-insensitively — the App Store treats "Clipper" and "clipper" as the same collision) → the App Store name is taken;
 - **prefix** matches (`trackName` starts with `NAME `, `NAME:`, `NAME -`) → close collisions;
 - **category saturation** — many apps whose names merely *contain* the word (e.g. a dozen
   "clipping" apps). Even with the bare name free, a saturated category means the name is

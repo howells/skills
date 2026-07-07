@@ -12,12 +12,12 @@ This collection copy is canonical. If `@howells/boundaries` ships a bundled skil
 ## Workflow
 
 1. Confirm whether the repo is a Turborepo workspace by checking for `turbo.json` and workspace packages in `package.json`, `pnpm-workspace.yaml`, or equivalent package-manager config.
-2. Install or use `@howells/boundaries` from the repo's chosen package manager.
+2. Install or use `@howells/boundaries` from the repo's chosen package manager, for example `pnpm add -D @howells/boundaries` or a one-off `npx @howells/boundaries check`.
 3. For Turborepo package boundaries, run `boundaries init --dry-run --json` first.
 4. Review the generated root rules, package tags, and script changes. Fix incorrect tags before applying the generated config.
 5. Run `boundaries init` only after the dry run looks correct.
-6. Run `boundaries check`.
-7. If a violation appears, prefer fixing the import or dependency declaration. Use exceptions only when they are narrow, temporary, and documented.
+6. Run `boundaries check`. `--json` works on every command (`init`, `check`, `check --profile`, and `explain`) and is the preferred output when an agent consumes the result programmatically. `check` also accepts `--no-turbo` to skip the Turbo boundaries backend.
+7. If a violation appears, prefer fixing the import or dependency declaration. The `boundaries` CLI has no exception flag of its own: an exception is a narrow allow entry added to the Turborepo boundary rules in `turbo.json` (Turborepo's own mechanism), not something the CLI declares. Add such exceptions only when they stay narrow, temporary, and documented.
 
 To explain a package relationship, run:
 
@@ -56,7 +56,7 @@ type:package  cannot depend on type:app
 type:tooling  cannot depend on type:app
 ```
 
-This blocks app-to-app imports and keeps shared packages from reaching into deployable apps. Treat `visibility:*` as metadata until the checker can distinguish runtime dependencies from dev-only tooling dependencies.
+This blocks app-to-app imports and keeps shared packages from reaching into deployable apps. Treat `visibility:*` as metadata.
 
 ## JavaScript Profiles
 
@@ -82,8 +82,8 @@ Higher layers may import lower layers. Lower layers should not import higher lay
 - Do not use ESLint as the primary enforcement mechanism.
 - Do not add broad allowlists to make a check pass.
 - Do not move task logic into root `package.json`; keep Turbo package tasks in packages and root scripts as delegators.
-- Do not invent bespoke package-internal layer rules when a named profile fits. Pick a profile first, then add narrow project-specific exceptions later.
+- Do not invent bespoke package-internal layer rules when a named profile fits. Pick a profile first, then add narrow project-specific exceptions later as allow entries in the Turborepo boundary rules in `turbo.json` (the CLI has no exception flag), keeping them narrow, documented, and temporary.
 
 ## Fallbacks
 
-Use `turbo boundaries` as the backend when available. Consider `dependency-cruiser` or `rev-dep` only when the user asks for graph analysis that Turbo boundaries cannot answer.
+`boundaries check` uses `turbo boundaries` as its backend automatically, so run the wrapper rather than calling `turbo boundaries` directly. Consider `dependency-cruiser` or `rev-dep` only when the user asks for graph analysis that Turbo boundaries cannot answer.

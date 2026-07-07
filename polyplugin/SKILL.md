@@ -30,7 +30,7 @@ When invoked:
    - `.codex-plugin/plugin.json`
    - `.cursor-plugin/plugin.json`
    - `.cursor-plugin/marketplace.json`
-   - Codex marketplace file if specified
+   - Codex marketplace file when the repo is a marketplace source (confirm its exact name and location from Codex's build-plugins docs linked in `references/dual-plugin-checklist.md`)
    - Cursor plugin folders: `skills/`, `commands/`, `agents/`, `rules/`, `hooks/`, `mcp.json`, assets, README, CHANGELOG, and LICENSE
    - shared folders that other hosts use: `skills/`, `commands/`, `agents/`, `references/`, `scripts/`, `assets/`, `mcp`, `apps`
    - version files and release scripts
@@ -106,23 +106,15 @@ For Codex:
 
 - keep `.codex-plugin/plugin.json` valid
 - add a Codex marketplace entry only when the user asks for marketplace visibility or install ordering
-- use the local `plugin-creator` skill or its validation scripts when available
+- use the `plugin-creator` sample skill that ships with Codex (`openai/codex`) to scaffold and validate the manifest rather than guessing the schema; see the checklist for the authoritative Codex plugin docs
 - keep Codex-only fields out of the Claude manifest and Claude-only fields out of the Codex manifest
 
 For Cursor:
 
+- load `references/dual-plugin-checklist.md` for the current Cursor manifest and marketplace schema; treat it as the source of truth for required and allowed fields, component paths, component frontmatter, marketplace field rules, and the local-install path, and reverify against official Cursor docs since the schema still changes
 - keep `.cursor-plugin/plugin.json` at the plugin root
-- use the official Cursor schema as the source of truth; as of 2026-06-04, `name` is required and the manifest allows only the documented fields
-- use default component folders when possible: `skills/`, `commands/`, `agents/`, `rules/`, `hooks/`, and `mcp.json`
-- declare component paths only when custom discovery is needed; paths must be relative to the plugin root and must not use absolute paths or `..`
-- use `mcpServers` in the manifest only for a path, inline config object, or array of either; do not invent `mcp`, `apps`, or host-specific fields not accepted by the schema
-- use `hooks` as either a path such as `./hooks/hooks.json` or an inline hooks object
-- keep Cursor rules in `rules/*.mdc` with frontmatter (`description`, `alwaysApply`, optional `globs`)
-- keep skills in `skills/<skill-name>/SKILL.md` with `name` and `description` frontmatter
-- keep agents and commands in markdown/text files with `name` and `description` frontmatter
-- for a multi-plugin Cursor marketplace repo, keep the root `.cursor-plugin/marketplace.json` minimal: `name`, optional `owner`, optional `metadata.description`, and `plugins[]` entries with `name`, `source`, and optional `description`
-- do not put version, category, tags, keywords, or author in Cursor marketplace entries; those belong in each plugin's `.cursor-plugin/plugin.json`
-- for local testing, place or symlink the plugin at `~/.cursor/plugins/local/<plugin-name>/`, with `.cursor-plugin/plugin.json` at that root, then restart Cursor or run `Developer: Reload Window`
+- prefer Cursor's default component folders and declare custom component paths only when discovery needs them
+- for local testing, install or symlink the plugin under Cursor's local plugins path (see the checklist) and reload Cursor
 - for marketplace publishing, use Cursor's current submission flow; do not assume marketplace acceptance, private team-marketplace eligibility, required-vs-optional rollout, or security review status without checking current Cursor docs
 
 Cursor plugins are not VS Code extensions. Cursor also supports VS Code/Open VSX extensions, but that is a different packaging surface and should not be mixed with `.cursor-plugin` manifests.

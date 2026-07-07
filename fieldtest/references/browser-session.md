@@ -11,7 +11,7 @@ Pick the browser with the strongest fit for the active host:
 | Codex desktop or Codex with Browser plugin | Browser plugin / Codex in-app browser | Preferred for local targets, localhost apps, file URLs, screenshots, and current-tab testing. |
 | Claude desktop with in-app browser | Claude desktop in-app browser | Use when it supports navigation, interaction, inspection, and screenshots. |
 | Claude Code CLI with Chrome MCP | Chrome MCP | Strong default for CLI sessions with a real Chrome connection. |
-| Any environment with no first-class browser | Playwright from terminal | Use for deterministic scripts, viewport checks, screenshots, console capture, and accessibility snapshots. |
+| Any environment with no first-class browser | Playwright from terminal | Use for deterministic scripts, viewport checks, screenshots, console capture, and accessibility snapshots. If Playwright browsers are not provisioned, suggest `npx playwright install chromium`, or fall back to static inspection if installation is not permitted. |
 | No browser-capable option | Static inspection only | Clearly say the result was not browser-verified. |
 
 Use the strongest available browser tool before falling back. A field test should exercise rendered behavior, not just source code.
@@ -40,7 +40,7 @@ Common patterns:
 | Astro default | `astro dev` | `http://localhost:4321` |
 | SvelteKit default | `vite dev` | `http://localhost:5173` |
 | Next default | `next dev` | `http://localhost:3000` |
-| Remix default | `remix dev` | `http://localhost:3000` |
+| React Router default | `react-router dev` | `http://localhost:3000` |
 
 If multiple URLs or apps are plausible, ask which app to field test.
 
