@@ -13,10 +13,10 @@ Do not split files just because they are long. Split when the file has multiple 
 
 ## Workflow
 
-1. Run the scanner:
+1. Run the scanner (paths below are relative to this skill's directory):
 
    ```bash
-   python3 /path/to/heathen/scripts/find-god-files.py /path/to/repo
+   python3 scripts/find-god-files.py /path/to/repo
    ```
 
    Use `--json` when another tool or script will consume the report. Use `--include-tests` when the user asks about duplicated test logic or test-suite cleanup.
@@ -76,13 +76,13 @@ When implementing, report files changed and the verification command results.
 
 ## Scanner
 
-Use `scripts/find-god-files.py` to find likely candidates. It is intentionally heuristic: it ranks files and duplicate blocks, but the agent must still read the code and make a judgment.
+Use `scripts/find-god-files.py` (relative to this skill's directory) to find likely candidates. It is intentionally heuristic: it ranks files and duplicate blocks, but the agent must still read the code and make a judgment. By default it flags files scoring at least 35 (roughly: length past ~200-500 lines combined with multiple responsibility signals); lower `--min-score` to widen the net.
 
 Useful options:
 
 ```bash
 python3 scripts/find-god-files.py /repo
-python3 scripts/find-god-files.py /repo --min-lines 220 --duplicate-window 10
+python3 scripts/find-god-files.py /repo --min-score 20 --duplicate-window 10
 python3 scripts/find-god-files.py /repo --include-tests
 python3 scripts/find-god-files.py /repo --json
 ```

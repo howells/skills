@@ -17,7 +17,7 @@ When invoked:
 
 1. State that you are using the `aperture` skill.
 2. Determine the requested target:
-   - new repo, commonly under `~/Sites`
+   - new repo (ask where the user keeps projects, or use the parent directory of the current repo)
    - new workspace package inside the current monorepo
    - existing package or library
    - publishable npm package

@@ -55,7 +55,7 @@ Atomic does not mean tiny files for their own sake. A component is atomic when i
 Follow the component conventions already present in the repo before introducing a new one:
 
 - If the repo uses shadcn-style primitives, prefer `class-variance-authority` (`cva`) plus `VariantProps` for semantic variants and sizes, `cn`/`twMerge` for consumer `className` merging, and Radix `Slot`/`asChild` for polymorphic leaf components such as buttons, links, triggers, and menu items.
-- If the repo uses Base UI from `@base-ui/react`, prefer its `render` prop composition model. For custom primitives that need the same polymorphism, use Base UI's `useRender` and `mergeProps` patterns rather than inventing an `asChild` clone.
+- If the repo uses Base UI from `@base-ui-components/react`, prefer its `render` prop composition model. For custom primitives that need the same polymorphism, use Base UI's `useRender` and `mergeProps` patterns rather than inventing an `asChild` clone.
 - If the repo uses older MUI Base-style components, respect its `slots` and `slotProps` customization model instead of mixing in Radix `Slot` or Base UI `render` patterns.
 - If the repo uses `tailwind-variants`, Stitches, Vanilla Extract, CSS modules, Panda, or another established variant system, extend that system instead of adding `cva` for one extraction.
 - If there is no established pattern, use `cva` only when the component has observed semantic variants or sizes across multiple call sites. Use a plain `cn(...)` class merge for one-off primitives with no variant matrix.
@@ -63,7 +63,7 @@ Follow the component conventions already present in the repo before introducing 
 For polymorphic components:
 
 - expose `asChild` only when the implementation uses a Slot-compatible library and the component can safely pass props, events, refs, accessibility attributes, and data attributes to exactly one child
-- expose Base UI-style `render` only when the repo uses `@base-ui/react` conventions or the component genuinely needs render-prop composition
+- expose Base UI-style `render` only when the repo uses `@base-ui-components/react` conventions or the component genuinely needs render-prop composition
 - avoid polymorphism for components with required native-only props, internal DOM structure, or accessibility semantics that would become invalid on arbitrary elements
 - document or type the default element and required child/ref behavior in the component API
 
@@ -122,7 +122,7 @@ rg --files -g '*.{tsx,jsx,ts,js}' | rg '(^|/)(components|ui|design-system|shared
 rg "className=['\"][^'\"]{60,}['\"]" -g '*.{tsx,jsx}'
 rg 'className=\{|cn\(|clsx\(|cva\(|tv\(|data-slot=' -g '*.{tsx,jsx}'
 rg '(Button|Card|Modal|Dialog|Input|Select|Badge|Avatar|Tabs|Table|Toast|Tooltip)' -g '*.{tsx,jsx}'
-rg '@radix-ui|@base-ui/react|@mui/base|class-variance-authority|tailwind-variants|Slot|asChild|useRender|slotProps|variant' -g '*.{tsx,jsx,ts,js}'
+rg '@radix-ui|@base-ui|@mui/base|class-variance-authority|tailwind-variants|Slot|asChild|useRender|slotProps|variant' -g '*.{tsx,jsx,ts,js}'
 rg "['\"]use client['\"]|['\"]use server['\"]|server-only|client-only|useState\\(|useEffect\\(|window\\.|document\\.|localStorage" -g '*.{tsx,jsx,ts,js}'
 rg --files -g '*.{tsx,jsx}' | sed 's#.*/##' | sort | uniq -d
 ```

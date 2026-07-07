@@ -1,6 +1,6 @@
 # Typography & OpenType Reference
 
-Advanced typography features for polished, professional interfaces. Companion to `rules/interface/typography.md` for baseline rules.
+Advanced typography features for polished, professional interfaces. Companion to `interface/typography.md` for baseline rules.
 
 ---
 

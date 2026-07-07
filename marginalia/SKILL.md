@@ -133,7 +133,7 @@ List symbols exposed through:
 Useful searches:
 
 ```sh
-rg '^\s*export\s+(\*|default|type\s+\{|declare\s+|abstract\s+)?(async\s+)?(function|class|interface|type|const|let|var|enum|namespace)|^\s*export\s+\{' -g '*.{ts,tsx,js,jsx,mts,cts,d.ts}'
+rg '^\s*export\b' -g '*.{ts,tsx,js,jsx,mts,cts,d.ts}'
 rg '"(exports|types|typings|main|module|browser)"' -g 'package.json'
 rg '^\s*(module\.exports|exports\.)' -g '*.{js,cjs,cts}'
 rg '@public|@internal|@deprecated|@alpha|@beta|@remarks|@example' -g '*.{ts,tsx,js,jsx}'
