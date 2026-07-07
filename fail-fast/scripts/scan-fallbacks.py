@@ -39,6 +39,16 @@ DEFAULT_EXCLUDED_FILENAMES = {
     "yarn.lock",
 }
 
+# Declarative manifests: dependency names and fields like "deprecated" trip the
+# legacy-keyword rule as noise. They are still scanned for other rules.
+MANIFEST_FILENAMES = {
+    "package.json",
+    "tsconfig.json",
+    "composer.json",
+    "composer.lock",
+    "Gemfile.lock",
+}
+
 TEXT_EXTENSIONS = {
     ".cjs",
     ".css",
@@ -103,7 +113,7 @@ RULES = [
         "getenv-default",
         "environment",
         "high",
-        re.compile(r"\b(?:os\.getenv|process\.env\.get|Deno\.env\.get)\([^)\n]+,\s*[^)\n]+\)"),
+        re.compile(r"\b(?:os\.getenv|os\.environ\.get)\([^)\n]+,\s*[^)\n]+\)"),
         "Do not hide required configuration behind getenv defaults; enforce presence through the env contract.",
     ),
     Rule(
@@ -149,6 +159,13 @@ RULES = [
         "Catch blocks that return fallback success should be replaced with explicit error handling.",
     ),
     Rule(
+        "swallowing-except",
+        "error-handling",
+        "high",
+        re.compile(r"\bexcept\b[^:\n]*:\s*(?:pass|return\s+None|continue)\b"),
+        "Python except blocks that swallow the error (pass / return None) hide failure; handle a specific expected error or re-raise with context.",
+    ),
+    Rule(
         "optional-import",
         "dependency",
         "medium",
@@ -181,7 +198,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--fail-on",
-        choices=["low", "medium", "high"],
+        choices=["medium", "high"],
         help="Exit non-zero when findings at or above this severity are present.",
     )
     parser.add_argument(
@@ -270,8 +287,11 @@ def scan(root: Path, include_tests: bool, include_docs: bool, max_file_bytes: in
         if text is None:
             continue
         rel = str(path.relative_to(root))
+        is_manifest = path.name in MANIFEST_FILENAMES
         seen: set[tuple[str, int]] = set()
         for rule in RULES:
+            if rule.name == "legacy-keyword" and is_manifest:
+                continue
             for match in rule.pattern.finditer(text):
                 line = line_number(text, match.start())
                 excerpt = line_excerpt(text, match.start())
