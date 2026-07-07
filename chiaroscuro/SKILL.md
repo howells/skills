@@ -32,7 +32,7 @@ Announce at start: "I'm using the chiaroscuro skill to create a distinctive UI d
 - Do not let the design spec contradict existing `docs/brand-system.md`, `docs/design-context.md`, project rules, or implemented design tokens.
 - For substantial UI work, save the design spec to `docs/design/specs/design-[name].md`. For small components, an inline spec is acceptable unless the user wants a file.
 
-## Reference Loading
+## References
 
 Load references only as needed. All paths are relative to this skill folder.
 
@@ -417,7 +417,7 @@ Run scoped checks appropriate to the changed project:
 
 Report any checks that could not be run.
 
-## Output Shape
+## Output
 
 For design work, end with:
 

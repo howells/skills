@@ -76,7 +76,7 @@ When validating names, check current sources appropriate to the request:
 - Product directories (Product Hunt, app store category listings) for the crowded case.
 - Trademark databases only when the user explicitly needs that level of signal.
 
-### App Store checks
+### App Store Checks
 
 Apple's public iTunes Search API needs no key and answers in one request. URL-encode the term (a raw space silently truncates the query) and widen `country` beyond `us` if the app targets other regions — region-exclusive apps won't otherwise appear:
 
@@ -96,7 +96,7 @@ From the JSON `results[]`, inspect each `trackName` / `sellerName` and report:
 
 For Android, a web search for `NAME site:play.google.com` is the pragmatic equivalent.
 
-### Verify, don't trust a single lookup
+### Verify, Don't Trust A Single Lookup
 
 Availability APIs lie — RDAP/WHOIS services rate-limit and return false "available" for
 domains that are in fact registered and serving. Before claiming a domain is free,

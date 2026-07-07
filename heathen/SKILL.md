@@ -7,6 +7,8 @@ description: No gods, no god files. Find and refactor god components, god script
 
 No gods, no god files. Find oversized or duplicated code, then split it in a safe order. Prefer evidence over instinct: measure candidates, read the worst files, identify actual responsibilities, and refactor one behavioral boundary at a time.
 
+State at the start that you are using the `heathen` skill.
+
 ## Core Rule
 
 Do not split files just because they are long. Split when the file has multiple responsibilities, duplicated logic, unstable change reasons, hard-to-test branches, or a public interface that can be made smaller.
@@ -62,7 +64,7 @@ For duplication:
 - Extract shared schemas/types only when they represent the same concept.
 - Replace copy-pasted tests with shared fixtures only if failures remain readable.
 
-## Output Shape
+## Output
 
 When auditing, report:
 
@@ -86,3 +88,13 @@ python3 scripts/find-god-files.py /repo --min-score 20 --duplicate-window 10
 python3 scripts/find-god-files.py /repo --include-tests
 python3 scripts/find-god-files.py /repo --json
 ```
+
+## Completion Check
+
+Before finishing, verify that:
+
+- candidates were confirmed by reading the code, not accepted from the score alone.
+- each split targeted a real responsibility, duplicated logic, or oversized interface — not just line count.
+- imports and the public interface stayed stable until tests passed, and behavior is unchanged.
+- the repo's relevant tests/typecheck/lint were re-run after each behavioral boundary was moved.
+- remaining god files or duplication left in place are reported with the reason.

@@ -9,6 +9,8 @@ Use `@howells/boundaries` for architecture boundary enforcement in JavaScript an
 
 This collection copy is canonical. If `@howells/boundaries` ships a bundled skill, sync its guidance from this skill rather than maintaining divergent instructions.
 
+State at the start that you are using the `fenceline` skill.
+
 ## Workflow
 
 1. Confirm whether the repo is a Turborepo workspace by checking for `turbo.json` and workspace packages in `package.json`, `pnpm-workspace.yaml`, or equivalent package-manager config.
