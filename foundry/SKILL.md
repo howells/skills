@@ -9,8 +9,6 @@ Create an applied, distinct visual identity system for a software product, websi
 
 Tailwind v4 is the default implementation target. Brand output should use Tailwind v4 CSS-first tokens, `@theme`, and OKLCH-aware color thinking. Produce Tailwind v3 config, CSS Modules-first, or styled-components-first instructions only when the user explicitly asks, and use plain-CSS `:root` custom properties only when the project is not on Tailwind.
 
-Announce at start: "I'm using the foundry skill to work on a visual identity system."
-
 ## Core Rules
 
 - Keep the work user-interactive. Brand identity is subjective; ask one focused question at a time for decisions.
@@ -72,7 +70,7 @@ This brand should feel [quality A] but not [failure mode], [quality B] but not [
 
 If the sentence is bland, keep questioning.
 
-### 2. Generate 3-5 genuinely different directions
+### 2. Generate five genuinely different directions
 
 Vary directions across temperature (at least one warm, one cool), typography (at least one serif-led, one sans-led), density (airy vs dense), energy (calm vs energetic), and at least one direction that pushes the user's comfort zone. For each direction define:
 
@@ -104,7 +102,7 @@ Build the selected direction into a complete system: full OKLCH color scales inc
 
 ### 5. Produce outputs
 
-Write `docs/brand-system.md` unless the user asks for another path (this is the default deliverable for Create Mode as well as Apply Mode). Include the brand summary and tension, chosen direction and rejected alternatives, palette with OKLCH and hex, typography system and font loading, component/application examples, logo/mark guidance, and do/don't rules. Then generate design tokens for the detected setup: Tailwind v4 `@theme` CSS variables (default), Tailwind v3 `tailwind.config.*` extension only if the project is on v3, or plain CSS `:root` custom properties for non-Tailwind projects. Offer to remove temporary exploration pages after finalizing.
+Write `docs/brand-system.md` unless the user asks for another path (this is the default deliverable for Create Mode as well as Apply Mode). Include the brand summary and tension, chosen direction and rejected alternatives, palette with OKLCH and hex, typography system and font loading, component/application examples, logo/mark guidance, and do/don't rules. Then generate design tokens for the detected setup: Tailwind v4 `@theme` CSS variables (default), or plain CSS `:root` custom properties for non-Tailwind projects. Do not emit `tailwind.config.*` (Tailwind v3) unless the user explicitly asks for a v3 deliverable. Offer to remove temporary exploration pages after finalizing.
 
 ## Apply Mode
 
