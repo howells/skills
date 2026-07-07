@@ -36,6 +36,8 @@ Choose the smallest density that satisfies the request.
 - **Meaningful pass:** Document exported symbols plus complex internal functions, tricky types, overloads, state machines, lifecycle behavior, side effects, and non-obvious constraints.
 - **Targeted pass:** Document only the named file, component, or symbol.
 
+Meaningful and targeted passes reuse steps 2-4 of the Package API Workflow (decide, write, validate) without the full surface inventory from step 1.
+
 Avoid blanket comments on obvious local variables, simple one-line wrappers, and code whose type signature already explains everything.
 
 ## What To Document
@@ -95,13 +97,11 @@ Rules:
 - Use `@returns` only when return semantics are not obvious from the type.
 - Use `@typeParam` for exported generics when the role, constraints, inference behavior, defaults, or relationship between type parameters is not obvious.
 - Use `@throws`, `@deprecated`, `@example`, `@remarks`, `@defaultValue`, `@see`, `@internal`, `@public`, `@alpha`, or `@beta` when the repo's tooling or docs use them.
-- Do not duplicate TypeScript types in prose.
+- Do not duplicate TypeScript types in prose, including type annotations inside `@param` or `@returns` tags.
 - Do not add comments that simply restate the function name.
 - Do not change runtime behavior while documenting.
 
 When TypeDoc, API Extractor, or TSDoc conventions are present, follow the repo's established tag style, preserve release tags, avoid nonstandard tags unless configured, and run the existing docs or API report check when practical.
-
-For TypeScript code, prefer TSDoc-compatible JSDoc: do not duplicate TypeScript type annotations inside `@param` or `@returns` tags, keep summaries short, and use block tags only when they add information the type system cannot express.
 
 ## Generated API Reference
 
@@ -211,7 +211,6 @@ When implementing, finish with:
 - kinds of APIs documented
 - public symbols considered, JSDoc added, JSDoc improved, and symbols left undocumented with reasons
 - validation results
-- any symbols intentionally left undocumented and why
 
 ## Guardrails
 

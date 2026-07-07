@@ -14,6 +14,7 @@ Audit a codebase for three things:
 ## Non-Negotiables
 
 - Use `$mastra` before judging API correctness. Mastra changes quickly; do not rely on model memory for constructor signatures, model routing, storage, memory, workflow, or tool APIs.
+- If `$mastra` is not installed, fall back to the installed `mastra`/`@mastra/*` package's own embedded docs and TypeScript types as the source of truth, and mark API-correctness findings as lower confidence.
 - Exactly one package or module should own Mastra implementation. In a Turborepo, prefer one workspace package.
 - Only the approved Mastra owner should declare `mastra` or `@mastra/*` dependencies, import from `mastra` or `@mastra/*`, or run direct Mastra CLI commands.
 - Apps and other packages should call the approved owner's public API instead of constructing Mastra objects directly.
@@ -22,8 +23,8 @@ Audit a codebase for three things:
 - A multi-stage process should usually be a workflow, not a convenience tool that hides several internal phases. Do not keep duplicate Mastra tools for workflow-owned operations unless an agent genuinely needs that atomic capability.
 - Tool contracts must be specific enough for agents and Studio. Prefer imported shared input/output schemas; avoid `outputSchema: z.unknown()` unless the result is genuinely opaque and documented.
 - Tool IDs, filenames, prompt references, capability registry entries, and Studio-visible names should describe the same verb-noun operation.
-- Agent and root surfaces should be deliberately small. Avoid `tools: "all"`, pseudo-agents, unused wrappers, low-level adapter utilities, and broad factories that make Studio or MCP look broader than the real orchestration graph.
-- Long-running tools may opt into background tasks explicitly by tool key; short deterministic reads, checks, and routing decisions should normally stay foreground so the model receives immediate feedback.
+- Agent and root surfaces should be deliberately small. Avoid pseudo-agents, unused wrappers, low-level adapter utilities, and broad factories that make Studio or MCP look broader than the real orchestration graph. (Optional signal, only where the codebase has such a registry: a registry that auto-attaches every available tool to an agent instead of a curated list.)
+- (Optional signal, only where the codebase defines its own background/async execution policy) Background execution should be scoped to named long-running operations; short deterministic reads, checks, and routing decisions should normally stay foreground so the model receives immediate feedback. Treat a blanket background/async policy applied to all tools as a signal to review, not as a core Mastra feature.
 - Application progress must be emitted through explicit domain events or workflow state, not inferred from observability exporter flush timing.
 - User-facing Mastra output needs an explicit quality contract. Prompt instructions, output validation, persistence-time normalization, and render-time display transforms should agree instead of relying on prompt text alone.
 - Mastra implementation code must be organized by domain under `src/`, using folders such as:
@@ -57,12 +58,15 @@ Audit a codebase for three things:
    - Mastra-looking config/source files outside the approved owner, such as `mastra.config.*`, `mastra.ts`, `src/mastra/**`, or `.mastra/**`.
    - Broad public exports from the approved owner that expose agents, tools, workflows, storage, memory, scorers, processors, schemas, or prompt internals.
    - Tool files where the declared `id` does not match the filename's verb-noun operation.
-   - `tools: "all"`, broad generated agent/tool factories, unused tool wrappers, pseudo-agent IDs, and low-level adapter wrappers that are not part of the configured Mastra surface.
+   - Registries that auto-attach every available tool to an agent (where the codebase has such a registry), broad generated agent/tool factories, unused tool wrappers, pseudo-agent IDs, and low-level adapter wrappers that are not part of the configured Mastra surface.
    - Deleted or intentionally avoided abstractions reappearing as folders, imports, identifiers, metadata, documentation, or diagrams.
 5. Manually review the approved owner against current Mastra docs:
    - TypeScript config supports ES2022/bundler semantics, directly or through an audited shared config.
    - Models use the current provider/model format required by `$mastra`.
    - Agents, tools, workflows, memory, storage, observability, and MCP usage match the installed docs.
+   - Storage: the configured storage driver matches an installed `@mastra/*` adapter, its connection/config is wired from environment (not hardcoded credentials or a stray default), and the same store instance is passed where memory/workflow/telemetry persistence expect it rather than each surface constructing its own.
+   - MCP: every MCP server the codebase registers is actually reachable, and the tools it exposes correspond to real registered tools/agents — no phantom entries advertised in MCP config that are not attached, and no internal tools leaked through MCP that were meant to stay in-process.
+   - Scorers/evals: each defined scorer is attached to the agent(s) or workflow(s) it is meant to grade rather than orphaned (defined but never referenced), and its input/output expectations match the surface it scores.
    - Mastra runtime/registration code composes domain exports instead of hiding implementation in app code.
    - Workflow runs use the installed API shape, such as awaiting async run creation when required by local types.
    - Prompts are not buried in unrelated files when they are shared, long, or reused.
@@ -102,7 +106,7 @@ Audit a codebase for three things:
      - Conversational agents have prompt-growth controls such as token limiting.
      - Generation call settings (`maxOutputTokens`, `temperature`, `topP`) reach a Mastra `agent.generate`/`stream` call only under `modelSettings`. Mastra silently ignores them at the top level, so flat options drop the cap and the model runs at its full output budget. Confirm every cap is nested under `modelSettings`, not spread flat — this is the common failure when any AI-SDK-flat options object (e.g. the output of a shared options helper meant for AI-SDK `generateText`/`streamText`) is handed to a Mastra agent instead, and it is invisible because `providerOptions`/`toolChoice` do align at the top level, so it half-works and typechecks. **This is the canonical `modelSettings` footgun referenced below.**
      - Agents whose generate/stream options carry only `maxSteps`/`structuredOutput` and no `modelSettings.maxOutputTokens` run uncapped at the model's full budget; treat unbounded user-facing or high-volume generation as a cost and runaway risk, not an accepted default.
-     - Reasoning controls are confirmed to actually bound the model, not assumed. Some providers ignore `reasoning.maxTokens` (e.g. OpenRouter for several models), so a low/small reasoning cap can still reason unboundedly — slow, or eating the whole `maxOutputTokens` budget and returning empty content. For latency-sensitive prose turns, disable reasoning explicitly (`providerOptions.<provider>.reasoning.enabled: false`) rather than trusting a token cap.
+     - Reasoning controls are confirmed to actually bound the model, not assumed. Some providers may ignore `reasoning.maxTokens` (OpenRouter has been reported to for several models — verify against current provider docs rather than trusting this claim), so a low/small reasoning cap can still reason unboundedly — slow, or eating the whole `maxOutputTokens` budget and returning empty content. For latency-sensitive prose turns, disable reasoning explicitly (`providerOptions.<provider>.reasoning.enabled: false`) rather than trusting a token cap.
      - Model policy is code-owned and role-based where possible; arbitrary hidden model strings in env vars are treated as drift unless intentionally tested.
      - Model/provider names, prices, and availability are verified through `$mastra`, installed routing setup, or current provider data before making claims.
      - User-facing generation surfaces record model role and model id in testable logs or response metadata so quality and cost decisions can be traced to real runs.
@@ -122,6 +126,7 @@ Audit a codebase for three things:
    - deterministic boundary findings,
    - documentation/API correctness findings from `$mastra`,
    - implementation-practice concerns.
+   Rate each finding on a severity scale: **high** = broken behavior, silent cost/runaway risk, or a boundary violation that undermines containment; **medium** = drift or contract mismatch that will bite under change but works today; **low** = style, naming, or optional-signal observations worth noting but not blocking.
 
 ## Remediation Guidance
 
@@ -156,13 +161,13 @@ Implementation drift signals are intentionally conservative. Confirm them manual
 - `outputSchema: z.unknown()` in tools;
 - Mastra tool-to-tool `SomeTool.execute(...)` calls;
 - direct `process.env` model selection in agents.
-- `tools: "all"` or registered surfaces that grow whenever a file is added;
+- registries that auto-attach every available tool to an agent, or registered surfaces that grow whenever a file is added (where the codebase has such a registry);
 - tool IDs that diverge from filenames, prompts, registry rows, documentation, or diagrams;
 - schema/capability entries for tools, workflows, or agents that are not actually registered or attached;
 - pseudo-agent names in runtime plans, registries, or documentation;
 - provider-specific tools exposed where a domain operation should own provider policy;
 - generated agent, tool, or workflow factories that hide the Studio-visible graph;
-- background-task configuration that applies to all tools instead of named long-running operations;
+- a blanket background/async execution policy applied to all tools instead of named long-running operations (where the codebase defines such a policy);
 - user-facing generated content that depends on hidden context when the surface needs to stand alone;
 - response logs that report only request duration without model id, model role, or actionable internal stage;
 - generation call settings (`maxOutputTokens`, `temperature`, `topP`) passed at the top level of a Mastra `agent.generate`/`stream`/`defaultOptions` call instead of nested under `modelSettings` — the canonical footgun above (silently dropped, so the model runs at its full output budget);

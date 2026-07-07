@@ -9,7 +9,7 @@ Use this skill to evaluate the app as rendered software, not just as code. The o
 
 ## References
 
-Load `references/browser-session.md` when running a full field test, resolving a dev URL, choosing a persona lens, or formatting a report.
+Load `references/browser-session.md` when running a full field test, resolving a dev URL, choosing a persona lens, or calibrating report tone and severity.
 
 ## Start
 
@@ -30,17 +30,9 @@ Default to report-only unless the user explicitly asks you to fix issues.
 
 ## Browser Tool Selection
 
-Use the most capable browser available in the current environment:
-
-- **Codex desktop / Codex with Browser plugin**: use the Browser plugin or Codex in-app browser for local targets such as `localhost`, `127.0.0.1`, `file://`, or the current in-app tab.
-- **Claude desktop with an in-app browser**: use the desktop in-app browser when it can navigate, interact, inspect, and screenshot the target.
-- **Claude Code CLI with Chrome MCP**: use Chrome MCP for navigation, screenshots, console messages, page text, and interaction.
-- **No interactive browser tool available**: use Playwright from the terminal for scripted navigation, viewport checks, screenshots, console capture, and accessibility snapshots.
-- **Last resort**: use static code inspection only if no browser-capable path exists, and clearly label the result as not browser-verified.
+Use the strongest browser available, degrade gracefully to Playwright, and clearly label any static-only results. Full fallback ladder: `references/browser-session.md`.
 
 For local web apps, do not satisfy a field test with shell-only checks when a browser-capable tool is available. The point of the skill is rendered behavior.
-
-If the environment supports lazy tool discovery, search for the Browser plugin or browser MCP before falling back to Playwright.
 
 ## Context Scan
 
@@ -130,7 +122,7 @@ For a full report, use:
 ## Fieldtest Report
 
 Target: [URL]
-Mode: [report-only | QA plus fixes | focused route]
+Mode: [report-only QA | QA plus fixes | focused route/feature/regression | responsive/mobile audit | persona browsing]
 Lens: [persona/lens]
 Viewports: [sizes tested]
 

@@ -7,7 +7,7 @@ description: "Audit and rewrite prose that carries AI-writing tells: inflated si
 
 Review, diagnose, and rewrite prose that carries common AI-writing tells. Treat patterns as clues, not proof of authorship.
 
-The tell taxonomy in `references/signs-of-ai-writing.md` encapsulates [*Wikipedia:Signs of AI writing*](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), adapted for general prose. That article is the source of record; keep the reference in sync with it.
+The tell taxonomy in `references/signs-of-ai-writing.md` encapsulates [*Wikipedia:Signs of AI writing*](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), adapted for general prose. Maintainers: that article is the source of record — re-check the reference against it when the article changes.
 
 ## Guardrails
 
@@ -35,7 +35,7 @@ The tell taxonomy in `references/signs-of-ai-writing.md` encapsulates [*Wikipedi
 
 1. Read once for overall effect.
 2. Mark the highest-signal clusters before editing.
-3. Use `references/signs-of-ai-writing.md` when you need the full taxonomy.
+3. Use `references/signs-of-ai-writing.md` when you need the full tell taxonomy (the crutch-phrase list lives in this file, below).
 4. Explain the issue in editorial terms, not detector jargon.
 5. Rewrite toward specificity, directness, and verifiable claims.
 6. Check citations, links, and markup separately when they look generated or broken.
@@ -49,7 +49,7 @@ Look first for clusters of:
 - vague attribution such as "experts say" or "observers note",
 - negative parallelisms such as "not just X, but Y",
 - outline-style "Despite its X, faces challenges" endings and bolt-on "Future Prospects" sections,
-- assistant-style formatting: Markdown leakage, bold sprawl, title case drift, curly quotes, ornamental lists,
+- assistant-style formatting: Markdown leakage, bold sprawl, title case drift, curly quotes where the house style uses straight quotes, ornamental lists,
 - a pronounced style or register shift between sections (pasted-in passage),
 - leaked model artifacts such as `oaicite`, `contentReference`, or `turn0search0`,
 - broken citations, `utm_source` tracking params, suspicious links, or placeholder markup.
@@ -64,9 +64,10 @@ Look first for clusters of:
 - Rewrite fake contrasts as direct statements.
 - Remove conclusion-style recaps unless the genre needs them.
 - Cut the crutch phrases below on sight.
-- Preserve the host document's native markup.
 
 ## Overused Crutch Phrases (Cut On Sight)
+
+This section applies to formal or technical prose. In conversational or casual writing, colloquialisms like "to be honest", "honestly", and "let's be real" are legitimate voice markers, not AI evidence — do not cut them there.
 
 These assert rigour or candour instead of demonstrating it. They are filler: delete them and state the thing plainly.
 

@@ -94,14 +94,11 @@ Rewrite imports to the new package boundary. Preserve user edits and avoid unrel
 
 Run the smallest meaningful checks:
 
-- package build
-- typecheck
-- relevant tests
-- example app or Storybook build when available
-- consuming app build or typecheck if imports were changed
-- packed-artifact or consumer import test for publishable packages when practical
+- build and typecheck the package, plus relevant tests
+- check any consumer whose imports changed
+- for publishable packages, smoke-test the packed artifact when practical
 
-If a full validation command is too broad or expensive, run package-scoped checks and say what was not run.
+See the full **Validation Checklist** in `references/package-extraction.md` for the complete list. If a full validation command is too broad or expensive, run package-scoped checks and say what was not run.
 
 ## Output
 
