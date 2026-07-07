@@ -5,7 +5,7 @@ Covers: pricing tiers, pricing cards, pricing tables, plan comparisons, emphasiz
 ## Design Rules
 
 - Emphasize cards through button styling and optional "Popular" or "Recommended" text — never use a different background color for the entire card
-- For feature list checkmarks, follow [Icons](./icons.md) rules — use `size-4 h-lh` to vertically center with text
+- For feature list checkmarks, follow the Icons rules in [`primitives.md`](./primitives.md#icons) — use `size-4 h-lh` to vertically center with text
 
 ## Coding Rules
 

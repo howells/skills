@@ -107,13 +107,13 @@ When you need different crops/compositions (not just resolutions):
 
 ### Navigation
 
-Desktop nav (header or sidebar) is hidden below `lg`; a hamburger reveals a dialog/disclosure mobile menu. The canonical breakpoint and class hints live in the Tactical Rules → Navigation section below and in [navigation.md](./navigation.md). A tablet middle stage (compact icons + labels) is optional, not required.
+Desktop nav (header or sidebar) is hidden below `lg`; a hamburger reveals a dialog/disclosure mobile menu. The canonical breakpoint and class hints live in the Tactical Rules → Navigation section below and in [navigation](./data-components.md#navigation). A tablet middle stage (compact icons + labels) is optional, not required.
 
 ### Tables
 
 Two valid strategies — choose by data density:
 
-- **Dense/wide tables**: keep one table and let it scroll horizontally (the two-div wrapper). This is the default. See [tables.md](./tables.md).
+- **Dense/wide tables**: keep one table and let it scroll horizontally (the two-div wrapper). This is the default. See [tables](./data-components.md#tables).
 - **Sparse tables (2–4 columns)**: transform to a card stack on mobile when a scroll feels heavier than the data warrants.
 
 ```html
@@ -147,7 +147,7 @@ Concrete breakpoint rules. Audit order: page shell → navigation → text/forms
 
 ### Navigation
 
-- MUST: Every app has a mobile nav menu below `lg`, regardless of whether desktop nav is a header or sidebar — a dialog/disclosure with a hamburger toggle. Hide header nav with `hidden lg:flex`, sidebar nav with `hidden lg:block`, and the mobile toggle with `lg:hidden`. See [navigation.md](./navigation.md).
+- MUST: Every app has a mobile nav menu below `lg`, regardless of whether desktop nav is a header or sidebar — a dialog/disclosure with a hamburger toggle. Hide header nav with `hidden lg:flex`, sidebar nav with `hidden lg:block`, and the mobile toggle with `lg:hidden`. See [navigation](./data-components.md#navigation).
 - MUST: Horizontal menus (tabs, pill navs) never overflow the parent — horizontally scroll when items don't fit.
 
 ### Text, Forms, And Touch Targets
@@ -156,18 +156,18 @@ Concrete breakpoint rules. Audit order: page shell → navigation → text/forms
 - MUST: Body/paragraph content is at least `text-base` (16px) on mobile — never `text-xs`; `text-sm` only at `sm:` or larger (`text-base/7 sm:text-sm/6`, never bare `text-sm/6` for body copy).
 - MUST: If a text input's font size is below `16px`, add `max-sm:text-base/{lh}` to prevent iOS zoom.
 - MUST: Small/icon buttons meet the touch-target minimum on coarse pointers — see [interactions.md](./interactions.md) → Touch Targets for the canonical size and hit-area pattern.
-- MUST NOT: Fix cramped heading groups by constraining the wrapper with `max-w-*`; constrain each text element directly with `max-w-[*ch]`. See [heading-groups.md](./heading-groups.md).
+- MUST NOT: Fix cramped heading groups by constraining the wrapper with `max-w-*`; constrain each text element directly with `max-w-[*ch]`. See [heading groups](./marketing-components.md#heading-groups).
 
 ### Overflow And Flexible Sizing
 
 - MUST: Add `min-w-0` to flex children that must shrink and `shrink-0` to those that must not. See [layout.md](./layout.md) → Flex Sizing.
-- MUST: Make tables horizontally scroll when columns won't fit, using the two-div wrapper. See [tables.md](./tables.md).
+- MUST: Make tables horizontally scroll when columns won't fit, using the two-div wrapper. See [tables](./data-components.md#tables).
 
 ### Component Patterns
 
 - MUST: Use container queries (`@container`) for component-level responsiveness — anything whose layout depends on available space, not the viewport (dashboard widgets, feature cards, pricing tiers, testimonial grids). Place `@container` as close to the responsive content as possible — a direct wrapper around the items, never a page-level container.
 - SHOULD: Reconfigure divider-separated grids at each breakpoint where columns change — reset first/last padding, drop vertical dividers when collapsing to one column, add horizontal dividers between rows.
-- SHOULD: Keep wrapped logo clouds balanced on every breakpoint (avoid `5+1`). See [logo-clouds.md](./logo-clouds.md).
+- SHOULD: Keep wrapped logo clouds balanced on every breakpoint (avoid `5+1`). See [logo clouds](./marketing-components.md#logo-clouds).
 - SHOULD: Use `min()` with viewport units for image/screenshot border radii instead of fixed `rounded-*` — e.g. `rounded-[min(1vw,12px)]`.
 
 ## Testing

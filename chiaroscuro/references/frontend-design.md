@@ -45,7 +45,7 @@ For the full curated font list — UI fonts, brand fonts, mono, Google Fonts pic
 
 ## Icons
 
-Icon rules are owned by `interface/icons.md`: import from the project's existing icon library, or default to Heroicons (Micro/16px in application UIs) when none is established. See that file for sizing and alignment.
+Icon rules are owned by `interface/primitives.md` (Icons section): import from the project's existing icon library, or default to Heroicons (Micro/16px in application UIs) when none is established. See that file for sizing and alignment.
 
 **Avoid:** Mixing icon libraries or using low-quality/inconsistent icon sets.
 

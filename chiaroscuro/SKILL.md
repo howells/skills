@@ -67,13 +67,13 @@ Then read the relevant interface rules:
 - In-browser variant comparison: `references/interface/ui-picker.md`
 - Spec output templates (Change Spec, Design Spec): `references/spec-templates.md`
 
-Component-specific references — load only the ones present in the work, not the whole set. Paths are relative to the skill root; bare filenames after the first in each bullet live in the same directory as the first (`references/interface/`), except where a full path is given:
+Component-specific references — load only the ones present in the work, not the whole set. Small components are grouped into four files; open the file and jump to the `##` anchor for the component:
 
-- Structure/sections: `section` patterns live in `layout.md`; page-wide consistency in `references/interface/landing-pages.md`
-- Marketing components: `references/interface/headers.md`, `footers.md`, `heading-groups.md`, `feature-lists.md`, `pricing-cards.md`, `testimonials.md`, `team-sections.md`, `logo-clouds.md`, `login-pages.md`
-- Data/app components: `references/interface/tables.md`, `dashboards.md`, `navigation.md`, `pagination.md`, `description-lists.md`
-- Primitives: `references/interface/badges.md`, `avatars.md`, `icons.md`, `images.md`, `svg.md`, `border-radius.md`
-- Type/content: `references/interface/copywriting.md`, `prose-content.md`, `custom-fonts.md`, and `references/font-recommendations.md` (at the references root, not `interface/`)
+- Structure/sections: `section` patterns live in `references/interface/layout.md`; page-wide consistency in `references/interface/marketing-components.md` (Landing Pages)
+- Marketing components (headers, footers, heading groups, feature lists, testimonials, team sections, logo clouds, login pages): `references/interface/marketing-components.md`; pricing tiers in `references/interface/pricing-cards.md`
+- Data/app components (tables, dashboards, navigation, pagination, description lists): `references/interface/data-components.md`
+- Primitives (badges, avatars, icons, images, svg, border radius): `references/interface/primitives.md`
+- Type/content (copywriting, prose, custom fonts): `references/interface/type-content.md`; font pairings in `references/font-recommendations.md` (at the references root, not `interface/`)
 
 For a single component or small fragment, read only `frontend-design.md` plus the 2-3 most relevant interface files.
 

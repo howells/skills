@@ -28,34 +28,15 @@ UI/UX guidelines for building polished, accessible interfaces.
 
 ## Component References
 
-Load only the ones present in the work.
+Load only the ones present in the work. Small components are grouped into four files; open the file and jump to the `##` anchor named after the component.
 
-| File | Description |
+| File | Covers (anchors) |
 |------|-------------|
-| [landing-pages.md](landing-pages.md) | Page-wide consistency across stacked sections |
-| [headers.md](headers.md) | Site headers, navbars, logos, header CTAs |
-| [footers.md](footers.md) | Footers, footer logos, links, social icons |
-| [heading-groups.md](heading-groups.md) | Headline/subheadline/eyebrow groups |
-| [feature-lists.md](feature-lists.md) | Feature grids and benefit lists |
+| [marketing-components.md](marketing-components.md) | Landing Pages, Headers, Footers, Heading Groups, Feature Lists, Testimonials, Team Sections, Logo Clouds, Login Pages |
+| [data-components.md](data-components.md) | Tables, Dashboards, Navigation, Pagination, Description Lists |
+| [primitives.md](primitives.md) | Badges, Avatars, Icons, Images, SVG, Border Radius |
+| [type-content.md](type-content.md) | Copywriting, Prose Content, Custom Fonts |
 | [pricing-cards.md](pricing-cards.md) | Pricing tiers, emphasized plans |
-| [testimonials.md](testimonials.md) | Quotes, social proof, attribution |
-| [team-sections.md](team-sections.md) | Team grids and people galleries |
-| [logo-clouds.md](logo-clouds.md) | Logo grids and trust bars |
-| [login-pages.md](login-pages.md) | Auth and account-access pages |
-| [navigation.md](navigation.md) | Sidebar/header nav, mobile menus, tabs |
-| [tables.md](tables.md) | Data tables, scrolling, dividers |
-| [dashboards.md](dashboards.md) | Stat/KPI grids, metric cards |
-| [pagination.md](pagination.md) | Page numbers and prev/next |
-| [description-lists.md](description-lists.md) | `<dl>`/`<dt>`/`<dd>` term/detail pairs |
-| [badges.md](badges.md) | Badges, tags, pills, chips |
-| [avatars.md](avatars.md) | Profile photos and avatar groups |
-| [icons.md](icons.md) | Icon sizing, alignment, libraries |
-| [images.md](images.md) | Photos, screenshots, media frames |
-| [svg.md](svg.md) | Inline SVG color and markup conventions |
-| [border-radius.md](border-radius.md) | Concentric and responsive radii |
-| [copywriting.md](copywriting.md) | UI copy, punctuation, casing |
-| [prose-content.md](prose-content.md) | Styling raw markdown/CMS HTML |
-| [custom-fonts.md](custom-fonts.md) | Loading and registering custom fonts |
 
 ## Related References
 
