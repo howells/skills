@@ -60,7 +60,7 @@ For the full curated font list — UI fonts, brand fonts, mono, Google Fonts pic
 
 ## Motion
 
-See [Animation Patterns Reference](animation-patterns.md) for comprehensive guidance.
+See [Animation Patterns Reference](interface/animation.md) for comprehensive guidance.
 
 **Key principles:**
 - Focus on high-impact moments (page load, reveals)
@@ -115,7 +115,7 @@ Elegance = executing the vision fully, not hedging.
 
 ### Concrete AI Slop Checks
 
-When reviewing or building, scan for these specific code-level tells. See `rules/interface/design.md` → "AI Slop Detection" for the full table.
+When reviewing or building, scan for these specific code-level tells. See `interface/design.md` → "AI Slop Detection" for the full table.
 
 - `transition-all` → specify exact properties
 - `bg-gradient-to-*` used decoratively → justify or remove
@@ -155,7 +155,7 @@ These warrant discussion:
 - [ ] No memorable element identified — what makes this stick?
 - [ ] Typography pairing unclear or default-feeling
 - [ ] Color palette lacks cohesion or intention
-- [ ] Motion is scattered micro-interactions, not orchestrated (see [animation-patterns.md](animation-patterns.md))
+- [ ] Motion is scattered micro-interactions, not orchestrated (see [animation.md](interface/animation.md))
 - [ ] Spacing feels arbitrary rather than systematic
 - [ ] Layout is "safe" — no unexpected decisions
 - [ ] Illustrations feel stock rather than curated

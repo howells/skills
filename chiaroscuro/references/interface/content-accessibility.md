@@ -61,7 +61,7 @@ Common patterns that fail accessibility, mapped to WCAG success criteria. Use as
 
 ## UX Copy & Writing Voice
 
-Follow the [Chicago Manual of Style](https://www.chicagomanualofstyle.org/) for UX copy (labels, tooltips, empty states, error messages, marketing pages). For fiction-specific CMOS rules, see `~/Sites/fiction/skills/references/style-guides/chicago-manual.md`.
+Follow the [Chicago Manual of Style](https://www.chicagomanualofstyle.org/) for UX copy (labels, tooltips, empty states, error messages, marketing pages).
 
 ### No System Leakage
 
