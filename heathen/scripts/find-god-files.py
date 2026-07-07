@@ -47,14 +47,31 @@ IGNORED_FILE_PATTERNS = (
     ".generated.tsx",
     ".gen.ts",
     ".gen.tsx",
+    ".spec.js",
+    ".spec.jsx",
     ".spec.ts",
     ".spec.tsx",
-    ".snap",
+    ".stories.js",
+    ".stories.jsx",
     ".stories.ts",
     ".stories.tsx",
+    ".test.js",
+    ".test.jsx",
     ".test.ts",
     ".test.tsx",
 )
+
+# Test-suffix patterns re-included when --include-tests is passed.
+TEST_FILE_PATTERNS = {
+    ".spec.js",
+    ".spec.jsx",
+    ".spec.ts",
+    ".spec.tsx",
+    ".test.js",
+    ".test.jsx",
+    ".test.ts",
+    ".test.tsx",
+}
 
 FUNCTION_RE = re.compile(
     r"\b(?:async\s+)?function\s+[A-Za-z0-9_$]+\s*\(|"
@@ -74,7 +91,7 @@ RESPONSIBILITY_PATTERNS = {
     "ui": (r"<[A-Z_a-z][A-Za-z0-9_.:-]*(\s|>|/>)", r"\bclassName\s*="),
     "react-state": (r"\buse(State|Reducer|Effect|Memo|Callback|Ref)\b",),
     "forms-validation": (r"\bz\.object\b", r"\buseForm\b", r"\bvalidate\b", r"\bvalidation\b"),
-    "network": (r"\bfetch\s*\(", r"\baxios\b", r"\bky\.", r"\btrpc\b", r"\bapi\b"),
+    "network": (r"\bfetch\s*\(", r"\baxios\b", r"\bky\.", r"\btrpc\b", r"\bapi\.", r"/api/"),
     "database": (r"\bdrizzle\b", r"\bdb\.", r"\bselect\(", r"\binsert\(", r"\bupdate\("),
     "filesystem": (r"\bfs\.", r"node:fs", r"\breadFile", r"\bwriteFile"),
     "process-cli": (r"\bprocess\.argv\b", r"\bcommander\b", r"\byargs\b", r"\bprocess\.exit\b"),
@@ -105,7 +122,7 @@ def should_ignore_file(path: Path, *, include_tests: bool = False) -> bool:
         ignored_patterns = tuple(
             pattern
             for pattern in IGNORED_FILE_PATTERNS
-            if pattern not in {".spec.ts", ".spec.tsx", ".test.ts", ".test.tsx"}
+            if pattern not in TEST_FILE_PATTERNS
         )
     return any(name.endswith(pattern) for pattern in ignored_patterns)
 
@@ -113,7 +130,11 @@ def should_ignore_file(path: Path, *, include_tests: bool = False) -> bool:
 def iter_source_files(root: Path, *, include_tests: bool = False) -> list[Path]:
     files = []
     for current_root, dirnames, filenames in os.walk(root):
-        dirnames[:] = [name for name in dirnames if name not in IGNORED_DIRS]
+        dirnames[:] = [
+            name
+            for name in dirnames
+            if name not in IGNORED_DIRS and (include_tests or name != "__tests__")
+        ]
         current = Path(current_root)
         for filename in filenames:
             path = current / filename
@@ -133,14 +154,15 @@ def relative(path: Path, root: Path) -> str:
     return path.relative_to(root).as_posix()
 
 
-def detect_category(path: Path, content: str) -> str:
-    rel = path.as_posix()
-    if "/scripts/" in rel or "/bin/" in rel or path.name.startswith(("script-", "migrate-", "seed-")):
+def detect_category(path: Path, content: str, root: Path) -> str:
+    if path.name.endswith((".test.ts", ".test.tsx", ".test.js", ".test.jsx", ".spec.ts", ".spec.tsx", ".spec.js", ".spec.jsx")):
+        return "test"
+    rel_parts = path.relative_to(root).parts
+    dir_parts = rel_parts[:-1]
+    if "scripts" in dir_parts or "bin" in dir_parts or path.name.startswith(("script-", "migrate-", "seed-")):
         return "script"
     if path.suffix in {".tsx", ".jsx"} or COMPONENT_RE.search(content):
         return "component"
-    if path.name.endswith((".test.ts", ".test.tsx", ".spec.ts", ".spec.tsx")):
-        return "test"
     return "module"
 
 
@@ -161,7 +183,7 @@ def file_metrics(path: Path, root: Path) -> FileMetrics:
     functions = len(FUNCTION_RE.findall(content))
     components = len(COMPONENT_RE.findall(content))
     responsibilities = detect_responsibilities(content)
-    category = detect_category(path, content)
+    category = detect_category(path, content, root)
 
     score = 0
     reasons = []
@@ -297,21 +319,110 @@ def duplicate_blocks(root: Path, window: int, *, include_tests: bool = False) ->
                 }
             )
 
-    groups = []
+    raw_groups = []
     for matches in occurrences.values():
-        unique_locations = {(match["path"], match["start"], match["end"]) for match in matches}
-        unique_files = {match["path"] for match in matches}
-        if len(unique_locations) < 2:
+        locations = sorted({(match["path"], match["start"], match["end"]) for match in matches})
+        if len(locations) < 2:
             continue
+        preview = matches[0]["preview"]
+        raw_groups.append({"locations": locations, "preview": preview})
+
+    groups = []
+    for merged in merge_overlapping_groups(raw_groups, window):
+        locations = merged["locations"]
+        unique_files = {loc[0] for loc in locations}
+        span = max(end - start + 1 for _, start, end in locations)
         groups.append(
             {
                 "files": len(unique_files),
-                "occurrences": len(unique_locations),
+                "occurrences": len(locations),
+                "lines": span,
                 "window": window,
-                "matches": sorted(matches, key=lambda item: (item["path"], item["start"]))[:8],
+                "matches": [
+                    {"path": path, "start": start, "end": end, "preview": merged["preview"]}
+                    for path, start, end in locations[:8]
+                ],
             }
         )
-    return sorted(groups, key=lambda item: (item["files"], item["occurrences"]), reverse=True)
+    # Rank a single large duplicated region above many small ones: files, then span, then count.
+    return sorted(groups, key=lambda item: (item["files"], item["lines"], item["occurrences"]), reverse=True)
+
+
+def _parallel_overlap(locs_a: list[tuple[str, int, int]], locs_b: list[tuple[str, int, int]]) -> bool:
+    """True when two window groups are the same duplicated region shifted by a few lines.
+
+    Requires the same number of occurrences, the same files in the same order, and every
+    corresponding interval to overlap or sit adjacent — so sliding windows over one region
+    collapse together while genuinely distinct regions stay separate.
+    """
+    if len(locs_a) != len(locs_b):
+        return False
+    for (path_a, start_a, end_a), (path_b, start_b, end_b) in zip(locs_a, locs_b):
+        if path_a != path_b:
+            return False
+        if start_b > end_a + 1 or start_a > end_b + 1:
+            return False
+    return True
+
+
+def merge_overlapping_groups(raw_groups: list[dict[str, Any]], window: int) -> list[dict[str, Any]]:
+    """Union window groups that describe the same maximal duplicated region."""
+    # Bucket by the set of files involved; only same-signature groups can be the same region.
+    buckets: dict[frozenset[str], list[int]] = defaultdict(list)
+    for index, group in enumerate(raw_groups):
+        signature = frozenset(loc[0] for loc in group["locations"])
+        buckets[signature].append(index)
+
+    parent = list(range(len(raw_groups)))
+
+    def find(node: int) -> int:
+        while parent[node] != node:
+            parent[node] = parent[parent[node]]
+            node = parent[node]
+        return node
+
+    def union(a: int, b: int) -> None:
+        root_a, root_b = find(a), find(b)
+        if root_a != root_b:
+            parent[root_b] = root_a
+
+    for members in buckets.values():
+        for i in range(len(members)):
+            for j in range(i + 1, len(members)):
+                if _parallel_overlap(raw_groups[members[i]]["locations"], raw_groups[members[j]]["locations"]):
+                    union(members[i], members[j])
+
+    clusters: dict[int, list[int]] = defaultdict(list)
+    for index in range(len(raw_groups)):
+        clusters[find(index)].append(index)
+
+    merged_groups = []
+    for members in clusters.values():
+        per_path: dict[str, list[tuple[int, int]]] = defaultdict(list)
+        for member in members:
+            for path, start, end in raw_groups[member]["locations"]:
+                per_path[path].append((start, end))
+        locations = []
+        for path, intervals in per_path.items():
+            for start, end in _merge_intervals(intervals):
+                locations.append((path, start, end))
+        locations.sort()
+        merged_groups.append(
+            {"locations": locations, "preview": raw_groups[members[0]]["preview"]}
+        )
+    return merged_groups
+
+
+def _merge_intervals(intervals: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    """Collapse overlapping/adjacent (start, end) line ranges into maximal spans."""
+    ordered = sorted(intervals)
+    merged: list[tuple[int, int]] = []
+    for start, end in ordered:
+        if merged and start <= merged[-1][1] + 1:
+            merged[-1] = (merged[-1][0], max(merged[-1][1], end))
+        else:
+            merged.append((start, end))
+    return merged
 
 
 def build_report(

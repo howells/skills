@@ -16,16 +16,16 @@ A fallback is allowed only when it is a real product requirement, a documented m
 ## Workflow
 
 1. Identify the target repo and its package manager.
-2. Run the scanner before editing:
+2. Run the scanner before editing (path is relative to this skill's directory):
 
    ```bash
-   python3 /path/to/fail-fast/scripts/scan-fallbacks.py /path/to/repo
+   python3 scripts/scan-fallbacks.py /path/to/repo
    ```
 
-   Use JSON for large audits or follow-up tooling:
+   Useful flags: `--json` (machine-readable output for large audits or follow-up tooling), `--include-tests` and `--include-docs` (scan files skipped by default), `--fail-on medium|high` (exit non-zero as a CI gate).
 
    ```bash
-   python3 /path/to/fail-fast/scripts/scan-fallbacks.py /path/to/repo --json
+   python3 scripts/scan-fallbacks.py /path/to/repo --json
    ```
 
 3. Read `references/remediation.md` when findings involve environment variables, legacy compatibility, broad catch blocks, or staged migrations.
@@ -48,10 +48,12 @@ In TypeScript projects that use `@howells/envy`, missing required env vars are a
 Use Envy checks when available:
 
 ```bash
-npx envy check local --schema ./src/env/schema.ts --from .env.production
-npx envy check local --schema ./src/env/schema.ts --mode all --json
-npx envy check turbo --schema ./src/env/schema.ts --task build
+npx --no-install envy check local --schema ./src/env/schema.ts --from .env.production
+npx --no-install envy check local --schema ./src/env/schema.ts --mode all --json
+npx --no-install envy check turbo --schema ./src/env/schema.ts --task build
 ```
+
+(`--no-install` ensures npx runs the project's `@howells/envy` binary rather than downloading an unrelated `envy` package if it is not a dependency.)
 
 Accept direct `process.env` reads only in env schema modules, generated env wiring, narrow system keys such as `NODE_ENV` and `CI`, or explicitly documented migration escape hatches.
 
@@ -97,18 +99,22 @@ Keep compatibility only when there is a named external caller, versioned API con
 When compatibility must remain, make it visible:
 
 ```ts
-// Compatibility: remove after API clients stop sending `workspaceId` on 2026-07-01.
+// TODO(compat): remove after API clients stop sending `workspaceId` on 2026-07-01.
 ```
+
+Lead the marker with `TODO`/`FIXME`/`HACK` so the scanner's `todo-compat` rule surfaces it — a bare `// Compatibility:` comment is intentionally not flagged (the keyword rule skips comment lines).
 
 ## Scanner
 
 `scripts/scan-fallbacks.py` performs deterministic source scanning for common fallback smells:
 
-- env var defaults and direct env reads,
+- env var defaults (`os.getenv`/`os.environ.get`/`process.env.X ||`) and direct env reads,
 - `||` / `??` fallback values,
 - legacy, deprecated, backwards-compatible, and migration keywords,
-- empty or swallowing `catch` blocks,
+- empty or swallowing `catch` blocks (JS/TS) and swallowing `except` blocks (Python),
 - optional dependency fallbacks,
 - aliases and dual config keys.
+
+Detection caveats: the legacy/compatibility keyword rule fires only on code lines, not comment lines, so a bare `// Compatibility: ...` marker is intentionally not flagged. Temporary-compat comments are surfaced only when they lead with `TODO`/`FIXME`/`HACK`/`XXX` (the `todo-compat` rule) — see the Compatibility section's marker format. The keyword rule also skips declarative manifests (`package.json`, `tsconfig.json`) to avoid matching dependency names. `--fail-on` accepts only `medium` or `high` (there are no low-severity rules).
 
 The scanner is not a substitute for judgment. Treat it as an index of places to inspect, then make the code simpler and more deterministic.
