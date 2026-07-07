@@ -55,7 +55,7 @@ border: 1px solid rgb(0 0 0 / 0.05);
 
 ## Focus
 
-- NEVER: Colored focus outlines (use grey/black/white only)
+- NEVER: Colored focus outlines on general interactive elements (use grey/black/white only). Exception: form controls (checkboxes, radios, toggles, inputs) may use a brand-colored `focus-visible` ring where it aids affordance — see `forms.md`.
 
 ## Color Restraint
 
@@ -92,7 +92,7 @@ Concrete patterns that signal AI-generated design. Grep-friendly — each is a s
 ### Code Tells
 
 - NEVER: `transition-all` — specify exact properties (`transition-colors`, `transition-transform`)
-- NEVER: `isolation: isolate` used as a "just in case" stacking context — use only when you can explain why
+- NEVER: `isolation: isolate` used as a "just in case" stacking context — use only when you can explain why (a deliberate app-shell isolation boundary per `layout.md`/`tailwind-authoring.md` is a valid such reason)
 - NEVER: `blur-*` > `blur-xl` (20px) on decorative elements — large blurs tank performance for no purpose
 - NEVER: Multiple gradient overlays stacked — simplify to one or use a solid color with opacity
 

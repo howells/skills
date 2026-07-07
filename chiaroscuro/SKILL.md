@@ -65,14 +65,15 @@ Then read the relevant interface rules:
 - Accessibility/content: `references/interface/content-accessibility.md`
 - Performance-heavy UI: `references/interface/performance.md`
 - In-browser variant comparison: `references/interface/ui-picker.md`
+- Spec output templates (Change Spec, Design Spec): `references/spec-templates.md`
 
-Component-specific references — load only the ones present in the work, not the whole set:
+Component-specific references — load only the ones present in the work, not the whole set. Paths are relative to the skill root; bare filenames after the first in each bullet live in the same directory as the first (`references/interface/`), except where a full path is given:
 
 - Structure/sections: `section` patterns live in `layout.md`; page-wide consistency in `references/interface/landing-pages.md`
 - Marketing components: `references/interface/headers.md`, `footers.md`, `heading-groups.md`, `feature-lists.md`, `pricing-cards.md`, `testimonials.md`, `team-sections.md`, `logo-clouds.md`, `login-pages.md`
 - Data/app components: `references/interface/tables.md`, `dashboards.md`, `navigation.md`, `pagination.md`, `description-lists.md`
 - Primitives: `references/interface/badges.md`, `avatars.md`, `icons.md`, `images.md`, `svg.md`, `border-radius.md`
-- Type/content: `references/interface/copywriting.md`, `prose-content.md`, `custom-fonts.md`, `font-recommendations.md`
+- Type/content: `references/interface/copywriting.md`, `prose-content.md`, `custom-fonts.md`, and `references/font-recommendations.md` (at the references root, not `interface/`)
 
 For a single component or small fragment, read only `frontend-design.md` plus the 2-3 most relevant interface files.
 
@@ -82,7 +83,7 @@ Do not produce framework-agnostic, CSS Modules, styled-components, emotion, or p
 
 Choose a mode before loading heavy references.
 
-**Design mode:** The user wants visual direction, a page/screen layout, a wireframe, a design doc, or a new interface concept. Load the full reference set as listed below.
+**Design mode:** The user wants visual direction, a page/screen layout, a wireframe, a design doc, or a new interface concept. Load the full reference set as listed above.
 
 **Component fast-path:** The user wants a single component or small UI fragment. Load only `references/frontend-design.md` plus 2-3 relevant interface files — do not load the full reference set.
 
@@ -269,37 +270,7 @@ Ask whether the structure feels right before writing a final design spec when th
 
 ### 7. Write the Change Spec
 
-Translate the direction into measurable implementation changes.
-
-Use this structure:
-
-```markdown
-## Change Spec
-
-### Typography
-| Element | Before | After | Reference |
-| --- | --- | --- | --- |
-
-### Colors
-| Element | Before | After | Reference |
-| --- | --- | --- | --- |
-
-### Spacing
-| Element | Before | After | Reference |
-| --- | --- | --- | --- |
-
-### Layout
-| Element | Before | After | Reference |
-| --- | --- | --- | --- |
-
-### Motion
-| Element | Before | After | Reference |
-| --- | --- | --- | --- |
-
-### Abstraction
-| Exposed implementation detail | User-centered replacement | Reference |
-| --- | --- | --- |
-```
+Translate the direction into measurable implementation changes. Use the Change Spec skeleton in `references/spec-templates.md`.
 
 Rules:
 
@@ -330,43 +301,7 @@ Include:
 - contrast and accessibility requirements
 - verification checklist
 
-Use this compact structure:
-
-```markdown
-# Design Direction: [Name]
-
-## Intent
-- Surface type:
-- Target user:
-- Tone:
-- Memorable element:
-
-## System
-- Typography:
-- Color tokens:
-- Spacing/radius:
-- Surface ladder:
-- Control patterns:
-
-## Wireframes
-### Desktop
-### Mobile
-### States
-
-## Change Spec
-### Typography
-### Colors
-### Spacing
-### Layout
-### Motion
-
-## Implementation Notes
-## Anti-Patterns
-## Abstraction Rules
-## Complexity Guardrails
-## Interactive States
-## Verification Checklist
-```
+Use the compact Design Spec skeleton in `references/spec-templates.md`.
 
 In complexity guardrails, name concrete limits for the implementation. Every element must earn its place — cut wrapper elements with no purpose, cards inside cards, excessive nesting for simple content, decorative chrome, too many font sizes, too many accent colors, arbitrary spacing values, mono small-caps used as a general label style rather than for numeric or data-adjacent content, and Tailwind class strings that should become reusable components.
 
@@ -459,7 +394,7 @@ Read `references/interface/tailwind-authoring.md`.
 - Remove conflicting utilities.
 - Replace arbitrary values with scale values when the exact value is not meaningful.
 - Consolidate repeated class shapes into components or small helpers only when it reduces real duplication.
-- When available, use `npx @tailwindcss/cli canonicalize` to normalize class lists. Pass the project's CSS entry file with `--css path/to/input.css` when custom Tailwind v4 tokens or utilities are required for accurate output.
+- When available, use `npx @tailwindcss/cli canonicalize` to normalize class lists. Pass the project's CSS entry file with `--css path/to/input.css` when custom Tailwind v4 tokens or utilities are required for accurate output. If the subcommand is unavailable, use the sibling `canonicalize-tailwind` skill, or normalize manually per `references/tailwind-authoring.md`.
 - Use structured output such as `--format json` or `--format jsonl` when processing many class strings.
 
 ### 4. Dark Mode (When In Scope)

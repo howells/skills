@@ -7,5 +7,5 @@ Covers: raw HTML from markdown, CMS content, database content, blog posts, artic
 - Default to `var(--text-base)` (`16px`) for prose body text; only use `var(--text-lg)` (`18px`) or larger if specifically requested or the project already uses that size for body text elsewhere
 - Never set `max-width` inside the `.prose` CSS — constrain width with a `max-w-[*ch]` class alongside `prose` in the markup (e.g. `<div class="prose max-w-[65ch]">`); use `60ch`–`90ch`, matched to the site's existing content widths
 - Set prose body `line-height` to at least `1.75` times the font size — e.g. `--spacing(7)` for `var(--text-base)`
-- Use `text-pretty` on blog post and article titles, not `text-balance`
+- Use `text-pretty` on blog post and article titles, not `text-balance` — long editorial titles can wrap to several lines, where `text-balance` (which evens line lengths, best for short 2-3 line headings per `typography.md`) tends to produce awkward top-heavy breaks; `text-pretty` only fixes orphans
 - When the article title/`h1` uses a sans-serif font, use the same sans-serif for all subheadings (`h2`–`h6`) within the article — never mix a sans-serif title with serif subheadings

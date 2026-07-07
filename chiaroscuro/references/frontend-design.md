@@ -45,7 +45,7 @@ For the full curated font list — UI fonts, brand fonts, mono, Google Fonts pic
 
 ## Icons
 
-**Recommended:** Lucide icons for consistency and quality. They're well-designed, comprehensive, and work well at all sizes.
+Icon rules are owned by `interface/icons.md`: import from the project's existing icon library, or default to Heroicons (Micro/16px in application UIs) when none is established. See that file for sizing and alignment.
 
 **Avoid:** Mixing icon libraries or using low-quality/inconsistent icon sets.
 
