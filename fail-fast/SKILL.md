@@ -7,6 +7,8 @@ description: Audit and remove unnecessary fallbacks, silent compatibility paths,
 
 Use this skill to make a codebase deterministic by finding and removing hidden fallback behavior that should be an explicit contract, validation error, migration, or test fixture.
 
+State at the start that you are using the `fail-fast` skill.
+
 ## Core Rule
 
 Prefer one canonical path and one explicit failure mode.
@@ -118,3 +120,13 @@ Lead the marker with `TODO`/`FIXME`/`HACK` so the scanner's `todo-compat` rule s
 Detection caveats: the legacy/compatibility keyword rule fires only on code lines, not comment lines, so a bare `// Compatibility: ...` marker is intentionally not flagged. Temporary-compat comments are surfaced only when they lead with `TODO`/`FIXME`/`HACK`/`XXX` (the `todo-compat` rule) — see the Compatibility section's marker format. The keyword rule also skips declarative manifests (`package.json`, `tsconfig.json`) to avoid matching dependency names. `--fail-on` accepts only `medium` or `high` (there are no low-severity rules).
 
 The scanner is not a substitute for judgment. Treat it as an index of places to inspect, then make the code simpler and more deterministic.
+
+## Completion Check
+
+Before finishing, verify that:
+
+- each finding was classified (remove / require / validate / keep), not just listed.
+- removed fallbacks have updated call sites and tests proving deterministic failure when the dependency, input, config, or env var is missing.
+- kept fallbacks have a stated reason (product requirement, external contract, or dated migration with an owner).
+- the scanner and the repo's relevant tests/typecheck/lint/build were re-run after edits.
+- any remaining fallbacks are reported explicitly, not left invisible.

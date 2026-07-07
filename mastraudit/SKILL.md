@@ -11,6 +11,8 @@ Audit a codebase for three things:
 2. Mastra is architecturally contained and organized: one approved package or module owns Mastra, and that owner uses domain folders instead of scattering agents, tools, prompts, workflows, runtime, memory, storage, observability, MCP, or scorers across the codebase.
 3. Mastra implementation remains thin, typed, observable, and testable: the approved package exposes agent/workflow/tool surfaces, while runtime/domain packages own application behavior, provider adapters, parsing, persistence, ranking, scoring, and data extraction.
 
+State at the start that you are using the `mastraudit` skill.
+
 ## Non-Negotiables
 
 - Use `$mastra` before judging API correctness. Mastra changes quickly; do not rely on model memory for constructor signatures, model routing, storage, memory, workflow, or tool APIs.
@@ -173,3 +175,13 @@ Implementation drift signals are intentionally conservative. Confirm them manual
 - generation call settings (`maxOutputTokens`, `temperature`, `topP`) passed at the top level of a Mastra `agent.generate`/`stream`/`defaultOptions` call instead of nested under `modelSettings` — the canonical footgun above (silently dropped, so the model runs at its full output budget);
 - Mastra agents whose generate/stream options carry only `maxSteps`/`structuredOutput` with no `modelSettings.maxOutputTokens` (uncapped output at the model's full budget by omission — same end-state as a dropped cap);
 - reasoning caps assumed to bound a model where the provider ignores them (e.g. OpenRouter `reasoning.maxTokens`), or a configured `outputLength`/`maxOutputTokens` that never reaches the agent because of an options-shape mismatch.
+
+## Completion Check
+
+Before finishing, verify that:
+
+- API-correctness claims were checked against `$mastra` or the installed package's docs/types, not model memory (findings marked lower-confidence where neither was available).
+- the approved Mastra owner was identified unambiguously (or ambiguity was reported for the user to resolve).
+- deterministic boundary signals (dependencies, imports, CLI scripts, stray Mastra config) were searched, not just spot-checked.
+- each finding names a domain (agents/tools/workflows/memory/storage/runtime/observability/MCP/scorers), a severity, and a concrete remediation.
+- optional/practice-lens signals were presented as review prompts, not asserted as defects, and confirmed before being reported as such.

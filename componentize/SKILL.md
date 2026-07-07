@@ -127,7 +127,7 @@ rg "['\"]use client['\"]|['\"]use server['\"]|server-only|client-only|useState\\
 rg --files -g '*.{tsx,jsx}' | sed 's#.*/##' | sort | uniq -d
 ```
 
-Discover source roots before running path-specific searches. Do not hard-code `packages libs src`; inspect the repo and search only directories that exist, such as `app`, `apps`, `src`, `packages`, `libs`, `frontend`, or `web`.
+Discover source roots before running path-specific searches. Do not assume a fixed set of source directories exists; inspect the repo and search only directories that are actually present, such as `app`, `apps`, `src`, `packages`, `libs`, `frontend`, or `web`.
 
 For import relationships, start with text search:
 
@@ -261,7 +261,7 @@ Run the narrowest meaningful checks:
 
 If checks are unavailable or too broad, say exactly what was and was not verified.
 
-## Audit Output
+## Output
 
 When returning an analysis, use this shape:
 
@@ -274,8 +274,6 @@ When returning an analysis, use this shape:
 ### Highest-Value Opportunities
 | Priority | Pattern | Evidence | Recommendation | Why |
 |---|---|---|---|---|
-
-Evidence should include representative `file:line` references, occurrence or call-site count, current owner/home, and whether the action is reuse unchanged, adapt, extract, move, or no action.
 
 ### Proposed Shared API
 - `ComponentName`: props, variants, slots, import path
@@ -295,6 +293,8 @@ Evidence should include representative `file:line` references, occurrence or cal
 ### Risks
 - Coupling, accessibility, styling, or package-boundary concerns
 ```
+
+In the Highest-Value Opportunities table, evidence should include representative `file:line` references, occurrence or call-site count, current owner/home, and whether the action is reuse unchanged, adapt, extract, move, or no action.
 
 ## Guardrails
 
