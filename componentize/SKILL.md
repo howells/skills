@@ -1,6 +1,6 @@
 ---
 name: componentize
-description: Audit a codebase for duplicated UI, repeated component patterns, and missed reuse opportunities; identify, plan, or implement scoped shared components and UI package changes. Use when asked to componentize an app, reduce duplicated components, consolidate repeated UI, adapt existing components with props/composition, create or use a Turborepo ui package, promote React/Tailwind UI reuse across apps/packages, or componentize a visually referenced part of a running app such as "the panel on the right" or "that thing in the sidebar."
+description: Audit a codebase for duplicated UI and repeated component patterns; identify, plan, or implement scoped shared components and UI package changes. Use when asked to componentize an app, reduce duplicated or repeated UI, adapt components with props/composition, create or use a Turborepo ui package, promote React/Tailwind reuse across apps/packages, or componentize a visually referenced region like "the panel on the right." For a standalone or publishable package, use aperture.
 ---
 
 # Componentize
@@ -243,7 +243,7 @@ Define the public component API before moving files:
 
 Extract one coherent group at a time. Update imports and call sites immediately so the repo does not keep two canonical versions.
 
-Only load related skills when the user request requires that concern, the repo already uses that workflow, or the current extraction is blocked without it. Use `chiaroscuro` for UI visual polish or Tailwind/React component deduplication decisions, `aperture` for package extraction details, and `fenceline` for package boundary enforcement. Keep this skill's componentization workflow as the controlling scope.
+Only load related skills when the user request requires that concern, the repo already uses that workflow, or the current extraction is blocked without it. Use `chiaroscuro` for visual direction and polish only, `aperture` for standalone/publishable package extraction, and `fenceline` for package boundary enforcement. Deduplication and shared-component extraction decisions stay in this skill; keep its componentization workflow as the controlling scope.
 
 ### 5. Validate
 

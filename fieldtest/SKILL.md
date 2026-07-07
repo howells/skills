@@ -1,6 +1,6 @@
 ---
 name: fieldtest
-description: Test a rendered web app in the browser with evidence-backed QA, UX, responsive, console, accessibility, and persona-based findings. Use when asked to dogfood an app, browse or experience a local web app, field test a feature, inspect UI behavior, validate a frontend change, check responsive/mobile issues, find rendered bugs, review a localhost app, or produce a practical browser QA report before shipping.
+description: Test a rendered web app in the browser with evidence-backed QA, UX, responsive, console, accessibility, and persona-based findings. Use when asked to dogfood an app, browse or experience a local web app, field test a feature, inspect UI behavior, validate a frontend change, find and report responsive/mobile defects in the rendered app, find rendered bugs, review a localhost app, or produce a practical browser QA report before shipping.
 ---
 
 # Fieldtest

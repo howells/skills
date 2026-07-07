@@ -28,7 +28,7 @@ Use `--copy` if you want independent files rather than symlinks. Restart your ag
 
 ### `aperture`
 
-Extract components, hooks, utilities, features, or subsystems from an existing codebase into reusable packages, workspace packages, or standalone publishable repositories. Use it when code needs a clean public API, stable exports, examples, tests, and a package boundary instead of app-local imports.
+Extract components, hooks, utilities, features, or subsystems from an existing codebase into reusable packages, workspace packages, or standalone publishable repositories. Use it when code needs a clean public API, stable exports, examples, tests, and a package boundary instead of app-local imports. For a tangled god file that needs decomposition first, use `heathen`.
 
 Install globally for Codex:
 
@@ -38,7 +38,7 @@ npx skills@latest add howells/skills --skill aperture --agent codex --global
 
 ### `chiaroscuro`
 
-Create distinctive UI direction, Tailwind v4 design specs, wireframes, visual systems, and post-implementation polish. Use it when a screen, page, app, or component needs a concrete visual direction that avoids generic AI-looking interface work.
+Create distinctive, non-generic UI design direction, Tailwind v4 visual systems, `@theme` tokens, wireframes, and design specs, plus UI polish, dark mode, responsive adaptation, and live variant comparison. Use it when a screen, page, app, or component needs a concrete visual direction that avoids generic AI-looking work. For codebase-wide reuse audits or shared-component extraction, use `componentize`.
 
 Install globally for Codex:
 
@@ -48,7 +48,7 @@ npx skills@latest add howells/skills --skill chiaroscuro --agent codex --global
 
 ### `componentize`
 
-Audit and improve repeated UI by finding duplicated components, repeated JSX patterns, and missed reuse opportunities. Use it to promote scoped shared components, adapt existing primitives, or move reusable UI into the right package boundary.
+Audit a codebase for duplicated UI and repeated component patterns, then plan or implement scoped shared components and UI package changes. Use it to reduce duplication, adapt existing primitives with props/composition, use a Turborepo `ui` package, or componentize a visually referenced region like "the panel on the right." For a standalone or publishable package, use `aperture`.
 
 Install globally for Codex:
 
@@ -68,7 +68,7 @@ npx skills@latest add howells/skills --skill deslop --agent codex --global
 
 ### `fail-fast`
 
-Find and remove unnecessary fallbacks, silent compatibility paths, legacy aliases, swallowed errors, permissive defaults, and ambiguous configuration behavior. Use it when a codebase should prefer one canonical path and one explicit failure mode.
+Find and remove unnecessary fallbacks, silent compatibility paths, legacy aliases, swallowed errors, permissive defaults, and ambiguous configuration behavior. Use it when a codebase should prefer one canonical path and one explicit failure mode, or to harden env handling with Envy.
 
 Install globally for Codex:
 
@@ -88,7 +88,7 @@ npx skills@latest add howells/skills --skill fenceline --agent codex --global
 
 ### `fieldtest`
 
-Test a rendered web app in the browser and report evidence-backed QA, UX, responsive, console, accessibility, and persona-based findings. Use it when you need to experience a local app as software instead of only inspecting code.
+Test a rendered web app in the browser and report evidence-backed QA, UX, console, accessibility, persona-based, and responsive/mobile findings. Use it when you need to experience a local app as software — and find and report rendered defects — instead of only inspecting code.
 
 Install globally for Codex:
 
@@ -108,7 +108,7 @@ npx skills@latest add howells/skills --skill foundry --agent codex --global
 
 ### `heathen`
 
-Find and refactor god components, god scripts, oversized modules, tangled multi-responsibility files, and duplicated logic in JavaScript or TypeScript codebases. Use it to identify safe decomposition steps before splitting code.
+Find and refactor god components, god scripts, oversized modules, tangled multi-responsibility files, and duplicated logic in JavaScript or TypeScript codebases. Use it to identify safe decomposition steps before splitting code. For duplicated UI components, use `componentize`; heathen targets logic, modules, scripts, and file decomposition.
 
 Install globally for Codex:
 
@@ -118,7 +118,7 @@ npx skills@latest add howells/skills --skill heathen --agent codex --global
 
 ### `marginalia`
 
-Add useful, concise JSDoc to JavaScript and TypeScript APIs, exports, components, hooks, classes, complex types, and behavior where IDE hover help matters. Use it when documentation should clarify public or non-obvious code without commenting everything.
+Add useful, concise JSDoc to JavaScript and TypeScript APIs, exports, components, hooks, classes, complex types, and behavior where IDE hover help matters. Use it when adding or improving docs for public APIs, exported symbols, generated API docs, or package publishing — clarifying non-obvious code without commenting everything or changing behavior.
 
 Install globally for Codex:
 
@@ -138,7 +138,7 @@ npx skills@latest add howells/skills --skill mastraudit --agent codex --global
 
 ### `nomen`
 
-Generate, critique, and validate names for projects, products, apps, packages, CLIs, brands, and features. Use it when naming or renaming something and when current availability, conflict, package, GitHub, or domain checks matter.
+Generate, critique, and validate names for projects, products, apps, packages, CLIs, brands, and features. Use it when naming or renaming something and when current availability, conflict, package, GitHub, domain, or App Store / app-directory checks matter.
 
 Install globally for Codex:
 
