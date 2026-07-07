@@ -117,7 +117,7 @@ Lead the marker with `TODO`/`FIXME`/`HACK` so the scanner's `todo-compat` rule s
 - optional dependency fallbacks,
 - aliases and dual config keys.
 
-Detection caveats: the legacy/compatibility keyword rule fires only on code lines, not comment lines, so a bare `// Compatibility: ...` marker is intentionally not flagged. Temporary-compat comments are surfaced only when they lead with `TODO`/`FIXME`/`HACK`/`XXX` (the `todo-compat` rule) — see the Compatibility section's marker format. The keyword rule also skips declarative manifests (`package.json`, `tsconfig.json`) to avoid matching dependency names. `--fail-on` accepts only `medium` or `high` (there are no low-severity rules).
+Detection caveats: the legacy/compatibility keyword rule fires only on code lines, not comment lines, so a bare `// Compatibility: ...` marker is intentionally not flagged. Temporary-compat comments are surfaced only when they lead with `TODO`/`FIXME`/`HACK`/`XXX` (the `todo-compat` rule) — see the Compatibility section's marker format. The keyword rule also skips declarative manifests (`package.json`, `tsconfig.json`) to avoid matching dependency names. `--fail-on` accepts only `medium` or `high` (there are no low-severity rules) — a previously accepted `--fail-on low` now exits with an argparse error, so update any scripts that passed it.
 
 The scanner is not a substitute for judgment. Treat it as an index of places to inspect, then make the code simpler and more deterministic.
 

@@ -104,9 +104,9 @@ const url = env.DATABASE_URL;
 Use Envy commands when present:
 
 ```bash
-npx envy check local --schema ./src/env/schema.ts --from .env.production
-npx envy check local --schema ./src/env/schema.ts --mode all --json
-npx envy check turbo --schema ./src/env/schema.ts --task build
+npx --no-install envy check local --schema ./src/env/schema.ts --from .env.production
+npx --no-install envy check local --schema ./src/env/schema.ts --mode all --json
+npx --no-install envy check turbo --schema ./src/env/schema.ts --task build
 ```
 
 Allowed direct `process.env` reads:

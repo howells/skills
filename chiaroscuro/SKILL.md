@@ -9,7 +9,7 @@ Use this skill to make UI design concrete before code, and to polish UI code aft
 
 Design for the user's task, not for the implementation underneath it. Chiaroscuro must produce interfaces that feel like coherent products, not exposed schemas, prompt scaffolds, agent logs, or ornamental screenshots.
 
-Announce at start: "I'm using the chiaroscuro skill to create a distinctive UI direction."
+State at the start that you are using the `chiaroscuro` skill.
 
 ## First Principles
 
