@@ -36,16 +36,6 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill aperture --agent codex --global
 ```
 
-### `brand`
-
-Create a practical visual identity system for a product or project, including brand strategy, palettes, typography, rendered direction comparisons, design tokens, and assets. Use it when you need to establish a brand before UI implementation or turn loose identity ideas into usable design guidance.
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill brand --agent codex --global
-```
-
 ### `chiaroscuro`
 
 Create distinctive UI direction, Tailwind v4 design specs, wireframes, visual systems, and post-implementation polish. Use it when a screen, page, app, or component needs a concrete visual direction that avoids generic AI-looking interface work.
@@ -108,7 +98,7 @@ npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 
 ### `foundry`
 
-Create, review, or revise a Tailwind v4 visual identity system with positioning, OKLCH palettes, `@theme` tokens, typography, surface rules, motion personality, and reusable UI identity guidance. Use it when a product needs a practical brand system tied directly to implementation.
+Create, review, or revise a distinctive visual identity system — brand positioning, rendered direction options to compare, OKLCH palettes, typography, visual character, and a Tailwind v4 `@theme` token model (or `docs/brand-system.md`). Use it when a product needs a brand established before UI, loose identity ideas turned into usable direction, or a system tied directly to implementation. (Absorbs the former `brand` skill — if you have `brand` installed, uninstall it and install `foundry`.)
 
 Install globally for Codex:
 

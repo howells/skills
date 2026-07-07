@@ -10,6 +10,7 @@
 - Each skill lives in its own directory with `SKILL.md`; supporting assets/scripts should stay local to that skill.
 - `README.md` is the public catalog and install guide.
 - Do not copy these skills into product repos; install or invoke them from the agent environment.
+- Removing or renaming a skill here does not update existing installs (`npx skills` copies files; it does not track deletions). When a skill is deleted or merged, note it in the README and manually uninstall the stale copy from local/global install locations.
 
 ## Editing Constraints
 - Keep each `SKILL.md` self-contained enough for a fresh agent to use.
@@ -19,7 +20,7 @@
 
 ## Search Preferences
 - Search the target skill directory before editing shared README text.
-- Search related skills to avoid duplicate scope, especially UI, brand, fieldtest, mastraudit, and fenceline skills.
+- Search related skills to avoid duplicate scope. The known overlap hotspots are chiaroscuro/componentize/heathen/aperture (UI design, componentization, decomposition, package extraction) and foundry (brand/identity); also check fieldtest, mastraudit, and fenceline before broadening scope.
 - For installer behavior, verify current `skills` CLI examples before changing docs.
 
 ## Commands
