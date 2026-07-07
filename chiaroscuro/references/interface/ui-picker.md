@@ -78,7 +78,7 @@ After variants exist, inject the script once in the shared root layout, idempote
 ## Choose And Finalize
 
 1. Let the user preview in-browser. If the toolbar can't load (CSP/offline), skip preview and ask for the selection in chat using the labels.
-2. Ask for the selection with the question tool — one clear question per decision, option labels matching the picker labels, custom input left enabled. Keep the `(current)` option first when present.
+2. Ask for the selection using a structured question tool if one is available (one clear question per decision, option labels matching the picker labels, custom input left enabled); otherwise ask in chat with the labels. Keep the `(current)` option first when present.
 3. After selection:
    - Keep only selected variants; remove unselected ones and now-unneeded picker wrapper attributes, `hidden` attributes, and empty wrappers.
    - Remove temporary comments/suppressions used only for scaffolding.

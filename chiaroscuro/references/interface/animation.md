@@ -308,7 +308,7 @@ const shouldReduce = useReducedMotion();
 | Hover causes flicker | Animate child, not parent |
 | Popover scales from wrong point | Origin-aware animation: set `transform-origin` to trigger location |
 | Sequential tooltips feel slow | Skip delay after first (warm state) |
-| Touch targets too small | 44px minimum via pseudo-element |
+| Touch targets too small | Expand hit area via pseudo-element (see `interactions.md`: 48px on coarse pointers) |
 | Something still feels off | Subtle blur (<20px) can mask issues |
 | Hover fires on mobile | `@media (hover: hover) and (pointer: fine)` |
 | Numbers shift during animation | Use tabular numbers (`tabular-nums`) for tickers and counters |

@@ -22,7 +22,7 @@ Common patterns that fail accessibility, mapped to WCAG success criteria. Use as
 | Focus outline removed | 2.4.7 | `outline-none` or `outline: none` without `focus-visible:ring` replacement |
 | Missing keyboard handlers | 2.1.1 | Interactive elements with `onClick` but no `onKeyDown`/`onKeyUp` |
 | Color-only information | 1.4.1 | Status/error indicated by color alone (no icon or text) |
-| Touch target too small | 2.5.5 | Clickable elements smaller than 44×44px |
+| Touch target too small | 2.5.5 | Clickable elements below the `interactions.md` spec (48×48px on coarse pointers) |
 | Heading hierarchy skipped | 1.3.1 | `h1` followed by `h3` (skipping `h2`) |
 
 ### Moderate (Consider Fixing)

@@ -96,29 +96,7 @@ Lightness 0.92 + chroma 0.04 → usable tint
 
 ## Dark Mode
 
-Use numerical scale (1-12) so variables flip cleanly:
-
-```css
-:root {
-  --gray-1: #fafafa;
-  --gray-12: #171717;
-}
-
-[data-theme="dark"] {
-  --gray-1: #171717;
-  --gray-12: #fafafa;
-}
-```
-
-- NEVER: Use Tailwind `dark:` modifier. Flip variables instead:
-
-```css
-/* Good */
-.button { background: var(--gray-12); color: var(--gray-1); }
-
-/* Avoid */
-.button { @apply bg-gray-900 dark:bg-gray-100; }
-```
+Dark mode strategy is owned by `dark-mode.md`: default to Tailwind's built-in `dark:` variant (`prefers-color-scheme`) and re-derive colors on the same 50-950 role scale rather than inverting. Keep neutral roles as semantic tokens (`--color-surface`, `--color-text`) that rebalance in the dark block; do not maintain a separate 1-12 flip scale.
 
 ## OKLCH-First Color Definition
 
@@ -190,7 +168,7 @@ Heavy use of transparency (`rgba`, `hsla`, `/ 0.5`) usually means an incomplete 
 
 SHOULD: Define explicit overlay colors for each context instead.
 
-Exception: Focus rings and interactive states where see-through is genuinely needed.
+Exception: Focus rings and interactive states where see-through is genuinely needed, and low-alpha hairline rings/borders and surface overlays (e.g. `ring-black/5`, `bg-white/10`) used deliberately as part of the surface ladder — see `surfaces.md` and `tailwind-authoring.md`.
 
 ## Tailwind Integration
 

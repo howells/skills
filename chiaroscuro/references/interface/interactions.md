@@ -211,4 +211,4 @@ NEVER rely on gestures as the only way to perform actions.
 - MUST: `pointer-events-none` on decorative overlays
 - SHOULD: Toggles take effect immediately (no confirmation)
 - MUST NOT: Add `hover:*` states to non-interactive elements — reserve them for buttons, links, and other genuinely clickable elements.
-- MUST NOT: Add `transition-*` for hover color or background changes — reserve transitions for elements that actually move or transform. Color swaps should be instant.
+- MUST NOT: Add `transition-*` for hover color or background changes on non-control elements (cards, rows, list items, static surfaces) — reserve transitions there for elements that actually move or transform, and let color swaps be instant. Interactive controls (buttons, links, form inputs) may use precise `transition-colors`/`transition-shadow` on hover/focus, per `buttons.md` and `forms.md`.

@@ -187,7 +187,7 @@ Geometrically centered icons often look off-center:
 
 ### Touch Targets vs Visual Size
 
-Buttons can look small but need large touch targets (44px minimum). Expand with padding or pseudo-elements:
+Buttons can look small but need large touch targets (see `interactions.md`: 48×48px on coarse pointers). Expand with padding or pseudo-elements:
 
 ```html
 <button class="relative size-6">
