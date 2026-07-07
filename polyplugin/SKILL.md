@@ -1,6 +1,6 @@
 ---
 name: polyplugin
-description: Create, audit, or migrate agent plugins across Claude Code, Codex, and Cursor. Use when asked to make a plugin valid for multiple agent hosts, add .claude-plugin, .codex-plugin, or .cursor-plugin manifests, reconcile shared plugin metadata, create multi-runtime marketplace entries, validate plugin packaging, research latest host plugin requirements, or decide whether an existing skill collection should become a plugin.
+description: Create, audit, or migrate agent plugins across Claude Code, Codex, and Cursor. Use when asked to make a plugin valid for multiple agent hosts, add .claude-plugin/.codex-plugin/.cursor-plugin manifests, reconcile shared plugin metadata, create multi-runtime marketplace entries, validate plugin packaging, or decide whether a skill collection should become a plugin.
 ---
 
 # Polyplugin

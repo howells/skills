@@ -1,6 +1,6 @@
 ---
 name: chiaroscuro
-description: Create distinctive, non-generic, user-centered UI design direction, wireframes, Tailwind v4 visual systems, Tailwind @theme tokens, design specs, and post-implementation UI polish. Use when asked to design a UI, create a layout, remove decorative UI furniture, prevent implementation/system leakage, make a page or app screen memorable, establish a visual direction, produce a design spec before implementation, clean up AI-looking interface work, componentize UI code, deduplicate repeated UI patterns, add dark mode to an existing UI, make a desktop-oriented UI responsive across mobile/tablet/desktop breakpoints, compare multiple UI variants live in the browser, or polish Tailwind/React frontend code after implementation. This skill assumes Tailwind v4 as the mandatory styling target.
+description: Create distinctive, non-generic UI design direction, wireframes, Tailwind v4 visual systems, @theme tokens, and design specs, plus UI polish, dark mode, responsive adaptation, and live variant comparison. Use when asked to design a UI, establish a visual direction, produce a design spec, remove decorative UI furniture or system leakage, make a screen memorable, or clean up AI-looking Tailwind/React work. Assumes Tailwind v4. For reuse audits or shared-component extraction, use componentize.
 ---
 
 # Chiaroscuro

@@ -1,6 +1,6 @@
 ---
 name: aperture
-description: Extract a component, hook, utility, feature, or subsystem from an existing codebase into a reusable package, workspace package, or new publishable repository. Use when asked to make code reusable, move code into its own repo, create an npm package, extract a shared package, package a component library, define package exports, preserve examples/tests, or replace app-local imports with a canonical package boundary.
+description: Extract a component, hook, utility, feature, or subsystem from an existing codebase into a reusable package, workspace package, or new publishable repository. Use when asked to make code reusable, move code into its own repo, create an npm package, extract a shared package, package a component library, define package exports, preserve examples/tests, or replace app-local imports with a canonical package boundary. For a tangled god file that needs decomposition first, use heathen.
 ---
 
 # Aperture
