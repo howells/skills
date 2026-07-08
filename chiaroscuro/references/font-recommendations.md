@@ -52,6 +52,7 @@ Fonts that disappear. They serve content without drawing attention — that's th
 | Font | Designer/Foundry | Character | Good for |
 |------|-----------------|-----------|----------|
 | Inter | Rasmus Andersson | The benchmark UI font. Excellent metrics, huge feature set | Any interface where personality isn't the goal |
+| ↳ *always as **InterVariable*** | rsms.me/inter | The canonical variable build: `opsz` axis + full cv/ss OpenType feature set (CDN builds strip some). Self-host via `next/font/local` | See `typography-opentype.md` § Character Variants for feature selection |
 | Geist | Vercel | Clean, modern, tight metrics | Developer tools, Vercel ecosystem, modern products |
 | DM Sans | Colophon Foundry | Low-contrast geometric, designed for small sizes | Dense interfaces, mobile, compact UI |
 | Hedvig Letters Sans | Kanon Foundry | Swedish warmth, slightly editorial proportions without quirk | Brands that want warmth without eccentricity |
