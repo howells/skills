@@ -96,6 +96,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 ```
 
+### `foreman`
+
+Foreman-mode implementation: the main loop plans, specs, and reviews while delegated subagents write the production code — a taste-tier model (Opus) for judgment-heavy surfaces, a fast tier (Sonnet) for grunt work. Diffs get reviewed by the foreman itself, and fixes go back to the same agent that wrote them.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill foreman --agent codex --global
+```
+
 ### `foundry`
 
 Create, review, or revise a distinctive visual identity system — brand positioning, rendered direction options to compare, OKLCH palettes, typography, visual character, and a Tailwind v4 `@theme` token model (or `docs/brand-system.md`). Use it when a product needs a brand established before UI, loose identity ideas turned into usable direction, or a system tied directly to implementation. (Absorbs the former `brand` skill — if you have `brand` installed, uninstall it and install `foundry`.)
