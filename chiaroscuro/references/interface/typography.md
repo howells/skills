@@ -2,21 +2,23 @@
 
 ## Rendering
 
-- MUST: `antialiased` class on body (Tailwind) or:
+- MUST: `antialiased` class on body. Grayscale smoothing renders text thinner and crisper than the browser default, and matches Figma and native macOS UI. If light text on dark backgrounds looks too thin at 1x DPI, bump the weight one step — don't remove `antialiased`.
+- MUST: enable optical sizing when the font has an `opsz` axis (Tailwind has no utility for this — set it once in base):
 
 ```css
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+@layer base {
+  body { font-optical-sizing: auto; }
 }
 ```
 
+- MUST NOT: add `text-rendering: optimizeLegibility`. Kerning and common ligatures are already on by default in modern browsers; the property still costs layout time on long pages (worst on mobile). It fixes nothing and slows things down.
 - MUST: Prevent iOS landscape zoom:
 
 ```css
 html { -webkit-text-size-adjust: 100%; }
 ```
+
+For the full rendering stack — DPI, optical sizing, per-size tracking, hanging punctuation — see `../typography-opentype.md` § The Rendering Stack.
 
 ## Font Weight
 
