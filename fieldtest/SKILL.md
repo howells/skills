@@ -73,6 +73,10 @@ Work from evidence:
 
 For destructive actions, payments, emails, orders, publishing, or production mutations, stop and ask before executing.
 
+### Recordings
+
+For a full field test, when the browser tool supports recording, capture a short clip (~30s) of the primary flow. Name the file meaningfully. A reader should be able to verify the finding from the clip alone and open the code only when the clip looks wrong. Recording is optional; skip it when the tooling cannot record.
+
 ## Persona Lenses
 
 If the user gives a persona, use it. Otherwise choose the most relevant lens:
@@ -96,7 +100,7 @@ Each finding should include:
 - what happened
 - why it matters
 - reproduction steps
-- evidence, such as screenshot path, console message, network status, or visible state
+- evidence, such as screenshot path, recording path, console message, network status, or visible state
 - likely cause when code inspection supports it
 - suggested fix
 
@@ -112,6 +116,8 @@ When the user asks for fixes:
 4. Run the relevant checks.
 5. Re-test the route or flow in the browser.
 
+When the tooling supports recording, capture before and after clips of the affected flow and include both paths in the report.
+
 Do not fix speculative issues that were not reproduced unless the user explicitly wants a code audit too.
 
 ## Output
@@ -125,6 +131,7 @@ Target: [URL]
 Mode: [report-only QA | QA plus fixes | focused route/feature/regression | responsive/mobile audit | persona browsing]
 Lens: [persona/lens]
 Viewports: [sizes tested]
+Recordings: [clip paths, or none]
 
 ## Findings
 
@@ -151,3 +158,4 @@ Before finishing, verify that:
 - findings include reproduction steps or concrete evidence
 - destructive flows were not executed without confirmation
 - fixes, if made, were re-tested in the browser
+- recordings were captured when the tooling supports them, or their absence is stated
