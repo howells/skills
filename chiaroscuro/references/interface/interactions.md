@@ -36,6 +36,14 @@ Canonical touch-target spec for the whole skill — `responsive.md` defers here.
 
 `3rem` = 48px; `pointer-fine:hidden` removes the padded hit area on mouse/trackpad where it isn't needed. Define `@custom-variant pointer-fine (@media (pointer: fine))` if the project doesn't already.
 
+## Tap and Gesture Feel
+
+- MUST: Show press feedback on pointer-*down*, commit the action on pointer-*up*. Waiting for `click` to show any feedback feels dead
+- MUST: Allow cancel-by-dragging-away — moving off the target before release aborts the tap, moving back re-arms it (native `:active` + `click` behave this way; custom pointer-event handlers must reproduce it)
+- SHOULD: Require ~10px of movement (hysteresis) before committing a drag to a direction; below that, treat the gesture as a tap
+- SHOULD: Detect all plausible gestures in parallel from the first move, then cancel the losers once intent is clear. Avoid end-state-only recognizers (`swipeleft`-style events) — they throw away the continuous tracking needed for 1:1 feedback (see `animation.md`: Gesture-Driven Motion)
+- SHOULD: Only pay the double-tap disambiguation delay (which delays every single tap) where double-tap genuinely exists
+
 ## Input
 
 - MUST: `text-base` minimum on mobile inputs (prevents iOS zoom)

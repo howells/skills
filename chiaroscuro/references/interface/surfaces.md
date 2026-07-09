@@ -34,6 +34,27 @@ Surface treatment communicates depth, grouping, and pace. Every surface must ear
 - MUST NOT: Make an elevated element (card, modal, popover with `shadow-*`) darker than its canvas. Use `white` or the lightest neutral, not `gray-100`/`gray-50`. Darker fills are fine for inset panels and wells that have no outer shadow.
 - MUST: Remove all shadows in dark mode — use `dark:shadow-none` and lean on the surface ladder and faint inset rings for separation. See [dark-mode.md](./dark-mode.md).
 
+## Translucent Chrome
+
+Translucency is functional, not decorative: it lets fixed chrome (sticky headers, toolbars, sheets) float over content instead of consuming an opaque strip of the canvas, and material weight communicates layer hierarchy. It still must earn its place — if the chrome never overlaps scrolling content, a solid surface is simpler and cheaper (see `performance.md` on auditing decorative `backdrop-blur-*`).
+
+- SHOULD: Build sticky nav, toolbars, and sheets as translucent layers — `backdrop-blur-*` plus a semi-transparent background (`bg-white/60 backdrop-blur-xl backdrop-saturate-150`) — with content scrolling underneath.
+- MUST NOT: Stack a light translucent surface on another translucent surface — legibility collapses.
+- SHOULD: Bigger surfaces read as thicker material: a full sheet gets stronger blur and a deeper shadow than a small chip.
+- MUST: Keep text legible over translucency — higher contrast and slightly heavier weight than the same text on a solid surface; keep colored text and accents on solid layers, not the translucent foreground.
+- SHOULD: Prefer a scroll edge effect over a hard 1px divider under sticky chrome — a small blur or gradient mask where content meets the floating layer, applied only where overlap actually happens.
+- SHOULD: Dim to focus, separate to keep flow — a modal task pairs its surface with a dimming scrim; a parallel, non-blocking panel uses translucency and offset without a scrim.
+- SHOULD: On enter/exit, animate blur radius and scale together so the surface reads as material arriving, not a plain opacity fade.
+- MUST: Honor `prefers-reduced-transparency: reduce` — raise the background to near-opaque and drop the blur:
+
+```css
+@custom-variant reduced-transparency (@media (prefers-reduced-transparency: reduce));
+```
+
+```html
+<header class="bg-white/60 backdrop-blur-xl reduced-transparency:bg-white reduced-transparency:backdrop-blur-none">
+```
+
 ## Empty And Loading States
 
 - MUST: Empty and loading states inherit the same surface ladder as the populated state.

@@ -6,9 +6,11 @@
 - MUST: Use `transform` and `opacity` for spatial/content motion. Color, background, border, and shadow transitions are acceptable for simple state feedback when they do not cause layout or paint-heavy effects.
 - MUST: Every animation answers "why does this exist?" — purposeful animation orients, gives feedback, or shows relationships. It does not decorate.
 - MUST: Correct `transform-origin` for element's entry point (origin-aware animation — a popover grows from the button that opened it, not from its own center)
+- MUST: Enter and exit along the same path — a panel that slides in from the right dismisses to the right. In-from-right / out-the-bottom feels disconnected
 - SHOULD: CSS for simple transitions; `motion/react` when JS control needed
 - NEVER: Animate for "delight" without function
 - SHOULD: The more often a user sees an animation, the shorter and subtler it should be (frequency of use)
+- SHOULD: Intermediate motion telegraphs the outcome — in-between frames point at where things are going, not blind interpolation to the end state
 
 ## Motion Vocabulary
 
@@ -158,6 +160,7 @@ Use these terms precisely when specifying motion in design specs. Shared languag
 | Interactive/gesture | `spring` | See presets below |
 
 - NEVER: Use `ease-in` for enter animations
+- SHOULD: Mirror the easing on reversible transitions so the outbound path matches the return path (inverse cubic-bézier control points for the two directions)
 
 ### Easing Variables
 
@@ -190,19 +193,93 @@ Order: quad → cubic → quart → quint → expo (subtle → dramatic)
 
 ## Spring Presets
 
+Think in two designer-friendly parameters instead of the physics triplet (mass/stiffness/damping):
+
+- **Damping ratio** — controls overshoot. `1.0` = critically damped, no bounce. Below `1.0` = overshoots. Lower = bouncier.
+- **Response** — how quickly the value reaches the target, in seconds. Lower = snappier. Not a duration — a spring's settle time emerges from its parameters.
+
+In `motion/react`, the `bounce` + `duration` spring API maps directly: `bounce: 0` ≈ damping `1.0`; `duration` ≈ response.
+
+- MUST: Default to critically damped (`bounce: 0`) — graceful, non-distracting.
+- MUST: Add bounce only when the gesture itself carried momentum (a flick, a throw, a drag release). Overshoot on a menu that just faded in feels wrong; overshoot on a card the user flicked feels right.
+
+Reference values (what Apple ships):
+
+| Interaction | Damping | Response |
+|-------------|---------|----------|
+| Move / reposition | `1.0` | `0.4` |
+| Rotation | `0.8` | `0.4` |
+| Drawer / sheet | `0.8` | `0.3` |
+
 ```jsx
-// Snappy (buttons, toggles)
-{ type: "spring", stiffness: 400, damping: 25 }
+// Critically damped default (no overshoot)
+{ type: "spring", bounce: 0, duration: 0.4 }
 
-// Gentle (subtle movement)
-{ type: "spring", stiffness: 200, damping: 20 }
+// Momentum interaction — slight bounce, only because a flick preceded it
+{ type: "spring", bounce: 0.2, duration: 0.4 }
 
-// Bouncy (use sparingly)
-{ type: "spring", stiffness: 300, damping: 10 }
+// Equivalent stiffness/damping presets when the API needs them:
+{ type: "spring", stiffness: 400, damping: 25 }  // snappy (buttons, toggles)
+{ type: "spring", stiffness: 200, damping: 20 }  // gentle (subtle movement)
 ```
 
 Use springs for: drag/drop, gestures, interruptible animations. Springs carry velocity across interruptions — a flicked element keeps its speed when redirected.
 Use tweens for: fixed timing, opacity-only, <100ms.
+
+## Gesture-Driven Motion
+
+For drags, swipes, sheets, carousels — anything the pointer can grab. The goal is no visible seam between the user's gesture and the animation that follows it: motion starts from the current on-screen value, inherits the user's velocity, projects momentum forward, and can be grabbed and reversed at any instant.
+
+### Tracking
+
+- MUST: Track 1:1 with the pointer for the entire gesture — never animate only when the gesture completes
+- MUST: Respect the grab offset — keep the point the user grabbed under the pointer; snapping to the element's center breaks the illusion
+- SHOULD: Use Pointer Events with `setPointerCapture` so tracking continues when the pointer leaves the element's bounds
+- SHOULD: Keep a short position + timestamp history (last few `pointermove` events) — release velocity comes from it
+
+### Interruptibility
+
+- MUST: Never lock out input during a transition — a closing sheet the user grabs must follow the finger, not finish closing first
+- MUST: On interrupt, animate from the presentation (live on-screen) value, never the logical target — starting from the target causes a visible jump
+- NEVER: CSS transitions or `@keyframes` for gesture-driven motion — they can't be grabbed and reversed mid-flight; springs animate from the current value by default
+- SHOULD: When a gesture reverses, carry velocity through the re-target instead of hard-cutting it — a velocity discontinuity reads as hitting a brick wall
+- SHOULD: Decompose 2D motion into independent X and Y springs — a single spring on 2D distance desyncs when the axes have different velocities
+
+### Velocity Handoff
+
+When a gesture ends, the animation continues at the finger's exact velocity. `motion/react` takes raw px/s directly via the `velocity` option. APIs that want relative velocity: normalize by remaining distance:
+
+```
+relativeVelocity = gestureVelocity / (targetValue − currentValue)
+```
+
+### Momentum Projection
+
+Don't snap to the nearest boundary from the release point — project where the momentum is going, then snap to the target nearest the projection. This is what makes a flick feel like a throw:
+
+```js
+// decelerationRate ≈ 0.998 for scroll-like feel; 0.99 for snappier
+function project(initialVelocity /* px/s */, decelerationRate = 0.998) {
+  return (initialVelocity / 1000) * decelerationRate / (1 - decelerationRate);
+}
+
+const projectedEndpoint = currentPosition + project(releaseVelocity);
+const target = nearestSnapPoint(projectedEndpoint);
+// then hand off releaseVelocity to the spring (see Velocity Handoff)
+```
+
+- MUST: Decide commit vs. cancel by velocity **sign** at release, not position — a fast flick back from 90% open should still cancel
+
+### Rubber-Banding
+
+At a boundary, resist progressively instead of stopping hard. A hard stop reads as frozen; increasing resistance reads as "responsive, but nothing more here":
+
+```js
+// The further past the bound, the less the element follows
+function rubberband(overshoot, dimension, constant = 0.55) {
+  return (overshoot * dimension * constant) / (dimension + constant * Math.abs(overshoot));
+}
+```
 
 ## Scale Values
 
@@ -255,6 +332,7 @@ Use `popLayout` for lists with exit animations.
 ### Swipe to Dismiss
 ```jsx
 onDragEnd={(_, info) => {
+  // velocity decides first (direction of the flick); offset is the fallback for slow drags
   if (info.velocity.x > 500 || Math.abs(info.offset.x) > 100) dismiss();
 }}
 ```
@@ -281,8 +359,18 @@ function setTheme(theme) {
 
 ## Reduced Motion
 
+Reduced motion means a gentler, non-vestibular equivalent — not zero feedback. Three independent signals to honor:
+
+| Signal | Response |
+|--------|----------|
+| `prefers-reduced-motion: reduce` | Replace slides/springs/parallax with short opacity cross-fades; drop overshoot and elastic effects; keep opacity/color changes that aid comprehension |
+| `prefers-reduced-transparency: reduce` | Raise surface opacity, drop backdrop blur (see `surfaces.md`) |
+| `prefers-contrast: more` | Near-solid backgrounds with a defined, contrasting border |
+
 - MUST: Provide reduced-motion fallback for every animation
 - SHOULD: Use opacity fade as fallback
+- NEVER: Full-viewport moving backgrounds, or slow loops near 0.2 Hz (one cycle per ~5s) — vestibular triggers
+- SHOULD: Make large elements semi-transparent while they travel a long distance, or fade them out during the move and back in once settled
 
 ```jsx
 const shouldReduce = useReducedMotion();

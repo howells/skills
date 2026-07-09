@@ -72,6 +72,8 @@ Navigation teaches users how to think about the product space. It IS the product
 
 - MUST: Current location always visible
 - MUST: Consistent placement across all screens
+- MUST: Every screen answers the wayfinding questions: Where am I? Where can I go? What's there? How do I get out? Never trap the user
+- SHOULD: Direct, specific labels beat safe generic ones — name nav items for their contents ("Progress", "Library"), not vague umbrellas ("Home"). Specificity creates predictability
 - SHOULD: Breadcrumbs for 3+ level depth
 - SHOULD: Navigation structure mirrors the mental model of the domain, not the database schema
 - NEVER: Navigation that requires scrolling to find
