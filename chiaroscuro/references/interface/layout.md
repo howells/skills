@@ -8,8 +8,17 @@
 - MUST: Verify mobile, laptop, ultra-wide (simulate at 50% zoom)
 - MUST: Respect safe areas via `env(safe-area-inset-*)`
 - MUST: No unwanted scrollbars — fix overflows
-- SHOULD: Optical alignment: ±1px when perception beats geometry
+- SHOULD: Optical alignment: ±1px when perception beats geometry — icons beside text, play triangles in circular buttons, and text in buttons usually need a 1–2px nudge to look centered; section vertical padding often wants slightly more bottom than top to feel balanced
 - SHOULD: Balance icon/text lockups (stroke, weight, size, spacing, color)
+
+## Cross-Element Alignment
+
+- MUST: Sibling cards, columns, and tiers align shared elements on the same Y — titles, descriptions, prices, and CTAs each sit on one shared baseline across all items. Misaligned baselines read as broken, not casual.
+- MUST: Pin CTAs to card bottoms (`mt-auto` in a flex column) so buttons form one clean horizontal line regardless of content height above them.
+
+## Multi-Span Grids
+
+- MUST: No dead cells — in bento/multi-span grids, verify the `col-span`/`row-span` values interlock with no empty voids; `grid-flow-dense` backfills holes. Prefer 3–5 intentional tiles over 8 messy ones.
 
 ## Flex Sizing
 
@@ -30,6 +39,7 @@
 
 - MUST: Left-aligned sections align to the page container edge — never narrow `max-w-* mx-auto` to fake it. Set `max-w-*` at the page level and constrain inner content separately.
 - SHOULD: Align containers that occupy the same proportion across stacked sections so their column edges line up — share grid definitions and gap values.
+- SHOULD: For the strictest page-wide consistency, define one shared grid (e.g. 12 columns) and give every section explicit spans (`col-span-12/8/6/4`) instead of per-section ad hoc widths — inconsistent section widths become a checkable violation. Collapse all spans to `col-span-full` below the mobile breakpoint.
 - SHOULD: Avoid nested `max-w-*` on grids/lists that already fill their container; let them align to the page edges. Nested `max-w-*` is fine for self-contained units meant to feel bounded (pricing cards, forms, comparison tables, centered media).
 
 ## Viewport

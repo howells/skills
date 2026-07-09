@@ -128,6 +128,17 @@ When reviewing or building, scan for these specific code-level tells. See `inter
 - Visible implementation terminology (`schema`, `pipeline`, `agent step`, `vector store`, raw API names) → translate into user goals and domain language unless this is a developer tool where those terms are the user's objects
 - Extra wrappers, floating labels, decorative status chips, and nonfunctional panels → remove unless they clarify state, hierarchy, navigation, or affordance
 
+### Content Authenticity
+
+Fabricated content has its own AI fingerprint, independent of visual styling. Scan demo data and copy for these tells:
+
+- Suspiciously round numbers (`99.99%`, `50%`, `$100.00`) → organic values (`47.2%`, `$89`, `18 of 43`)
+- Placeholder people ("John Doe", "Jane Smith") and slop brands ("Acme", "Nexus", "SmartFlow") → contextually believable names for the product's domain
+- One avatar image reused for every person, identical timestamps on every row → unique avatars, varied dates
+- AI copy clichés ("Elevate", "Seamless", "Unleash", "Next-Gen", "Supercharge") → plain, specific language about what the product does
+- Micro-copy tells: exclamation marks in success states, "Oops!" in errors, passive voice → confident direct voice ("Connection failed. Try again.")
+- Title Case On Every Header → sentence case by default, unless the brand system chose otherwise
+
 ## Design Review Checklist
 
 Use this checklist when reviewing UI implementations.

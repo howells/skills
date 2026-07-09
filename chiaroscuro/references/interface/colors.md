@@ -201,3 +201,4 @@ Note chroma curve: peaks at 500 (0.15), reduces toward both extremes. This keeps
 - NEVER: Default to indigo as the brand or accent color unless the project already uses it or the user asked for it
 - NEVER: Invent colors on the fly — use defined palette
 - NEVER: Heavy alpha/transparency as a substitute for proper palette shades
+- NEVER: An orphan dark section in a light page (or vice versa) — a lone `#111` band mid-page reads as a copy-paste accident. Commit to one substrate; when a section needs contrast, step within the same palette (a darker/lighter shade of the page's neutrals), not a jump to the opposite scheme. A deliberate full dark footer or hero can work; a random dark stripe between light sections cannot.

@@ -397,7 +397,15 @@ Read `references/interface/tailwind-authoring.md`.
 - When available, use `npx @tailwindcss/cli canonicalize` to normalize class lists. Pass the project's CSS entry file with `--css path/to/input.css` when custom Tailwind v4 tokens or utilities are required for accurate output. If the subcommand is unavailable, use the sibling `canonicalize-tailwind` skill, or normalize manually per `references/tailwind-authoring.md`.
 - Use structured output such as `--format json` or `--format jsonl` when processing many class strings.
 
-### 4. Dark Mode (When In Scope)
+### 4. Visual De-Generification (When In Scope)
+
+When the request is "make it look less AI" rather than structural cleanup, work in max-impact/min-risk order, verifying after each step:
+
+1. font swap, 2. palette cleanup, 3. hover/focus/active states, 4. layout and spacing (grid, max-width, rhythm), 5. replace cliché components, 6. add missing empty/loading/error states, 7. type-scale and spacing polish.
+
+Check `references/frontend-design.md` (AI slop checks, content authenticity) for what to hunt, and stay within the existing stack — no rewrite.
+
+### 5. Dark Mode (When In Scope)
 
 When the request includes dark mode — adding it, improving an existing treatment, or converting a light-only UI — read `references/interface/dark-mode.md` and run a dedicated pass:
 
@@ -406,7 +414,7 @@ When the request includes dark mode — adding it, improving an existing treatme
 - Remove shadows (`dark:shadow-none`) and lean on the surface ladder and faint inset rings for separation.
 - Audit raster images and external SVGs for dark variants. Chiaroscuro identifies and wires them in; generating raster assets is a handoff to an image-generation workflow (out of scope here).
 
-### 5. Verify
+### 6. Verify
 
 Run scoped checks appropriate to the changed project:
 

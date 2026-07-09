@@ -408,6 +408,23 @@ const shouldReduce = useReducedMotion();
 - MUST: Pause looping animations when off-screen
 - NEVER: Animate `width`, `height`, `top`, `left`, `margin`, `padding`
 
+### Pausing Off-Screen Animations
+
+Two mechanisms depending on what drives the animation:
+
+- CSS animations: toggle a class via `IntersectionObserver` — on the section *and* on animated descendants (including `::before`/`::after` shimmer layers):
+
+```css
+.is-offscreen .looping-animation,
+.looping-animation.is-offscreen {
+  animation-play-state: paused;
+}
+```
+
+- Canvas/WebGL/rAF loops: `animation-play-state` cannot touch JS loops — cancel `requestAnimationFrame` when off-screen, resume on re-entry, and dispose renderer resources on unmount.
+
+Pass/fail check: profile top, middle, and footer of the page — zero animations running for off-screen sections.
+
 | Don't | Do |
 |-------|-----|
 | `width` | `scaleX` |
