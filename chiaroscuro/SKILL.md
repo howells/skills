@@ -126,6 +126,8 @@ If neither exists and the work is substantial, ask whether to establish persiste
 - motion philosophy
 - project-specific anti-patterns
 
+Write every recorded principle so an agent can grade its own output against it — countable or checkable. "Every screen has one primary action, and only that action uses the accent color" is gradable; an agent can count accented elements. "Keep the interface clean" is not. If a principle cannot be graded, rewrite it until it can.
+
 ### 2. Inspect What Exists
 
 If redesigning existing UI:
@@ -303,7 +305,7 @@ Include:
 
 Use the compact Design Spec skeleton in `references/spec-templates.md`.
 
-In complexity guardrails, name concrete limits for the implementation. Every element must earn its place — cut wrapper elements with no purpose, cards inside cards, excessive nesting for simple content, decorative chrome, too many font sizes, too many accent colors, arbitrary spacing values, mono small-caps used as a general label style rather than for numeric or data-adjacent content, and Tailwind class strings that should become reusable components.
+In complexity guardrails, name concrete limits for the implementation. Every element must earn its place — cut wrapper elements with no purpose, cards inside cards, excessive nesting for simple content, decorative chrome, too many font sizes, too many accent colors, arbitrary spacing values, mono small-caps used as a general label style rather than for numeric or data-adjacent content, and Tailwind class strings that should become reusable components. Write the verification checklist and every guardrail so an implementing agent can check compliance by counting or inspecting, not by taste.
 
 In abstraction rules, name which internal details must be hidden, translated, or deferred. Replace implementation-first copy with domain language: `API key created` can become `Connection ready`; `vector index sync failed` can become `Search is still updating`; `agent step running` can become `Checking the next section`. Keep debug details available only behind explicit affordances when the user needs diagnosis.
 

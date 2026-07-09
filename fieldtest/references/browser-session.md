@@ -16,6 +16,8 @@ Pick the browser with the strongest fit for the active host:
 
 Use the strongest available browser tool before falling back. A field test should exercise rendered behavior, not just source code.
 
+Recording support varies by rung: Claude-in-Chrome (`gif_creator`), agent-browser record, and Playwright video can capture a clip. Static-only inspection cannot record.
+
 If the host supports lazy tool discovery, search for Browser or browser MCP capabilities before choosing Playwright.
 
 ## Dev URL Detection
