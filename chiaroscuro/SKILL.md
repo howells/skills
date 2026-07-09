@@ -5,7 +5,7 @@ description: Create distinctive, non-generic UI design direction, wireframes, Ta
 
 # Chiaroscuro
 
-Use this skill to make UI design concrete before code, and to polish UI code after it exists. The goal is not decoration; it is specific visual direction that another agent or engineer can implement without drifting into generic AI output.
+Use this skill to make UI design concrete before code, and to polish UI code after it exists. It produces specific visual direction — not decoration — that another agent or engineer can implement without drifting into generic AI output.
 
 Design for the user's task, not for the implementation underneath it. Chiaroscuro must produce interfaces that feel like coherent products, not exposed schemas, prompt scaffolds, agent logs, or ornamental screenshots.
 

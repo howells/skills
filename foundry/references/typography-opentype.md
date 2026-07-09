@@ -6,7 +6,7 @@ Advanced typography features for polished, professional interfaces. Companion to
 
 ## OpenType Feature Settings
 
-OpenType features unlock professional typographic refinements. Use `font-feature-settings` for fine control or `font-variant-*` for standardized features.
+OpenType features add professional typographic refinement. Use `font-feature-settings` for fine control or `font-variant-*` for standardized features.
 
 ### Numeric Formatting
 

@@ -65,7 +65,7 @@ p { font-size: clamp(1rem, 2.5vw, 1.25rem); }
 
 ## OpenType Features
 
-Most developers don't know these exist. Use them for polish:
+Use them for polish:
 
 ```html
 <!-- Tailwind classes for OpenType features -->

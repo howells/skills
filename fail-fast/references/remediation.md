@@ -1,6 +1,6 @@
 # Fail Fast Remediation Reference
 
-Use this reference after the scanner identifies a fallback. The goal is not to delete all defaults mechanically; the goal is to remove hidden state and make every remaining branch explicit, tested, and justified.
+Use this reference after the scanner identifies a fallback. Do not delete all defaults mechanically; remove hidden state and make every remaining branch explicit, tested, and justified.
 
 ## Classification
 
