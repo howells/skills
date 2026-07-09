@@ -5,7 +5,7 @@ description: Extract a component, hook, utility, feature, or subsystem from an e
 
 # Aperture
 
-Use this skill to extract useful local code into a clean reusable package. The goal is not just moving files; the goal is a stable public surface, minimal dependencies, working examples, and a package that can be reused without dragging the original app with it.
+Use this skill to extract useful local code into a clean reusable package: a stable public surface, minimal dependencies, working examples, and no dependence on the original app.
 
 ## References
 

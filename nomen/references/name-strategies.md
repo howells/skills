@@ -62,4 +62,4 @@ Availability checks are signals, not guarantees.
 - Package registry results can change at any time.
 - Trademark clearance requires jurisdiction-specific legal review.
 
-Use precise language: "no obvious conflict found" is usually more honest than "available".
+Use precise language: "no obvious conflict found" is usually more accurate than "available".
