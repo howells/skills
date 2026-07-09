@@ -82,6 +82,15 @@ Covers: logo grids, customer logos, partner logos, trust bars, client rows, and 
 - Always distribute logos evenly across rows when wrapping — never allow an unbalanced last row (e.g. 5 on one row and 1 on the next); use a grid or layout that splits logos as evenly as possible across all rows (e.g. 3+3 instead of 5+1 for 6 logos)
 - Logo clouds directly beneath a hero are an extension of the hero — match the hero's alignment; left-aligned hero → left-aligned logo cloud label and logos
 
+### Marquee Logo Rows
+
+When a logo row loops (marquee), the mechanics that keep it from reading as glitchy:
+
+- Duplicate the item sequence exactly once and animate the track `translateX(0)` → `translateX(-50%)` with linear easing — the halfway point is identical to the start, so the loop is seamless with no visible reset
+- Keep item widths stable so the -50% midpoint stays exact
+- Fade both ends with an edge mask (`mask-x-from-90%`, see `primitives.md`: Overflow Edges) so logos don't pop in and out at the container boundary
+- Pause on hover only if the logos are links; pause when off-screen always (see `animation.md`)
+
 ## Login Pages
 
 Covers: login, sign-in, sign-up, authentication, password reset, and account access pages.

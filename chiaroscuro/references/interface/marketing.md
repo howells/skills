@@ -22,6 +22,8 @@ The hero is the first impression. It sets the tone for everything below.
 | Full-bleed media | Photography-driven, lifestyle brands |
 | Interactive/demo | Product speaks for itself |
 
+**Full-bleed media composition:** anchor the copy low or to a deliberate edge — not centered over the middle of the image — so the photography keeps its dominance. Use a directional gradient wash for legibility (`bg-gradient-to-t from-black/60 via-black/20 to-transparent`), not a flat scrim over the whole image. Keep secondary blocks (quote, metric, proof) low-fill so they sit on the image instead of boxing it with container chrome.
+
 ## Section Composition
 
 Marketing pages are narratives. Each section advances the story.

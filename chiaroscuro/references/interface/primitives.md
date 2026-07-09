@@ -45,6 +45,13 @@ Covers: inline SVG, SVG color styling, `fill`, `stroke`, `currentColor`, and SVG
 - Style SVG colors with Tailwind classes (`fill-*`, `stroke-*`, `text-*` with `fill="currentColor"`/`stroke="currentColor"`) instead of hardcoded color attributes or inline ternaries — use `data-*`/`aria-*` variants or conditional classes to switch colors
 - Never combine `fill="currentColor"`/`stroke="currentColor"` attributes with `fill-*`/`stroke-*` classes on the same element — the attribute conflicts with the class; use `fill-current`/`stroke-current` to inherit the text color, or drop the attribute entirely when using a specific color class like `fill-zinc-400`
 
+## Overflow Edges
+
+Covers: horizontally scrolling chip rows, tab bars, carousels, wide tables, and code blocks — anything that clips at a container edge.
+
+- Fade overflowing content at the container edge instead of hard-clipping it — the fade is the affordance that says "more this way". Tailwind v4.1 mask utilities: `mask-r-from-85%` (fade the right edge), `mask-x-from-90%` (both edges); raw CSS: `mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent)`
+- Only mask edges that can actually scroll — a faded edge on fully visible content falsely signals hidden items; if both states occur, toggle the mask based on scroll position
+
 ## Border Radius
 
 Covers: rounded cards, panels, buttons, images, screenshots, nested surfaces, and any UI element where radius consistency matters.

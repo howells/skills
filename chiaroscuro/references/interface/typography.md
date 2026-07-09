@@ -57,6 +57,12 @@ h1 { font-size: clamp(2rem, 5vw, 4.5rem); }
 p { font-size: clamp(1rem, 2.5vw, 1.25rem); }
 ```
 
+## Headline Wrap Budget
+
+- MUST: A display headline (H1, hero heading) never wraps beyond 2–3 lines. A 4+ line heading is a top AI tell — big type poured into a too-narrow container.
+- MUST: Fix it compositionally, not cosmetically: widen the heading container (`max-w-5xl`/`max-w-6xl`/full width) and let `clamp()` reduce the size so words flow horizontally. Do not just shrink the font in place.
+- SHOULD: Verify the rendered line count at mobile and desktop widths before shipping.
+
 ## OpenType Features
 
 Most developers don't know these exist. Use them for polish:
