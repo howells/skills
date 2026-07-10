@@ -1,4 +1,4 @@
 interface:
   display_name: "Foreman"
-  short_description: "Plan, spec, and review; delegate the code"
-  default_prompt: "Use $foreman to implement this: plan and spec the work, delegate the production code to subagents, and review their diffs yourself."
+  short_description: "Plan, spec, and review; delegate the code across taste/heavy/grunt tiers"
+  default_prompt: "Use $foreman to implement this: plan and spec the work, delegate the production code to subagents (shelling out to the claude CLI for taste-sensitive work when available), and review their diffs yourself."
