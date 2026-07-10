@@ -98,7 +98,7 @@ npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 
 ### `foreman`
 
-Foreman-mode implementation: the main loop plans, specs, and reviews while delegated subagents write the production code — a taste-tier model (Opus) for judgment-heavy surfaces, a fast tier (Sonnet) for grunt work. Diffs get reviewed by the foreman itself, and fixes go back to the same agent that wrote them.
+Foreman-mode implementation: the main loop plans, specs, and reviews while delegated subagents write the production code, routed across three tiers — taste for judgment-heavy surfaces, heavy for spec-complete but interlocking work, grunt for mechanical work. Host-agnostic with cross-CLI delegation: Claude Code shells heavy work out to the `codex` CLI, Codex shells taste work out to the `claude` CLI, each falling back to native dispatch when the other CLI is unavailable. Diffs get reviewed by the foreman itself, and fixes go back to the same agent that wrote them.
 
 Install globally for Codex:
 
