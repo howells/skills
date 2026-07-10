@@ -1,6 +1,6 @@
 ---
 name: foreman
-description: Foreman-mode implementation — the main loop plans, specs, and reviews while delegated subagents write the production code, routed across three tiers: taste (judgment-heavy), heavy (spec-complete but interlocking), grunt (mechanical). Claude Code shells long airtight grinds to the codex CLI, Codex shells taste work to the claude CLI, each with native fallback. Use when implementing or refactoring production code of any substance. Not for one-line fixes, analysis, or docs.
+description: Foreman-mode implementation — the main loop plans, specs, and reviews while delegated subagents write the production code, routed across three tiers — taste (judgment-heavy), heavy (spec-complete but interlocking), grunt (mechanical). Claude Code shells long airtight grinds to the codex CLI, Codex shells taste work to the claude CLI, each with native fallback. Use when implementing or refactoring production code of any substance. Not for one-line fixes, analysis, or docs.
 ---
 
 # Foreman
