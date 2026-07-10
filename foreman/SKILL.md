@@ -1,6 +1,6 @@
 ---
 name: foreman
-description: Foreman-mode implementation — the main loop plans, specs, and reviews while delegated subagents write the production code, routed across three tiers — taste (judgment-heavy), heavy (spec-complete but interlocking), and grunt (mechanical). Cross-CLI delegation — Claude Code shells heavy work to the codex CLI; Codex shells taste work to the claude CLI, each with native fallback. Use when implementing or refactoring production code of any substance. Not for one-line fixes, analysis, or docs.
+description: Foreman-mode implementation — the main loop plans, specs, and reviews while delegated subagents write the production code, routed across three tiers: taste (judgment-heavy), heavy (spec-complete but interlocking), grunt (mechanical). Claude Code shells long airtight grinds to the codex CLI, Codex shells taste work to the claude CLI, each with native fallback. Use when implementing or refactoring production code of any substance. Not for one-line fixes, analysis, or docs.
 ---
 
 # Foreman
@@ -23,19 +23,21 @@ Escape hatch: the main loop writes production code inline only in extraordinary 
 
 ## Dispatch
 
-Each host shells out only where the other vendor beats its native option — Claude models for judgment and taste, Codex for long, exacting, spec-following execution. In any other host, map the tiers onto the strongest and cheapest facilities available.
+Vendor choice inside a tier is a bet on failure mode: Codex fails by literalism (transcribes a spec into a corner), Claude models fail by initiative (improve things you didn't ask for). A spec-complete grind punishes initiative; a spec with hidden gaps punishes literalism. Shell out to the other vendor only when its failure mode is the safer bet — and only when the run is long enough to amortize the cross-CLI overhead. In any other host, map the tiers onto the strongest and cheapest facilities available.
 
 | Tier | In Claude Code | In Codex |
 |---|---|---|
 | Taste | Agent tool, `model: "opus"` | shell to `claude -p`; if unavailable, write it yourself in your strongest native mode |
-| Heavy | shell to `codex exec`; if unavailable, a native fast-tier agent | native dispatch |
+| Heavy | Agent tool, `model: "opus"` by default; shell to `codex exec` per the vendor test below | native dispatch |
 | Grunt | Agent tool, `model: "sonnet"` | cheapest native mode |
+
+Heavy-tier vendor test (in Claude Code): shell to `codex exec` only when all three hold — the spec is genuinely airtight, with zero judgment calls expected mid-flight; the run is a long grind where stamina and literal spec-adherence beat initiative; and the run is big enough to amortize cross-CLI overhead (session capture, flag drift, a clunkier fix loop than native SendMessage). "I thought the spec was complete but it wasn't" is the common heavy-tier reality, and Opus fails better on unspecced gaps — when in doubt, or when the run is short, keep it on the native Opus agent. Offloading usage to a second vendor's plan is a legitimate tiebreaker, never the deciding reason on its own.
 
 ### Cross-CLI mechanics
 
 Verify flags against `--help` before the first shelled dispatch; the commands below are current as of codex-cli 0.142 / Claude Code mid-2026.
 
-- **Availability gate:** check `command -v codex` / `command -v claude` before shelling out. On a miss, use the fallback column above and say so in the dispatch summary — never hard-fail on a missing CLI.
+- **Availability gate:** check `command -v codex` / `command -v claude` before shelling out. On a miss, use the tier's native default and say so in the dispatch summary — never hard-fail on a missing CLI.
 - **Shelling to claude:** `claude -p "<brief>" --session-id "$(uuidgen)" --output-format json --permission-mode acceptEdits --allowedTools "Bash(<verify commands>)"`. Pre-assign the session ID so you hold it from dispatch. `acceptEdits` covers file edits and common filesystem commands only — the spec's verification commands must be pre-approved via `--allowedTools` or the run aborts.
 - **Shelling to codex:** `codex exec "<brief>" --json -s workspace-write` (never default to `danger-full-access`; scope the writable root with `-C <dir>` / `--add-dir` when needed). The session ID only exists on completion: capture stdout to a file and read the `thread_id` field from the JSONL events before starting review.
 - **Sending fixes:** `claude -p "<findings>" --resume <session-id>` (same permission flags as dispatch), or `codex exec resume <thread-id> --json "<findings>"`. Note `codex exec resume` accepts no `-s` — set the sandbox with `-c 'sandbox_mode="workspace-write"'`. `resume --last` is only safe if nothing else was dispatched in between. Native agents take fixes through the host's continue-agent mechanism (in Claude Code: SendMessage with the agent's ID).
