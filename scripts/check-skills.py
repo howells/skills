@@ -12,6 +12,9 @@ Surfaces per skill:
 Checks:
   - existence/sync: every skill has all three surfaces; no README entry without a
     skill dir (or vice versa); frontmatter `name` and openai `$name` match the dir.
+  - strict YAML: unquoted scalar values in SKILL.md frontmatter and openai.yaml must
+    not contain patterns that strict parsers (GitHub, installers) reject or silently
+    truncate — `: `, ` #`, a leading indicator character, or a trailing colon.
   - link integrity: every relative .md path referenced in a SKILL.md or references/
     file resolves to a real file.
   - description budget & overlap: warn >500 chars; error when two descriptions share
@@ -96,6 +99,58 @@ def read_openai_yaml(path: Path) -> dict[str, str]:
             value = value[1:-1]
         fields[kv.group(1)] = value
     return fields
+
+
+# Characters that cannot open a plain (unquoted) YAML scalar.
+YAML_LEAD_INDICATORS = set("!&*?|>%@`\"'#,[]{}")
+
+
+def plain_scalar_hazard(value: str) -> str | None:
+    """Why a plain YAML scalar would break or change meaning under a strict parser.
+
+    The regex readers above are lenient, but GitHub's frontmatter renderer and
+    skill installers parse these files with real YAML parsers. Returns a human
+    explanation, or None when the value is safe.
+    """
+    if ": " in value or value.endswith(":"):
+        return "unquoted ': ' starts a nested mapping under strict YAML parsers"
+    if " #" in value:
+        return "unquoted ' #' starts a comment; the rest of the value is dropped"
+    if value and value[0] in YAML_LEAD_INDICATORS:
+        return f"leading {value[0]!r} is a YAML indicator and cannot open a plain scalar"
+    if value.startswith(("- ", "? ")):
+        return f"leading {value[:2]!r} is a YAML block indicator"
+    return None
+
+
+def check_yaml_strictness() -> None:
+    """Line-scan frontmatter and openai.yaml for plain scalars strict parsers reject."""
+    kv_re = re.compile(r"^(\s*)([A-Za-z0-9_-]+):\s+(\S.*)$")
+    for skill in skill_dirs():
+        targets = [(skill / "SKILL.md", True), (skill / "agents" / "openai.yaml", False)]
+        for path, frontmatter_only in targets:
+            if not path.exists():
+                continue
+            text = path.read_text(encoding="utf-8")
+            if frontmatter_only:
+                match = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+                if not match:
+                    err(f"{skill.name}: SKILL.md has no frontmatter block")
+                    continue
+                text = match.group(1)
+            for lineno, line in enumerate(text.split("\n"), start=1 + frontmatter_only):
+                kv = kv_re.match(line)
+                if not kv:
+                    continue
+                value = kv.group(3).strip()
+                if value[0] in "\"'" or value in ("|", ">", "|-", ">-"):
+                    continue  # quoted or block scalar: strict parsers handle these
+                hazard = plain_scalar_hazard(value)
+                if hazard:
+                    err(
+                        f"{path.relative_to(REPO_ROOT)}:{lineno}: "
+                        f"`{kv.group(2)}` — {hazard}; quote the value or reword"
+                    )
 
 
 def readme_sections() -> dict[str, str]:
@@ -277,6 +332,7 @@ def check_links() -> None:
 
 def main() -> int:
     check_surfaces()
+    check_yaml_strictness()
     check_drift()
     check_budget_and_overlap()
     check_links()
