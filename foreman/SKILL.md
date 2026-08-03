@@ -44,6 +44,68 @@ Verify flags against `--help` before the first shelled dispatch; the commands be
 - **No hangs:** a shelled CLI must never block on stdin — run it with a hard timeout and treat a stall as a failed dispatch, not something to wait out.
 - **Isolation:** the overlapping-files rule in step 3 applies to shelled dispatches exactly as to native agents; a sandbox flag is not a substitute for sequencing or worktrees.
 
+## Standing teams (long-running named teammates)
+
+A one-shot dispatch and a team that runs for hours have different economics and
+different failure modes. When you are running the second kind:
+
+- **Parallelism is the dominant cost, not model choice.** Every live teammate
+  burns on wake-ups and idle notifications even when contributing nothing. Keep
+  only the agents on the current critical path; close the rest and re-open a
+  fresh one when their work returns. Four idle agents cost more than one busy
+  one.
+- **Report length is a budget you control.** Excellent agents write long,
+  well-argued reports, and both directions are billed. Set the format explicitly
+  at dispatch: what landed, the handle (PR/commit), gates pass/fail, and anything
+  contradicting a ruling — and say you will ask for depth when you want it.
+  Quality of judgment and length of prose are independent; only cut the second.
+- **Close on completion, brief a fresh one on return.** A resumed session drags
+  hours of dead context. Require a closeout report first — repo state, what is
+  published vs pending, and anything that would die with the pane (drafts,
+  uncontacted parties, decisions awaiting the principal) — then shut it down.
+- **Message delivery is not guaranteed.** One-way drops happen: an agent keeps
+  citing steers you sent twice. Detect it (they call something "awaiting" that
+  you ruled on), then switch to a file in their repo as the authoritative
+  channel and tell them to re-read it at each milestone. Never assume silence
+  means agreement.
+- **You are the write-side bottleneck by design.** Route ticket and record
+  writes through the foreman so one coherent view exists; let teammates read
+  freely. Cross-referencing what three agents saw is where the real findings
+  come from — a stale comment against a closed ticket against live code.
+- **A teammate that retracts its own finding is working correctly.** Reward it
+  plainly. The expensive failure is a plausible number nobody re-examined, and
+  the cheapest way to catch it is asking what the instrument actually touched.
+- **Refusal beats compliance when the agent holds context you don't.** An agent
+  that declines part of an instruction and says why is doing the job; a generic
+  order should lose to a specific constraint the agent can see and you cannot.
+  Say so when it happens, or you train the opposite.
+- **Sequence measurements so one variable moves at a time.** When two fixes are
+  landing, run the cheap isolating measurement between them, not one combined
+  pass afterwards — a combined pass confounds the effects and destroys the
+  attribution you paid for. Economy of runs is worth less than clean causality.
+
+## Verifying a delegated claim
+
+The report is a claim; the diff is the evidence — but for anything measured,
+neither is enough on its own. Before a number changes a decision, ask:
+
+- **Where did the instrument run?** In-process or over the wire, through the
+  cache or around it, as a real user or as a privileged caller. Two honest
+  harnesses measuring the same system from different sides will disagree, and
+  the disagreement is the finding, not something to average away.
+- **Did the code being measured exist when the run happened?** Check the date
+  the change landed on the mainline against the date of the run — not the
+  branch it sits on.
+- **What invalidates the cache when the CODE changes, rather than the input?**
+  A key built from inputs while the transform is a policy serves the old policy
+  forever, silently, and no TTL heals it.
+- **Could this arm have produced a non-zero result at all?** An arm that was
+  structurally zero before anything ran measures an exclusion, not a capability
+  — and printed beside a real result it makes that result look corroborated.
+- **Is a metric standing in for a judgement?** If the principal's bar is "would
+  someone accept this", a threshold invites clearing the threshold. Gate on the
+  judgement and report the number beside it.
+
 ## Steps
 
 1. **Plan.** Decompose the work into tasks with disjoint file footprints where possible. Solve the hard kernel yourself now, as code, so no agent ever invents an algorithm. Done when every task is either kernel (yours, solved) or delegable (speccable in full).
