@@ -96,9 +96,11 @@ neither is enough on its own. Before a number changes a decision, ask:
 - **Did the code being measured exist when the run happened?** Check the date
   the change landed on the mainline against the date of the run — not the
   branch it sits on.
-- **What invalidates the cache when the CODE changes, rather than the input?**
-  A key built from inputs while the transform is a policy serves the old policy
-  forever, silently, and no TTL heals it.
+- **Is anything reusing a stored result the change was supposed to affect?**
+  Caches, memoised values, fixtures, generated artefacts, snapshots. If what
+  identifies the stored result is built from the inputs but not from the code
+  that produced it, the old behaviour is served indefinitely and no expiry
+  heals it — so a correct fix measures as no change at all.
 - **Could this arm have produced a non-zero result at all?** An arm that was
   structurally zero before anything ran measures an exclusion, not a capability
   — and printed beside a real result it makes that result look corroborated.
