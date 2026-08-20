@@ -215,3 +215,13 @@ Install globally for Codex:
 ```bash
 npx skills@latest add howells/skills --skill unslop --agent codex --global
 ```
+
+### `what`
+
+Say plainly what just happened - the last message and the handful of actions behind it, translated out of jargon and tool names into what was actually done and what it means for the reader. Re-explains, never re-answers, and never starts new work. Use it when a reply did not land, when an agent has been grinding and its last update made no sense, or for "wait, what did you just do". For the state of the whole task instead, use `memento`.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill what --agent codex --global
+```

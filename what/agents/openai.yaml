@@ -1,0 +1,4 @@
+interface:
+  display_name: "What"
+  short_description: "Say plainly what just happened, in the last message and the actions behind it"
+  default_prompt: "Use $what to re-explain your last message and the few actions behind it in plain language - what you did, what it means, what happens next. Re-explain only; do not answer anything new or start further work."

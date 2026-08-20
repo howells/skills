@@ -23,6 +23,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `polyplugin` - create, audit or migrate agent plugins across Claude Code, Codex and Cursor.
 - `salvage` - rescue work that exists in only one place, then clear away branches, worktrees and stashes that are provably redundant.
 - `unslop` - strip machine-written tells out of a diff without changing behaviour.
+- `what` - say plainly what just happened in the last message and the actions behind it.
 
 ## Three sync surfaces
 
@@ -49,7 +50,7 @@ installs one skill at a time and an installed skill has to stand alone.
 
 - Keep each `SKILL.md` self-contained enough for a fresh agent to use, with no hidden dependency on a local file that the body doesn't link.
 - Don't broaden a skill unless its trigger and output stay clear, and keep repo-specific product assumptions out of reusable skills.
-- Search related skills before broadening scope. The overlap hotspots are chiaroscuro/componentize/heathen/aperture (UI design, componentization, decomposition, package extraction) and foundry (brand and identity); also check fieldtest, mastraudit and fenceline. memento/muster/inquest overlap on reporting state - memento is this session now, muster sweeps many sessions, inquest answers a question from external evidence.
+- Search related skills before broadening scope. The overlap hotspots are chiaroscuro/componentize/heathen/aperture (UI design, componentization, decomposition, package extraction) and foundry (brand and identity); also check fieldtest, mastraudit and fenceline. what/memento/muster/inquest overlap on reporting state - what decodes the last message and actions, memento is this session's task now, muster sweeps many sessions, inquest answers a question from external evidence.
 - Search the target skill directory before editing shared README text.
 - Verify current `skills` CLI examples before changing installer docs.
 - Don't copy these skills into product repos; install or invoke them from the agent environment.
