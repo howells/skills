@@ -27,6 +27,7 @@ Load only the references needed for the task:
 - `references/design-philosophy.md`: hierarchy, personality, depth, and critique of generic UI.
 - `references/interface-colors.md`: OKLCH palettes, tinted neutrals, color weight, contrast, dark mode.
 - `references/interface-typography.md`: type hierarchy, readable UI typography.
+- `references/font-recommendations.md`: the font catalogue - UI and brand faces, commercial foundries, Google Fonts picks, proven pairings, and the faces to avoid.
 - `references/typography-opentype.md`: OpenType features, tracking, font loading.
 - `references/tailwind-v4.md`: Tailwind v4 token patterns when the project uses Tailwind.
 - `references/tailwind-authoring.md`: utility authoring discipline.
