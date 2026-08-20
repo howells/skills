@@ -1,6 +1,6 @@
 ---
 name: foreman
-description: Foreman-mode implementation - the main loop plans, specs, and reviews while delegated subagents write the production code, routed across three tiers - taste (judgment-heavy), heavy (spec-complete but interlocking), grunt (mechanical). The model the foreman itself runs on sets the token economy - an expensive loop delegates harder and keeps every brief and report terse. Use when implementing or refactoring production code of any substance. Not for one-line fixes, analysis, or docs.
+description: Foreman-mode implementation - the main loop plans, specs, and reviews while subagents write the production code, routed across three tiers - taste (judgment-heavy), heavy (spec-complete but interlocking), grunt (mechanical). The model the foreman runs on sets the economy - a frontier host delegates harder and keeps briefs terse; a cheaper host saves the frontier model for narrow, hard problems. Use when implementing or refactoring production code of substance. Not for one-line fixes or docs.
 ---
 
 # Foreman
@@ -23,17 +23,19 @@ Routing rule: if the diff's quality depends on judgment calls the spec cannot fu
 
 The task decides capability - taste, heavy, or grunt. The model **you** are running on decides economy: how much you do inline, how dense your specs are, and how cheap the bottom tier can be. Read your own host model out of your environment context.
 
-| Foreman host | Taste | Heavy | Grunt |
-|---|---|---|---|
-| Fable | Opus | Opus | Sonnet, or Haiku when the pattern is already established |
-| Opus (default) | Opus | Opus | Sonnet |
-| Sonnet | Opus | Sonnet | Haiku |
+Route by role, not by product name. **Frontier** is the most capable model on offer, priced to match. **Workhorse** is strong and cheap enough to run all day. **Cheap** is fast and literal, fine once a pattern is established.
 
-In Codex, read the same table with sol at high or xhigh effort on the Fable row and sol at default effort on the Opus row. Terra and Luna are capable working models, not toys - use them wherever the Claude column says Sonnet or Haiku. If those names have drifted, map by role, not by string.
+| Tier | Model |
+|---|---|
+| Taste | Workhorse, or frontier when the surface is the product |
+| Heavy | Workhorse |
+| Grunt | Cheap, or workhorse if the spec has any slack in it |
 
-**Started in Fable.** The user paid for a smart orchestrator, so act like one: re-plan mid-flight, override an agent's call, chase the subtle thing. In exchange, every token around that judgment must be lean. Specs get *denser*, not longer - signatures, constraints and non-goals as bullets, no prose. Don't re-read files an agent already reported on, don't restate the plan, don't narrate. Push the delegation floor down: more grunt, less heavy, because your attention is the scarce resource, not theirs. Never spawn a Fable subagent from a Fable host - you are already the smart layer, and that pays twice for it.
+**If you are running on the frontier model, you are the most expensive line in the budget.** That is a licence and a constraint at once. The licence: re-plan mid-flight, override an agent's call, chase the subtle thing - that judgment is what the host was chosen for. The constraint: every token around that judgment must be lean. Specs get *denser*, not longer, with signatures, constraints and non-goals as bullets rather than prose. Don't re-read files an agent already reported on, don't restate the plan, don't narrate. Push the delegation floor down - more grunt, less heavy - because your attention is the scarce resource, not theirs. Never spawn a frontier subagent from a frontier host; you are already the smart layer, and that pays twice for it.
 
-**Started in Opus.** Fable is a scalpel, never a teammate. Spin one up only for a narrow, genuinely hard problem - a bug that survived two fix rounds, a subtle invariant or concurrency or type puzzle, a kernel Opus already failed at once. One at a time, whole context in the brief, one focused answer back, closed immediately. "This task is big" does not qualify. Say in the dispatch summary that you did it and why.
+**If you are running below it, the frontier model is a scalpel, never a teammate.** Spin one up only for a narrow, genuinely hard problem - a bug that survived two fix rounds, a subtle invariant or concurrency or type puzzle, a kernel your own tier already failed at. One at a time, whole context in the brief, one focused answer back, closed immediately. "This task is big" does not qualify. Say in the dispatch summary that you did it and why.
+
+Mapping, as of mid-2026: in Claude Code, frontier is Fable, workhorse is Opus, cheap is Sonnet or Haiku. In Codex, frontier is the flagship at high or xhigh effort, workhorse is the same flagship at default effort, and the mid tier below it holds capable working models rather than toys - use them wherever this reads "cheap". Names drift faster than the roles do; if the mapping looks stale, re-derive it from what the host offers.
 
 ### Brief economy
 
