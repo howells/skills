@@ -26,16 +26,21 @@ Length and jargon are two failures and fixing one does not fix the other. Cuttin
 
 Sometimes a message was confusing because the work behind it was confused. Verbose output is a good hiding place for not knowing.
 
-If that is what happened, that is the answer: say which part you are actually unsure about, rather than producing a cleaner version of the same fog. It is far more useful than a tidy summary that repeats a wrong assumption in better prose.
+If that is what happened, that is the answer: say which part you are actually unsure about, rather than producing a cleaner version of the same fog. It goes in `Now`, and it is far more useful than a tidy summary that repeats a wrong assumption in better prose.
 
 ## Output contract
 
-Four short lines. Not four paragraphs, and not four lines each carrying a subordinate clause. No preamble, no restating the question.
+Three headings, one short line under each. Not three paragraphs, and not three lines each carrying a subordinate clause. No preamble, no restating the question.
 
-- **Did.** What actually happened.
-- **Means.** What that means for the reader.
-- **Next.** What happens now, or what they need to decide.
-- **Unsure**, only when true. What you do not actually know.
+```
+What:  <what actually happened>
+
+Now:   <where that leaves things>
+
+Next:  <what happens now, or what they need to decide>
+```
+
+`Now` is also where uncertainty goes. If the honest state is that something did not work or you do not know, that is the line - not a footnote after it.
 
 If something genuinely will not compress, give the one-line version and offer the detail rather than delivering it unasked.
 

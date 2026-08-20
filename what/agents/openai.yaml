@@ -1,4 +1,4 @@
 interface:
   display_name: "What"
   short_description: "Cut the last message down to what happened, short and in plain language"
-  default_prompt: "Use $what to cut your last message down: what you did, what it means, what happens next, in four short lines of plain language. Re-explain only; do not answer anything new or start further work."
+  default_prompt: "Use $what to cut your last message down to three short lines of plain language - What (what happened), Now (where that leaves things), Next (what happens now or what to decide). Re-explain only; do not answer anything new or start further work."
