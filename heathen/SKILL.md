@@ -25,17 +25,17 @@ Do not split files just because they are long. Split when the file has multiple 
 
 2. Read the highest-ranked candidates before proposing changes. Confirm whether each candidate is truly overloaded or just necessarily dense.
 3. Classify each confirmed candidate:
-   - `god-component`: React component doing rendering, data shaping, effects, mutations, validation, and subview control in one file.
-   - `god-script`: CLI/build/migration script mixing argument parsing, I/O, domain logic, formatting, and side effects.
-   - `god-module`: non-UI module with multiple unrelated responsibilities.
-   - `duplication`: repeated functions, schemas, UI fragments, query builders, scripts, or formatting logic.
+ - `god-component`: React component doing rendering, data shaping, effects, mutations, validation, and subview control in one file.
+ - `god-script`: CLI/build/migration script mixing argument parsing, I/O, domain logic, formatting, and side effects.
+ - `god-module`: non-UI module with multiple unrelated responsibilities.
+ - `duplication`: repeated functions, schemas, UI fragments, query builders, scripts, or formatting logic.
 4. Produce a split order:
-   - Extract pure helpers first.
-   - Extract duplicated logic before moving callers.
-   - Extract hooks/state machines before child components when state is tangled.
-   - Extract leaf subcomponents before layout shells when JSX is large.
-   - Extract I/O adapters away from domain logic in scripts.
-   - Keep public imports stable until tests pass, then clean up barrels/exports.
+ - Extract pure helpers first.
+ - Extract duplicated logic before moving callers.
+ - Extract hooks/state machines before child components when state is tangled.
+ - Extract leaf subcomponents before layout shells when JSX is large.
+ - Extract I/O adapters away from domain logic in scripts.
+ - Keep public imports stable until tests pass, then clean up barrels/exports.
 5. If the user asked for an audit or report, stop after the split plan unless they explicitly approve edits.
 6. If the user asked for implementation, refactor one candidate at a time. After each step, run the smallest relevant test/typecheck/lint command.
 7. Stop when the requested scope is handled. Do not turn a focused decomposition into a broad architecture rewrite.
@@ -94,7 +94,7 @@ python3 scripts/find-god-files.py /repo --json
 Before finishing, verify that:
 
 - candidates were confirmed by reading the code, not accepted from the score alone.
-- each split targeted a real responsibility, duplicated logic, or oversized interface — not just line count.
+- each split targeted a real responsibility, duplicated logic, or oversized interface - not just line count.
 - imports and the public interface stayed stable until tests passed, and behavior is unchanged.
 - the repo's relevant tests/typecheck/lint were re-run after each behavioral boundary was moved.
 - remaining god files or duplication left in place are reported with the reason.

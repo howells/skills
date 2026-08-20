@@ -5,7 +5,7 @@ description: Answer a question about intent or history from evidence rather than
 
 # Inquest
 
-An inquest establishes a finding from the record. It calls every witness available, writes down which ones it could not call, and returns a verdict that a reader can follow back to the evidence.
+An inquest establishes a finding from the record. It calls every witness available, writes down which ones it could not call, and returns a verdict a reader can follow back to the evidence.
 
 Use it for "why is it built this way", "what do we actually know about X", "is this claim supported", "what happened before this broke", or any number that is about to influence a decision.
 
@@ -39,7 +39,7 @@ Copy these steps into your todolist verbatim before you reason about the questio
 
 5. **Separate what you found from what you think.** Direct evidence carries a citation - commit hash, PR number, ticket ID, message permalink, `file:line`. Everything else is inference and is labelled as inference, with the chain shown. When two sources disagree, print both; the disagreement is usually the finding. When the evidence supports more than one story, give them all rather than picking the tidy one.
 
-6. **Write the verdict to the contract below.** Do not upgrade the hedges on the way out. Confident phrasing over thin evidence is the exact failure this skill exists to prevent.
+6. **Write the verdict to the contract below.** Do not upgrade the hedges on the way out. Sounding more certain than the evidence is how a sweep turns back into a guess.
 
 ## Output contract
 
@@ -48,7 +48,7 @@ Copy these steps into your todolist verbatim before you reason about the questio
 - **What follows from it.** Inference, hedged and shown as a chain: given A and B, likely C.
 - **Where the record disagrees.** Competing readings with the evidence for each. Omit if there is a clean answer.
 - **What is not known.** Questions the sweep did not answer, and the searches that came back empty. "Searched the tracker for the retry threshold and found no ticket" beats "unclear".
-- **Sources consulted.** One line per category, including the ones that found nothing and the ones you could not reach. Format: `<category> (<server>): <what was searched>. <what was found, or "nothing relevant", or "skipped - no server available">.` This is the coverage map. It is what lets the reader see the shape of the gap and send you back for the source you missed.
+- **Sources consulted.** One line per category, including the ones that found nothing and the ones you could not reach. Format: `<category> (<server>): <what was searched>. <what was found, or "nothing relevant", or "skipped - no server available">.` This is the coverage map. It lets the reader see what you did not check, and send you back for it.
 
 Write the verdict through `deslop` before it goes anywhere near a person.
 

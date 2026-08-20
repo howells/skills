@@ -1,6 +1,6 @@
 ---
 name: foundry
-description: Create, review, or revise a distinctive visual identity system — brand positioning, rendered direction options, OKLCH palette, typography, visual character, and a Tailwind v4 @theme token model (or docs/brand-system.md). Use when asked to create a brand, define visual identity, generate or compare brand directions, choose colors or fonts, set up design tokens, make a product less generic, or establish identity before UI design.
+description: Create, review, or revise a distinctive visual identity system - brand positioning, rendered direction options, OKLCH palette, typography, visual character, and a Tailwind v4 @theme token model (or docs/brand-system.md). Use when asked to create a brand, define visual identity, generate or compare brand directions, choose colors or fonts, set up design tokens, make a product less generic, or establish identity before UI design.
 ---
 
 # Foundry
@@ -78,7 +78,7 @@ Vary directions across temperature (at least one warm, one cool), typography (at
 ### Direction N: Name
 
 Positioning: audience, category tension, and personality in one sentence.
-Palette: brand, accent, surface, text, muted — named roles with OKLCH values, fallback hex where useful, contrast risks, color-blind considerations.
+Palette: brand, accent, surface, text, muted - named roles with OKLCH values, fallback hex where useful, contrast risks, color-blind considerations.
 Typography: display, body, mono choices or characteristics, hierarchy, and why each fits; OpenType notes when relevant.
 Visual character: radius, shadows, line weight, density, icon style, motion temperament.
 Tailwind v4 implementation: `@theme` variables, semantic token names, example utility usage.

@@ -5,11 +5,11 @@ description: Rebuild working context after time away or across concurrent agent 
 
 # Muster
 
-A muster is a roll-call: every hand named, every hand accounted for, present or absent. That is the job here. Not a summary of what you did - a list of what is in flight right now, what state each thread is actually in, and what to do next.
+A muster is a roll-call: every hand named, present or absent. That is the job here. It lists what is in flight right now, the state each thread is actually in, and what to do next. It is not a summary of what you did.
 
 Use it for "catch me up", "where did I leave off", "what is running", or before picking up work you started somewhere else.
 
-The reason this earns a skill is concurrency. When several sessions run against the same repos, the expensive mistake is not forgetting what you did - it is two agents standing on the same branch, or resuming a thread that another session already merged, reverted, or abandoned.
+The reason this earns a skill is concurrency. When several sessions run against the same repos, the expensive mistake is two agents standing on the same branch, or resuming a thread another session already merged, reverted or abandoned. Forgetting what you did is cheap next to that.
 
 ## What counts as the record
 

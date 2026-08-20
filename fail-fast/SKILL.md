@@ -32,10 +32,10 @@ A fallback is allowed only when it is a real product requirement, a documented m
 
 3. Read `references/remediation.md` when findings involve environment variables, legacy compatibility, broad catch blocks, or staged migrations.
 4. Classify each finding:
-   - `remove`: dead compatibility, legacy aliases, duplicate option names, fallback branches without a live caller.
-   - `require`: missing config, absent dependencies, invalid user input, or an env var that belongs in the Envy schema.
-   - `validate`: boundary input that must accept unknown data but should reject invalid states clearly.
-   - `keep`: documented product behavior, real external API compatibility, or temporary migration with owner and removal date.
+ - `remove`: dead compatibility, legacy aliases, duplicate option names, fallback branches without a live caller.
+ - `require`: missing config, absent dependencies, invalid user input, or an env var that belongs in the Envy schema.
+ - `validate`: boundary input that must accept unknown data but should reject invalid states clearly.
+ - `keep`: documented product behavior, real external API compatibility, or temporary migration with owner and removal date.
 5. Edit narrowly. Remove the fallback state and update call sites/tests to use the canonical path.
 6. Add or update tests that prove the code fails deterministically when the dependency, input, config, or Envy-declared env var is missing.
 7. Run the scanner again, plus the repo's relevant tests, typecheck, lint, or build.
@@ -104,7 +104,7 @@ When compatibility must remain, make it visible:
 // TODO(compat): remove after API clients stop sending `workspaceId` on 2026-07-01.
 ```
 
-Lead the marker with `TODO`/`FIXME`/`HACK` so the scanner's `todo-compat` rule surfaces it — a bare `// Compatibility:` comment is intentionally not flagged (the keyword rule skips comment lines).
+Lead the marker with `TODO`/`FIXME`/`HACK` so the scanner's `todo-compat` rule surfaces it - a bare `// Compatibility:` comment is intentionally not flagged (the keyword rule skips comment lines).
 
 ## Scanner
 
@@ -117,7 +117,7 @@ Lead the marker with `TODO`/`FIXME`/`HACK` so the scanner's `todo-compat` rule s
 - optional dependency fallbacks,
 - aliases and dual config keys.
 
-Detection caveats: the legacy/compatibility keyword rule fires only on code lines, not comment lines, so a bare `// Compatibility: ...` marker is intentionally not flagged. Temporary-compat comments are surfaced only when they lead with `TODO`/`FIXME`/`HACK`/`XXX` (the `todo-compat` rule) — see the Compatibility section's marker format. The keyword rule also skips declarative manifests (`package.json`, `tsconfig.json`) to avoid matching dependency names. `--fail-on` accepts only `medium` or `high` (there are no low-severity rules) — a previously accepted `--fail-on low` now exits with an argparse error, so update any scripts that passed it.
+Detection caveats: the legacy/compatibility keyword rule fires only on code lines, not comment lines, so a bare `// Compatibility: ...` marker is intentionally not flagged. Temporary-compat comments are surfaced only when they lead with `TODO`/`FIXME`/`HACK`/`XXX` (the `todo-compat` rule) - see the Compatibility section's marker format. The keyword rule also skips declarative manifests (`package.json`, `tsconfig.json`) to avoid matching dependency names. `--fail-on` accepts only `medium` or `high` (there are no low-severity rules) - a previously accepted `--fail-on low` now exits with an argparse error, so update any scripts that passed it.
 
 The scanner is not a substitute for judgment. Treat it as an index of places to inspect, then make the code simpler and more deterministic.
 

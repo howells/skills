@@ -7,7 +7,7 @@ description: "Audit and rewrite prose that carries AI-writing tells: inflated si
 
 Review, diagnose, and rewrite prose that carries common AI-writing tells. Treat patterns as clues, not proof of authorship.
 
-The tell taxonomy in `references/signs-of-ai-writing.md` encapsulates [*Wikipedia:Signs of AI writing*](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), adapted for general prose. Maintainers: that article is the source of record — re-check the reference against it when the article changes.
+The tell taxonomy in `references/signs-of-ai-writing.md` encapsulates [*Wikipedia:Signs of AI writing*](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), adapted for general prose. Maintainers: that article is the source of record - re-check the reference against it when the article changes.
 
 State at the start that you are using the `deslop` skill.
 
@@ -69,13 +69,13 @@ Look first for clusters of:
 
 ## Overused Crutch Phrases (Cut On Sight)
 
-This section applies to formal or technical prose. In conversational or casual writing, colloquialisms like "to be honest", "honestly", and "let's be real" are legitimate voice markers, not AI evidence — do not cut them there.
+This section applies to formal or technical prose. In conversational or casual writing, colloquialisms like "to be honest", "honestly", and "let's be real" are legitimate voice markers, not AI evidence - do not cut them there.
 
 These assert rigour or candour instead of demonstrating it. They are filler: delete them and state the thing plainly.
 
 - **"load-bearing"** (load-bearing assumption / definition / detail / word / line). Say what the thing does or why it matters, not that it is structurally important.
-- **The honesty family** — "keep (it / the model / us) honest", "the honest part", "to be honest", "honestly", "honest about its gaps / limits", "the honest answer". State the limitation or fact directly; announcing honesty adds nothing.
-- **Related self-framing** — "to its credit", "the hard truth", "let's be real", "the uncomfortable truth", "make no mistake". Cut the preamble, keep the claim.
+- **The honesty family** - "keep (it / the model / us) honest", "the honest part", "to be honest", "honestly", "honest about its gaps / limits", "the honest answer". State the limitation or fact directly; announcing honesty adds nothing.
+- **Related self-framing** - "to its credit", "the hard truth", "let's be real", "the uncomfortable truth", "make no mistake". Cut the preamble, keep the claim.
 
 These rarely carry meaning the surrounding sentence does not already hold. Treat them as deletions, not rewrites.
 

@@ -53,7 +53,7 @@ Copy these steps into your todolist verbatim before you start. A step you skip s
 2. **Read the gate first.** Run the typecheck, lint and tests before you edit anything, so you know what green looked like. If it was not green, that is the finding; stop and say so.
 3. **Pass over the diff against the catalogue.** One finding per instance, each carrying the tell number and a `file:line`. Do not rewrite as you read - a pass that edits while it scans loses the thread and starts improving things.
 4. **Sort the findings into remove and refer.** Remove is anything behaviour-preserving. Refer is anything that would change what the program does, named with the skill that owns it. Never do a refer inline.
-5. **Apply the removals, then run the same gate again.** Identical results, or you changed behaviour and have to back it out. This is the whole safety property of the skill.
+5. **Apply the removals, then run the same gate again.** Identical results, or you changed behaviour and have to back it out. Without that comparison this is an unreviewed refactor.
 6. **Report.** Counts by tell number, the refer list, and the gate result before and after.
 
 ## What this is not

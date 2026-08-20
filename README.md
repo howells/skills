@@ -88,7 +88,7 @@ npx skills@latest add howells/skills --skill fenceline --agent codex --global
 
 ### `fieldtest`
 
-Test a rendered web app in the browser and report evidence-backed QA, UX, console, accessibility, persona-based, and responsive/mobile findings. Use it when you need to experience a local app as software — and find and report rendered defects — instead of only inspecting code.
+Test a rendered web app in the browser and report evidence-backed QA, UX, console, accessibility, persona-based, and responsive/mobile findings. Use it when you need to experience a local app as software - and find and report rendered defects - instead of only inspecting code.
 
 Install globally for Codex:
 
@@ -98,7 +98,7 @@ npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 
 ### `foreman`
 
-Foreman-mode implementation: the main loop plans, specs, and reviews while delegated subagents write the production code, routed across three tiers — taste for judgment-heavy surfaces, heavy for spec-complete but interlocking work, grunt for mechanical work. The task picks the tier; the model the foreman itself runs on sets the economy — an expensive host delegates harder, writes denser specs, and holds every brief and report to a terse format, while a cheaper host reserves the top model as a scalpel for narrow, genuinely hard problems. Host-agnostic and native-only, with no cross-CLI spend. Diffs get reviewed by the foreman itself, and fixes go back to the same agent that wrote them.
+Foreman-mode implementation: the main loop plans, specs, and reviews while delegated subagents write the production code, routed across three tiers - taste for judgment-heavy surfaces, heavy for spec-complete but interlocking work, grunt for mechanical work. The task picks the tier; the model the foreman itself runs on sets the economy - an expensive host delegates harder, writes denser specs, and holds every brief and report to a terse format, while a cheaper host reserves the top model as a scalpel for narrow, genuinely hard problems. Host-agnostic and native-only, with no cross-CLI spend. Diffs get reviewed by the foreman itself, and fixes go back to the same agent that wrote them.
 
 Install globally for Codex:
 
@@ -108,7 +108,7 @@ npx skills@latest add howells/skills --skill foreman --agent codex --global
 
 ### `foundry`
 
-Create, review, or revise a distinctive visual identity system — brand positioning, rendered direction options to compare, OKLCH palettes, typography, visual character, and a Tailwind v4 `@theme` token model (or `docs/brand-system.md`). Use it when a product needs a brand established before UI, loose identity ideas turned into usable direction, or a system tied directly to implementation. (Absorbs the former `brand` skill — if you have `brand` installed, uninstall it and install `foundry`.)
+Create, review, or revise a distinctive visual identity system - brand positioning, rendered direction options to compare, OKLCH palettes, typography, visual character, and a Tailwind v4 `@theme` token model (or `docs/brand-system.md`). Use it when a product needs a brand established before UI, loose identity ideas turned into usable direction, or a system tied directly to implementation. (Absorbs the former `brand` skill - if you have `brand` installed, uninstall it and install `foundry`.)
 
 Install globally for Codex:
 
@@ -138,7 +138,7 @@ npx skills@latest add howells/skills --skill inquest --agent codex --global
 
 ### `marginalia`
 
-Add useful, concise JSDoc to JavaScript and TypeScript APIs, exports, components, hooks, classes, complex types, and behavior where IDE hover help matters. Use it when adding or improving docs for public APIs, exported symbols, generated API docs, or package publishing — clarifying non-obvious code without commenting everything or changing behavior.
+Add useful, concise JSDoc to JavaScript and TypeScript APIs, exports, components, hooks, classes, complex types, and behavior where IDE hover help matters. Use it when adding or improving docs for public APIs, exported symbols, generated API docs, or package publishing - clarifying non-obvious code without commenting everything or changing behavior.
 
 Install globally for Codex:
 

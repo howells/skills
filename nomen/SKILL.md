@@ -20,12 +20,12 @@ When invoked:
 1. State that you are using the `nomen` skill.
 2. Determine whether the user wants generation, validation, renaming, or critique.
 3. If working in a codebase, inspect relevant context first:
-   - `README.md`
-   - `package.json`
-   - `docs/vision.md`
-   - `docs/brand-system.md`
-   - app, package, command, and domain folder names
-   - existing public names, product copy, and environment prefixes
+ - `README.md`
+ - `package.json`
+ - `docs/vision.md`
+ - `docs/brand-system.md`
+ - app, package, command, and domain folder names
+ - existing public names, product copy, and environment prefixes
 4. Ask only for missing constraints that materially change the name space.
 
 Useful questions:
@@ -67,9 +67,9 @@ When validating names, check current sources appropriate to the request:
 
 - General web search for exact name and adjacent terms.
 - GitHub repository and organization conflicts when developer-facing. Concretely: `gh api "repos/OWNER/NAME"` (404 = free, 200 = taken) for an exact owner/name, and `gh search repos NAME --limit 20` to gauge how crowded the name is.
-- Package registries when relevant. Concretely: `npm view NAME name` (a non-zero exit / `404` means unpublished), `pip index versions NAME`, `cargo search NAME`, or a `gem list -r -e NAME`. **A registry 404 does not mean the name is registrable** — npm rejects names too similar to existing packages (punctuation/typo-squat rules), and spam-reserved or unpublished names also 404. Treat 404 as "not currently published," not "yours to claim."
+- Package registries when relevant. Concretely: `npm view NAME name` (a non-zero exit / `404` means unpublished), `pip index versions NAME`, `cargo search NAME`, or a `gem list -r -e NAME`. **A registry 404 does not mean the name is registrable** - npm rejects names too similar to existing packages (punctuation/typo-squat rules), and spam-reserved or unpublished names also 404. Treat 404 as "not currently published," not "yours to claim."
 - Domain and DNS signals for requested TLDs.
-- **App stores** — check whenever the thing being named is, or might become, a mobile
+- **App stores** - check whenever the thing being named is, or might become, a mobile
   or desktop app (see "App Store checks" below). This is easy to forget and expensive
   to miss: an App Store name collision blocks public release, and a name can be free on
   npm/domains yet already be a shipped app.
@@ -78,7 +78,7 @@ When validating names, check current sources appropriate to the request:
 
 ### App Store Checks
 
-Apple's public iTunes Search API needs no key and answers in one request. URL-encode the term (a raw space silently truncates the query) and widen `country` beyond `us` if the app targets other regions — region-exclusive apps won't otherwise appear:
+Apple's public iTunes Search API needs no key and answers in one request. URL-encode the term (a raw space silently truncates the query) and widen `country` beyond `us` if the app targets other regions - region-exclusive apps won't otherwise appear:
 
 ```
 curl -s -G "https://itunes.apple.com/search" \
@@ -88,9 +88,9 @@ curl -s -G "https://itunes.apple.com/search" \
 
 From the JSON `results[]`, inspect each `trackName` / `sellerName` and report:
 
-- an **exact** name match (`trackName` equals the name, compared case-insensitively — the App Store treats "Clipper" and "clipper" as the same collision) → the App Store name is taken;
+- an **exact** name match (`trackName` equals the name, compared case-insensitively - the App Store treats "Clipper" and "clipper" as the same collision) → the App Store name is taken;
 - **prefix** matches (`trackName` starts with `NAME `, `NAME:`, `NAME -`) → close collisions;
-- **category saturation** — many apps whose names merely *contain* the word (e.g. a dozen
+- **category saturation** - many apps whose names merely *contain* the word (e.g. a dozen
   "clipping" apps). Even with the bare name free, a saturated category means the name is
   not distinctive and is worth flagging.
 
@@ -98,7 +98,7 @@ For Android, a web search for `NAME site:play.google.com` is the pragmatic equiv
 
 ### Verify, Don't Trust A Single Lookup
 
-Availability APIs lie — RDAP/WHOIS services rate-limit and return false "available" for
+Availability APIs lie - RDAP/WHOIS services rate-limit and return false "available" for
 domains that are in fact registered and serving. Before claiming a domain is free,
 cross-check: a live `curl -s -o /dev/null -w "%{http_code}" https://NAME.TLD` that returns
 `200`/`301`/`302` means it is taken regardless of what RDAP said; a `dig +short NAME.TLD NS`
