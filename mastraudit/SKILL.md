@@ -30,104 +30,104 @@ State at the start that you are using the `mastraudit` skill.
 - Application progress must be emitted through explicit domain events or workflow state, not inferred from observability exporter flush timing.
 - User-facing Mastra output needs an explicit quality contract. Prompt instructions, output validation, persistence-time normalization, and render-time display transforms should agree instead of relying on prompt text alone.
 - Mastra implementation code must be organized by domain under `src/`, using folders such as:
- - `agents/`
- - `tools/`
- - `workflows/`
- - `prompts/` or `agents/prompts/` when prompts are shared or substantial
- - `memory/`
- - `storage/`
- - `runtime/`
- - `observability/`
- - `mcp/`
- - `scorers/` or `evals/`
+  - `agents/`
+  - `tools/`
+  - `workflows/`
+  - `prompts/` or `agents/prompts/` when prompts are shared or substantial
+  - `memory/`
+  - `storage/`
+  - `runtime/`
+  - `observability/`
+  - `mcp/`
+  - `scorers/` or `evals/`
 
 ## Audit Workflow
 
 1. Identify the repo root. Prefer the current working directory when it contains `turbo.json`, `pnpm-workspace.yaml`, or a workspace `package.json`.
 2. Identify the approved Mastra owner:
- - Use the user's explicit package path/name if provided.
- - Otherwise inspect package manifests and imports. Auto-detect only when exactly one workspace declares `mastra` or `@mastra/*` dependencies.
- - If zero or multiple candidates exist, report ambiguity and ask the user to choose before remediation.
+   - Use the user's explicit package path/name if provided.
+   - Otherwise inspect package manifests and imports. Auto-detect only when exactly one workspace declares `mastra` or `@mastra/*` dependencies.
+   - If zero or multiple candidates exist, report ambiguity and ask the user to choose before remediation.
 3. Load `$mastra` and follow its current-docs workflow:
- - Check whether Mastra packages are installed.
- - Prefer embedded docs for the installed version.
- - Use source/types only when embedded docs are insufficient.
- - Use remote docs only when packages are unavailable.
+   - Check whether Mastra packages are installed.
+   - Prefer embedded docs for the installed version.
+   - Use source/types only when embedded docs are insufficient.
+   - Use remote docs only when packages are unavailable.
 4. Inspect deterministic boundary signals with ordinary repo search:
- - `package.json` files declaring `mastra` or `@mastra/*`.
- - Source files importing from `mastra` or `@mastra/*`.
- - Package scripts invoking the Mastra CLI.
- - Mastra-looking config/source files outside the approved owner, such as `mastra.config.*`, `mastra.ts`, `src/mastra/**`, or `.mastra/**`.
- - Broad public exports from the approved owner that expose agents, tools, workflows, storage, memory, scorers, processors, schemas, or prompt internals.
- - Tool files where the declared `id` does not match the filename's verb-noun operation.
- - Registries that auto-attach every available tool to an agent (where the codebase has such a registry), broad generated agent/tool factories, unused tool wrappers, pseudo-agent IDs, and low-level adapter wrappers that are not part of the configured Mastra surface.
- - Deleted or intentionally avoided abstractions reappearing as folders, imports, identifiers, metadata, documentation, or diagrams.
+   - `package.json` files declaring `mastra` or `@mastra/*`.
+   - Source files importing from `mastra` or `@mastra/*`.
+   - Package scripts invoking the Mastra CLI.
+   - Mastra-looking config/source files outside the approved owner, such as `mastra.config.*`, `mastra.ts`, `src/mastra/**`, or `.mastra/**`.
+   - Broad public exports from the approved owner that expose agents, tools, workflows, storage, memory, scorers, processors, schemas, or prompt internals.
+   - Tool files where the declared `id` does not match the filename's verb-noun operation.
+   - Registries that auto-attach every available tool to an agent (where the codebase has such a registry), broad generated agent/tool factories, unused tool wrappers, pseudo-agent IDs, and low-level adapter wrappers that are not part of the configured Mastra surface.
+   - Deleted or intentionally avoided abstractions reappearing as folders, imports, identifiers, metadata, documentation, or diagrams.
 5. Manually review the approved owner against current Mastra docs:
- - TypeScript config supports ES2022/bundler semantics, directly or through an audited shared config.
- - Models use the current provider/model format required by `$mastra`.
- - Agents, tools, workflows, memory, storage, observability, and MCP usage match the installed docs.
- - Storage: the configured storage driver matches an installed `@mastra/*` adapter, its connection/config is wired from environment (not hardcoded credentials or a stray default), and the same store instance is passed where memory/workflow/telemetry persistence expect it rather than each surface constructing its own.
- - MCP: every MCP server the codebase registers is actually reachable, and the tools it exposes correspond to real registered tools/agents - no phantom entries advertised in MCP config that are not attached, and no internal tools leaked through MCP that were meant to stay in-process.
- - Scorers/evals: each defined scorer is attached to the agent(s) or workflow(s) it is meant to grade rather than orphaned (defined but never referenced), and its input/output expectations match the surface it scores.
- - Mastra runtime/registration code composes domain exports instead of hiding implementation in app code.
- - Workflow runs use the installed API shape, such as awaiting async run creation when required by local types.
- - Prompts are not buried in unrelated files when they are shared, long, or reused.
- - Tests cover agent/tool/workflow contracts and any boundary-facing public API.
- - Studio or `mastra api` can inspect the implementation when runtime verification is needed.
- - At least one bounded normal-singleton smoke exists for critical execution paths; test-mode success alone is not proof that storage, observability, background tasks, and registration work together.
+   - TypeScript config supports ES2022/bundler semantics, directly or through an audited shared config.
+   - Models use the current provider/model format required by `$mastra`.
+   - Agents, tools, workflows, memory, storage, observability, and MCP usage match the installed docs.
+   - Storage: the configured storage driver matches an installed `@mastra/*` adapter, its connection/config is wired from environment (not hardcoded credentials or a stray default), and the same store instance is passed where memory/workflow/telemetry persistence expect it rather than each surface constructing its own.
+   - MCP: every MCP server the codebase registers is actually reachable, and the tools it exposes correspond to real registered tools/agents - no phantom entries advertised in MCP config that are not attached, and no internal tools leaked through MCP that were meant to stay in-process.
+   - Scorers/evals: each defined scorer is attached to the agent(s) or workflow(s) it is meant to grade rather than orphaned (defined but never referenced), and its input/output expectations match the surface it scores.
+   - Mastra runtime/registration code composes domain exports instead of hiding implementation in app code.
+   - Workflow runs use the installed API shape, such as awaiting async run creation when required by local types.
+   - Prompts are not buried in unrelated files when they are shared, long, or reused.
+   - Tests cover agent/tool/workflow contracts and any boundary-facing public API.
+   - Studio or `mastra api` can inspect the implementation when runtime verification is needed.
+   - At least one bounded normal-singleton smoke exists for critical execution paths; test-mode success alone is not proof that storage, observability, background tasks, and registration work together.
 6. Manually review the implementation-practice lens:
- - Package boundary:
- - Public exports are narrow. The normal package API is the configured Mastra singleton or a documented runtime bridge, not deep exports for every agent/tool/workflow.
- - App/API/CLI packages do not import Mastra internals or raw `@mastra/*` packages.
- - Barrel files do not hide the configured runtime graph when explicit singleton registration would be clearer.
- - Registries, external metadata, public docs, and static diagrams reference actual configured agents, workflows, and tools, not future or deleted surfaces.
- - Every top-level registered agent has matching metadata when the codebase maintains a capability registry or similar index, and executable IDs match exactly even when user-facing groups use friendlier labels.
- - Runtime ownership:
- - Provider clients, HTTP calls, retries, normalization, parsing, filesystem artifacts, persistence, ranking/scoring algorithms, auth decisions, and domain semantics live in runtime/domain packages.
- - Mastra tools keep stable IDs/descriptions/annotations/schemas and delegate directly.
- - Workflow steps orchestrate phases, progress, branching, bounded fan-out, merges, retries, and failure states; they do not hide heavy business logic.
- - Workflows and agent-facing tools share the same runtime schemas and canonical services for equivalent operations.
- - Host-framework entry points that trigger Mastra runs create, observe, and return run state; they do not duplicate workflow or runtime write policy.
- - Tool and agent contracts:
- - Prompt prose, configured tool maps, delegated tools, capability registries, public docs, and Studio-visible config describe the same capabilities.
- - Tool inputs that claim external, persisted, or user-provided truth validate the relevant references at the contract boundary.
- - Direct tool surfaces stay lean. Routing agents do not need every delegated/internal capability loaded directly.
- - Provider or adapter choice stays behind domain/runtime services unless choosing that provider is itself the user-facing capability.
- - If a prompt, contract, or capability registry names a delegated tool or agent, that executable surface is really registered or attached.
- - Agent files should be readable as the orchestration surface: model role, instructions, memory, tools, workflows, scorers, and background-task policy should not be hidden behind broad factories.
- - Observability and background work:
- - Sampling, payload size, label cardinality, prompt/completion redaction, high-volume span filtering, and exporter batching are bounded by environment.
- - User-visible progress is explicit and independent from trace export timing.
- - Long-running work uses accepted/observable async starts, background backpressure, timeouts, concurrency limits, progress throttling, and cleanup TTLs where relevant.
- - Client, host-framework, runtime, model, storage, and transport timing are distinguishable when user-perceived latency matters.
- - Verification-visible telemetry exposes correlation id, model id, model role, request or operation duration, actionable internal stage, and bounded stage breakdowns for user-facing generation.
- - Telemetry collection is best-effort after validation and should not create user-visible failures for otherwise successful application behavior.
- - Request, auth, routing, and transport failures are distinguishable from Mastra, model, memory, and workflow failures.
- - Memory, models, and execution:
- - Memory is opt-in per surface. One-shot structured calls, routers, inspectors, checks, and classifiers usually disable memory or use read-only memory.
- - Conversational agents have prompt-growth controls such as token limiting.
- - Generation call settings (`maxOutputTokens`, `temperature`, `topP`) reach a Mastra `agent.generate`/`stream` call only under `modelSettings`. Mastra silently ignores them at the top level, so flat options drop the cap and the model runs at its full output budget. Confirm every cap is nested under `modelSettings`, not spread flat - this is the common failure when any AI-SDK-flat options object (e.g. the output of a shared options helper meant for AI-SDK `generateText`/`streamText`) is handed to a Mastra agent instead, and it is invisible because `providerOptions`/`toolChoice` do align at the top level, so it half-works and typechecks. **This is the canonical `modelSettings` footgun referenced below.**
- - Agents whose generate/stream options carry only `maxSteps`/`structuredOutput` and no `modelSettings.maxOutputTokens` run uncapped at the model's full budget; treat unbounded user-facing or high-volume generation as a cost and runaway risk, not an accepted default.
- - Reasoning controls are confirmed to actually bound the model, not assumed. Some providers may ignore `reasoning.maxTokens` (OpenRouter has been reported to for several models - verify against current provider docs rather than trusting this claim), so a low/small reasoning cap can still reason unboundedly - slow, or eating the whole `maxOutputTokens` budget and returning empty content. For latency-sensitive prose turns, disable reasoning explicitly (`providerOptions.<provider>.reasoning.enabled: false`) rather than trusting a token cap.
- - Model policy is code-owned and role-based where possible; arbitrary hidden model strings in env vars are treated as drift unless intentionally tested.
- - Model/provider names, prices, and availability are verified through `$mastra`, installed routing setup, or current provider data before making claims.
- - User-facing generation surfaces record model role and model id in testable logs or response metadata so quality and cost decisions can be traced to real runs.
- - Runtime and field verification:
- - Automated verification agents are report-only unless mutation is explicitly required.
- - Verification-only auth or environment bypasses are local-only, scoped, and tested.
- - Field checks verify the user-facing signal, relevant response metadata, error payloads, accessibility/responsive behavior where applicable, and generated output in context.
- - Field checks inspect persisted or reloaded output when the product stores generated content, not only fresh stream text.
- - Expected local-development, navigation, cancellation, cache, and session-state failures are separated from product, model, or Mastra defects.
- - Testing:
- - Runtime/domain tests cover provider adapters, parsing, ranking, persistence, algorithms, retries, and injected clients.
- - Mastra wrapper tests cover IDs, descriptions, schemas, annotations, registration, direct delegation, and startup/import configuration.
- - Boundary tests guard provider endpoints, heuristic strings, nested tool imports, `SomeTool.execute(...)`, direct `fetch`, filesystem reads/writes, and other signals that product logic leaked into Mastra wrappers.
- - Contract tests pin registered root agents, focused agent tool lists, workflow IDs, registry IDs, deleted abstractions, and background-task eligibility.
- - Retry/recovery tests cover partially completed user-initiated runs, normal singleton smoke scripts, and incomplete local-development runs when the product supports retry.
+   - Package boundary:
+     - Public exports are narrow. The normal package API is the configured Mastra singleton or a documented runtime bridge, not deep exports for every agent/tool/workflow.
+     - App/API/CLI packages do not import Mastra internals or raw `@mastra/*` packages.
+     - Barrel files do not hide the configured runtime graph when explicit singleton registration would be clearer.
+     - Registries, external metadata, public docs, and static diagrams reference actual configured agents, workflows, and tools, not future or deleted surfaces.
+     - Every top-level registered agent has matching metadata when the codebase maintains a capability registry or similar index, and executable IDs match exactly even when user-facing groups use friendlier labels.
+   - Runtime ownership:
+     - Provider clients, HTTP calls, retries, normalization, parsing, filesystem artifacts, persistence, ranking/scoring algorithms, auth decisions, and domain semantics live in runtime/domain packages.
+     - Mastra tools keep stable IDs/descriptions/annotations/schemas and delegate directly.
+     - Workflow steps orchestrate phases, progress, branching, bounded fan-out, merges, retries, and failure states; they do not hide heavy business logic.
+     - Workflows and agent-facing tools share the same runtime schemas and canonical services for equivalent operations.
+     - Host-framework entry points that trigger Mastra runs create, observe, and return run state; they do not duplicate workflow or runtime write policy.
+   - Tool and agent contracts:
+     - Prompt prose, configured tool maps, delegated tools, capability registries, public docs, and Studio-visible config describe the same capabilities.
+     - Tool inputs that claim external, persisted, or user-provided truth validate the relevant references at the contract boundary.
+     - Direct tool surfaces stay lean. Routing agents do not need every delegated/internal capability loaded directly.
+     - Provider or adapter choice stays behind domain/runtime services unless choosing that provider is itself the user-facing capability.
+     - If a prompt, contract, or capability registry names a delegated tool or agent, that executable surface is really registered or attached.
+     - Agent files should be readable as the orchestration surface: model role, instructions, memory, tools, workflows, scorers, and background-task policy should not be hidden behind broad factories.
+   - Observability and background work:
+     - Sampling, payload size, label cardinality, prompt/completion redaction, high-volume span filtering, and exporter batching are bounded by environment.
+     - User-visible progress is explicit and independent from trace export timing.
+     - Long-running work uses accepted/observable async starts, background backpressure, timeouts, concurrency limits, progress throttling, and cleanup TTLs where relevant.
+     - Client, host-framework, runtime, model, storage, and transport timing are distinguishable when user-perceived latency matters.
+     - Verification-visible telemetry exposes correlation id, model id, model role, request or operation duration, actionable internal stage, and bounded stage breakdowns for user-facing generation.
+     - Telemetry collection is best-effort after validation and should not create user-visible failures for otherwise successful application behavior.
+     - Request, auth, routing, and transport failures are distinguishable from Mastra, model, memory, and workflow failures.
+   - Memory, models, and execution:
+     - Memory is opt-in per surface. One-shot structured calls, routers, inspectors, checks, and classifiers usually disable memory or use read-only memory.
+     - Conversational agents have prompt-growth controls such as token limiting.
+     - Generation call settings (`maxOutputTokens`, `temperature`, `topP`) reach a Mastra `agent.generate`/`stream` call only under `modelSettings`. Mastra silently ignores them at the top level, so flat options drop the cap and the model runs at its full output budget. Confirm every cap is nested under `modelSettings`, not spread flat - this is the common failure when any AI-SDK-flat options object (e.g. the output of a shared options helper meant for AI-SDK `generateText`/`streamText`) is handed to a Mastra agent instead, and it is invisible because `providerOptions`/`toolChoice` do align at the top level, so it half-works and typechecks. **This is the canonical `modelSettings` footgun referenced below.**
+     - Agents whose generate/stream options carry only `maxSteps`/`structuredOutput` and no `modelSettings.maxOutputTokens` run uncapped at the model's full budget; treat unbounded user-facing or high-volume generation as a cost and runaway risk, not an accepted default.
+     - Reasoning controls are confirmed to actually bound the model, not assumed. Some providers may ignore `reasoning.maxTokens` (OpenRouter has been reported to for several models - verify against current provider docs rather than trusting this claim), so a low/small reasoning cap can still reason unboundedly - slow, or eating the whole `maxOutputTokens` budget and returning empty content. For latency-sensitive prose turns, disable reasoning explicitly (`providerOptions.<provider>.reasoning.enabled: false`) rather than trusting a token cap.
+     - Model policy is code-owned and role-based where possible; arbitrary hidden model strings in env vars are treated as drift unless intentionally tested.
+     - Model/provider names, prices, and availability are verified through `$mastra`, installed routing setup, or current provider data before making claims.
+     - User-facing generation surfaces record model role and model id in testable logs or response metadata so quality and cost decisions can be traced to real runs.
+   - Runtime and field verification:
+     - Automated verification agents are report-only unless mutation is explicitly required.
+     - Verification-only auth or environment bypasses are local-only, scoped, and tested.
+     - Field checks verify the user-facing signal, relevant response metadata, error payloads, accessibility/responsive behavior where applicable, and generated output in context.
+     - Field checks inspect persisted or reloaded output when the product stores generated content, not only fresh stream text.
+     - Expected local-development, navigation, cancellation, cache, and session-state failures are separated from product, model, or Mastra defects.
+   - Testing:
+     - Runtime/domain tests cover provider adapters, parsing, ranking, persistence, algorithms, retries, and injected clients.
+     - Mastra wrapper tests cover IDs, descriptions, schemas, annotations, registration, direct delegation, and startup/import configuration.
+     - Boundary tests guard provider endpoints, heuristic strings, nested tool imports, `SomeTool.execute(...)`, direct `fetch`, filesystem reads/writes, and other signals that product logic leaked into Mastra wrappers.
+     - Contract tests pin registered root agents, focused agent tool lists, workflow IDs, registry IDs, deleted abstractions, and background-task eligibility.
+     - Retry/recovery tests cover partially completed user-initiated runs, normal singleton smoke scripts, and incomplete local-development runs when the product supports retry.
 7. Report findings with severity, file paths, and concrete next steps. Clearly separate:
- - deterministic boundary findings,
- - documentation/API correctness findings from `$mastra`,
- - implementation-practice concerns.
+   - deterministic boundary findings,
+   - documentation/API correctness findings from `$mastra`,
+   - implementation-practice concerns.
    Rate each finding on a severity scale: **high** = broken behavior, silent cost/runaway risk, or a boundary violation that undermines containment; **medium** = drift or contract mismatch that will bite under change but works today; **low** = style, naming, or optional-signal observations worth noting but not blocking.
 
 ## Remediation Guidance

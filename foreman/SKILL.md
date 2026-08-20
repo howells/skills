@@ -102,7 +102,7 @@ neither is enough on its own. Before a number changes a decision, ask:
   heals it - so a correct fix measures as no change at all.
 - **Could this arm have produced a non-zero result at all?** An arm that was
   structurally zero before anything ran measures an exclusion, not a capability
- - and printed beside a real result it makes that result look corroborated.
+  - and printed beside a real result it makes that result look corroborated.
 - **Is a metric standing in for a judgement?** If the principal's bar is "would
   someone accept this", a threshold invites clearing the threshold. Gate on the
   judgement and report the number beside it.
@@ -128,13 +128,13 @@ Copy these six steps into your todolist verbatim before you reason about the tas
 1. **Plan.** Decompose the work into tasks with disjoint file footprints where possible. Solve the hard kernel yourself now, as code, so no agent ever invents an algorithm. Done when every task is either kernel (yours, solved) or delegable (speccable in full).
 
 2. **Spec.** Write each agent's brief so it could be executed without asking a single question:
- - files to create/touch, and files that are out of bounds
- - exact signatures, types, and interfaces at every boundary
- - the kernel code verbatim, if the task integrates one
- - the project constraints that apply (conventions, anti-patterns, lint rules)
- - the verification command(s) the agent must run and pass
- - explicit non-goals - what a diligent agent might helpfully add, and must not
- - the report format, per brief economy above
+   - files to create/touch, and files that are out of bounds
+   - exact signatures, types, and interfaces at every boundary
+   - the kernel code verbatim, if the task integrates one
+   - the project constraints that apply (conventions, anti-patterns, lint rules)
+   - the verification command(s) the agent must run and pass
+   - explicit non-goals - what a diligent agent might helpfully add, and must not
+   - the report format, per brief economy above
 
    Write for the failure mode of the models you're dispatching to: Codex models fail by literalism, transcribing a spec into a corner, so gaps hurt most; Claude models fail by initiative, improving things you didn't ask for, so vague non-goals hurt most. Done when the spec answers every question you'd expect the agent to ask.
 

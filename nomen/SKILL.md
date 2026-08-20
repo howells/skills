@@ -20,12 +20,12 @@ When invoked:
 1. State that you are using the `nomen` skill.
 2. Determine whether the user wants generation, validation, renaming, or critique.
 3. If working in a codebase, inspect relevant context first:
- - `README.md`
- - `package.json`
- - `docs/vision.md`
- - `docs/brand-system.md`
- - app, package, command, and domain folder names
- - existing public names, product copy, and environment prefixes
+   - `README.md`
+   - `package.json`
+   - `docs/vision.md`
+   - `docs/brand-system.md`
+   - app, package, command, and domain folder names
+   - existing public names, product copy, and environment prefixes
 4. Ask only for missing constraints that materially change the name space.
 
 Useful questions:

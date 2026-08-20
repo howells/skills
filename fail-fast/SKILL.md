@@ -32,10 +32,10 @@ A fallback is allowed only when it is a real product requirement, a documented m
 
 3. Read `references/remediation.md` when findings involve environment variables, legacy compatibility, broad catch blocks, or staged migrations.
 4. Classify each finding:
- - `remove`: dead compatibility, legacy aliases, duplicate option names, fallback branches without a live caller.
- - `require`: missing config, absent dependencies, invalid user input, or an env var that belongs in the Envy schema.
- - `validate`: boundary input that must accept unknown data but should reject invalid states clearly.
- - `keep`: documented product behavior, real external API compatibility, or temporary migration with owner and removal date.
+   - `remove`: dead compatibility, legacy aliases, duplicate option names, fallback branches without a live caller.
+   - `require`: missing config, absent dependencies, invalid user input, or an env var that belongs in the Envy schema.
+   - `validate`: boundary input that must accept unknown data but should reject invalid states clearly.
+   - `keep`: documented product behavior, real external API compatibility, or temporary migration with owner and removal date.
 5. Edit narrowly. Remove the fallback state and update call sites/tests to use the canonical path.
 6. Add or update tests that prove the code fails deterministically when the dependency, input, config, or Envy-declared env var is missing.
 7. Run the scanner again, plus the repo's relevant tests, typecheck, lint, or build.
