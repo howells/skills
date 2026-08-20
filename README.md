@@ -156,6 +156,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill mastraudit --agent codex --global
 ```
 
+### `memento`
+
+Answer "what are you working on right now" from current state rather than from the transcript - the original ask, what landed, what is left, the live branch and uncommitted files, and whether the work has drifted from what was requested. Returns one screen with no archaeology. Use it when returning to a long-running session, checking an agent is still on track, or telling an agent to report in. For a sweep across many sessions, use `muster`.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill memento --agent codex --global
+```
+
 ### `muster`
 
 Rebuild working context after time away or across concurrent agent sessions - recent transcripts newest-first, live branch and PR state, peer sessions and the paths each one owns, and the tracker. Returns a status-tagged brief of every thread in flight with one concrete next move. Use it for "catch me up", "where did I leave off", or before resuming work started in another session. To investigate a question against external evidence, use `inquest`.
@@ -184,6 +194,16 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill polyplugin --agent codex --global
+```
+
+### `salvage`
+
+Find and rescue work that exists in only one place - detached HEADs, uncommitted worktrees, unpushed branches, stashes - then remove only what is provably merged and pushed. Names what each salvaged thread was for from the branch and the tracker, and treats any worktree that might belong to a live peer session as untouchable. Use it for tidying branches, worktrees and stashes, or before a machine cleanup. To rebuild your own working context instead, use `muster`.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill salvage --agent codex --global
 ```
 
 ### `unslop`
