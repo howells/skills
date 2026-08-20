@@ -1,3 +1,4 @@
+<!-- generated from shared/tailwind-v4.md by scripts/sync-shared.py. Edit the source, not this copy. -->
 # Tailwind CSS v4 Reference
 
 Quick reference for Tailwind v4 syntax, breaking changes from v3, and new patterns.
@@ -239,9 +240,19 @@ Use `@theme` blocks in CSS instead of JavaScript config:
 
 ### Migrating from JavaScript Config
 
-Do not carry a v3 JavaScript config into new brand work. Move tokens, utilities,
-variants, and source paths into the Tailwind v4 CSS entry so the styling model is
+For new work, do not carry a v3 JavaScript config across. Move tokens, utilities,
+variants, and source paths into the Tailwind v4 CSS entry so the styling model stays
 canonical and CSS-first.
+
+The exception is an existing v3 codebase being migrated gradually. There, `@config`
+imports the old config so both models run side by side while tokens are moved over:
+
+```css
+@import "tailwindcss";
+@config "./tailwind.config.js";
+```
+
+Treat that import as scaffolding with an end date, not a resting state.
 
 ---
 

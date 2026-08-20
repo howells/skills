@@ -1,0 +1,26 @@
+{
+  "design-philosophy.md": [
+    "chiaroscuro/references/design-philosophy.md",
+    "foundry/references/design-philosophy.md"
+  ],
+  "brand-identity.md": [
+    "chiaroscuro/references/brand-identity.md",
+    "foundry/references/brand-identity.md"
+  ],
+  "typography-opentype.md": [
+    "chiaroscuro/references/typography-opentype.md",
+    "foundry/references/typography-opentype.md"
+  ],
+  "tailwind-authoring.md": [
+    "chiaroscuro/references/interface/tailwind-authoring.md",
+    "foundry/references/tailwind-authoring.md"
+  ],
+  "tailwind-v4.md": [
+    "chiaroscuro/references/tailwind-v4.md",
+    "foundry/references/tailwind-v4.md"
+  ],
+  "font-recommendations.md": [
+    "chiaroscuro/references/font-recommendations.md",
+    "foundry/references/font-recommendations.md"
+  ]
+}

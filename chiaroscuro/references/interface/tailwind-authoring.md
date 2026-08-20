@@ -1,3 +1,4 @@
+<!-- generated from shared/tailwind-authoring.md by scripts/sync-shared.py. Edit the source, not this copy. -->
 # Interface: Tailwind Authoring
 
 Class-level Tailwind guidance for writing cleaner, more consistent UI code.

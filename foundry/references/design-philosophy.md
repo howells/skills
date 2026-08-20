@@ -1,3 +1,4 @@
+<!-- generated from shared/design-philosophy.md by scripts/sync-shared.py. Edit the source, not this copy. -->
 # Design Philosophy
 
 Timeless principles for UI design, extracted from *Refactoring UI* by Adam Wathan & Steve Schoger.
@@ -72,18 +73,18 @@ When everything is bold, nothing is bold. Relying too much on font size creates 
 
 Use the full toolkit:
 - **Font weight**: Normal vs medium vs semibold
-- **Color**: Black, grey, lighter grey
+- **Color**: Black, gray, lighter gray
 - **Spacing**: Grouping creates hierarchy
 
 Two or three grays plus one primary color handles 90% of hierarchy needs.
 
-### Emphasize by De-emphasizing
+### Emphasize by De-emphasising
 
 Sometimes the best way to highlight an element is to make everything else fade back. Instead of making a button louder, make the surrounding elements quieter.
 
 This works because:
 - There's a ceiling to how prominent you can make something
-- De-emphasizing has no floor
+- De-emphasising has no floor
 - Subtraction often works better than addition
 
 ### Labels Are a Last Resort
@@ -106,7 +107,7 @@ An `<h2>` doesn't have to be visually prominent. A button in an `<aside>` might 
 ### Balance Weight and Contrast
 
 A bold icon next to thin text looks unbalanced. Reduce contrast on heavier elements to maintain visual equilibrium:
-- Soften heavy icons with grey instead of black
+- Soften heavy icons with gray instead of black
 - Use lighter weights for large text
 - Bold elements work better at lower contrast
 
@@ -169,7 +170,61 @@ Good: [Header]
 
 ## Working with Color
 
-Color mechanics - OKLCH definition, chroma-at-extremes, hue rotation for shade ramps, tinted (non-grey) greys, and never-rely-on-color-alone - live in `interface-colors.md`. This file owns only the taste-level point: **color is a personality decision, not a decoration.** Pick a palette that commits to a temperature and a worldview; a brand that could take any hue has no identity. Match grey temperature to the brand (cool for tech/legal, warm for friendly/craft), and let semantic roles - not raw palette names - carry meaning.
+### Color is a Personality Decision, Not a Decoration
+
+Pick a palette that commits to a temperature and a worldview; a brand that could take any hue has no identity. Match gray temperature to the brand, and let semantic roles - not raw palette names - carry meaning.
+
+### Ditch Hex for OKLCH
+
+OKLCH is more useful than Hex or HSL for production palette work:
+- **Lightness** (0-1): Perceived brightness
+- **Chroma** (0-0.4+): Color intensity
+- **Hue** (0-360): Position on the color wheel
+
+Use HSL only as a conceptual sketching model. Define final UI and brand tokens in OKLCH so shade steps look visually even.
+
+### You Need More Colors Than You Think
+
+A complete palette includes:
+- **Grays**: 8-10 shades (used most frequently)
+- **Primary**: 5-10 shades
+- **Semantic colors**: Red, yellow, green - 5-10 shades each
+- **Accent colors**: Any additional hues - 5-10 shades each
+
+### Don't Let Lightness Kill Saturation
+
+As OKLCH lightness approaches 0 or 1, high chroma becomes harsh or clips out of gamut. To maintain usable color at the extremes:
+- Reduce chroma for very light shades
+- Reduce chroma for very dark shades
+
+A mid-lightness blue can carry more chroma than a very pale or very dark blue. Extremes should usually become quieter, not louder.
+
+### Use Perceived Brightness
+
+Different hues have different perceived brightness in older color models:
+- **Bright hues**: Yellow (60°), Cyan (180°), Magenta (300°)
+- **Dark hues**: Red (0°), Green (120°), Blue (240°)
+
+To create lighter shades, rotate hue toward the nearest bright point. To create darker shades, rotate toward the nearest dark point.
+
+Don't rotate more than 20-30 degrees - you'll shift the color's identity.
+
+### Grays Don't Have to Be Gray
+
+Pure gray (0% saturation) often feels cold or dead. Saturate your grays:
+
+- **Cool grays**: Add blue for professional, tech, modern feel
+- **Warm grays**: Add yellow/orange for friendly, inviting, craft feel
+
+Match gray temperature to your brand. A legal site wants cool; a bakery wants warm.
+
+### Don't Rely on Color Alone
+
+Red/green colorblind users need alternative signals:
+- Icons alongside color (checkmark for success, X for error)
+- Position and grouping
+- Text labels
+- Patterns or textures for data visualization
 
 ---
 
@@ -211,13 +266,15 @@ When overlapping images, add an invisible border (matching the background) to pr
 
 ## Finishing Touches
 
-### Add Color with Accent Borders
+### Accent Borders
 
-A single colored border transforms plain elements:
-- Top of cards
-- Left side of alerts or notifications
-- Under active navigation items
-- Top of the entire layout (brand strip)
+A single colored border transforms plain elements. The places it earns its keep:
+- **Left side of alerts or notifications** - communicates severity
+- **Under active navigation items** - communicates location
+- **Top of a card** - communicates category, when you're distinguishing between types
+- **Top of the entire layout (brand strip)** - carries identity
+
+The test is whether the border encodes something. In product UI, an accent border added to "make it feel more finished" is furniture: brand strips, accent lines on every card, and colored borders that signify nothing add visual weight without adding clarity. In brand and identity work the brand strip is doing real work - it is the identity signature on the page - so judge it as a deliberate mark rather than as decoration.
 
 ### Don't Overlook Empty States
 

@@ -1,6 +1,9 @@
+<!-- generated from shared/brand-identity.md by scripts/sync-shared.py. Edit the source, not this copy. -->
 # Brand Identity Reference
 
-Opinionated guidance for creating distinctive visual identities. This reference owns brand-level taste: typography personality, color psychology, visual character. For UI implementation concerns, see `interface-colors.md` (palette, contrast, dark mode) and `interface-typography.md` (type hierarchy, readable UI type).
+Opinionated guidance for creating distinctive visual identities. This reference owns brand-level taste: typography personality, color psychology, visual character.
+
+For UI implementation concerns - spacing, states, contrast, palette application, readable type - go to the consuming skill's own interface references, which each skill lists in its SKILL.md. This file covers brand and identity decisions only.
 
 ---
 
@@ -18,60 +21,35 @@ A project typically needs both: a brand font for display/identity and a UI font 
 
 These fonts signal "no one made a choice here":
 
-- **Instrument Serif** - the default AI serif. Every AI-generated landing page uses it.
+- **Instrument Serif** - the number one AI-slop serif and the current AI default. Every AI-generated landing page uses it.
 - **Playfair Display** - template-tier. Beautiful in isolation, generic in practice.
 - **Poppins** - geometric sans that's everywhere. Indistinguishable from a thousand other sites.
 - **Montserrat** - massively overexposed. Was distinctive in 2016.
 - **Roboto** - Android default. Choosing it says "I didn't choose."
 - **Arial** - the non-choice.
 
-### Recommended Brand Fonts
+### Choosing a Brand Font
 
-**Distinctive sans-serif (for brands that want modern + personality):**
+The candidates live in one place: `font-recommendations.md`, which covers UI and brand
+faces, commercial foundries, Google Fonts picks, proven pairings, and the faces to avoid.
+Pick from there rather than keeping a second list here.
 
-| Font | Character | Good for |
-|------|-----------|----------|
-| Sohne | Quiet confidence, Klim precision | Premium, understated brands |
-| Scto Grotesk | Industrial warmth | Craft, studio, honest brands |
-| Space Grotesk | Technical, geometric with quirk | Dev tools, technical products |
-| Bricolage Grotesque | Playful geometry, not childish | Creative tools, consumer products |
-| General Sans | Clean but not invisible | Brands that want clarity with presence |
-| Rethink Sans | Friendly precision | Approachable professional brands |
+Choosing well is a judgement, not a lookup. The face carries the brand's character before
+anyone reads a word, so start from the character you want and work back to the candidates
+that hold it, rather than starting from a shortlist and rationalising the pick.
 
-**Serif (for brands that want editorial, warmth, or authority):**
-
-| Font | Character | Good for |
-|------|-----------|----------|
-| Newsreader | Editorial authority | Publishing, journalism, serious tools |
-| Fraunces | Warmth, craft, slight quirk | Artisanal, food, creative brands |
-| Cormorant | Elegant, high contrast | Luxury, fashion, high-end products |
-| Crimson Pro | Readable authority | Long-form content, institutional brands |
-| Libre Baskerville | Classical, bookish | Academic, legal, traditional brands |
-
-**Display (for headlines and hero moments):**
-
-| Font | Character | Good for |
-|------|-----------|----------|
-| Novarese | Retro warmth, distinctive | Brands with a nostalgic or craft angle |
-| Editorial New | Dramatic, editorial | Magazine-style, bold statements |
-
-**Commercial foundries (require license, worth it for serious brand work):**
-
-| Foundry | Fonts | Character |
-|---------|-------|-----------|
-| **Klim** | Söhne, Untitled Sans, Tiempos | Refined, quiet authority |
-| **Grilli Type** | GT America, GT Walsheim, GT Sectra | Versatile, well-engineered |
-| **Commercial Type** | Graphik, Canela, Dala Floda, Austin | Editorial, distinctive |
-| **Colophon** | Apercu, Reader, Basis Grotesque | Contemporary, characterful |
-| **Dinamo** | ABC Favorit, ABC Diatype, ABC Arizona | Bold, modern |
-| **Sharp Type** | Sharp Grotesk, Sharp Sans | Precise, confident |
-
-### Font Pairing Principles
+### Pairing Principles
 
 - **Contrast, not conflict.** Pair a serif with a sans, or a display with a body font. Two similar fonts compete.
 - **One does the talking.** The brand/display font carries personality; the body font stays quiet.
 - **Weight matters more than family.** A bold condensed heading + light body text creates hierarchy regardless of font family.
 - **Test at real sizes.** A font that looks great at 72px may look wrong at 16px. Always check both.
+
+### Validating a Choice
+
+Before committing to any font or pairing, validate with real-world evidence at **fontsinuse.com** and **typewolf.com**.
+
+chiaroscuro carries a fuller curated list - UI fonts alongside brand fonts, Google Fonts picks, proven pairings, and pairing research guidance - in `references/font-recommendations.md`.
 
 ---
 
@@ -106,7 +84,7 @@ The usual "blue = trust, red = urgency" is too shallow. Color meaning depends on
 
 1. **Start with meaning.** Why this hue? What does it connect to in the brand's world?
 2. **Commit to a dominant color.** Not a gradient, not a split - one confident hue that owns the brand.
-3. **Add tension with an accent.** The accent should create visual interest, not just complement. Complementary hues (opposite on the color wheel) create energy.
+3. **Add tension with an accent.** The accent should create visual interest rather than simply complement the dominant hue. Complementary hues (opposite on the color wheel) create energy.
 4. **Derive, don't pick.** Tinted neutrals should carry a hint of the brand hue. Semantic colors (success, error) should harmonize, not clash.
 5. **Generate full scales.** Every brand color needs a 50-900 scale in OKLCH for UI application.
 

@@ -1,4 +1,3 @@
-<!-- generated from shared/brand-identity.md by scripts/sync-shared.py. Edit the source, not this copy. -->
 # Brand Identity Reference
 
 Opinionated guidance for creating distinctive visual identities. This reference owns brand-level taste: typography personality, color psychology, visual character.

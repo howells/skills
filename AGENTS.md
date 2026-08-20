@@ -28,6 +28,21 @@ Every skill's description exists in three places and they must agree: the `SKILL
 
 Keep each frontmatter `description` within about 500 characters - longer ones get truncated in some host listings. Use terse cross-skill pointers, not full sentences, to disambiguate overlapping scope.
 
+## Shared reference files
+
+Six reference documents are used by more than one skill. `shared/` holds the single
+source of truth; `shared/manifest.json` lists where each one is copied to. Every skill
+still ships a real file in its own `references/` directory, because `npx skills`
+installs one skill at a time and an installed skill has to stand alone.
+
+- Edit the file in `shared/`, then run `python3 scripts/sync-shared.py`.
+- Never edit a generated copy. Each one opens with a comment saying so, and
+  `check-skills.py` fails if a copy has drifted from its source.
+- A shared file must not link to a path that exists in only one skill. Name the topic
+  and let each skill's SKILL.md carry the pointer, or the link breaks in the other skill.
+- Content that genuinely belongs to one skill goes in a skill-local file, not a fork of
+  the shared one. Forking is how these drifted apart in the first place.
+
 ## Editing skills
 
 - Keep each `SKILL.md` self-contained enough for a fresh agent to use, with no hidden dependency on a local file that the body doesn't link.
@@ -40,7 +55,8 @@ Keep each frontmatter `description` within about 500 characters - longer ones ge
 
 ## Commands
 
-- `python3 scripts/check-skills.py` - the consistency gate. Run before committing any skill change: it checks the three sync surfaces, intra-skill `.md` link integrity, the description budget and verbatim trigger-clause overlap between skills. Exits non-zero on errors.
+- `python3 scripts/sync-shared.py` - materialise `shared/` into the skills that consume it. `--check` reports drift without writing. Run it after editing anything in `shared/`.
+- `python3 scripts/check-skills.py` - the consistency gate. Run before committing any skill change: it checks the three sync surfaces, intra-skill `.md` link integrity, the description budget, verbatim trigger-clause overlap between skills, and that every generated copy still matches its source in `shared/`. Exits non-zero on errors.
 - `npx skills@latest add howells/skills --list` - list installable skills.
 - `npx skills@latest add howells/skills --skill '*' --agent codex --global` - install all globally for Codex.
 

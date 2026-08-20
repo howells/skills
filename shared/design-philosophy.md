@@ -1,4 +1,3 @@
-<!-- generated from shared/design-philosophy.md by scripts/sync-shared.py. Edit the source, not this copy. -->
 # Design Philosophy
 
 Timeless principles for UI design, extracted from *Refactoring UI* by Adam Wathan & Steve Schoger.
