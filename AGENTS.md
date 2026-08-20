@@ -16,7 +16,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `heathen` - find and refactor god components, god scripts and oversized modules.
 - `inquest` - sweep every available evidence source and return a cited answer with a coverage map.
 - `marginalia` - JSDoc for public APIs and exported symbols.
-- `mastraudit` - audit a codebase against current Mastra guidance.
+- `mastraudit` - audit a Mastra codebase against what actually breaks it, execution semantics before structure.
 - `memento` - report what you are working on right now, from current state, in one screen.
 - `muster` - roll-call of work in flight: transcripts, live git state, peer sessions, tracker.
 - `nomen` - generate and validate names, with availability and conflict checks.

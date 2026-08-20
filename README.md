@@ -148,7 +148,7 @@ npx skills@latest add howells/skills --skill marginalia --agent codex --global
 
 ### `mastraudit`
 
-Audit Mastra implementations in JavaScript and TypeScript codebases. Use it to check current Mastra guidance, contain Mastra dependencies and imports, organize Mastra code into clear domain folders, and keep product behavior in runtime/domain code instead of Mastra wrappers.
+Audit a Mastra codebase against what actually breaks it, worst first - workflow step size and fan-out keying, suspend and resume payloads, load-bearing writes that must throw, model settings nesting, the tool keys a model actually sees - and only then containment and domain structure. Runs shipped boundary scanners where they exist and falls back to search. Use it when reviewing Mastra work before shipping or auditing an existing implementation. For building rather than judging, use the `$mastra` skill.
 
 Install globally for Codex:
 
