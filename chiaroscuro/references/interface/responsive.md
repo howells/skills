@@ -15,7 +15,7 @@ Desktop-first means mobile loads unnecessary styles first.
 
 ## Content-Driven Breakpoints
 
-Don't chase device sizes — let content tell you where to break. Start narrow, stretch until design breaks, add breakpoint there.
+Don't chase device sizes - let content tell you where to break. Start narrow, stretch until design breaks, add breakpoint there.
 
 Three breakpoints usually suffice. Use `clamp()` for fluid values without breakpoints:
 
@@ -27,13 +27,13 @@ Three breakpoints usually suffice. Use `clamp()` for fluid values without breakp
 
 ## Detect Input Method, Not Just Screen Size
 
-Screen size doesn't tell you input method. A laptop with touchscreen, a tablet with keyboard — use pointer and hover queries:
+Screen size doesn't tell you input method. A laptop with touchscreen, a tablet with keyboard - use pointer and hover queries:
 
 ```html
 <!-- Tailwind: fine pointer (mouse, trackpad) -->
 <button class="px-3 py-2 pointer-fine:px-2 pointer-fine:py-1.5">
 
-<!-- Tailwind: coarse pointer (touch) — larger targets -->
+<!-- Tailwind: coarse pointer (touch) - larger targets -->
 <button class="min-h-11 pointer-coarse:min-h-12">
 ```
 
@@ -46,7 +46,7 @@ Screen size doesn't tell you input method. A laptop with touchscreen, a tablet w
 @custom-variant hover-hover (@media (hover: hover) and (pointer: fine));
 ```
 
-- NEVER: Rely on hover for functionality — touch users can't hover
+- NEVER: Rely on hover for functionality - touch users can't hover
 - MUST: Gate hover styles behind `hover-hover:` or `@media (hover: hover)`
 
 ---
@@ -111,7 +111,7 @@ Desktop nav (header or sidebar) is hidden below `lg`; a hamburger reveals a dial
 
 ### Tables
 
-Two valid strategies — choose by data density:
+Two valid strategies - choose by data density:
 
 - **Dense/wide tables**: keep one table and let it scroll horizontally (the two-div wrapper). This is the default. See [tables](./data-components.md#tables).
 - **Sparse tables (2–4 columns)**: transform to a card stack on mobile when a scroll feels heavier than the data warrants.
@@ -142,20 +142,20 @@ Concrete breakpoint rules. Audit order: page shell → navigation → text/forms
 ### Page Shell
 
 - MUST: Every layout adapts from mobile to desktop via responsive prefixes (`sm:`, `md:`, `lg:`) adjusting columns, spacing, font sizes, and visibility.
-- MUST: Multi-column desktop layouts (sidebars, secondary nav, filter panels) collapse to a single column on small screens — use a mobile menu or disclosure, never shrink the columns.
+- MUST: Multi-column desktop layouts (sidebars, secondary nav, filter panels) collapse to a single column on small screens - use a mobile menu or disclosure, never shrink the columns.
 - MUST: Use `min-h-dvh`/`min-h-svh`/`min-h-lvh`, never `min-h-screen`.
 
 ### Navigation
 
-- MUST: Every app has a mobile nav menu below `lg`, regardless of whether desktop nav is a header or sidebar — a dialog/disclosure with a hamburger toggle. Hide header nav with `hidden lg:flex`, sidebar nav with `hidden lg:block`, and the mobile toggle with `lg:hidden`. See [navigation](./data-components.md#navigation).
-- MUST: Horizontal menus (tabs, pill navs) never overflow the parent — horizontally scroll when items don't fit.
+- MUST: Every app has a mobile nav menu below `lg`, regardless of whether desktop nav is a header or sidebar - a dialog/disclosure with a hamburger toggle. Hide header nav with `hidden lg:flex`, sidebar nav with `hidden lg:block`, and the mobile toggle with `lg:hidden`. See [navigation](./data-components.md#navigation).
+- MUST: Horizontal menus (tabs, pill navs) never overflow the parent - horizontally scroll when items don't fit.
 
 ### Text, Forms, And Touch Targets
 
-- MUST: Body text, subheadings, form controls, and icons are **larger on mobile** and scale *down* at `sm:` — write the mobile (larger) size as the default, the desktop size with `sm:` (e.g. `text-base/7 sm:text-sm/6`, `size-5 sm:size-4`, `py-2.5 sm:py-1.5`). Applies to body text, subheadings, stat values, input labels, badges, buttons, and icons — **not** h1s/page titles, which stay the same or get smaller on mobile.
-- MUST: Body/paragraph content is at least `text-base` (16px) on mobile — never `text-xs`; `text-sm` only at `sm:` or larger (`text-base/7 sm:text-sm/6`, never bare `text-sm/6` for body copy).
+- MUST: Body text, subheadings, form controls, and icons are **larger on mobile** and scale *down* at `sm:` - write the mobile (larger) size as the default, the desktop size with `sm:` (e.g. `text-base/7 sm:text-sm/6`, `size-5 sm:size-4`, `py-2.5 sm:py-1.5`). Applies to body text, subheadings, stat values, input labels, badges, buttons, and icons - **not** h1s/page titles, which stay the same or get smaller on mobile.
+- MUST: Body/paragraph content is at least `text-base` (16px) on mobile - never `text-xs`; `text-sm` only at `sm:` or larger (`text-base/7 sm:text-sm/6`, never bare `text-sm/6` for body copy).
 - MUST: If a text input's font size is below `16px`, add `max-sm:text-base/{lh}` to prevent iOS zoom.
-- MUST: Small/icon buttons meet the touch-target minimum on coarse pointers — see [interactions.md](./interactions.md) → Touch Targets for the canonical size and hit-area pattern.
+- MUST: Small/icon buttons meet the touch-target minimum on coarse pointers - see [interactions.md](./interactions.md) → Touch Targets for the canonical size and hit-area pattern.
 - MUST NOT: Fix cramped heading groups by constraining the wrapper with `max-w-*`; constrain each text element directly with `max-w-[*ch]`. See [heading groups](./marketing-components.md#heading-groups).
 
 ### Overflow And Flexible Sizing
@@ -165,10 +165,10 @@ Concrete breakpoint rules. Audit order: page shell → navigation → text/forms
 
 ### Component Patterns
 
-- MUST: Use container queries (`@container`) for component-level responsiveness — anything whose layout depends on available space, not the viewport (dashboard widgets, feature cards, pricing tiers, testimonial grids). Place `@container` as close to the responsive content as possible — a direct wrapper around the items, never a page-level container.
-- SHOULD: Reconfigure divider-separated grids at each breakpoint where columns change — reset first/last padding, drop vertical dividers when collapsing to one column, add horizontal dividers between rows.
+- MUST: Use container queries (`@container`) for component-level responsiveness - anything whose layout depends on available space, not the viewport (dashboard widgets, feature cards, pricing tiers, testimonial grids). Place `@container` as close to the responsive content as possible - a direct wrapper around the items, never a page-level container.
+- SHOULD: Reconfigure divider-separated grids at each breakpoint where columns change - reset first/last padding, drop vertical dividers when collapsing to one column, add horizontal dividers between rows.
 - SHOULD: Keep wrapped logo clouds balanced on every breakpoint (avoid `5+1`). See [logo clouds](./marketing-components.md#logo-clouds).
-- SHOULD: Use `min()` with viewport units for image/screenshot border radii instead of fixed `rounded-*` — e.g. `rounded-[min(1vw,12px)]`.
+- SHOULD: Use `min()` with viewport units for image/screenshot border radii instead of fixed `rounded-*` - e.g. `rounded-[min(1vw,12px)]`.
 
 ## Testing
 
@@ -188,11 +188,11 @@ SHOULD test on: one real iPhone, one real Android, a tablet if relevant. Cheap A
 The earn-its-place bar rises as space shrinks. Elements that justified themselves on a wide screen may become furniture on mobile.
 
 - SHOULD: Remove decorative borders, dividers, and container chrome that don't aid comprehension at small sizes
-- SHOULD: Collapse wrapper panels into flat content stacks — padding and spacing group content without visual framing
-- SHOULD: Simplify multi-level hierarchy to fewer levels on mobile — two levels of nesting rarely survive a narrow viewport
+- SHOULD: Collapse wrapper panels into flat content stacks - padding and spacing group content without visual framing
+- SHOULD: Simplify multi-level hierarchy to fewer levels on mobile - two levels of nesting rarely survive a narrow viewport
 - SHOULD: Let content fill the viewport edge-to-edge where appropriate, rather than inset into cards or panels
 
-The goal is not a stripped-down version — it's the essential version. Mobile should feel intentionally designed, not desktop with pieces removed.
+The goal is not a stripped-down version - it's the essential version. Mobile should feel intentionally designed, not desktop with pieces removed.
 
 ---
 

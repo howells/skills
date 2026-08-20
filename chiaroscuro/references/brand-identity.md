@@ -8,7 +8,7 @@ Opinionated guidance for creating distinctive visual identities. This reference 
 
 ### The Distinction
 
-**UI fonts** disappear. They serve content without drawing attention — that's their job. Inter, Geist, DM Sans are excellent at this.
+**UI fonts** disappear. They serve content without drawing attention - that's their job. Inter, Geist, DM Sans are excellent at this.
 
 **Brand fonts** express. They carry personality in headlines, hero text, wordmarks, and anywhere the brand speaks with its own voice. A brand font should say something about who you are.
 
@@ -18,16 +18,16 @@ A project typically needs both: a brand font for display/identity and a UI font 
 
 These fonts signal "no one made a choice here":
 
-- **Instrument Serif** — the number one AI-slop serif. Every AI-generated landing page uses it.
-- **Playfair Display** — template-tier. Beautiful in isolation, generic in practice.
-- **Poppins** — geometric sans that's everywhere. Indistinguishable from a thousand other sites.
-- **Montserrat** — massively overexposed. Was distinctive in 2016.
-- **Roboto** — Android default. Choosing it says "I didn't choose."
-- **Arial** — the non-choice.
+- **Instrument Serif** - the number one AI-slop serif. Every AI-generated landing page uses it.
+- **Playfair Display** - template-tier. Beautiful in isolation, generic in practice.
+- **Poppins** - geometric sans that's everywhere. Indistinguishable from a thousand other sites.
+- **Montserrat** - massively overexposed. Was distinctive in 2016.
+- **Roboto** - Android default. Choosing it says "I didn't choose."
+- **Arial** - the non-choice.
 
 ### Font Selection and Pairing
 
-For the full curated font list covering both UI and brand fonts — including commercial foundry recommendations, Google Fonts picks, proven pairings, and pairing research guidance — see `references/font-recommendations.md`.
+For the full curated font list covering both UI and brand fonts - including commercial foundry recommendations, Google Fonts picks, proven pairings, and pairing research guidance - see `references/font-recommendations.md`.
 
 Before committing to any font or pairing, validate with real-world evidence at **fontsinuse.com** and **typewolf.com**.
 
@@ -63,7 +63,7 @@ The usual "blue = trust, red = urgency" is too shallow. Color meaning depends on
 ### Building a Brand Palette
 
 1. **Start with meaning.** Why this hue? What does it connect to in the brand's world?
-2. **Commit to a dominant color.** Not a gradient, not a split — one confident hue that owns the brand.
+2. **Commit to a dominant color.** Not a gradient, not a split - one confident hue that owns the brand.
 3. **Add tension with an accent.** The accent should create visual interest, not just complement. Complementary hues (opposite on the color wheel) create energy.
 4. **Derive, don't pick.** Tinted neutrals should carry a hint of the brand hue. Semantic colors (success, error) should harmonize, not clash.
 5. **Generate full scales.** Every brand color needs a 50-900 scale in OKLCH for UI application.
@@ -103,7 +103,7 @@ Use these to push past safe defaults:
 - "What if only *some* things are rounded? Sharp cards with round buttons creates tension."
 - "What if no shadows at all? Or dramatic, layered shadows instead of subtle everywhere?"
 - "What if the surface has color or texture instead of white + gray cards?"
-- "What if borders are the character — thick, thin, dotted, or absent entirely?"
+- "What if borders are the character - thick, thin, dotted, or absent entirely?"
 - "What would this brand look like if it were brave?"
 
 ---
@@ -128,4 +128,4 @@ A brand is distinctive when:
 3. **It has a tension.** Accessible + authoritative. Playful + precise. Raw + refined.
 4. **Someone would remember it.** After seeing it once, could they describe what made it different?
 
-If the answer to any of these is "no" — push harder.
+If the answer to any of these is "no" - push harder.

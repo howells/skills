@@ -22,7 +22,7 @@ Sections set the page rhythm. They should feel like part of one system, not inde
 
 ## Transitions Between Sections
 
-- MUST: Section transitions come from pacing, surface shifts, or content contrast — not ornamental separators. Decorative rules, gradient dividers, and patterned strips between sections are furniture.
+- MUST: Section transitions come from pacing, surface shifts, or content contrast - not ornamental separators. Decorative rules, gradient dividers, and patterned strips between sections are furniture.
 - MUST: If a section uses a strong background or surface change, the next section should visibly reset the rhythm.
 
 ## Review Questions

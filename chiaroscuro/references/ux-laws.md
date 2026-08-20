@@ -38,7 +38,7 @@ Psychology-based principles for interface design. Use these as review criteria a
 **Application:**
 - Limit primary navigation to 5–7 items
 - Break complex forms into multi-step wizards
-- Use progressive disclosure — show only what's needed now
+- Use progressive disclosure - show only what's needed now
 - Highlight recommended options to short-circuit decisions
 - Group related options to reduce perceived count
 
@@ -55,10 +55,10 @@ Psychology-based principles for interface design. Use these as review criteria a
 
 | Latency | Perception |
 |---------|-----------|
-| < 100ms | Instant — no feedback needed |
-| 100–300ms | Slight delay — show state change immediately |
-| 300–1000ms | Noticeable — show loading indicator |
-| > 1000ms | Disruptive — show progress, allow cancellation |
+| < 100ms | Instant - no feedback needed |
+| 100–300ms | Slight delay - show state change immediately |
+| 300–1000ms | Noticeable - show loading indicator |
+| > 1000ms | Disruptive - show progress, allow cancellation |
 
 **Application:**
 - User-initiated animations must complete within 300ms
@@ -107,7 +107,7 @@ The eye follows smooth lines and curves.
 ### Closure
 The mind completes incomplete shapes.
 
-- Icons don't need every detail — suggestion works
+- Icons don't need every detail - suggestion works
 - Card shadows imply boundaries without full borders
 - Progress indicators work because we mentally complete the circle
 
@@ -145,9 +145,9 @@ We separate foreground from background instinctively.
 **Show only what's needed at each step. Reveal complexity as it becomes relevant.**
 
 Levels:
-1. **Default view** — essential information and primary actions
-2. **On demand** — secondary info behind expandable sections, "Show more", or hover
-3. **Deep dive** — advanced settings, detailed data behind dedicated pages
+1. **Default view** - essential information and primary actions
+2. **On demand** - secondary info behind expandable sections, "Show more", or hover
+3. **Deep dive** - advanced settings, detailed data behind dedicated pages
 
 **Application:**
 - Forms: show required fields first, optional behind "More options"
@@ -162,9 +162,9 @@ Levels:
 **Working memory holds ~4 items. Minimize what users must hold in their heads.**
 
 Three types:
-1. **Intrinsic** — complexity inherent to the task (can't reduce)
-2. **Extraneous** — caused by poor design (eliminate this)
-3. **Germane** — effort spent learning/understanding (support this)
+1. **Intrinsic** - complexity inherent to the task (can't reduce)
+2. **Extraneous** - caused by poor design (eliminate this)
+3. **Germane** - effort spent learning/understanding (support this)
 
 **Reduce extraneous load:**
 - Don't make users remember information between steps

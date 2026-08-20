@@ -1,13 +1,13 @@
 # Interface: Marketing Pages
 
-**Quality bar:** Build marketing sites worthy of [siteinspire.com](https://siteinspire.com). Distinctive, refined, memorable — not generic template work. Every element earns its place; decorative furniture erodes credibility.
+**Quality bar:** Build marketing sites worthy of [siteinspire.com](https://siteinspire.com). Distinctive, refined, memorable - not generic template work. Every element earns its place; decorative furniture erodes credibility.
 
 ## Hero Section
 
 The hero is the first impression. It sets the tone for everything below.
 
 - MUST: Headline communicates the core value proposition in one sentence
-- SHOULD: Typography creates drama — large size contrast between headline and subtext
+- SHOULD: Typography creates drama - large size contrast between headline and subtext
 - SHOULD: One primary CTA, visually dominant. Secondary CTA (if present) clearly subordinate.
 - NEVER: Generic stock imagery that could belong to any product
 - NEVER: More than 2 CTAs in the hero
@@ -22,19 +22,19 @@ The hero is the first impression. It sets the tone for everything below.
 | Full-bleed media | Photography-driven, lifestyle brands |
 | Interactive/demo | Product speaks for itself |
 
-**Full-bleed media composition:** anchor the copy low or to a deliberate edge — not centered over the middle of the image — so the photography keeps its dominance. Use a directional gradient wash for legibility (`bg-gradient-to-t from-black/60 via-black/20 to-transparent`), not a flat scrim over the whole image. Keep secondary blocks (quote, metric, proof) low-fill so they sit on the image instead of boxing it with container chrome.
+**Full-bleed media composition:** anchor the copy low or to a deliberate edge - not centered over the middle of the image - so the photography keeps its dominance. Use a directional gradient wash for legibility (`bg-gradient-to-t from-black/60 via-black/20 to-transparent`), not a flat scrim over the whole image. Keep secondary blocks (quote, metric, proof) low-fill so they sit on the image instead of boxing it with container chrome.
 
 ## Section Composition
 
 Marketing pages are narratives. Each section advances the story.
 
 - MUST: Consistent vertical rhythm between sections (pick a value: 96px, 128px, or 160px and commit)
-- SHOULD: Alternate visual weight — dense section followed by spacious, text followed by visual
+- SHOULD: Alternate visual weight - dense section followed by spacious, text followed by visual
 - SHOULD: Each section has one clear purpose (don't combine testimonials with feature lists)
-- SHOULD: Visual transitions between sections — background color shifts, not just whitespace
+- SHOULD: Visual transitions between sections - background color shifts, not just whitespace
 - NEVER: Cookie-cutter repeating layout (3-column cards, 3-column cards, 3-column cards)
 - NEVER: More than 7-8 sections total (if you need more, you're not editing)
-- NEVER: Decorative filler — gradient blobs, floating shapes, ornamental dividers, accent badges, or background effects that exist to fill space rather than communicate meaning
+- NEVER: Decorative filler - gradient blobs, floating shapes, ornamental dividers, accent badges, or background effects that exist to fill space rather than communicate meaning
 
 **Section rhythm matters more than individual section design.** A page with 5 well-paced sections beats a page with 10 beautifully designed sections that feel relentless.
 
@@ -42,7 +42,7 @@ Marketing pages are narratives. Each section advances the story.
 
 Social proof converts. But generic social proof repels.
 
-- SHOULD: Real names, real photos, real companies — not "John D., CEO"
+- SHOULD: Real names, real photos, real companies - not "John D., CEO"
 - SHOULD: Specific outcomes over vague praise ("Cut deploy time from 45min to 2min" > "Great product!")
 - SHOULD: Logo bars with recognizable brands, monochrome, consistent sizing
 - SHOULD: Testimonials placed after the claim they support (feature section → proof of that feature)

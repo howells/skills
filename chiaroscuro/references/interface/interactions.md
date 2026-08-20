@@ -19,7 +19,7 @@ Common miss: Designing hover without focus, or vice versa. Keyboard users never 
 
 ## Touch Targets
 
-Canonical touch-target spec for the whole skill — `responsive.md` defers here.
+Canonical touch-target spec for the whole skill - `responsive.md` defers here.
 
 - MUST: On coarse pointers (touch), interactive targets are at least 48×48px. A 24px visual minimum is fine on fine pointers (mouse/trackpad).
 - MUST: When the visual element is smaller than 48px, keep it visually small but expand the hit area with a child span, gated so it only applies on coarse pointers:
@@ -39,9 +39,9 @@ Canonical touch-target spec for the whole skill — `responsive.md` defers here.
 ## Tap and Gesture Feel
 
 - MUST: Show press feedback on pointer-*down*, commit the action on pointer-*up*. Waiting for `click` to show any feedback feels dead
-- MUST: Allow cancel-by-dragging-away — moving off the target before release aborts the tap, moving back re-arms it (native `:active` + `click` behave this way; custom pointer-event handlers must reproduce it)
+- MUST: Allow cancel-by-dragging-away - moving off the target before release aborts the tap, moving back re-arms it (native `:active` + `click` behave this way; custom pointer-event handlers must reproduce it)
 - SHOULD: Require ~10px of movement (hysteresis) before committing a drag to a direction; below that, treat the gesture as a tap
-- SHOULD: Detect all plausible gestures in parallel from the first move, then cancel the losers once intent is clear. Avoid end-state-only recognizers (`swipeleft`-style events) — they throw away the continuous tracking needed for 1:1 feedback (see `animation.md`: Gesture-Driven Motion)
+- SHOULD: Detect all plausible gestures in parallel from the first move, then cancel the losers once intent is clear. Avoid end-state-only recognizers (`swipeleft`-style events) - they throw away the continuous tracking needed for 1:1 feedback (see `animation.md`: Gesture-Driven Motion)
 - SHOULD: Only pay the double-tap disambiguation delay (which delays every single tap) where double-tap genuinely exists
 
 ## Input
@@ -75,7 +75,7 @@ For stricter pointer gating, define a CSS-first Tailwind v4 custom variant:
 @custom-variant pointer-fine (@media (hover: hover) and (pointer: fine));
 ```
 
-- NEVER: Rely on hover for functionality — hover enhances only
+- NEVER: Rely on hover for functionality - hover enhances only
 
 ## State & Navigation
 
@@ -104,7 +104,7 @@ document.addEventListener('visibilitychange', () => {
 
 - MUST: `overscroll-contain` in modals/drawers
 - MUST: During drag: `select-none`, disable text selection, set `inert` on dragged element/container
-- MUST: No dead zones — if it looks clickable, it is
+- MUST: No dead zones - if it looks clickable, it is
 
 ### `inert` Attribute
 
@@ -125,7 +125,7 @@ Use for: hidden panels, content behind modals, drag containers.
 ## Menus
 
 - SHOULD: Trigger on `mousedown` (not `click`)
-- MUST: No dead zones between menu items — use `py-*` not `space-y-*`
+- MUST: No dead zones between menu items - use `py-*` not `space-y-*`
 - SHOULD: Safe-area triangle for submenu diagonal movement
 
 ### Submenu Safe Triangle
@@ -195,7 +195,7 @@ Arrow keys move `tabindex="0"` between items. Tab moves to the next component en
 
 ## Destructive Actions: Undo > Confirm
 
-SHOULD prefer undo over confirmation dialogs — users click through confirmations mindlessly:
+SHOULD prefer undo over confirmation dialogs - users click through confirmations mindlessly:
 
 1. Remove from UI immediately
 2. Show undo toast
@@ -218,5 +218,5 @@ NEVER rely on gestures as the only way to perform actions.
 - SHOULD: `select-none` on buttons, tabs
 - MUST: `pointer-events-none` on decorative overlays
 - SHOULD: Toggles take effect immediately (no confirmation)
-- MUST NOT: Add `hover:*` states to non-interactive elements — reserve them for buttons, links, and other genuinely clickable elements.
-- MUST NOT: Add `transition-*` for hover color or background changes on non-control elements (cards, rows, list items, static surfaces) — reserve transitions there for elements that actually move or transform, and let color swaps be instant. Interactive controls (buttons, links, form inputs) may use precise `transition-colors`/`transition-shadow` on hover/focus, per `buttons.md` and `forms.md`.
+- MUST NOT: Add `hover:*` states to non-interactive elements - reserve them for buttons, links, and other genuinely clickable elements.
+- MUST NOT: Add `transition-*` for hover color or background changes on non-control elements (cards, rows, list items, static surfaces) - reserve transitions there for elements that actually move or transform, and let color swaps be instant. Interactive controls (buttons, links, form inputs) may use precise `transition-colors`/`transition-shadow` on hover/focus, per `buttons.md` and `forms.md`.

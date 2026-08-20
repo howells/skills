@@ -8,8 +8,8 @@ Indicators" before concluding anything.
 > (https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing). It mirrors that
 > article's taxonomy adapted for general prose; purely Wikipedia-internal tells
 > (AfC submission statements, maintenance-template gaming, fabricated WP: shortcuts,
-> edit-summary patterns) are deliberately omitted, while the generalizable ones —
-> fabricated policies/standards, cross-section style shifts — are kept. When the
+> edit-summary patterns) are deliberately omitted, while the generalizable ones  - 
+> fabricated policies/standards, cross-section style shifts - are kept. When the
 > source article changes, re-check this file against it.
 
 ## Caveats
@@ -17,7 +17,7 @@ Indicators" before concluding anything.
 - AI-detection tools are unreliable. They are fooled by light editing and by models
   they were not trained on. Do not rely on them.
 - Most people detect AI prose at roughly chance level. Heavy LLM users reach about
-  90% accuracy, mostly by recognising the patterns below — not by intuition.
+  90% accuracy, mostly by recognising the patterns below - not by intuition.
 - The word lists and tics drift by model and release date. Treat the specific
   vocabulary as era-bound; treat the underlying behaviour (inflated register,
   synonym-swapping, hedged authority) as the durable signal.
@@ -150,7 +150,7 @@ finished and comprehensive.
 ### Elegant Variation / Lexical Diversity
 
 Needless synonym swapping to avoid repeating a simple noun even when repetition
-would be clearer — a visible side effect of repetition penalties.
+would be clearer - a visible side effect of repetition penalties.
 
 Caveat: non-native English speakers and some careful stylists do this naturally.
 A single instance is not a tell.
@@ -158,7 +158,7 @@ A single instance is not a tell.
 ## Style And Formatting Tells
 
 - Title case drift in headings (capitalising every main word).
-- Boldface sprawl — mechanical emphasis, every instance of a chosen term bolded,
+- Boldface sprawl - mechanical emphasis, every instance of a chosen term bolded,
   "key takeaways" styling.
 - Inline-header vertical lists: a bold lead-in followed by a colon inside each item.
 - Bare bullet characters (•, -, –, #, emoji) or explicit "1." numbering where the
@@ -204,7 +204,7 @@ Strong signs that assistant output leaked directly:
 
 ## Miscellaneous Tells
 
-- A pronounced shift in writing style, vocabulary, or register between sections —
+- A pronounced shift in writing style, vocabulary, or register between sections  - 
   a strong sign part of an article was pasted in from a model.
 - Overwhelmingly exhaustive, oddly thorough edit/change summaries.
 - Unsolicited "submission statement" preambles explaining the work.
@@ -223,7 +223,7 @@ Read these before concluding. They argue *against* AI authorship:
 
 ## Ineffective Indicators
 
-Weak or misleading on their own — do not flag a text on these alone:
+Weak or misleading on their own - do not flag a text on these alone:
 
 - A single "AI vocabulary" word, em dash, or rule-of-three in otherwise grounded prose.
 - Polish, fluency, or correctness by itself. Strong human writing is also polished.

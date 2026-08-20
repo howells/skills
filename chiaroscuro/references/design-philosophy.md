@@ -8,7 +8,7 @@ Timeless principles for UI design, extracted from *Refactoring UI* by Adam Watha
 
 ### Start with a Feature, Not a Layout
 
-The instinct when starting a new project is to design the shell first—navigation, sidebar, footer. Resist this. You don't know what those need to contain until you've designed what matters: the actual features.
+The instinct when starting a new project is to design the shell first - navigation, sidebar, footer. Resist this. You don't know what those need to contain until you've designed what matters: the actual features.
 
 Instead:
 - Design the core functionality first
@@ -25,14 +25,14 @@ Work in cycles:
 3. **Make it real**: Add color, images, refined typography
 4. **Polish**: Shadows, transitions, micro-interactions
 
-Holding off on aesthetics forces you to focus on hierarchy and spacing—the bones of good design.
+Holding off on aesthetics forces you to focus on hierarchy and spacing - the bones of good design.
 
 ### Don't Design Too Much
 
 Design what you need to build next, not the entire system.
 
 - Work in short cycles
-- Be a pessimist—expect things to change
+- Be a pessimist - expect things to change
 - Designing features you might not build wastes time and creates attachment
 
 ### Choose a Personality
@@ -48,7 +48,7 @@ Every design has a personality, whether intentional or not. Be deliberate:
 
 ### Limit Your Choices
 
-Define systems up front—spacing, colors, typography. Then design by selecting from predefined options, not inventing new ones on the fly.
+Define systems up front - spacing, colors, typography. Then design by selecting from predefined options, not inventing new ones on the fly.
 
 Constraints accelerate decision-making. Every time you reach for "whatever looks right," you slow down and introduce inconsistency.
 
@@ -118,7 +118,7 @@ A bold icon next to thin text looks unbalanced. Reduce contrast on heavier eleme
 
 White space is free. Cramped layouts feel cheap and amateur.
 
-Start generous, then remove space only when you have a specific reason. "It feels too empty" isn't a reason—"users are missing the relationship between these items" is.
+Start generous, then remove space only when you have a specific reason. "It feels too empty" isn't a reason - "users are missing the relationship between these items" is.
 
 ### Establish a Spacing System
 
@@ -183,8 +183,8 @@ Use HSL only as a conceptual sketching model. Define final UI and brand tokens i
 A complete palette includes:
 - **Greys**: 8-10 shades (used most frequently)
 - **Primary**: 5-10 shades
-- **Semantic colors**: Red, yellow, green—5-10 shades each
-- **Accent colors**: Any additional hues—5-10 shades each
+- **Semantic colors**: Red, yellow, green - 5-10 shades each
+- **Accent colors**: Any additional hues - 5-10 shades each
 
 ### Don't Let Lightness Kill Saturation
 
@@ -202,7 +202,7 @@ Different hues have different perceived brightness in older color models:
 
 To create lighter shades, rotate hue toward the nearest bright point. To create darker shades, rotate toward the nearest dark point.
 
-Don't rotate more than 20-30 degrees—you'll shift the color's identity.
+Don't rotate more than 20-30 degrees - you'll shift the color's identity.
 
 ### Greys Don't Have to Be Grey
 
@@ -263,10 +263,10 @@ When overlapping images, add an invisible border (matching the background) to pr
 
 ### Accent Borders Must Communicate
 
-A colored border can strengthen hierarchy or communicate state — but only when it carries meaning:
-- **Left side of alerts or notifications** — communicates severity
-- **Under active navigation items** — communicates location
-- **Top of a card** — communicates category (only when distinguishing between types)
+A colored border can strengthen hierarchy or communicate state - but only when it carries meaning:
+- **Left side of alerts or notifications** - communicates severity
+- **Under active navigation items** - communicates location
+- **Top of a card** - communicates category (only when distinguishing between types)
 
 An accent border added to "make it feel more finished" is furniture. Brand strips across the top of a layout, accent lines on every card, and colored borders that don't encode meaning add visual weight without adding clarity.
 

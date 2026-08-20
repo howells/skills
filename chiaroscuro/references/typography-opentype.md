@@ -6,11 +6,11 @@ Advanced typography features for polished, professional interfaces. Companion to
 
 ## The Rendering Stack
 
-"Gorgeous text rendering" is not one property — it's a stack of decisions, ordered here by how much each actually contributes. The highest-impact levers are font choice and layout discipline, not CSS tweaks.
+"Gorgeous text rendering" is not one property - it's a stack of decisions, ordered here by how much each actually contributes. The highest-impact levers are font choice and layout discipline, not CSS tweaks.
 
 ### 1. Pixel density beats everything
 
-On a 2x/Retina display, plain grayscale antialiasing *is* the gorgeous rendering — hinting and subpixel tricks stop mattering (Apple deleted subpixel AA entirely in macOS Mojave). Nothing in CSS matches the jump from 1x to 2x. Consequence: design and QA type on a 2x display, but verify weight/contrast on a 1x display before shipping.
+On a 2x/Retina display, plain grayscale antialiasing *is* the gorgeous rendering - hinting and subpixel tricks stop mattering (Apple deleted subpixel AA entirely in macOS Mojave). Nothing in CSS matches the jump from 1x to 2x. Consequence: design and QA type on a 2x display, but verify weight/contrast on a 1x display before shipping.
 
 ### 2. Grayscale antialiasing
 
@@ -18,28 +18,28 @@ On a 2x/Retina display, plain grayscale antialiasing *is* the gorgeous rendering
 <body class="antialiased">
 ```
 
-Tailwind's `antialiased` sets `-webkit-font-smoothing: antialiased` + `-moz-osx-font-smoothing: grayscale`. Text renders thinner and crisper than the default (which dilates stems), matching Figma and Apple's own UI. The one real trade-off: at 1x DPI, light text on dark backgrounds can go too thin — fix by bumping `font-medium` → `font-semibold` on those surfaces, never by dropping `antialiased`.
+Tailwind's `antialiased` sets `-webkit-font-smoothing: antialiased` + `-moz-osx-font-smoothing: grayscale`. Text renders thinner and crisper than the default (which dilates stems), matching Figma and Apple's own UI. The one real trade-off: at 1x DPI, light text on dark backgrounds can go too thin - fix by bumping `font-medium` → `font-semibold` on those surfaces, never by dropping `antialiased`.
 
-Do **not** add `text-rendering: optimizeLegibility` — kerning and common ligatures are on by default in modern browsers, and it still costs layout time on long pages.
+Do **not** add `text-rendering: optimizeLegibility` - kerning and common ligatures are on by default in modern browsers, and it still costs layout time on long pages.
 
 ### 3. Optical sizing
 
 The most under-used lever. Fonts drawn for text sizes have wider spacing, taller x-heights, sturdier hairlines; display cuts are tighter and more elegant. A variable font with an `opsz` axis interpolates this continuously:
 
 ```css
-/* Tailwind has no utility for this — set once in base */
+/* Tailwind has no utility for this - set once in base */
 @layer base {
   body { font-optical-sizing: auto; }
 }
 ```
 
-- Requires a font with an `opsz` axis (InterVariable 4.0+, Source Serif 4, Fraunces, Roboto Flex, Newsreader). Static-weight imports (e.g. `next/font/google` `Inter({ weight: ['400','700'] })`) don't carry the axis — load the variable font.
-- **If the project uses Inter, use InterVariable** — the canonical variable build from rsms.me/inter. It carries the `opsz` axis *and* the complete OpenType feature set (character variants + stylistic sets — see § Character Variants below); Google Fonts' build pipeline has historically stripped some of these. Self-host via `next/font/local` with `InterVariable.woff2` (+ `InterVariable-Italic.woff2`), or if staying on Google Fonts, request the axis explicitly: `Inter({ subsets: ['latin'], axes: ['opsz'] })`.
+- Requires a font with an `opsz` axis (InterVariable 4.0+, Source Serif 4, Fraunces, Roboto Flex, Newsreader). Static-weight imports (e.g. `next/font/google` `Inter({ weight: ['400','700'] })`) don't carry the axis - load the variable font.
+- **If the project uses Inter, use InterVariable** - the canonical variable build from rsms.me/inter. It carries the `opsz` axis *and* the complete OpenType feature set (character variants + stylistic sets - see § Character Variants below); Google Fonts' build pipeline has historically stripped some of these. Self-host via `next/font/local` with `InterVariable.woff2` (+ `InterVariable-Italic.woff2`), or if staying on Google Fonts, request the axis explicitly: `Inter({ subsets: ['latin'], axes: ['opsz'] })`.
 - A text/display *pairing* (e.g. Inter + Inter Tight) is the manual version of optical sizing. If the variable font has `opsz`, the display cut may be redundant.
 
 ### 4. Tracking tuned per size
 
-Tracking must tighten as size grows. The reference curve is Inter's dynamic metrics formula (`tracking ≈ -0.0223 + 0.185·e^(-0.1745·px)`); in practice a stepped scale is fine — see the Manual Tracking table under Kerning below. In Tailwind, bind tracking into the type scale via `@theme` so `text-6xl` brings its tracking with it rather than relying on authors to remember `tracking-tight`:
+Tracking must tighten as size grows. The reference curve is Inter's dynamic metrics formula (`tracking ≈ -0.0223 + 0.185·e^(-0.1745·px)`); in practice a stepped scale is fine - see the Manual Tracking table under Kerning below. In Tailwind, bind tracking into the type scale via `@theme` so `text-6xl` brings its tracking with it rather than relying on authors to remember `tracking-tight`:
 
 ```css
 @theme {
@@ -51,7 +51,7 @@ Tracking must tighten as size grows. The reference curve is Inter's dynamic metr
 
 ### 5. OpenType features
 
-Kerning and common ligatures are on by default. Opt into the extras — `tabular-nums` for anything numeric that aligns or changes, `slashed-zero` for codes, stylistic sets where the font offers them. Full detail in the sections below.
+Kerning and common ligatures are on by default. Opt into the extras - `tabular-nums` for anything numeric that aligns or changes, `slashed-zero` for codes, stylistic sets where the font offers them. Full detail in the sections below.
 
 ### 6. Layout-level polish
 
@@ -64,7 +64,7 @@ The newest tier, all cheap wins:
 <div class="hyphens-auto" lang="en">…</div>  <!-- needs a correct lang attribute -->
 ```
 
-And the part no property can do: measure ~45–75 characters per line, line-height tightening as size grows (1.5 at 16px → ~1.1 at 60px — table under Line Height Relationships below).
+And the part no property can do: measure ~45–75 characters per line, line-height tightening as size grows (1.5 at 16px → ~1.1 at 60px - table under Line Height Relationships below).
 
 ### The stack, condensed
 
@@ -78,7 +78,7 @@ FONT               → variable, with opsz axis where possible (Inter → InterV
 SMOOTHING          → antialiased (Tailwind), weight bump on dark 1x surfaces
 OPTICAL SIZING     → font-optical-sizing: auto (base layer)
 TRACKING           → bound to type scale via @theme, tighter as size grows
-FEATURES           → tabular-nums etc. — see below
+FEATURES           → tabular-nums etc. - see below
 WRAPPING           → text-balance / text-pretty / hanging-punctuation
 MEASURE & LEADING  → 45–75ch; line-height falls as size rises
 ```
@@ -100,7 +100,7 @@ OpenType features add professional typographic refinement. Use `font-feature-set
 | `ordn` | `font-variant-numeric: ordinal` | Ordinal indicators (1st) | Dates, rankings |
 
 ```css
-/* Data tables — digits align vertically */
+/* Data tables - digits align vertically */
 .data-cell {
   font-variant-numeric: tabular-nums lining-nums;
 }
@@ -108,7 +108,7 @@ OpenType features add professional typographic refinement. Use `font-feature-set
 /* Tailwind */
 <td class="tabular-nums">1,234.56</td>
 
-/* Body text — digits blend with lowercase */
+/* Body text - digits blend with lowercase */
 .prose {
   font-variant-numeric: oldstyle-nums proportional-nums;
 }
@@ -163,11 +163,11 @@ Only use if the font has designed small cap glyphs. Faked small caps (scaled cap
 
 ### Character Variants & Stylistic Sets (Inter / InterVariable)
 
-InterVariable ships a large set of `cv`/`ss` features — one of the strongest reasons to use the rsms.me build over a stripped CDN copy. The high-value ones for interfaces:
+InterVariable ships a large set of `cv`/`ss` features - one of the strongest reasons to use the rsms.me build over a stripped CDN copy. The high-value ones for interfaces:
 
 | Feature | Effect | Use When |
 |---------|--------|----------|
-| `cv05` | Lowercase `l` with tail | Any UI showing codes/IDs — disambiguates `I`/`l`/`1` |
+| `cv05` | Lowercase `l` with tail | Any UI showing codes/IDs - disambiguates `I`/`l`/`1` |
 | `cv11` | Single-storey `a` | Softer, more geometric personality |
 | `ss01` | Open digits (alternate 0, 6, 9) | Data-dense UI, dashboards |
 | `ss02` | Disambiguation set (serifed I, slashed 0, tailed l) | Codes, license keys, technical output |
@@ -175,7 +175,7 @@ InterVariable ships a large set of `cv`/`ss` features — one of the strongest r
 | `zero` | Slashed zero only | Tables mixing O and 0 |
 | `case` | Case-sensitive punctuation (raised hyphens/brackets in ALL CAPS) | Auto via `calt` in most cases; force for caps-only labels |
 
-Wire features into the font token in Tailwind v4 so every use of `font-sans` gets them — don't sprinkle arbitrary properties per element:
+Wire features into the font token in Tailwind v4 so every use of `font-sans` gets them - don't sprinkle arbitrary properties per element:
 
 ```css
 @theme {
@@ -223,7 +223,7 @@ body {
 /* Headline */
 h1 { letter-spacing: -0.02em; }
 
-/* When uppercase is justified (not a default — see typography.md rules) */
+/* When uppercase is justified (not a default - see typography.md rules) */
 .mono-eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -323,8 +323,8 @@ body {
 ```
 
 **Rules:**
-- Always set a minimum (`clamp` first value) — viewport units alone can make text unreadable on small screens
-- Always set a maximum — text shouldn't grow forever on large screens
+- Always set a minimum (`clamp` first value) - viewport units alone can make text unreadable on small screens
+- Always set a maximum - text shouldn't grow forever on large screens
 - Body text range: 14px–18px
 - Heading text range: 24px–64px depending on hierarchy level
 

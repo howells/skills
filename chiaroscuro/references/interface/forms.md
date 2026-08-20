@@ -2,7 +2,7 @@
 
 ## Labels
 
-- MUST: Use clear, readable text for form labels — same typeface family as body text, legible size.
+- MUST: Use clear, readable text for form labels - same typeface family as body text, legible size.
 - MUST NOT: Apply mono small-caps, uppercase tracking, or decorative typographic treatments to form labels. Labels communicate field identity, not brand texture.
 - SHOULD: Position labels above inputs. Side-aligned labels create scanning friction on narrow viewports.
 
@@ -23,17 +23,17 @@
 ## Control Styling
 
 - MUST NOT: Pair `shadow-*` with a solid gray border on any control. Use a ring instead: `ring-1 ring-black/10 shadow-*`, never `border border-gray-300 shadow-*`.
-- SHOULD: Use `max-w-xs` for compact, single-purpose forms (login, sign-up, single-field) — `max-w-sm` and wider feels too spacious for focused UI.
+- SHOULD: Use `max-w-xs` for compact, single-purpose forms (login, sign-up, single-field) - `max-w-sm` and wider feels too spacious for focused UI.
 - MUST NOT: Use `outline-offset-*` on custom focus rings for `<input>`/`<textarea>`; use `outline-offset-0` or omit it. When using a 2px focus outline, inset it with `-outline-offset-1` so it does not extend outside the element.
 - MUST NOT: Use the conjoined input + button pattern where the two share a border. Add a gap between them, or nest the button visually inside the input.
-- MUST: Bump small inputs to `16px` on mobile — if a text input's font size is below `16px`, add `max-sm:text-base/{lh}` to prevent iOS zoom.
-- SHOULD: Scale touch controls down at `sm:` — checkboxes/radios `size-5 sm:size-4`, toggles `w-11 sm:w-9`.
+- MUST: Bump small inputs to `16px` on mobile - if a text input's font size is below `16px`, add `max-sm:text-base/{lh}` to prevent iOS zoom.
+- SHOULD: Scale touch controls down at `sm:` - checkboxes/radios `size-5 sm:size-4`, toggles `w-11 sm:w-9`.
 
 ## Control Markup
 
 Build native controls; apply state styling in CSS via variants. **Never use JavaScript to toggle classes based on input state.** Replace `{brand}`/`{gray}` with project colors. Associate a `<label>` via `id`/`for`, or give the control an `aria-label`.
 
-### Select — custom chevron
+### Select - custom chevron
 
 Wrap only the `<select>` and chevron (never the label) in `inline-grid grid-cols-[1fr_--spacing(8)]`; the `<select>` gets `col-span-full row-start-1 appearance-none pr-8`; the chevron SVG gets `pointer-events-none col-start-2 row-start-1 place-self-center`.
 
@@ -75,7 +75,7 @@ Default width `w-9`. Remove all `dark:` classes if the site has no dark mode; fo
 </div>
 ```
 
-To vertically center a checkbox/radio with adjacent text, wrap it in an element with `h-lh items-center` and the matching `text-{size}` — never put `h-lh` on the `inline-grid` wrapper, never use top margins.
+To vertically center a checkbox/radio with adjacent text, wrap it in an element with `h-lh items-center` and the matching `text-{size}` - never put `h-lh` on the `inline-grid` wrapper, never use top margins.
 
 ## Input Decorations
 
@@ -113,7 +113,7 @@ To vertically center a checkbox/radio with adjacent text, wrap it in an element 
 - MUST: Warn on unsaved changes before navigation
 - MUST: Allow pasting (never block paste)
 - MUST: Trim whitespace from values
-- MUST: Hydration-safe inputs — no lost focus or value after hydration
+- MUST: Hydration-safe inputs - no lost focus or value after hydration
 - MUST: Compatible with password managers and 2FA; allow pasting one-time codes
 - SHOULD: Prefill with user data when available
 - SHOULD: Placeholder ends with ellipsis: `Search…`, `sk-012345…`
@@ -130,7 +130,7 @@ To vertically center a checkbox/radio with adjacent text, wrap it in an element 
 
 ## Checkboxes/Radios
 
-- MUST: No dead zones — entire row clickable
+- MUST: No dead zones - entire row clickable
 
 ```jsx
 <label className="flex items-center gap-2 cursor-pointer">

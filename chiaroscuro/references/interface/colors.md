@@ -76,7 +76,7 @@ Lightness 0.92 + chroma 0.04 → usable tint
 
 ### Color Independence
 
-- NEVER: Rely on color alone — pair with icons, text, position
+- NEVER: Rely on color alone - pair with icons, text, position
 - 8% of males have red-green deficiency
 
 ## Starter Palette: Blue-Grey
@@ -100,12 +100,12 @@ Dark mode strategy is owned by `dark-mode.md`: default to Tailwind's built-in `d
 
 ## OKLCH-First Color Definition
 
-MUST define colors in OKLCH. It's perceptually uniform — equal steps in lightness *look* equal, unlike HSL where 50% lightness in yellow looks bright while 50% in blue looks dark.
+MUST define colors in OKLCH. It's perceptually uniform - equal steps in lightness *look* equal, unlike HSL where 50% lightness in yellow looks bright while 50% in blue looks dark.
 
 ```css
 /* OKLCH: lightness (0-1), chroma (0-0.4+), hue (0-360) */
 --color-primary: oklch(0.60 0.15 250);       /* Blue */
---color-primary-light: oklch(0.85 0.08 250);  /* Same hue, lighter — reduce chroma */
+--color-primary-light: oklch(0.85 0.08 250);  /* Same hue, lighter - reduce chroma */
 --color-primary-dark: oklch(0.35 0.12 250);   /* Same hue, darker */
 ```
 
@@ -131,7 +131,7 @@ Pure grey is dead. Add a subtle hint of your brand hue to all neutrals:
   --color-gray-900: oklch(0.15 0.01 60);
   --color-gray-950: oklch(0.10 0.01 60);
 
-  /* Cool-tinted greys (professional, tech) — change hue to 250 */
+  /* Cool-tinted greys (professional, tech) - change hue to 250 */
 }
 ```
 
@@ -142,8 +142,8 @@ Chroma of 0.01 is tiny but perceptible. It creates subconscious cohesion between
 This rule is about **visual weight**, not pixel count:
 
 - **60%**: Neutral backgrounds, white space, base surfaces
-- **30%**: Secondary — text, borders, inactive states
-- **10%**: Accent — CTAs, highlights, focus states
+- **30%**: Secondary - text, borders, inactive states
+- **10%**: Accent - CTAs, highlights, focus states
 
 The common mistake: using accent color everywhere because it's "the brand color." Accent colors work *because* they're rare. Overuse kills their power.
 
@@ -152,12 +152,12 @@ The common mistake: using accent color everywhere because it's "the brand color.
 These commonly fail contrast or cause readability issues:
 
 - Light grey text on white (the #1 accessibility fail)
-- **Grey text on any colored background** — grey looks washed out on color. Use a darker shade of the background's hue, or transparency
+- **Grey text on any colored background** - grey looks washed out on color. Use a darker shade of the background's hue, or transparency
 - Red text on green background (8% of men can't distinguish)
 - Blue text on red background (vibrates visually)
 - Yellow text on white (almost always fails)
 - Thin light text on images (unpredictable contrast)
-- **Placeholder text** still needs 4.5:1 — that light grey placeholder usually fails WCAG
+- **Placeholder text** still needs 4.5:1 - that light grey placeholder usually fails WCAG
 
 ## Alpha Is A Design Smell
 
@@ -168,12 +168,12 @@ Heavy use of transparency (`rgba`, `hsla`, `/ 0.5`) usually means an incomplete 
 
 SHOULD: Define explicit overlay colors for each context instead.
 
-Exception: Focus rings and interactive states where see-through is genuinely needed, and low-alpha hairline rings/borders and surface overlays (e.g. `ring-black/5`, `bg-white/10`) used deliberately as part of the surface ladder — see `surfaces.md` and `tailwind-authoring.md`.
+Exception: Focus rings and interactive states where see-through is genuinely needed, and low-alpha hairline rings/borders and surface overlays (e.g. `ring-black/5`, `bg-white/10`) used deliberately as part of the surface ladder - see `surfaces.md` and `tailwind-authoring.md`.
 
 ## Tailwind Integration
 
 ```css
-/* Tailwind v4 — OKLCH-first */
+/* Tailwind v4 - OKLCH-first */
 @theme {
   --color-brand-50: oklch(0.97 0.02 250);
   --color-brand-100: oklch(0.93 0.04 250);
@@ -193,12 +193,12 @@ Note chroma curve: peaks at 500 (0.15), reduces toward both extremes. This keeps
 
 ## Anti-Patterns
 
-- NEVER: Pure black (#000) for text — too harsh. Use `oklch(0.15 0.01 hue)`
-- NEVER: Pure white (#FFF) for large backgrounds — too stark. Use `oklch(0.98 0.005 hue)`
+- NEVER: Pure black (#000) for text - too harsh. Use `oklch(0.15 0.01 hue)`
+- NEVER: Pure white (#FFF) for large backgrounds - too stark. Use `oklch(0.98 0.005 hue)`
 - NEVER: Define colors in hex without OKLCH equivalent
 - NEVER: Create shades by adjusting only lightness (also adjust chroma and hue)
 - NEVER: Multiple primary colors (dilutes hierarchy)
 - NEVER: Default to indigo as the brand or accent color unless the project already uses it or the user asked for it
-- NEVER: Invent colors on the fly — use defined palette
+- NEVER: Invent colors on the fly - use defined palette
 - NEVER: Heavy alpha/transparency as a substitute for proper palette shades
-- NEVER: An orphan dark section in a light page (or vice versa) — a lone `#111` band mid-page reads as a copy-paste accident. Commit to one substrate; when a section needs contrast, step within the same palette (a darker/lighter shade of the page's neutrals), not a jump to the opposite scheme. A deliberate full dark footer or hero can work; a random dark stripe between light sections cannot.
+- NEVER: An orphan dark section in a light page (or vice versa) - a lone `#111` band mid-page reads as a copy-paste accident. Commit to one substrate; when a section needs contrast, step within the same palette (a darker/lighter shade of the page's neutrals), not a jump to the opposite scheme. A deliberate full dark footer or hero can work; a random dark stripe between light sections cannot.

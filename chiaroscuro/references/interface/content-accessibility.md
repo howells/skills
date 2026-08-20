@@ -65,7 +65,7 @@ Follow the [Chicago Manual of Style](https://www.chicagomanualofstyle.org/) for 
 
 ### No System Leakage
 
-UI copy describes the user's objects, decisions, and next actions. System internals — database tables, API mechanics, agent steps, model names, orchestration states — stay hidden unless the target user is a technical operator whose work requires them.
+UI copy describes the user's objects, decisions, and next actions. System internals - database tables, API mechanics, agent steps, model names, orchestration states - stay hidden unless the target user is a technical operator whose work requires them.
 
 - MUST: Translate implementation states into user outcomes: `sync failed` → `Updates are paused`; `indexing` → `Search is updating`; `agent step running` → `Checking the next section`
 - MUST: Use domain nouns and verbs from the user's work, not database tables, API endpoints, prompt stages, model names, or workflow engine states
@@ -77,7 +77,7 @@ UI copy describes the user's objects, decisions, and next actions. System intern
 
 AI-generated text has recognizable patterns that erode trust. Avoid these tells:
 
-- NEVER: Em dashes (—) in UX copy. Use commas, periods, or parentheses instead. Em dashes are the most recognizable LLM tell
+- NEVER: Em dashes ( - ) in UX copy. Use commas, periods, or parentheses instead. Em dashes are the most recognizable LLM tell
 - NEVER: "Delve", "leverage", "streamline", "empower", "elevate", "robust", "seamless", "cutting-edge"
 - NEVER: "In order to" (just use "to")
 - NEVER: Filler hedges like "It's worth noting that", "Interestingly,", "It's important to note"
@@ -94,7 +94,7 @@ AI-generated text has recognizable patterns that erode trust. Avoid these tells:
 - SHOULD: Curly quotes (" "); avoid widows/orphans
 - MUST: Tabular numbers for comparisons (`font-variant-numeric: tabular-nums` or a mono like Geist Mono)
 - MUST: Redundant status cues (not color-only); icons have text labels
-- MUST: Don't ship the schema—visuals may omit labels but accessible names still exist
+- MUST: Don't ship the schema - visuals may omit labels but accessible names still exist
 - MUST: Use the ellipsis character `…` (not `...`)
 - MUST: `scroll-margin-top` on headings for anchored links; include a "Skip to content" link; hierarchical `<h1–h6>`
 - MUST: Resilient to user-generated content (short/avg/very long)

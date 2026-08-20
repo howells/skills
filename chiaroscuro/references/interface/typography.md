@@ -2,8 +2,8 @@
 
 ## Rendering
 
-- MUST: `antialiased` class on body. Grayscale smoothing renders text thinner and crisper than the browser default, and matches Figma and native macOS UI. If light text on dark backgrounds looks too thin at 1x DPI, bump the weight one step — don't remove `antialiased`.
-- MUST: enable optical sizing when the font has an `opsz` axis (Tailwind has no utility for this — set it once in base):
+- MUST: `antialiased` class on body. Grayscale smoothing renders text thinner and crisper than the browser default, and matches Figma and native macOS UI. If light text on dark backgrounds looks too thin at 1x DPI, bump the weight one step - don't remove `antialiased`.
+- MUST: enable optical sizing when the font has an `opsz` axis (Tailwind has no utility for this - set it once in base):
 
 ```css
 @layer base {
@@ -18,7 +18,7 @@
 html { -webkit-text-size-adjust: 100%; }
 ```
 
-For the full rendering stack — DPI, optical sizing, per-size tracking, hanging punctuation — see `../typography-opentype.md` § The Rendering Stack.
+For the full rendering stack - DPI, optical sizing, per-size tracking, hanging punctuation - see `../typography-opentype.md` § The Rendering Stack.
 
 ## Font Weight
 
@@ -59,7 +59,7 @@ p { font-size: clamp(1rem, 2.5vw, 1.25rem); }
 
 ## Headline Wrap Budget
 
-- MUST: A display headline (H1, hero heading) never wraps beyond 2–3 lines. A 4+ line heading is a top AI tell — big type poured into a too-narrow container.
+- MUST: A display headline (H1, hero heading) never wraps beyond 2–3 lines. A 4+ line heading is a top AI tell - big type poured into a too-narrow container.
 - MUST: Fix it compositionally, not cosmetically: widen the heading container (`max-w-5xl`/`max-w-6xl`/full width) and let `clamp()` reduce the size so words flow horizontally. Do not just shrink the font in place.
 - SHOULD: Verify the rendered line count at mobile and desktop widths before shipping.
 
@@ -77,7 +77,7 @@ Use them for polish:
 ```
 
 ```css
-/* Features without Tailwind classes — use arbitrary values */
+/* Features without Tailwind classes - use arbitrary values */
 abbr { font-variant-caps: all-small-caps; }        /* Abbreviations */
 code { font-variant-ligatures: none; }             /* Disable ligatures in code */
 body { font-kerning: normal; }                     /* Enable kerning (be explicit) */
@@ -102,7 +102,7 @@ NEVER pair fonts that are similar but not identical (e.g., two geometric sans-se
 
 ### Better Google Fonts Alternatives
 
-For the full curated font list — including commercial foundries, Google Fonts picks, proven pairings, and pairing research guidance — see `references/font-recommendations.md`.
+For the full curated font list - including commercial foundries, Google Fonts picks, proven pairings, and pairing research guidance - see `references/font-recommendations.md`.
 
 ## Font Loading
 
@@ -168,11 +168,11 @@ Tools like [Fontaine](https://github.com/unjs/fontaine) or Next.js `next/font` c
 - MUST NOT: Add explicit `leading-*` modifiers to headings unless a layout edge case truly requires it. Tailwind's default heading rhythm is the baseline.
 - MUST: Use `text-balance` on headings and `text-pretty` on paragraph text.
 - MUST: Use `tracking-tight` on headings larger than `text-xl` unless the chosen font is already condensed.
-- MUST NOT: Default to `uppercase` + `tracking-wide`/`tracking-widest` eyebrows above section headings. This pattern is overused to the point of being a tell — the typographic equivalent of a purple-to-blue gradient. Most pages need zero eyebrows; many need one; almost none need them on every section.
+- MUST NOT: Default to `uppercase` + `tracking-wide`/`tracking-widest` eyebrows above section headings. This pattern is overused to the point of being a tell - the typographic equivalent of a purple-to-blue gradient. Most pages need zero eyebrows; many need one; almost none need them on every section.
 - MUST NOT: Use `uppercase` eyebrow text on sans or serif fonts. Reserve uppercase eyebrows for **monospace** fonts only.
 - SHOULD: When uppercase monospace eyebrows are used, pair with `tracking-wide` and use them sparingly (typically one per page, not as a section-divider habit).
-- SHOULD: Prefer alternatives to the uppercase eyebrow — numeric labels (`01 / Pricing`), sentence-case kickers in the display font at smaller weight, a colored dot + label, or no eyebrow at all.
-- MUST NOT: Use mono small-caps as a default label style. Mono small-caps are a high-signal treatment for numeric content and short data-adjacent labels (`v2.4.1`, `$49/mo`, `ID`, `STATUS`, `ETA`). When they appear on more than a few elements per screen — card labels, sidebar headings, tags, general metadata — they lose signal and become wallpaper. Before applying, ask: would sentence-case in the body font at a lighter weight work just as well? If yes, use that.
+- SHOULD: Prefer alternatives to the uppercase eyebrow - numeric labels (`01 / Pricing`), sentence-case kickers in the display font at smaller weight, a colored dot + label, or no eyebrow at all.
+- MUST NOT: Use mono small-caps as a default label style. Mono small-caps are a high-signal treatment for numeric content and short data-adjacent labels (`v2.4.1`, `$49/mo`, `ID`, `STATUS`, `ETA`). When they appear on more than a few elements per screen - card labels, sidebar headings, tags, general metadata - they lose signal and become wallpaper. Before applying, ask: would sentence-case in the body font at a lighter weight work just as well? If yes, use that.
 - SHOULD: Constrain long-form text with `max-w-[*ch]` or equivalent directly on the text element.
 
 ## Content Formatting

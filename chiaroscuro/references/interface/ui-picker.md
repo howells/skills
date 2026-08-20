@@ -22,7 +22,7 @@ If the picker was used earlier in the same project, clean up before a new round:
 
 ## Annotate Variants
 
-Do all variant work in the existing source files — never a standalone preview file.
+Do all variant work in the existing source files - never a standalone preview file.
 
 1. Give each decision a human-readable label (`Hero style`, `Pricing layout`).
 2. Wrap the decision: `data-uidotsh-pick="Human readable label"`.
@@ -48,7 +48,7 @@ Do all variant work in the existing source files — never a standalone preview 
 
 ## Inject The Toolbar (once)
 
-After variants exist, inject the script once in the shared root layout, idempotently — never in leaf components, never duplicated. Prefer framework-native script APIs.
+After variants exist, inject the script once in the shared root layout, idempotently - never in leaf components, never duplicated. Prefer framework-native script APIs.
 
 - **Next.js**: `next/script` (a plain `<script>` in JSX can fail to execute until a full refresh in dev).
 
@@ -67,7 +67,7 @@ After variants exist, inject the script once in the shared root layout, idempote
   }
   ```
 
-- **TanStack**: inject via the `scripts` array in the `head` option of `createRootRoute` in `src/routes/__root.tsx` — not a raw `<script>` in markup.
+- **TanStack**: inject via the `scripts` array in the `head` option of `createRootRoute` in `src/routes/__root.tsx` - not a raw `<script>` in markup.
 - **Nuxt**: `useHead` in `app.vue` or a layout file.
 - **Vite / Laravel / plain HTML**: inject once before `</body>` in `index.html` / `resources/views/layouts/app.blade.php` / the shared root shell.
 

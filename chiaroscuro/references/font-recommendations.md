@@ -8,12 +8,12 @@ Curated font guidance for both UI work (body, interface, data, mono) and brand/d
 
 These fonts signal "no one made a choice here." Avoid in both UI and brand contexts:
 
-- **Instrument Serif** — the number one AI-slop serif. Every AI-generated landing page uses it. "Currently trending" means it has been strip-mined of all distinctiveness.
-- **Playfair Display** — template-tier. Beautiful in isolation, generic in practice.
-- **Poppins** — geometric sans that's everywhere. Indistinguishable from a thousand other sites.
-- **Montserrat** — massively overexposed. Was distinctive in 2016.
-- **Roboto** — Android default. Choosing it says "I didn't choose."
-- **Arial** — the non-choice.
+- **Instrument Serif** - the number one AI-slop serif. Every AI-generated landing page uses it. "Currently trending" means it has been strip-mined of all distinctiveness.
+- **Playfair Display** - template-tier. Beautiful in isolation, generic in practice.
+- **Poppins** - geometric sans that's everywhere. Indistinguishable from a thousand other sites.
+- **Montserrat** - massively overexposed. Was distinctive in 2016.
+- **Roboto** - Android default. Choosing it says "I didn't choose."
+- **Arial** - the non-choice.
 
 ---
 
@@ -21,8 +21,8 @@ These fonts signal "no one made a choice here." Avoid in both UI and brand conte
 
 Before committing to any font selection or pairing, validate with real-world evidence:
 
-- **Fonts In Use** (fontsinuse.com) — curated archive of typography in real-world design. Search by font name to see how it pairs, what sizes it works at, and what contexts it thrives in. The best source for seeing a font in its natural habitat rather than a specimen page.
-- **Typewolf** (typewolf.com) — curated in-use examples with pairing recommendations. Shows fonts as they appear on live websites. The "similar fonts" and "pairings" sections are particularly useful for discovering alternatives and validated combinations.
+- **Fonts In Use** (fontsinuse.com) - curated archive of typography in real-world design. Search by font name to see how it pairs, what sizes it works at, and what contexts it thrives in. The best source for seeing a font in its natural habitat rather than a specimen page.
+- **Typewolf** (typewolf.com) - curated in-use examples with pairing recommendations. Shows fonts as they appear on live websites. The "similar fonts" and "pairings" sections are particularly useful for discovering alternatives and validated combinations.
 
 A pairing that looks good in a type specimen may fail in a real interface. Real-world evidence beats theoretical compatibility.
 
@@ -30,11 +30,11 @@ A pairing that looks good in a type specimen may fail in a real interface. Real-
 
 ## UI Fonts
 
-Fonts that disappear. They serve content without drawing attention — that's their job. Choose these for body text, interface labels, navigation, form elements, and anywhere readability and neutrality matter more than personality.
+Fonts that disappear. They serve content without drawing attention - that's their job. Choose these for body text, interface labels, navigation, form elements, and anywhere readability and neutrality matter more than personality.
 
 **You often don't need a second font.** One well-chosen font family in multiple weights creates cleaner hierarchy than two competing typefaces. Only add a second font when you need genuine contrast (e.g., display headlines + body text).
 
-### UI Sans-Serif — Commercial
+### UI Sans-Serif - Commercial
 
 | Font | Foundry | Character | Good for |
 |------|---------|-----------|----------|
@@ -44,10 +44,10 @@ Fonts that disappear. They serve content without drawing attention — that's th
 | Apercu | Colophon | Geometric bones with humanist quirks | Studio/creative brands, portfolios, design tools |
 | Akkurat | Lineto | Swiss precision without warmth. Clean as a scalpel | Data products, developer tools, institutional rigour |
 | Maison Neue | Milieu Grotesque | Refined neutral with just enough personality to not disappear | Premium consumer, fashion-adjacent, lifestyle |
-| Whitney | Hoefler | Designed for signage/wayfinding — excellent legibility at all sizes | Information-heavy products, dashboards, systems at every scale |
-| Untitled Sans | Klim | Invisible in the best way — serves content without ego | Products where the type must never compete with the content |
+| Whitney | Hoefler | Designed for signage/wayfinding - excellent legibility at all sizes | Information-heavy products, dashboards, systems at every scale |
+| Untitled Sans | Klim | Invisible in the best way - serves content without ego | Products where the type must never compete with the content |
 
-### UI Sans-Serif — Google Fonts
+### UI Sans-Serif - Google Fonts
 
 | Font | Designer/Foundry | Character | Good for |
 |------|-----------------|-----------|----------|
@@ -64,7 +64,7 @@ Fonts that disappear. They serve content without drawing attention — that's th
 | Public Sans | USWDS | Government-grade accessibility, neutral functional | Institutional, civic, accessibility-first brands |
 | Rethink Sans | Hans Thiessen / Rethink | Fork of DM Sans, weight-specific tracking, refined | Approachable professional brands |
 
-### UI Sans-Serif — Free (self-hosted, not on Google Fonts)
+### UI Sans-Serif - Free (self-hosted, not on Google Fonts)
 
 | Font | License | Character | Good for |
 |------|---------|-----------|----------|
@@ -92,37 +92,37 @@ Fonts that express. They carry personality in headlines, hero text, wordmarks, a
 
 ### Brand Sans-Serif (with real character)
 
-These go beyond neutral — they have personality suitable for display, headlines, and brand identity while still being legible.
+These go beyond neutral - they have personality suitable for display, headlines, and brand identity while still being legible.
 
 | Font | Foundry | Character | Good for |
 |------|---------|-----------|----------|
 | Scto Grotesk | Schick-Toikka | Industrial warmth | Craft, studio, honest brands |
 | TWK Everett | Weltkern | Contemporary grotesque with presence at display sizes | Brand identities that want modern + bold without shouting |
-| Brown | Lineto | Warm, rounded terminals, slightly soft | Approachable premium — hospitality, wellness, consumer |
+| Brown | Lineto | Warm, rounded terminals, slightly soft | Approachable premium - hospitality, wellness, consumer |
 | Roobert | Displaay | Friendly geometric, rounder than Circular | Consumer apps, playful brands, warmth without childishness |
 | Sharp Grotesk | Sharp Type | Precise, confident, wide weight range | Confident brands that want to feel engineered |
-| SöhneBreit | Klim | Wide Söhne — confident, modern | Brand marks, display headlines, posters |
+| SöhneBreit | Klim | Wide Söhne - confident, modern | Brand marks, display headlines, posters |
 | Space Grotesk | Google Fonts (Colophon) | Technical, geometric with quirk | Dev tools, technical products |
 | Bricolage Grotesque | Google Fonts | Playful geometry, not childish | Creative tools, consumer products |
 
-### Serif — Commercial
+### Serif - Commercial
 
 | Font | Foundry | Character | Good for |
 |------|---------|-----------|----------|
 | Signifier | Klim | Sharp, modern, high-contrast. Klim's best serif | Tech editorial, contemporary brands that want serif warmth + modern edge |
-| Tiempos | Klim | Modern authority — familiar without being dated | Long-form reading, editorial, legal, institutional |
+| Tiempos | Klim | Modern authority - familiar without being dated | Long-form reading, editorial, legal, institutional |
 | Martina Plantijn | Klim | Warm humanist serif, softer than Tiempos | Storytelling brands, creative platforms, humanist tech |
 | GT Sectra | Grilli Type | Sharp wedge serifs, slightly brutal | Tech editorial, brands with edge, serif warmth + modern sharpness |
-| GT Alpina | Grilli Type | Soft, warm, slightly irregular — like a well-read book | Storytelling brands, creative platforms |
+| GT Alpina | Grilli Type | Soft, warm, slightly irregular - like a well-read book | Storytelling brands, creative platforms |
 | GT Super | Grilli Type | High-contrast display serif with 70s warmth | Fashion, music, lifestyle, retro-modern editorial |
-| Canela | Commercial Type | Half-serif, half-sans — ethereal, floating quality | Luxury, beauty, fashion, aspirational without cold |
+| Canela | Commercial Type | Half-serif, half-sans - ethereal, floating quality | Luxury, beauty, fashion, aspirational without cold |
 | Lyon | Commercial Type | Workhorse text serif, reads beautifully at body sizes | Long-form content products, publishing |
-| Saol | Schick-Toikka | High-contrast display serif with character | Headlines, hero text, brand moments — not for body |
-| Sainte Colombe | Production Type | Beautiful French serif — elegant without precious | Luxury, editorial, brands with European sensibility |
+| Saol | Schick-Toikka | High-contrast display serif with character | Headlines, hero text, brand moments - not for body |
+| Sainte Colombe | Production Type | Beautiful French serif - elegant without precious | Luxury, editorial, brands with European sensibility |
 | Mercury | Hoefler | Newspaper-grade with optical sizing | Serious editorial, data journalism, institutional publishing |
 | Ivar | Letters from Sweden | Modern editorial serif, crisp and contemporary | Magazine brands, editorial products, premium content |
 
-### Serif — Google Fonts
+### Serif - Google Fonts
 
 | Font | Designer/Foundry | Character | Good for |
 |------|-----------------|-----------|----------|
@@ -130,9 +130,9 @@ These go beyond neutral — they have personality suitable for display, headline
 | Hedvig Letters Serif | Kanon Foundry | Warm Swedish editorial quality, readable, characterful | Editorial brands, content platforms |
 | Spectral | Production Type (Jean-Baptiste Levée) | Screen-first, 7 weights + small caps. Fastest-loading serif on GF | News sites, professional publications, modern magazines |
 | Literata | TypeTogether | Google Play Books serif, v3, optical size axis, upright italic | Digital publishing, reading apps, content-heavy products |
-| Source Serif 4 | Adobe (Frank Grießhammer) | High-quality transitional, multiple optical sizes | Long-form, institutional, professional — overlooked for its quality |
+| Source Serif 4 | Adobe (Frank Grießhammer) | High-quality transitional, multiple optical sizes | Long-form, institutional, professional - overlooked for its quality |
 | Lora | Cyreal | Calligraphic warmth, moderate contrast, reads at body sizes | Storytelling brands, literary products, warm editorial |
-| EB Garamond | Georg Maurer | Best free Garamond. True small caps, ligatures, old-style figures | Academic, literary, classical — for people who know type |
+| EB Garamond | Georg Maurer | Best free Garamond. True small caps, ligatures, old-style figures | Academic, literary, classical - for people who know type |
 | Fraunces | Undercase Type | Warmth, craft, slight quirk in the details | Artisanal, food, creative brands |
 | Cormorant | Christian Thalmann | Elegant, high contrast, Claude Garamond-inspired | Luxury, fashion, high-end display |
 
@@ -140,12 +140,12 @@ These go beyond neutral — they have personality suitable for display, headline
 
 | Font | Foundry | Character | Good for |
 |------|---------|-----------|----------|
-| Novarese | — | Retro warmth, distinctive | Brands with a nostalgic or craft angle |
-| Knockout | Hoefler | 9 widths × many weights — an entire system of condensed display | Bold statements, sports, media, high-energy brands |
-| Schnyder | Commercial Type | Ultra-high-contrast Didone — dramatic | Luxury, fashion, editorial covers, statement moments |
-| Eksell Display | Letters from Sweden | Round, warm, hand-drawn quality — distinctive | Craft brands, food, warmth and personality |
-| Editorial New | — | Dramatic, editorial | Magazine-style, bold statements |
-| Bodoni Moda | Google Fonts (Indestructible Type) | Proper variable Bodoni, high contrast, 6–72pt optical sizing | Luxury, fashion, editorial — what people should reach for instead of Playfair |
+| Novarese | - | Retro warmth, distinctive | Brands with a nostalgic or craft angle |
+| Knockout | Hoefler | 9 widths × many weights - an entire system of condensed display | Bold statements, sports, media, high-energy brands |
+| Schnyder | Commercial Type | Ultra-high-contrast Didone - dramatic | Luxury, fashion, editorial covers, statement moments |
+| Eksell Display | Letters from Sweden | Round, warm, hand-drawn quality - distinctive | Craft brands, food, warmth and personality |
+| Editorial New | - | Dramatic, editorial | Magazine-style, bold statements |
+| Bodoni Moda | Google Fonts (Indestructible Type) | Proper variable Bodoni, high contrast, 6–72pt optical sizing | Luxury, fashion, editorial - what people should reach for instead of Playfair |
 | Libre Caslon Display | Google Fonts (Impallari Type) | Condensed, delicate serifs, high contrast | Boutique, vintage, refined brand moments |
 
 ---

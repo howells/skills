@@ -54,8 +54,8 @@ Class-level Tailwind guidance for writing cleaner, more consistent UI code.
 ## Decorative Utility Discipline
 
 - MUST NOT: Add cosmetic utilities that serve no clarity, hierarchy, affordance, or state purpose. Every `shadow-*`, `blur-*`, `bg-gradient-*`, `ring-*`, `border-*`, and `rounded-*` must justify why it exists.
-- MUST NOT: Stack decorative layers (gradient + shadow + ring + glow) — this is UI furniture in class form.
-- MUST NOT: Apply uniform `rounded-*` / `shadow-*` / `p-*` to every card or surface — vary visual weight to signal hierarchy.
+- MUST NOT: Stack decorative layers (gradient + shadow + ring + glow) - this is UI furniture in class form.
+- MUST NOT: Apply uniform `rounded-*` / `shadow-*` / `p-*` to every card or surface - vary visual weight to signal hierarchy.
 - SHOULD: Question every `opacity-*`, `backdrop-blur-*`, and `bg-*` on wrapper elements. If the wrapper can be removed without losing comprehension, remove it.
 
 ## Review Questions

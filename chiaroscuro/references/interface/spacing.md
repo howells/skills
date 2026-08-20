@@ -16,10 +16,10 @@ MUST start with more whitespace than you think you need. Remove space only when 
 
 MUST use spacing to create visual groups before reaching for borders, containers, or background changes. The grouping escalation order:
 
-1. **Spacing alone** — tighter within groups, wider between groups
-2. **Typography and weight** — shared text styles reinforce belonging
-3. **Subtle dividers** — only when spacing is ambiguous
-4. **Containers/cards** — only when content is actionable, comparable, or needs an interaction boundary
+1. **Spacing alone** - tighter within groups, wider between groups
+2. **Typography and weight** - shared text styles reinforce belonging
+3. **Subtle dividers** - only when spacing is ambiguous
+4. **Containers/cards** - only when content is actionable, comparable, or needs an interaction boundary
 
 If spacing creates clear grouping, a border or card around it is furniture.
 
@@ -71,7 +71,7 @@ Reference: [Tailwind Spacing Scale](https://tailwindcss.com/docs/customizing-spa
 
 ### Cards (When Earned)
 
-Cards must earn their place — see layout guidance. When a card is justified, use consistent internal padding:
+Cards must earn their place - see layout guidance. When a card is justified, use consistent internal padding:
 
 ```html
 <div class="p-4">  <!-- Compact -->
@@ -145,7 +145,7 @@ The ratio between adjacent gaps matters more than the absolute values. Pick a ra
 
 ### Group Boundaries
 
-When a content group meets a different functional group (e.g., copy → action buttons), the gap SHOULD be equal to or greater than the largest within-group gap. If spacing alone doesn't make the boundary clear, a subtle divider or background change can reinforce it — but try spacing first.
+When a content group meets a different functional group (e.g., copy → action buttons), the gap SHOULD be equal to or greater than the largest within-group gap. If spacing alone doesn't make the boundary clear, a subtle divider or background change can reinforce it - but try spacing first.
 
 ---
 
@@ -162,7 +162,7 @@ Viewport queries are for page layouts. **Container queries are for components**:
 </div>
 ```
 
-A card in a narrow sidebar stays compact; the same card in main content expands — automatically, without viewport hacks.
+A card in a narrow sidebar stays compact; the same card in main content expands - automatically, without viewport hacks.
 
 SHOULD: Prefer `@container` over viewport breakpoints for reusable components.
 
@@ -225,7 +225,7 @@ Cards are overused. Spacing and alignment create visual grouping naturally. Use 
 - Items need visual comparison in a grid
 - Content needs clear interaction boundaries
 
-NEVER nest cards inside cards — use spacing, typography, and subtle dividers for hierarchy within a card.
+NEVER nest cards inside cards - use spacing, typography, and subtle dividers for hierarchy within a card.
 
 ---
 
@@ -235,7 +235,7 @@ NEVER:
 - Use the same spacing between all elements (creates ambiguous grouping)
 - Scale spacing proportionally with screen size (larger screens need more absolute space, not proportionally more)
 - Fill space just because it's available
-- Use arbitrary Tailwind values (`p-[13px]`) — stick to the scale
+- Use arbitrary Tailwind values (`p-[13px]`) - stick to the scale
 
 ---
 
@@ -248,4 +248,4 @@ SHOULD increase spacing on larger screens for breathing room:
 <div class="gap-4 md:gap-6">
 ```
 
-Headlines and sections need more generous spacing at larger sizes—the proportions matter more than absolute values.
+Headlines and sections need more generous spacing at larger sizes - the proportions matter more than absolute values.

@@ -4,7 +4,7 @@
 
 - MUST: Measure reliably (disable extensions that skew runtime)
 - MUST: Track re-renders (React DevTools/React Scan)
-- MUST: Batch layout reads/writes — avoid reflows/repaints
+- MUST: Batch layout reads/writes - avoid reflows/repaints
 - MUST: Mutations (`POST/PATCH/DELETE`) < 500ms
 - MUST: Virtualize large lists (`@tanstack/react-virtual` or `virtua`)
 - MUST: Preload above-fold images; lazy-load rest
@@ -13,17 +13,17 @@
 
 ## CSS
 
-Decorative elements are doubly costly — they are UI furniture AND performance drains. Every blur, shadow, gradient, and backdrop effect that doesn't serve clarity, hierarchy, or state is a wasted frame budget. Remove the element before optimizing it.
+Decorative elements are doubly costly - they are UI furniture AND performance drains. Every blur, shadow, gradient, and backdrop effect that doesn't serve clarity, hierarchy, or state is a wasted frame budget. Remove the element before optimizing it.
 
 - SHOULD: Avoid large `blur()` values (GPU-heavy)
 - SHOULD: Replace blurred rectangles with radial gradients
 - SHOULD: `transform: translateZ(0)` sparingly for GPU layer promotion
 - SHOULD: Toggle `will-change` only during scroll, then remove
-- SHOULD: Audit decorative `backdrop-blur-*`, `shadow-*`, and `bg-gradient-*` — if they don't earn their place functionally, removal is the best optimization
+- SHOULD: Audit decorative `backdrop-blur-*`, `shadow-*`, and `bg-gradient-*` - if they don't earn their place functionally, removal is the best optimization
 
 ### CSS Variables
 
-- NEVER: Animate global CSS variables — triggers style recalc on ALL descendants (F-Tier)
+- NEVER: Animate global CSS variables - triggers style recalc on ALL descendants (F-Tier)
 - CSS variables ALWAYS trigger paint, even inside `opacity: var(--x)`
 - If unavoidable, use `@property { inherits: false }` to prevent cascade
 
@@ -68,7 +68,7 @@ const [activeTab, setActiveTab] = useState(() => {
 }
 ```
 
-- SHOULD: Use proper SSR hydration — match server/client initial state
+- SHOULD: Use proper SSR hydration - match server/client initial state
 
 ## Video & Media
 

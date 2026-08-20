@@ -19,7 +19,7 @@ OpenType features add professional typographic refinement. Use `font-feature-set
 | `ordn` | `font-variant-numeric: ordinal` | Ordinal indicators (1st) | Dates, rankings |
 
 ```css
-/* Data tables — digits align vertically */
+/* Data tables - digits align vertically */
 .data-cell {
   font-variant-numeric: tabular-nums lining-nums;
 }
@@ -27,7 +27,7 @@ OpenType features add professional typographic refinement. Use `font-feature-set
 /* Tailwind */
 <td class="tabular-nums">1,234.56</td>
 
-/* Body text — digits blend with lowercase */
+/* Body text - digits blend with lowercase */
 .prose {
   font-variant-numeric: oldstyle-nums proportional-nums;
 }
@@ -207,8 +207,8 @@ body {
 ```
 
 **Rules:**
-- Always set a minimum (`clamp` first value) — viewport units alone can make text unreadable on small screens
-- Always set a maximum — text shouldn't grow forever on large screens
+- Always set a minimum (`clamp` first value) - viewport units alone can make text unreadable on small screens
+- Always set a maximum - text shouldn't grow forever on large screens
 - Body text range: 14px–18px
 - Heading text range: 24px–64px depending on hierarchy level
 

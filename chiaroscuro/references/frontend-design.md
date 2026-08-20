@@ -6,7 +6,7 @@ Create distinctive, production-grade frontend interfaces. Avoid generic AI aesth
 
 Frontend work requires intentional aesthetic direction. Generic "AI slop" (purple gradients, predictable layouts) is unacceptable. Every UI decision should be deliberate and memorable.
 
-Distinctive does not mean decorative. **Everything must earn its place.** Every visible element — every panel, badge, divider, label, shadow, wrapper, and typographic treatment — must justify itself by serving clarity, utility, hierarchy, affordance, state, navigation, content meaning, or domain character. If an element can be removed without reducing comprehension, remove it. The default is removal, not addition. UI furniture — ornamental badges, empty accent panels, fake controls, filler separators, floating chrome, background effects, and decorative typographic treatments like mono small caps sprayed across every label — exists only to make a screenshot look richer. Cut it.
+Distinctive does not mean decorative. **Everything must earn its place.** Every visible element - every panel, badge, divider, label, shadow, wrapper, and typographic treatment - must justify itself by serving clarity, utility, hierarchy, affordance, state, navigation, content meaning, or domain character. If an element can be removed without reducing comprehension, remove it. The default is removal, not addition. UI furniture - ornamental badges, empty accent panels, fake controls, filler separators, floating chrome, background effects, and decorative typographic treatments like mono small caps sprayed across every label - exists only to make a screenshot look richer. Cut it.
 
 Design the abstraction, not the machinery. Users should see goals, objects, actions, and outcomes from their world, not prompt scaffolds, agent steps, schema names, API mechanics, internal statuses, or implementation vocabulary. Expose diagnostics only when the target user needs them and only behind a clear affordance.
 
@@ -39,7 +39,7 @@ Design the abstraction, not the machinery. Users should see goals, objects, acti
 
 **Never use:** Roboto, Arial, Instrument Serif, Playfair Display, Poppins, Montserrat.
 
-For the full curated font list — UI fonts, brand fonts, mono, Google Fonts picks, commercial foundries, and proven pairings — see `references/font-recommendations.md`.
+For the full curated font list - UI fonts, brand fonts, mono, Google Fonts picks, commercial foundries, and proven pairings - see `references/font-recommendations.md`.
 
 **If user has a fonts folder**, check it for available licensed fonts before selecting.
 
@@ -88,7 +88,7 @@ When the aesthetic direction calls for visual texture, choose treatments that re
 - Layered transparencies, dramatic shadows
 - Custom cursors, grain overlays
 
-Every detail must earn its place. If it can be removed without changing comprehension, priority, or brand character, it's furniture — remove it.
+Every detail must earn its place. If it can be removed without changing comprehension, priority, or brand character, it's furniture - remove it.
 
 ## Implementation Matching
 
@@ -156,19 +156,19 @@ These indicate generic "AI slop" design:
 - [ ] No discernible aesthetic direction
 - [ ] Cookie-cutter hero → features → testimonials → CTA layout
 - [ ] UI furniture present: decorative chrome, filler panels, fake controls, or visual effects with no user-facing purpose
-- [ ] Mono small-caps used as a general label style — appearing on section eyebrows, card labels, sidebar headings, tags, or most metadata rather than limited to numeric content and short data-adjacent labels
+- [ ] Mono small-caps used as a general label style - appearing on section eyebrows, card labels, sidebar headings, tags, or most metadata rather than limited to numeric content and short data-adjacent labels
 - [ ] System internals leak into navigation, labels, empty states, errors, or progress copy
 
 ### Yellow Flags (Question)
 
 These warrant discussion:
 
-- [ ] No memorable element identified — what makes this stick?
+- [ ] No memorable element identified - what makes this stick?
 - [ ] Typography pairing unclear or default-feeling
 - [ ] Color palette lacks cohesion or intention
 - [ ] Motion is scattered micro-interactions, not orchestrated (see [animation.md](interface/animation.md))
 - [ ] Spacing feels arbitrary rather than systematic
-- [ ] Layout is "safe" — no unexpected decisions
+- [ ] Layout is "safe" - no unexpected decisions
 - [ ] Illustrations feel stock rather than curated
 - [ ] The design explains how the software works internally instead of what the user can accomplish
 
