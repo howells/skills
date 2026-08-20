@@ -126,6 +126,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill heathen --agent codex --global
 ```
 
+### `inquest`
+
+Answer a question about intent or history from evidence rather than from the code, sweeping every source available in the session - source control, tickets, chat, docs, database, observability, analytics - one investigator each in parallel. Returns a cited answer plus a coverage map where an empty search and a skipped source are both reported. Use it when a claim needs proving, a decision needs explaining, or a number needs a source. To rebuild your own working context, use `muster`.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill inquest --agent codex --global
+```
+
 ### `marginalia`
 
 Add useful, concise JSDoc to JavaScript and TypeScript APIs, exports, components, hooks, classes, complex types, and behavior where IDE hover help matters. Use it when adding or improving docs for public APIs, exported symbols, generated API docs, or package publishing — clarifying non-obvious code without commenting everything or changing behavior.
@@ -146,6 +156,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill mastraudit --agent codex --global
 ```
 
+### `muster`
+
+Rebuild working context after time away or across concurrent agent sessions - recent transcripts newest-first, live branch and PR state, peer sessions and the paths each one owns, and the tracker. Returns a status-tagged brief of every thread in flight with one concrete next move. Use it for "catch me up", "where did I leave off", or before resuming work started in another session. To investigate a question against external evidence, use `inquest`.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill muster --agent codex --global
+```
+
 ### `nomen`
 
 Generate, critique, and validate names for projects, products, apps, packages, CLIs, brands, and features. Use it when naming or renaming something and when current availability, conflict, package, GitHub, domain, or App Store / app-directory checks matter.
@@ -164,4 +184,14 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill polyplugin --agent codex --global
+```
+
+### `unslop`
+
+Strip the tells of machine-written code from a diff without changing what it does - comments narrating the line below, one-caller wrappers, guards against states the types forbid, options nobody passes, decorative log output and leftover scaffolding. Run it before commit or review. Behaviour-changing cleanups belong elsewhere - fallbacks and swallowed errors are `fail-fast`, oversized modules are `heathen`, doc comments worth keeping are `marginalia`, and prose is `deslop`.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill unslop --agent codex --global
 ```

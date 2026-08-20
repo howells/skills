@@ -1,0 +1,4 @@
+interface:
+  display_name: "Muster"
+  short_description: "Roll-call of work in flight"
+  default_prompt: "Use $muster to rebuild my working context and tell me what is in flight."

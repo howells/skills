@@ -43,6 +43,7 @@ Applies to every dispatch, not just long-running teams.
 - **Judgment quality and prose length are independent.** Only cut the second. A terse agent is not a careless one, and saying so up front stops it padding to look thorough.
 - **Paste context, don't send them hunting.** You already read the file; the excerpt costs less than five greps.
 - **A gap in the spec buys one line, not a discovery report.** Tell them to stop and ask, briefly.
+- **Build the lever, don't write the brief N times.** When the same edit repeats across many sites, the deliverable is the codemod, generator, or check - not a fan-out of briefs describing it by hand. Do the first unit yourself to learn the recipe, then write the tool and rerun it on that unit to diff against your own version. A deterministic lever beats fan-out: if one pass can do every site, run it and skip the dispatch. When you do fan out, the lever is a file every delegate reads, held outside their write scope so none of them can quietly edit the contract. The claim is falsifiable - if the verdict cites a lever and the diff holds no script, generator, or delegate spec, there wasn't one.
 
 ## Standing teams (long-running named teammates)
 
@@ -106,7 +107,23 @@ neither is enough on its own. Before a number changes a decision, ask:
   someone accept this", a threshold invites clearing the threshold. Gate on the
   judgement and report the number beside it.
 
+**Say which rung you stopped at.** Every safety or performance claim in a report
+sits on one of these, and the verdict names which one it reached.
+
+1. The agent said so. Worth nothing on its own.
+2. The agent pointed at a real `file:line`, or at the library's own source.
+3. The agent walked the failure path and showed the bad case can't reach.
+4. The agent ran it - a script or test calling the real code that fails loud if
+   the claim is wrong.
+5. The agent reproduced it in the running app.
+
+Rung 4 is usually one small script against the same library the app ships, so
+moving a claim from 1 to 4 costs minutes. Anything you accept below rung 4 is
+unproven, and the verdict says unproven rather than rounding it up.
+
 ## Steps
+
+Copy these six steps into your todolist verbatim before you reason about the task. The failure mode is reading them and then writing a bespoke plan that quietly drops Spec or Inspect - the plan looks reasonable, and the two steps that catch bad work are the ones missing. A step you judge unnecessary stays in the list with a one-line `skip: <reason>`. Dropping it silently is not allowed.
 
 1. **Plan.** Decompose the work into tasks with disjoint file footprints where possible. Solve the hard kernel yourself now, as code, so no agent ever invents an algorithm. Done when every task is either kernel (yours, solved) or delegable (speccable in full).
 

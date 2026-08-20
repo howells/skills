@@ -14,10 +14,13 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `foreman` - foreman-mode implementation: the main loop plans and reviews, subagents write the code.
 - `foundry` - visual identity systems, brand positioning, rendered direction options.
 - `heathen` - find and refactor god components, god scripts and oversized modules.
+- `inquest` - sweep every available evidence source and return a cited answer with a coverage map.
 - `marginalia` - JSDoc for public APIs and exported symbols.
 - `mastraudit` - audit a codebase against current Mastra guidance.
+- `muster` - roll-call of work in flight: transcripts, live git state, peer sessions, tracker.
 - `nomen` - generate and validate names, with availability and conflict checks.
 - `polyplugin` - create, audit or migrate agent plugins across Claude Code, Codex and Cursor.
+- `unslop` - strip machine-written tells out of a diff without changing behaviour.
 
 ## Three sync surfaces
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unslop"
+  short_description: "Strip AI code tells from a diff"
+  default_prompt: "Use $unslop to strip the machine-written tells out of this diff without changing behaviour."
