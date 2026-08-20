@@ -17,6 +17,10 @@ State at the start that you are using the `chiaroscuro` skill.
 
 **No UI furniture.** Decorative chrome, wrapper panels, floating badges, ornamental dividers, status strips, fake controls, empty accent shapes, background effects, and visual clutter are furniture - they fill space without serving the user. The instinct to make a screen "look more designed" by adding visual weight is the instinct to reach for furniture. Resist it. A screen with fewer elements and better hierarchy always beats a screen with more elements and equal hierarchy.
 
+**Prose is not an interface.** A region carrying its meaning in paragraphs is a region that has not been designed yet. Long text in a UI is the tell that the work stopped at describing the thing instead of building it: reams of copy where a control, a table, a chart, or a visualisation belongs. Headlines and findings first, detail revealed on interrogation. When you catch yourself writing a sentence into the screen, ask what the reader is meant to do with it and build that instead.
+
+**An app is a shell, not a document.** Tools, dashboards and workflows get an app shell - a persistent frame, panels and panes that scroll independently, filter, search and collapse in place. A page that scrolls as one long document is a website, and shipping one where a tool belongs is the same failure as the wall of prose.
+
 **No system leakage.** Hide implementation concepts, prompt/workflow mechanics, database schemas, API names, internal state machines, and agent reasoning behind user-centered nouns, verbs, progressive disclosure, and task-focused states.
 
 ## Operating Rules
@@ -29,6 +33,10 @@ State at the start that you are using the `chiaroscuro` skill.
 - Project-local visual tokens may inform values, but they do not override the Tailwind v4 requirement. Translate them into Tailwind v4 `@theme` tokens where needed.
 - Do not default to marketing-page structure for apps, tools, games, dashboards, or workflows. Design the actual usable surface first.
 - Apply the "earn its place" test to every element. If you cannot name what the element clarifies, cut it.
+- One shell, one grid. Every view sits in the same frame with content starting at the same positions, built from shared components rather than laid out per page. A layout that shifts between views reads as carelessness before it reads as design.
+- Cap the type scale. Around five text styles across the whole surface, no more; form controls share one size. Never author text sizing inline - the styles are named in the theme, and projects that enforce this ban inline `text-*` classes with oxlint.
+- Images are square or landscape. Square for samples, uploads, cards and anything gridded. Never 16:9, which goes skinny and awkwardly cropped at the sizes a UI actually uses.
+- Write UI copy in the user's words, never the codebase's. Internal nouns - pile, shelf, plate, run-as-a-noun - and symbols like the delta are system leakage wearing a label. Assume a savvy consumer or a designer who is not technical.
 - Do not let the design spec contradict existing `docs/brand-system.md`, `docs/design-context.md`, project rules, or implemented design tokens.
 - For substantial UI work, save the design spec to `docs/design/specs/design-[name].md`. For small components, an inline spec is acceptable unless the user wants a file.
 
@@ -339,6 +347,12 @@ The design is not complete until these are true:
 - zero inaccessible icon-only controls
 - zero UI furniture - every visible element passes the "earn its place" test: it serves clarity, utility, hierarchy, affordance, state, navigation, or domain meaning
 - zero unnecessary system leakage in visible labels, navigation, empty states, errors, or progress states
+- zero regions carrying their meaning in prose where a control, table, chart, or visualisation belongs
+- zero document-scroll layouts where the surface is a tool
+- layout frame and content start positions identical across every view
+- text styles across the surface count five or fewer, with no inline `text-*` sizing
+- zero 16:9 images; square or landscape only
+- zero internal vocabulary in visible copy
 - mono small-caps used only for numeric content and short data-adjacent labels, not sprayed across section eyebrows, card labels, sidebar headings, or general metadata
 - all critical states accounted for
 - contrast requirements named
