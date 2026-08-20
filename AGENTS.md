@@ -23,7 +23,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `polyplugin` - create, audit or migrate agent plugins across Claude Code, Codex and Cursor.
 - `salvage` - rescue work that exists in only one place, then clear away branches, worktrees and stashes that are provably redundant.
 - `unslop` - strip machine-written tells out of a diff without changing behaviour.
-- `what` - say plainly what just happened in the last message and the actions behind it.
+- `what` - cut the last message down to what happened, short and in plain language.
 
 ## Three sync surfaces
 
