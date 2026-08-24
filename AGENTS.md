@@ -22,6 +22,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `nomen` - generate and validate names, with availability and conflict checks.
 - `polyplugin` - create, audit or migrate agent plugins across Claude Code, Codex and Cursor.
 - `salvage` - rescue work that exists in only one place, then clear away branches, worktrees and stashes that are provably redundant.
+- `survey` - grade a whole codebase and return a stage-calibrated verdict with a comparable score, clustered by what you would fix in one sitting.
 - `unslop` - strip machine-written tells out of a diff without changing behaviour.
 - `what` - cut the last message down to what happened, short and in plain language.
 

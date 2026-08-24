@@ -206,6 +206,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill salvage --agent codex --global
 ```
 
+### `survey`
+
+Grade a whole codebase and return a calibrated verdict instead of a wall of findings. Lifecycle stage is detected first, because a prototype and a production app deserve different severities from identical code. Mechanical checks run before any reviewer, every serious finding is re-read at the cited line before it counts, results cluster by what you would fix in one sitting, and seven axes are scored so runs compare. Use it for auditing a repo's health. A diff or PR is code-review; Mastra is `mastraudit`.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill survey --agent codex --global
+```
+
 ### `unslop`
 
 Strip the tells of machine-written code from a diff without changing what it does - comments narrating the line below, one-caller wrappers, guards against states the types forbid, options nobody passes, decorative log output and leftover scaffolding. Run it before commit or review. Behaviour-changing cleanups belong elsewhere - fallbacks and swallowed errors are `fail-fast`, oversized modules are `heathen`, doc comments worth keeping are `marginalia`, and prose is `deslop`.
