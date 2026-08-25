@@ -1,6 +1,6 @@
 ---
 name: inquest
-description: Answer a question about intent or history from evidence rather than from the code, sweeping every source available in the session - source control, tickets, chat, docs, database, observability, analytics - one investigator each in parallel, then returning a cited answer plus a coverage map where an empty search and a skipped source are both reported. Use when a claim needs proving, a decision needs explaining, or a number needs a source. To rebuild your own working context, use `muster`.
+description: "Answer a question about intent, history, or provenance by sweeping every available evidence source in parallel, then return a cited answer and coverage map. Use when a claim, decision, or number needs proving beyond the code. For rebuilding current working context use `muster`."
 ---
 
 # Inquest

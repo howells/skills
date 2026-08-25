@@ -1,6 +1,6 @@
 ---
 name: fail-fast
-description: Audit and remove unnecessary fallbacks, silent compatibility paths, legacy aliases, default environment values, swallowed errors, and backwards-compatible states that make code harder to reason about. Use when a user asks to fail fast, remove legacy behavior, eliminate hidden fallbacks, make configuration deterministic, harden env handling with Envy, or replace permissive behavior with explicit validation and clear errors.
+description: "Remove hidden fallbacks, swallowed errors, legacy aliases, permissive defaults, and silent compatibility paths. Use when configuration or control flow should have one canonical path and explicit failure modes, including deterministic environment handling with Envy."
 ---
 
 # Fail Fast

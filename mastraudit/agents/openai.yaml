@@ -1,4 +1,4 @@
 interface:
   display_name: "Mastraudit"
-  short_description: "Audit a Mastra codebase against what actually breaks it, worst first"
-  default_prompt: "Use $mastraudit to audit this: check execution semantics first - workflow step size, fan-out keying, retries, suspend and resume, load-bearing writes - then containment and structure, verifying every API shape against the installed packages rather than memory."
+  short_description: "Audit Mastra execution semantics before structure"
+  default_prompt: "Use $mastraudit to review this Mastra codebase, checking execution semantics before structure."

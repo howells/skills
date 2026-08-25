@@ -1,6 +1,6 @@
 ---
 name: chiaroscuro
-description: Create distinctive, non-generic UI design direction, wireframes, Tailwind v4 visual systems, @theme tokens, and design specs, plus UI polish, dark mode, responsive adaptation, and live variant comparison. Use when asked to design a UI, establish a visual direction, produce a design spec, remove decorative UI furniture or system leakage, make a screen memorable, or clean up AI-looking Tailwind/React work. Assumes Tailwind v4. For reuse audits or shared-component extraction, use componentize.
+description: "Design distinctive Tailwind v4 interfaces: visual direction, wireframes, `@theme` tokens, responsive layouts, dark mode, and polish. Use when creating or restyling a screen, page, app, or component whose visual character matters. For brand identity use `foundry`; for reuse audits use `componentize`."
 ---
 
 # Chiaroscuro

@@ -1,6 +1,6 @@
 ---
 name: memento
-description: Answer "what are you working on right now" from current state rather than from the transcript - the original ask, what is done, what is left, the live branch and uncommitted files, and whether the work has drifted from what was requested. One screen, no archaeology. Use when returning to a long-running session, checking whether an agent is still on track, or telling an agent to report in. For a sweep across many sessions, use `muster`.
+description: "Report what this task is doing now from live state: original ask, completed work, remaining work, branch, uncommitted files, and drift. Use when returning to a long session or checking whether an agent is still on track. For a roll-call across tasks use `muster`; for rewriting only the last reply use `what`."
 ---
 
 # Memento

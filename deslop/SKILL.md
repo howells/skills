@@ -1,6 +1,6 @@
 ---
 name: deslop
-description: "Audit and rewrite prose that carries AI-writing tells: inflated significance, negative parallelisms like \"not just X, but Y\", vague attribution, generic source roll-calls, assistant leakage, suspicious citations, and chatbot markup artifacts. Use when asked to check for AI slop, make text sound less like ChatGPT, explain why prose feels AI-generated, clean up LLM prose, or rewrite synthetic-sounding copy into a grounded voice."
+description: "Rewrite prose that sounds synthetic, inflated, generic, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts, or copy that should sound grounded and human. Applies to prose; for machine-written code tells use `unslop`."
 ---
 
 # Deslop

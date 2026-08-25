@@ -1,6 +1,6 @@
 ---
 name: fenceline
-description: Add, check, explain, or repair JavaScript and TypeScript package and source architecture boundaries with the `boundaries` CLI from `@howells/boundaries`. Use when enforcing Turborepo package boundaries, preventing app-to-app imports, tagging workspace packages, running source-layer profiles such as feature-sliced, next-feature, or clean-node, or fixing boundary violations without weakening architecture rules.
+description: "Add, check, explain, or repair JavaScript and TypeScript architecture boundaries with `@howells/boundaries`. Use for Turborepo package rules, app-to-app import prevention, source-layer profiles, package tags, or fixing violations without weakening the intended architecture."
 ---
 
 # Fenceline

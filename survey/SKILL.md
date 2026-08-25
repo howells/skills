@@ -1,6 +1,6 @@
 ---
 name: survey
-description: "Grade a whole codebase and return a calibrated verdict instead of a wall of findings. Lifecycle stage is detected first, because a prototype and a production app deserve different severities from identical code. Mechanical checks run before any reviewer, every serious finding is re-read at the cited line before it counts, results cluster by what you would fix in one sitting, and seven axes are scored so runs compare. A diff or PR is code-review; Mastra is `mastraudit`."
+description: "Grade an entire codebase with a stage-calibrated verdict, clustered findings, and comparable scores. Use for repository health audits where mechanical checks, source-confirmed findings, lifecycle stage, and multiple review lenses matter. For a diff or PR use code review; for Mastra use `mastraudit`."
 ---
 
 # Survey

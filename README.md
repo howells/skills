@@ -28,7 +28,7 @@ Use `--copy` if you want independent files rather than symlinks. Restart your ag
 
 ### `aperture`
 
-Extract components, hooks, utilities, features, or subsystems from an existing codebase into reusable packages, workspace packages, or standalone publishable repositories. Use it when code needs a clean public API, stable exports, examples, tests, and a package boundary instead of app-local imports. For a tangled god file that needs decomposition first, use `heathen`.
+Extract app-local components, hooks, utilities, or subsystems into reusable workspace or publishable packages with stable exports, tests, and examples. Use for package extraction, reusable npm packages, canonical import boundaries, or moving code into its own repository. For decomposition inside the current codebase, use `heathen`.
 
 Install globally for Codex:
 
@@ -38,7 +38,7 @@ npx skills@latest add howells/skills --skill aperture --agent codex --global
 
 ### `chiaroscuro`
 
-Create distinctive, non-generic UI design direction, Tailwind v4 visual systems, `@theme` tokens, wireframes, and design specs, plus UI polish, dark mode, responsive adaptation, and live variant comparison. Use it when a screen, page, app, or component needs a concrete visual direction that avoids generic AI-looking work. For codebase-wide reuse audits or shared-component extraction, use `componentize`.
+Design distinctive Tailwind v4 interfaces: visual direction, wireframes, `@theme` tokens, responsive layouts, dark mode, and polish. Use when creating or restyling a screen, page, app, or component whose visual character matters. For brand identity use `foundry`; for reuse audits use `componentize`.
 
 Install globally for Codex:
 
@@ -48,7 +48,7 @@ npx skills@latest add howells/skills --skill chiaroscuro --agent codex --global
 
 ### `componentize`
 
-Audit a codebase for duplicated UI and repeated component patterns, then plan or implement scoped shared components and UI package changes. Use it to reduce duplication, adapt existing primitives with props/composition, use a Turborepo `ui` package, or componentize a visually referenced region like "the panel on the right." For a standalone or publishable package, use `aperture`.
+Find duplicated UI and turn it into scoped shared components or UI-package primitives. Use for componentization, repeated React/Tailwind patterns, Turborepo `ui` packages, or adapting an existing component through props and composition. For standalone package extraction use `aperture`; for oversized logic files use `heathen`.
 
 Install globally for Codex:
 
@@ -58,7 +58,7 @@ npx skills@latest add howells/skills --skill componentize --agent codex --global
 
 ### `deslop`
 
-Audit and rewrite prose that sounds synthetic, inflated, generic, or assistant-like. Use it to clean up AI-writing tells, suspicious citations, vague attribution, markdown artifacts, and copy that needs a more grounded human voice.
+Rewrite prose that sounds synthetic, inflated, generic, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts, or copy that should sound grounded and human. Applies to prose; for machine-written code tells use `unslop`.
 
 Install globally for Codex:
 
@@ -68,7 +68,7 @@ npx skills@latest add howells/skills --skill deslop --agent codex --global
 
 ### `fail-fast`
 
-Find and remove unnecessary fallbacks, silent compatibility paths, legacy aliases, swallowed errors, permissive defaults, and ambiguous configuration behavior. Use it when a codebase should prefer one canonical path and one explicit failure mode, or to harden env handling with Envy.
+Remove hidden fallbacks, swallowed errors, legacy aliases, permissive defaults, and silent compatibility paths. Use when configuration or control flow should have one canonical path and explicit failure modes, including deterministic environment handling with Envy.
 
 Install globally for Codex:
 
@@ -78,7 +78,7 @@ npx skills@latest add howells/skills --skill fail-fast --agent codex --global
 
 ### `fenceline`
 
-Add, check, explain, or repair JavaScript and TypeScript architecture boundaries with `@howells/boundaries`. Use it for Turborepo package boundaries, source-layer profiles, app-to-app import prevention, and boundary violation fixes.
+Add, check, explain, or repair JavaScript and TypeScript architecture boundaries with `@howells/boundaries`. Use for Turborepo package rules, app-to-app import prevention, source-layer profiles, package tags, or fixing violations without weakening the intended architecture.
 
 Install globally for Codex:
 
@@ -88,7 +88,7 @@ npx skills@latest add howells/skills --skill fenceline --agent codex --global
 
 ### `fieldtest`
 
-Test a rendered web app in the browser and report evidence-backed QA, UX, console, accessibility, persona-based, and responsive/mobile findings. Use it when you need to experience a local app as software - and find and report rendered defects - instead of only inspecting code.
+Test a rendered web app in a real browser and return evidence-backed QA findings. Use for dogfooding, localhost review, responsive or mobile defects, console or accessibility checks, persona walkthroughs, and frontend validation that must exercise the running interface rather than inspect code alone.
 
 Install globally for Codex:
 
@@ -98,7 +98,7 @@ npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 
 ### `foreman`
 
-Foreman-mode implementation: the main loop plans, briefs, and reviews while delegated subagents write the production code, routed across three tiers - taste for judgment-heavy surfaces, heavy for spec-complete but interlocking work, grunt for mechanical work. The task picks the tier; the model the foreman itself runs on sets the economy - a frontier host delegates harder, writes denser briefs, and holds every brief and report to a terse format, while a cheaper host reserves the frontier model as a scalpel for narrow, genuinely hard problems. Host-agnostic and native-only, with no cross-CLI spend. Diffs get reviewed by the foreman itself, and fixes go back to the same agent that wrote them.
+Implement substantial production changes in foreman mode: the main agent plans, briefs, and reviews while subagents write code, routed by taste, heavy, or grunt work. Use for implementation or refactoring that benefits from delegated execution. Skip for tiny fixes or documentation-only work.
 
 Install globally for Codex:
 
@@ -108,7 +108,7 @@ npx skills@latest add howells/skills --skill foreman --agent codex --global
 
 ### `foundry`
 
-Create, review, or revise a distinctive visual identity system - brand positioning, rendered direction options to compare, OKLCH palettes, typography, visual character, and a Tailwind v4 `@theme` token model (or `docs/brand-system.md`). Use it when a product needs a brand established before UI, loose identity ideas turned into usable direction, or a system tied directly to implementation. (Absorbs the former `brand` skill - if you have `brand` installed, uninstall it and install `foundry`.)
+Create, review, or revise a distinctive visual identity system: positioning, rendered direction options, OKLCH palette, typography, visual character, and Tailwind v4 tokens. Use when a product needs brand identity established before interface design. For screen-level UI direction use `chiaroscuro`.
 
 Install globally for Codex:
 
@@ -118,7 +118,7 @@ npx skills@latest add howells/skills --skill foundry --agent codex --global
 
 ### `heathen`
 
-Find and refactor god components, god scripts, oversized modules, tangled multi-responsibility files, and duplicated logic in JavaScript or TypeScript codebases. Use it to identify safe decomposition steps before splitting code. For duplicated UI components, use `componentize`; heathen targets logic, modules, scripts, and file decomposition.
+Find and refactor god components, oversized modules, tangled scripts, and multi-responsibility JavaScript or TypeScript files. Use for safe decomposition, responsibility splits, and extracting duplicated logic inside a codebase. For repeated UI components use `componentize`; for package extraction use `aperture`.
 
 Install globally for Codex:
 
@@ -128,7 +128,7 @@ npx skills@latest add howells/skills --skill heathen --agent codex --global
 
 ### `inquest`
 
-Answer a question about intent or history from evidence rather than from the code, sweeping every source available in the session - source control, tickets, chat, docs, database, observability, analytics - one investigator each in parallel. Returns a cited answer plus a coverage map where an empty search and a skipped source are both reported. Use it when a claim needs proving, a decision needs explaining, or a number needs a source. To rebuild your own working context, use `muster`.
+Answer a question about intent, history, or provenance by sweeping every available evidence source in parallel, then return a cited answer and coverage map. Use when a claim, decision, or number needs proving beyond the code. For rebuilding current working context use `muster`.
 
 Install globally for Codex:
 
@@ -138,7 +138,7 @@ npx skills@latest add howells/skills --skill inquest --agent codex --global
 
 ### `marginalia`
 
-Add useful, concise JSDoc to JavaScript and TypeScript APIs, exports, components, hooks, classes, complex types, and behavior where IDE hover help matters. Use it when adding or improving docs for public APIs, exported symbols, generated API docs, or package publishing - clarifying non-obvious code without commenting everything or changing behavior.
+Add concise, useful JSDoc where IDE hover help matters. Use for public JavaScript or TypeScript APIs, exports, components, hooks, classes, complex types, generated API docs, or package publishing. Clarifies non-obvious behavior without commenting everything or changing code.
 
 Install globally for Codex:
 
@@ -148,7 +148,7 @@ npx skills@latest add howells/skills --skill marginalia --agent codex --global
 
 ### `mastraudit`
 
-Audit a Mastra codebase against what actually breaks it, worst first - workflow step size and fan-out keying, suspend and resume payloads, load-bearing writes that must throw, model settings nesting, the tool keys a model actually sees - and only then containment and domain structure. Runs shipped boundary scanners where they exist and falls back to search. Use it when reviewing Mastra work before shipping or auditing an existing implementation. For building rather than judging, use the `$mastra` skill.
+Audit a Mastra codebase against execution failures first: workflow step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, and visible tool keys. Use for pre-ship review or an existing Mastra implementation. For building Mastra features use `$mastra`.
 
 Install globally for Codex:
 
@@ -158,7 +158,7 @@ npx skills@latest add howells/skills --skill mastraudit --agent codex --global
 
 ### `memento`
 
-Answer "what are you working on right now" from current state rather than from the transcript - the original ask, what landed, what is left, the live branch and uncommitted files, and whether the work has drifted from what was requested. Returns one screen with no archaeology. Use it when returning to a long-running session, checking an agent is still on track, or telling an agent to report in. For a sweep across many sessions, use `muster`.
+Report what this task is doing now from live state: original ask, completed work, remaining work, branch, uncommitted files, and drift. Use when returning to a long session or checking whether an agent is still on track. For a roll-call across tasks use `muster`; for rewriting only the last reply use `what`.
 
 Install globally for Codex:
 
@@ -168,7 +168,7 @@ npx skills@latest add howells/skills --skill memento --agent codex --global
 
 ### `muster`
 
-Rebuild working context after time away or across concurrent agent sessions - recent transcripts newest-first, live branch and PR state, peer sessions and the paths each one owns, and the tracker. Returns a status-tagged brief of every thread in flight with one concrete next move. Use it for "catch me up", "where did I leave off", or before resuming work started in another session. To investigate a question against external evidence, use `inquest`.
+Rebuild working context across concurrent or older agent tasks from transcripts, git state, peer sessions, and the tracker. Use for 'catch me up', 'where did I leave off', or 'what is in flight', returning every active thread and its next move. For evidence-backed investigation use `inquest`.
 
 Install globally for Codex:
 
@@ -178,7 +178,7 @@ npx skills@latest add howells/skills --skill muster --agent codex --global
 
 ### `nomen`
 
-Generate, critique, and validate names for projects, products, apps, packages, CLIs, brands, and features. Use it when naming or renaming something and when current availability, conflict, package, GitHub, domain, or App Store / app-directory checks matter.
+Generate, critique, and validate names for products, projects, packages, CLIs, apps, brands, or features. Use for naming or renaming work where domain, package, GitHub, App Store, directory, or web conflict checks matter.
 
 Install globally for Codex:
 
@@ -188,7 +188,7 @@ npx skills@latest add howells/skills --skill nomen --agent codex --global
 
 ### `polyplugin`
 
-Create, audit, or migrate agent plugins that work across Claude Code, Codex, and Cursor. Use it for multi-host manifests, shared plugin metadata, Cursor `.cursor-plugin` packaging, marketplace entries, and deciding whether a skill collection should become a plugin.
+Create, audit, or migrate agent plugins across Claude Code, Codex, and Cursor. Use for multi-host manifests, marketplace metadata, shared capability paths, release and version alignment, or deciding whether a skill collection should become a plugin.
 
 Install globally for Codex:
 
@@ -198,7 +198,7 @@ npx skills@latest add howells/skills --skill polyplugin --agent codex --global
 
 ### `product-description`
 
-Build or extend an outside-in product description: a feature-by-feature, event-by-event account of what users see, can do, and experience, drafted from code and tests, verified against the running product, and consolidated into bug triage. Use when asked to document a software product's user-visible behavior, create a behavior-spec repo, or resume an existing product-description repo. Works for web, mobile, canvas, CLI, chat, and agent products.
+Build or extend an outside-in product description: a feature-by-feature, event-by-event account of user-visible behavior drafted from code and tests, verified against the running product, and consolidated into bug triage. Use for behavior-spec repositories or complete product-experience documentation across web, mobile, canvas, CLI, chat, or agent products.
 
 Imported from [Steve Ruiz's original `product-description` gist](https://gist.github.com/steveruizok/83ae5c53f2784ebf8f5fe0a3fb94480f).
 
@@ -210,7 +210,7 @@ npx skills@latest add howells/skills --skill product-description --agent codex -
 
 ### `salvage`
 
-Find and rescue work that exists in only one place - detached HEADs, uncommitted worktrees, unpushed branches, stashes - then remove only what is provably merged and pushed. Names what each salvaged thread was for from the branch and the tracker, and treats any worktree that might belong to a live peer session as untouchable. Use it for tidying branches, worktrees and stashes, or before a machine cleanup. To rebuild your own working context instead, use `muster`.
+Rescue work that exists in only one place - detached HEADs, worktrees, unpushed branches, or stashes - then remove only what is proven merged and pushed. Use for repository cleanup where ambiguous work must be preserved and each surviving thread named. For status reconstruction without cleanup use `muster`.
 
 Install globally for Codex:
 
@@ -220,7 +220,7 @@ npx skills@latest add howells/skills --skill salvage --agent codex --global
 
 ### `survey`
 
-Grade a whole codebase and return a calibrated verdict instead of a wall of findings. Lifecycle stage is detected first, because a prototype and a production app deserve different severities from identical code. Mechanical checks run before any reviewer, every serious finding is re-read at the cited line before it counts, results cluster by what you would fix in one sitting, and seven axes are scored so runs compare. Use it for auditing a repo's health. A diff or PR is code-review; Mastra is `mastraudit`.
+Grade an entire codebase with a stage-calibrated verdict, clustered findings, and comparable scores. Use for repository health audits where mechanical checks, source-confirmed findings, lifecycle stage, and multiple review lenses matter. For a diff or PR use code review; for Mastra use `mastraudit`.
 
 Install globally for Codex:
 
@@ -230,7 +230,7 @@ npx skills@latest add howells/skills --skill survey --agent codex --global
 
 ### `unslop`
 
-Strip the tells of machine-written code from a diff without changing what it does - comments narrating the line below, one-caller wrappers, guards against states the types forbid, options nobody passes, decorative log output and leftover scaffolding. Run it before commit or review. Behaviour-changing cleanups belong elsewhere - fallbacks and swallowed errors are `fail-fast`, oversized modules are `heathen`, doc comments worth keeping are `marginalia`, and prose is `deslop`.
+Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. Use before commit or review. For behavior-changing fallback cleanup use `fail-fast`; for prose use `deslop`.
 
 Install globally for Codex:
 
@@ -240,7 +240,7 @@ npx skills@latest add howells/skills --skill unslop --agent codex --global
 
 ### `what`
 
-Cut the last message down to what actually happened - short, and translated out of jargon and tool names into what was done and what it means for the reader. Called because the previous reply was long and dense, so brevity is the product. Re-explains, never re-answers, and never starts new work. Use it when a reply did not land, when an agent has been grinding and its last update made no sense, or for "wait, what did you just do". For the state of the whole task instead, use `memento`.
+Rewrite only the previous agent reply into three short, plain-language lines: what happened, where things stand, and what comes next. Use when the last message was dense, jargon-heavy, or unclear. It re-explains existing content; for whole-task status use `memento`.
 
 Install globally for Codex:
 

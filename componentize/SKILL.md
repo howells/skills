@@ -1,6 +1,6 @@
 ---
 name: componentize
-description: Audit a codebase for duplicated UI and repeated component patterns; identify, plan, or implement scoped shared components and UI package changes. Use when asked to componentize an app, reduce duplicated or repeated UI, adapt components with props/composition, create or use a Turborepo ui package, promote React/Tailwind reuse across apps/packages, or componentize a visually referenced region like "the panel on the right." For a standalone or publishable package, use aperture.
+description: "Find duplicated UI and turn it into scoped shared components or UI-package primitives. Use for componentization, repeated React/Tailwind patterns, Turborepo `ui` packages, or adapting an existing component through props and composition. For standalone package extraction use `aperture`; for oversized logic files use `heathen`."
 ---
 
 # Componentize

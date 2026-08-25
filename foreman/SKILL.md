@@ -1,6 +1,6 @@
 ---
 name: foreman
-description: Foreman-mode implementation - the main loop plans, briefs, and reviews while subagents write the production code, routed across three tiers - taste (judgment-heavy), heavy (spec-complete but interlocking), grunt (mechanical). The model the foreman runs on sets the economy - a frontier host delegates harder and keeps briefs terse; a cheaper host saves the frontier model for narrow, hard problems. Use when implementing or refactoring production code of substance. Not for one-line fixes or docs.
+description: "Implement substantial production changes in foreman mode: the main agent plans, briefs, and reviews while subagents write code, routed by taste, heavy, or grunt work. Use for implementation or refactoring that benefits from delegated execution. Skip for tiny fixes or documentation-only work."
 ---
 
 # Foreman

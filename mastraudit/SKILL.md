@@ -1,6 +1,6 @@
 ---
 name: mastraudit
-description: Audit a Mastra codebase against what actually breaks it, worst first - workflow step size and fan-out keying, suspend and resume payloads, load-bearing writes that must throw, model settings nesting, the tool keys a model actually sees - and only then containment and domain structure. Runs shipped boundary scanners where they exist and falls back to search. Use when reviewing Mastra work before shipping or auditing an existing implementation. For building rather than judging, use `$mastra`.
+description: "Audit a Mastra codebase against execution failures first: workflow step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, and visible tool keys. Use for pre-ship review or an existing Mastra implementation. For building Mastra features use `$mastra`."
 ---
 
 # Mastraudit

@@ -1,6 +1,6 @@
 ---
 name: foundry
-description: Create, review, or revise a distinctive visual identity system - brand positioning, rendered direction options, OKLCH palette, typography, visual character, and a Tailwind v4 @theme token model (or docs/brand-system.md). Use when asked to create a brand, define visual identity, generate or compare brand directions, choose colors or fonts, set up design tokens, make a product less generic, or establish identity before UI design.
+description: "Create, review, or revise a distinctive visual identity system: positioning, rendered direction options, OKLCH palette, typography, visual character, and Tailwind v4 tokens. Use when a product needs brand identity established before interface design. For screen-level UI direction use `chiaroscuro`."
 ---
 
 # Foundry

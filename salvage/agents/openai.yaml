@@ -1,4 +1,4 @@
 interface:
   display_name: "Salvage"
-  short_description: "Rescue work that exists in only one place, then clear away what is provably redundant"
-  default_prompt: "Use $salvage to tidy this up: census the worktrees, branches and stashes first, rescue anything that exists nowhere else, name what each rescued thread was for, and remove only what is provably merged and pushed."
+  short_description: "Rescue unique work before repository cleanup"
+  default_prompt: "Use $salvage to rescue unique work, then remove only branches, worktrees, and stashes proven merged and pushed."

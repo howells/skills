@@ -1,6 +1,6 @@
 ---
 name: salvage
-description: Find and rescue work that exists in only one place - detached HEADs, uncommitted worktrees, unpushed branches, stashes - then remove only what is provably merged and pushed. Names what each salvaged thread was for from the branch and the tracker, and treats any worktree that might belong to a live peer session as untouchable. Use for tidying branches, worktrees and stashes, or before a machine cleanup. To rebuild your own context instead, use `muster`.
+description: "Rescue work that exists in only one place - detached HEADs, worktrees, unpushed branches, or stashes - then remove only what is proven merged and pushed. Use for repository cleanup where ambiguous work must be preserved and each surviving thread named. For status reconstruction without cleanup use `muster`."
 ---
 
 # Salvage

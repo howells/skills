@@ -1,6 +1,6 @@
 ---
 name: what
-description: Cut the last message down to what actually happened - short, and translated out of jargon and tool names into what was done and what it means for the reader. Called because the previous reply was long and dense, so brevity is the product. Re-explains, never re-answers, and never starts new work. Use when a reply did not land, when an agent has been grinding and the last update made no sense, or for "wait, what did you just do". For the state of the whole task instead, use `memento`.
+description: "Rewrite only the previous agent reply into three short, plain-language lines: what happened, where things stand, and what comes next. Use when the last message was dense, jargon-heavy, or unclear. It re-explains existing content; for whole-task status use `memento`."
 ---
 
 # What

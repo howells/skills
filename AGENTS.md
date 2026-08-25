@@ -31,7 +31,9 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 
 Every skill's description exists in three places and they must agree: the `SKILL.md` frontmatter `description`, the skill's section in `README.md`, and `agents/openai.yaml` (installer metadata: `display_name`, `short_description`, `default_prompt`, whose `default_prompt` references `$<skill-name>`). Change one, change all three, then run the checker.
 
-Keep each frontmatter `description` within about 500 characters - longer ones get truncated in some host listings. Use terse cross-skill pointers, not full sentences, to disambiguate overlapping scope.
+Keep each frontmatter `description` within about 400 characters and the collection total under 6,500 - Codex budgets the initial skill list, while Claude truncates crowded listings. Front-load the use case and use terse cross-skill pointers to disambiguate overlapping scope.
+
+Keep shared discovery in portable `SKILL.md` frontmatter: `name` and `description`. Codex-only UI metadata belongs in `agents/openai.yaml`. If a skill becomes explicit-only, pair Claude's `disable-model-invocation: true` with Codex's `policy.allow_implicit_invocation: false`; otherwise omit both and keep implicit discovery enabled. Current sources: [OpenAI Build skills](https://developers.openai.com/codex/skills/) and [Claude Code Skills](https://code.claude.com/docs/en/skills).
 
 ## Shared reference files
 
@@ -61,7 +63,7 @@ installs one skill at a time and an installed skill has to stand alone.
 ## Commands
 
 - `python3 scripts/sync-shared.py` - materialise `shared/` into the skills that consume it. `--check` reports drift without writing. Run it after editing anything in `shared/`.
-- `python3 scripts/check-skills.py` - the consistency gate. Run before committing any skill change: it checks the three sync surfaces, intra-skill `.md` link integrity, the description budget, verbatim trigger-clause overlap between skills, and that every generated copy still matches its source in `shared/`. Exits non-zero on errors.
+- `python3 scripts/check-skills.py` - the consistency gate. Run before committing any skill change: it checks the three sync surfaces, Claude/Codex invocation-policy parity, Codex UI metadata bounds, portable names, intra-skill `.md` links, per-skill and collection description budgets, trigger-clause overlap, and generated copies. Exits non-zero on errors.
 - `python3 scripts/check-vocabulary.py` - the vocabulary gate. Flags prose that contradicts `CONTEXT.md`: a bare "surface", a bare "reference", foreman's "spec" where it means a brief, "stage" used for a staged migration, a report written as a file. Several governed words are also ordinary verbs, so the rules match the noun uses and exempt the verb ones - "surface the conflict" is correct and stays. A flagged line that is genuinely right is fixed by adding it to `ALLOW` with a reason, not by loosening the rule. Exits non-zero on violations.
 - `npx skills@latest add howells/skills --list` - list installable skills.
 - `npx skills@latest add howells/skills --skill '*' --agent codex --global` - install all globally for Codex.

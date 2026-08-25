@@ -1,6 +1,6 @@
 ---
 name: muster
-description: Rebuild working context after time away or across concurrent agent sessions - recent transcripts newest-first, live branch and PR state, peer sessions and the paths each one owns, and the tracker - returned as a status-tagged brief of every thread in flight with one concrete next move. Use for "catch me up", "where did I leave off", "what is actually running", or before resuming work started in another session. To investigate a question against external evidence instead, use `inquest`.
+description: "Rebuild working context across concurrent or older agent tasks from transcripts, git state, peer sessions, and the tracker. Use for 'catch me up', 'where did I leave off', or 'what is in flight', returning every active thread and its next move. For evidence-backed investigation use `inquest`."
 ---
 
 # Muster

@@ -1,6 +1,6 @@
 ---
 name: product-description
-description: "Build or extend an outside-in product description: a feature-by-feature, event-by-event account of what users see, can do, and experience, drafted from code and tests, verified against the running product, and consolidated into bug triage. Use when asked to document a software product's user-visible behavior, create a behavior-spec repo, or resume an existing product-description repo. Works for web, mobile, canvas, CLI, chat, and agent products."
+description: "Build or extend an outside-in product description: a feature-by-feature, event-by-event account of user-visible behavior drafted from code and tests, verified against the running product, and consolidated into bug triage. Use for behavior-spec repositories or complete product-experience documentation across web, mobile, canvas, CLI, chat, or agent products."
 ---
 
 # Product description repo

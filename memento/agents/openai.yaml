@@ -1,4 +1,4 @@
 interface:
   display_name: "Memento"
-  short_description: "Report what you are working on right now, from current state, in one screen"
-  default_prompt: "Use $memento to report in: the original ask, what is done, what is left, the live branch and uncommitted files, and whether the work has drifted from what was asked. One screen, from current state, no transcript mining."
+  short_description: "Current-task status from live repository state"
+  default_prompt: "Use $memento to report the current task's ask, completed work, remaining work, branch, and uncommitted files."

@@ -1,6 +1,6 @@
 ---
 name: heathen
-description: No gods, no god files. Find and refactor god components, god scripts, oversized modules, tangled multi-responsibility files, and duplicated logic in JavaScript/TypeScript codebases. Use when asked to audit for large components or scripts, split files into meaningful pieces, simplify overgrown React components, or create a safe decomposition order with tests. Duplicated UI components belong in componentize; heathen targets logic, modules, scripts, and file decomposition.
+description: "Find and refactor god components, oversized modules, tangled scripts, and multi-responsibility JavaScript or TypeScript files. Use for safe decomposition, responsibility splits, and extracting duplicated logic inside a codebase. For repeated UI components use `componentize`; for package extraction use `aperture`."
 ---
 
 # Heathen

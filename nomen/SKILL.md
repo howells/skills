@@ -1,6 +1,6 @@
 ---
 name: nomen
-description: Generate and validate project, product, app, package, CLI, brand, or feature names using systematic naming strategies, codebase context, domain checks, GitHub or package conflict checks, App Store / app-directory checks, and web research. Use when naming a new project, renaming an existing one, validating a name, checking availability, or generating alternatives with ranked recommendations.
+description: "Generate, critique, and validate names for products, projects, packages, CLIs, apps, brands, or features. Use for naming or renaming work where domain, package, GitHub, App Store, directory, or web conflict checks matter."
 ---
 
 # Nomen

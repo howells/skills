@@ -1,4 +1,4 @@
 interface:
   display_name: "Foreman"
-  short_description: "Plan, brief, and review; delegate the code across taste/heavy/grunt tiers"
-  default_prompt: "Use $foreman to implement this: plan and brief the work, delegate the production code to subagents routed by tier and by the model you are running on, keep every brief and report terse, and review their diffs yourself."
+  short_description: "Delegate implementation through reviewed briefs"
+  default_prompt: "Use $foreman to implement this by briefing delegated agents, reviewing their diffs, and running the final gates."

@@ -17,8 +17,11 @@ Checks:
     truncate — `: `, ` #`, a leading indicator character, or a trailing colon.
   - link integrity: every relative .md path referenced in a SKILL.md or references/
     file resolves to a real file.
-  - description budget & overlap: warn >500 chars; error when two descriptions share
-    a verbatim clause >= 40 chars (the trigger-collision that causes mis-routing).
+  - metadata budgets: warn when one description exceeds 400 chars; error when the
+    collection exceeds 6,500 chars or a Codex short description is outside 25-64.
+  - routing consistency: README summaries match descriptions exactly, default prompts
+    name their `$skill`, Claude/Codex invocation policy agrees, and descriptions do
+    not share a long verbatim trigger clause.
   - shared sources: every generated copy listed in shared/manifest.json matches the
     file in shared/ it was written from, so a copy edited in place fails instead of
     drifting back apart.
@@ -35,8 +38,12 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DESCRIPTION_BUDGET = 500
+DESCRIPTION_BUDGET = 400
+COLLECTION_DESCRIPTION_BUDGET = 6500
+OPENAI_SHORT_DESCRIPTION_MIN = 25
+OPENAI_SHORT_DESCRIPTION_MAX = 64
 OVERLAP_MIN = 50
+SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 
 # Basenames that name files in the *consuming* project, not inside a skill.
 PROJECT_FILES = {
@@ -105,7 +112,10 @@ def read_openai_yaml(path: Path) -> dict[str, str]:
     if not path.exists():
         return fields
     for line in path.read_text(encoding="utf-8").split("\n"):
-        kv = re.match(r"^\s*(display_name|short_description|default_prompt):\s*(.*)$", line)
+        kv = re.match(
+            r"^\s*(display_name|short_description|default_prompt|allow_implicit_invocation):\s*(.*)$",
+            line,
+        )
         if not kv:
             continue
         value = kv.group(2).strip()
@@ -196,6 +206,8 @@ def check_surfaces() -> None:
     for name in sorted(names):
         skill = REPO_ROOT / name
         fm = read_frontmatter(skill / "SKILL.md")
+        if len(name) > 64 or not SKILL_NAME_RE.fullmatch(name):
+            err(f"{name}: directory name must be <=64 lowercase letters, digits, and single hyphens")
         if fm.get("name") != name:
             err(f"{name}: frontmatter name={fm.get('name')!r} does not match directory")
         if not fm.get("description"):
@@ -205,11 +217,32 @@ def check_surfaces() -> None:
         elif not readme[name]:
             err(f"{name}: README section has no summary paragraph")
         oy = read_openai_yaml(skill / "agents" / "openai.yaml")
+        if not oy.get("display_name"):
+            err(f"{name}: agents/openai.yaml missing display_name")
         if not oy.get("short_description"):
             err(f"{name}: agents/openai.yaml missing short_description")
+        elif not OPENAI_SHORT_DESCRIPTION_MIN <= len(oy["short_description"]) <= OPENAI_SHORT_DESCRIPTION_MAX:
+            err(
+                f"{name}: openai short_description is {len(oy['short_description'])} chars "
+                f"(required {OPENAI_SHORT_DESCRIPTION_MIN}-{OPENAI_SHORT_DESCRIPTION_MAX})"
+            )
         prompt = oy.get("default_prompt", "")
-        if prompt and f"${name}" not in prompt:
-            warn(f"{name}: openai.yaml default_prompt does not reference ${name}")
+        if not prompt:
+            err(f"{name}: agents/openai.yaml missing default_prompt")
+        elif f"${name}" not in prompt:
+            err(f"{name}: openai.yaml default_prompt does not reference ${name}")
+
+        claude_manual = fm.get("disable-model-invocation", "false").lower() in {
+            "true", "yes", "on", "1",
+        }
+        codex_implicit = oy.get("allow_implicit_invocation", "true").lower() in {
+            "true", "yes", "on", "1",
+        }
+        if claude_manual == codex_implicit:
+            err(
+                f"{name}: Claude disable-model-invocation and Codex "
+                "allow_implicit_invocation disagree"
+            )
 
     for name in sorted(readme):
         if name not in names:
@@ -235,10 +268,8 @@ def check_drift() -> None:
             continue
         d_tokens = salient_tokens(desc)
         summary = readme.get(name, "")
-        if summary:
-            overlap = d_tokens & salient_tokens(summary)
-            if d_tokens and len(overlap) / max(len(d_tokens), 1) < 0.2:
-                warn(f"{name}: README summary shares few salient terms with the description (possible drift)")
+        if summary and summary != desc:
+            err(f"{name}: README summary does not exactly match the SKILL.md description")
         oy = read_openai_yaml(skill / "agents" / "openai.yaml")
         short = oy.get("short_description", "")
         if short and d_tokens and not (d_tokens & salient_tokens(short)):
@@ -276,6 +307,12 @@ def check_budget_and_overlap() -> None:
         descs[skill.name] = desc
         if len(desc) > DESCRIPTION_BUDGET:
             warn(f"{skill.name}: description is {len(desc)} chars (budget {DESCRIPTION_BUDGET})")
+    total = sum(len(desc) for desc in descs.values())
+    if total > COLLECTION_DESCRIPTION_BUDGET:
+        err(
+            f"skill descriptions total {total} chars "
+            f"(collection budget {COLLECTION_DESCRIPTION_BUDGET})"
+        )
     names = sorted(descs)
     for i in range(len(names)):
         for j in range(i + 1, len(names)):

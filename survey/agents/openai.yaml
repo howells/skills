@@ -1,4 +1,4 @@
 interface:
   display_name: "Survey"
-  short_description: "Grade a codebase and return a stage-calibrated verdict, not a wall of findings"
-  default_prompt: "Use $survey to grade this codebase: detect the lifecycle stage first and confirm it, run the mechanical checks before any reviewer, dispatch review lenses calibrated to that stage, re-read every serious finding at the cited line before it counts, cluster the survivors by what you would fix in one sitting, and score the seven axes."
+  short_description: "Stage-calibrated whole-codebase health audit"
+  default_prompt: "Use $survey to grade this codebase with stage-calibrated, source-confirmed findings and comparable scores."

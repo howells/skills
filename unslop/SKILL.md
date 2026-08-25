@@ -1,6 +1,6 @@
 ---
 name: unslop
-description: Strip the tells of machine-written code from a diff without changing what it does - comments narrating the line below, one-caller wrappers, guards against states the types forbid, options nobody passes, decorative log output and leftover scaffolding. Run it before commit or review. Behaviour-changing cleanups belong elsewhere - fallbacks and swallowed errors are `fail-fast`, oversized modules are `heathen`, doc comments worth keeping are `marginalia`, and prose is `deslop`.
+description: "Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. Use before commit or review. For behavior-changing fallback cleanup use `fail-fast`; for prose use `deslop`."
 ---
 
 # Unslop
