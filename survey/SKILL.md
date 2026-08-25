@@ -43,7 +43,7 @@ Load `references/stage.md`.
 
 Establish scope from the argument if one was given - a path, or a plain-language focus like "security" or "architecture". A focus narrows which lenses run; it does not change the process. If no scope was given, detect structure: `apps/*` and `packages/*` means a monorepo, `src/*` means standard, neither means the current directory.
 
-Detect project type, scale and **lifecycle stage** using the signal tables in the reference. Then apply the **security readiness gate**, which decides whether a deep security lens runs at all.
+Detect project type, scale and **lifecycle stage** using the signal tables in the reference file. Then apply the **security readiness gate**, which decides whether a deep security lens runs at all.
 
 **Confirm the stage with the user before going further.** Stage drives every severity rating in the run, so an unconfirmed stage means an unreliable verdict. If they correct it, their answer wins. If no answer is available, proceed with the detected stage and mark it unconfirmed in the output.
 

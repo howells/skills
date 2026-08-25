@@ -1,7 +1,7 @@
 <!-- generated from shared/brand-identity.md by scripts/sync-shared.py. Edit the source, not this copy. -->
 # Brand Identity Reference
 
-Opinionated guidance for creating distinctive visual identities. This reference owns brand-level taste: typography personality, color psychology, visual character.
+Opinionated guidance for creating distinctive visual identities. This reference file owns brand-level taste: typography personality, color psychology, visual character.
 
 For UI implementation concerns - spacing, states, contrast, palette application, readable type - go to the consuming skill's own interface references, which each skill lists in its SKILL.md. This file covers brand and identity decisions only.
 
@@ -122,7 +122,7 @@ Use these to push past safe defaults:
 
 - "What if only *some* things are rounded? Sharp cards with round buttons creates tension."
 - "What if no shadows at all? Or dramatic, layered shadows instead of subtle everywhere?"
-- "What if the surface has color or texture instead of white + gray cards?"
+- "What if the UI surface has color or texture instead of white + gray cards?"
 - "What if borders are the character - thick, thin, dotted, or absent entirely?"
 - "What would this brand look like if it were brave?"
 

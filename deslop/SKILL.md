@@ -7,7 +7,7 @@ description: "Audit and rewrite prose that carries AI-writing tells: inflated si
 
 Review, diagnose, and rewrite prose that carries common AI-writing tells. Treat patterns as clues, not proof of authorship.
 
-The tell taxonomy in `references/signs-of-ai-writing.md` encapsulates [*Wikipedia:Signs of AI writing*](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), adapted for general prose. Maintainers: that article is the source of record - re-check the reference against it when the article changes.
+The tell taxonomy in `references/signs-of-ai-writing.md` encapsulates [*Wikipedia:Signs of AI writing*](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), adapted for general prose. Maintainers: that article is the source of record - re-check the reference file against it when the article changes.
 
 State at the start that you are using the `deslop` skill.
 

@@ -1,6 +1,6 @@
 # Stage
 
-Detecting where a project is in its life, and calibrating every severity to it. This is the reference that keeps a survey from condemning a house for having no kitchen while the walls are going up.
+Detecting where a project is in its life, and calibrating every severity to it. This is the reference file that keeps a survey from condemning a house for having no kitchen while the walls are going up.
 
 ## Detecting scale
 

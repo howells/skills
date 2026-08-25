@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Description"
+  short_description: "Outside-in product behavior documentation"
+  default_prompt: "Use $product-description to document this product's user-visible behavior from code through verification and bug triage."

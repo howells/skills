@@ -98,7 +98,7 @@ npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 
 ### `foreman`
 
-Foreman-mode implementation: the main loop plans, specs, and reviews while delegated subagents write the production code, routed across three tiers - taste for judgment-heavy surfaces, heavy for spec-complete but interlocking work, grunt for mechanical work. The task picks the tier; the model the foreman itself runs on sets the economy - a frontier host delegates harder, writes denser specs, and holds every brief and report to a terse format, while a cheaper host reserves the frontier model as a scalpel for narrow, genuinely hard problems. Host-agnostic and native-only, with no cross-CLI spend. Diffs get reviewed by the foreman itself, and fixes go back to the same agent that wrote them.
+Foreman-mode implementation: the main loop plans, briefs, and reviews while delegated subagents write the production code, routed across three tiers - taste for judgment-heavy surfaces, heavy for spec-complete but interlocking work, grunt for mechanical work. The task picks the tier; the model the foreman itself runs on sets the economy - a frontier host delegates harder, writes denser briefs, and holds every brief and report to a terse format, while a cheaper host reserves the frontier model as a scalpel for narrow, genuinely hard problems. Host-agnostic and native-only, with no cross-CLI spend. Diffs get reviewed by the foreman itself, and fixes go back to the same agent that wrote them.
 
 Install globally for Codex:
 
@@ -194,6 +194,18 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill polyplugin --agent codex --global
+```
+
+### `product-description`
+
+Build or extend an outside-in product description: a feature-by-feature, event-by-event account of what users see, can do, and experience, drafted from code and tests, verified against the running product, and consolidated into bug triage. Use when asked to document a software product's user-visible behavior, create a behavior-spec repo, or resume an existing product-description repo. Works for web, mobile, canvas, CLI, chat, and agent products.
+
+Imported from [Steve Ruiz's original `product-description` gist](https://gist.github.com/steveruizok/83ae5c53f2784ebf8f5fe0a3fb94480f).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill product-description --agent codex --global
 ```
 
 ### `salvage`

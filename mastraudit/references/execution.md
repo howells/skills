@@ -35,8 +35,8 @@ Each check below exists because the failure it describes has happened. Where a c
 - **The payload carries human-readable names, not only ids.** An identifier rendered at a person is a defect, not a display detail.
 - **New payload fields are optional and additive**, so runs suspended before the change still parse on resume.
 - **The suspension is recorded immediately before the run parks**, not after.
-- **The surface distinguishes a live suspension from a dead run.** A stale heartbeat or a claimed run with no progress is not a question awaiting an answer, and showing it as one wastes the person's time.
-- **Ledger or state tokens are mapped to labels at the surface.**
+- **The operator surface distinguishes a live suspension from a dead run.** A stale heartbeat or a claimed run with no progress is not a question awaiting an answer, and showing it as one wastes the person's time.
+- **Ledger or state tokens are mapped to labels at the operator surface.**
 - **What is serialised is what reaches the wire.** A payload type existing server-side is not evidence the payload is transmitted. Check the emitted event, not the type.
 
 ## State and storage

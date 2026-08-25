@@ -81,7 +81,7 @@ Component-specific references - load only the ones present in the work, not the 
 - Marketing components (headers, footers, heading groups, feature lists, testimonials, team sections, logo clouds, login pages): `references/interface/marketing-components.md`; pricing tiers in `references/interface/pricing-cards.md`
 - Data/app components (tables, dashboards, navigation, pagination, description lists): `references/interface/data-components.md`
 - Primitives (badges, avatars, icons, images, svg, border radius): `references/interface/primitives.md`
-- Type/content (copywriting, prose, custom fonts): `references/interface/type-content.md`; font pairings in `references/font-recommendations.md` (at the references root, not `interface/`)
+- Type/content (copywriting, prose, custom fonts): `references/interface/type-content.md`; font pairings in `references/font-recommendations.md` (at the `references/` root, not `interface/`)
 
 For a single component or small fragment, read only `frontend-design.md` plus the 2-3 most relevant interface files.
 

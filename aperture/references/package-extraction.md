@@ -1,6 +1,6 @@
 # Package Extraction Reference
 
-Use this reference when extracting local code into a reusable package, workspace package, or new repository.
+Use this reference file when extracting local code into a reusable package, workspace package, or new repository.
 
 ## Extraction Questions
 
@@ -41,7 +41,7 @@ Prefer one stable import path:
 import { Aperture } from "@scope/aperture";
 ```
 
-Use subpath exports only when they represent deliberate surfaces:
+Use subpath exports only when each represents a deliberate public surface:
 
 ```json
 {

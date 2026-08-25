@@ -173,7 +173,7 @@ Default to an app-local shared folder when reuse is within one app, duplication 
 Prioritize components with high reuse value and low domain coupling:
 
 - primitives: Button, IconButton, LinkButton, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Badge, Avatar, Tooltip
-- surfaces: Card, Panel, EmptyState, ErrorState, LoadingState, Dialog, Sheet, Popover
+- UI surfaces: Card, Panel, EmptyState, ErrorState, LoadingState, Dialog, Sheet, Popover
 - data display: Table, DataList, Stat, MetricCard, Pagination, Tabs
 - forms: Field, FieldLabel, FieldError, FormSection, SearchInput
 

@@ -39,7 +39,17 @@ DESCRIPTION_BUDGET = 500
 OVERLAP_MIN = 50
 
 # Basenames that name files in the *consuming* project, not inside a skill.
-PROJECT_FILES = {"readme.md", "agents.md", "claude.md", "changelog.md", "contributing.md", "license.md"}
+PROJECT_FILES = {
+    "readme.md",
+    "agents.md",
+    "claude.md",
+    "changelog.md",
+    "contributing.md",
+    "license.md",
+    "goal.md",
+    "glossary.md",
+    "bug-triage.md",
+}
 
 errors: list[str] = []
 warnings: list[str] = []

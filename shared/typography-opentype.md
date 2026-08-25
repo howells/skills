@@ -18,7 +18,7 @@ On a 2x/Retina display, plain grayscale antialiasing *is* the gorgeous rendering
 <body class="antialiased">
 ```
 
-Tailwind's `antialiased` sets `-webkit-font-smoothing: antialiased` + `-moz-osx-font-smoothing: grayscale`. Text renders thinner and crisper than the default (which dilates stems), matching Figma and Apple's own UI. The one real trade-off: at 1x DPI, light text on dark backgrounds can go too thin - fix by bumping `font-medium` → `font-semibold` on those surfaces, never by dropping `antialiased`.
+Tailwind's `antialiased` sets `-webkit-font-smoothing: antialiased` + `-moz-osx-font-smoothing: grayscale`. Text renders thinner and crisper than the default (which dilates stems), matching Figma and Apple's own UI. The one real trade-off: at 1x DPI, light text on dark backgrounds can go too thin - fix by bumping `font-medium` → `font-semibold` on those UI surfaces, never by dropping `antialiased`.
 
 Do **not** add `text-rendering: optimizeLegibility` - kerning and common ligatures are on by default in modern browsers, and it still costs layout time on long pages.
 

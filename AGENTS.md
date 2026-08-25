@@ -21,6 +21,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `muster` - roll-call of work in flight: transcripts, live git state, peer sessions, tracker.
 - `nomen` - generate and validate names, with availability and conflict checks.
 - `polyplugin` - create, audit or migrate agent plugins across Claude Code, Codex and Cursor.
+- `product-description` - document a product's user-visible behaviour outside-in, then verify and triage it.
 - `salvage` - rescue work that exists in only one place, then clear away branches, worktrees and stashes that are provably redundant.
 - `survey` - grade a whole codebase and return a stage-calibrated verdict with a comparable score, clustered by what you would fix in one sitting.
 - `unslop` - strip machine-written tells out of a diff without changing behaviour.
@@ -61,7 +62,22 @@ installs one skill at a time and an installed skill has to stand alone.
 
 - `python3 scripts/sync-shared.py` - materialise `shared/` into the skills that consume it. `--check` reports drift without writing. Run it after editing anything in `shared/`.
 - `python3 scripts/check-skills.py` - the consistency gate. Run before committing any skill change: it checks the three sync surfaces, intra-skill `.md` link integrity, the description budget, verbatim trigger-clause overlap between skills, and that every generated copy still matches its source in `shared/`. Exits non-zero on errors.
+- `python3 scripts/check-vocabulary.py` - the vocabulary gate. Flags prose that contradicts `CONTEXT.md`: a bare "surface", a bare "reference", foreman's "spec" where it means a brief, "stage" used for a staged migration, a report written as a file. Several governed words are also ordinary verbs, so the rules match the noun uses and exempt the verb ones - "surface the conflict" is correct and stays. A flagged line that is genuinely right is fixed by adding it to `ALLOW` with a reason, not by loosening the rule. Exits non-zero on violations.
 - `npx skills@latest add howells/skills --list` - list installable skills.
 - `npx skills@latest add howells/skills --skill '*' --agent codex --global` - install all globally for Codex.
 
-There's no build or test script beyond `check-skills.py`; otherwise verify by reading and targeted search.
+There is no build. The two Python gates above are the repository-wide checks; otherwise verify by reading and targeted search.
+
+## Agent skills
+
+### Issue tracker
+
+Linear, team `SKI` (Skills). Linear is the record, not markdown in this repo. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The five canonical roles, unrenamed, live on `SKI` alongside its `Bug`/`Improvement`/`Feature` labels. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context - one `CONTEXT.md` glossary and `docs/adr/` at the root. See `docs/agents/domain.md`.

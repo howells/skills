@@ -21,7 +21,7 @@ Tailwind v4 is the default implementation target. Brand output should use Tailwi
 
 ## References
 
-Load only the references needed for the task:
+Load only the reference files needed for the task:
 
 - `references/brand-identity.md`: brand identity principles, typography, color psychology, distinctiveness, brand-system structure.
 - `references/design-philosophy.md`: hierarchy, personality, depth, and critique of generic UI.

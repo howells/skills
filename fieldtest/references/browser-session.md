@@ -1,6 +1,6 @@
 # Browser Session Reference
 
-Use this reference when running a rendered app QA session.
+Use this reference file when running a rendered app QA session.
 
 ## Browser Tool Selection
 
@@ -79,7 +79,7 @@ For a focused regression, test only the affected route and one adjacent state.
 - Is typography doing distinct jobs?
 - Are interaction states designed?
 - Is the page memorable for the right reason?
-- Are colors, borders, shadows, and surfaces intentional?
+- Are colors, borders, shadows, and UI surfaces intentional?
 
 ### Operator
 
