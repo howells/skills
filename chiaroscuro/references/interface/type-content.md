@@ -16,7 +16,7 @@ Covers: headings, taglines, subtitles, descriptions, labels, list items, button 
 
 Covers: raw HTML from markdown, CMS content, database content, blog posts, articles, documentation, and rendered markup where classes cannot be applied to individual elements.
 
-- Never use the `@tailwindcss/typography` plugin - instead, create a `.prose` class that styles raw HTML elements (headings, links, lists, code blocks, images, etc.) using plain CSS with Tailwind's CSS theme variables (`var(--color-*)`, `var(--text-*)`, `var(--font-weight-*)`, `var(--radius-*)`, `--spacing(*)`, `--alpha()`); use `@variant dark { … }` and `@variant hover { … }` for dark mode and hover states; use `* + *` for vertical spacing between elements; style every element that could appear in the rendered markup - `h1`–`h6`, `p`, `a`, `ul`, `ol`, `li`, `pre`, `code`, `img`, `strong`, `blockquote`
+- Use the project's existing rich-text treatment when it is coherent. A local `.prose` class built from Tailwind theme variables gives precise control; `@tailwindcss/typography` is also valid when its dependency and output are already accepted and themed deliberately.
 - Apply the `.prose` wrapper class to the container element that holds the rendered HTML - `<div class="prose">` around blog post content, markdown output, CMS-generated markup, or any HTML where you can't add Tailwind classes to individual elements
 - Default to `var(--text-base)` (`16px`) for prose body text; only use `var(--text-lg)` (`18px`) or larger if specifically requested or the project already uses that size for body text elsewhere
 - Never set `max-width` inside the `.prose` CSS - constrain width with a `max-w-[*ch]` class alongside `prose` in the markup (e.g. `<div class="prose max-w-[65ch]">`); use `60ch`–`90ch`, matched to the site's existing content widths
@@ -28,6 +28,6 @@ Covers: raw HTML from markdown, CMS content, database content, blog posts, artic
 
 Covers: loading custom fonts, registering font theme variables, and applying display/body font utilities.
 
-- Always load custom fonts before using them - add `<link>` tags in the HTML `<head>` (preferred); if no `<head>` is available, use `@import url('…');` at the top of the CSS file instead
+- Load custom fonts through the framework or document's supported font path, with suitable preload and fallback behavior. Avoid CSS `@import` when a head-level or self-hosted mechanism is available.
 - Register frequently used custom fonts in the CSS `@theme` block - e.g. `--font-display: "Oswald", sans-serif;`; optionally set `--font-display--font-feature-settings` and `--font-display--font-variation-settings` for fine-tuning
 - Register headline/display fonts as `--font-display` (creates a `font-display` utility) - use `--font-sans` for body/UI fonts and `--font-display` for fonts that are only used on headings and display text; apply `font-display` on headings alongside `font-sans` on the body

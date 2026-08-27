@@ -6,17 +6,17 @@ Dark mode is not an inversion. It is a second design that preserves the *contras
 
 ## Design Rules
 
-- MUST: Maintain the same contrast ratios as light mode - re-derive colors, never just invert.
+- MUST: Preserve accessible contrast and the intended hierarchy from light mode - re-derive colors, never just invert.
 - SHOULD: Default to the OS preference via Tailwind's built-in `dark:` variant (`prefers-color-scheme`). Add a manual toggle only when the user explicitly asks for one.
-- MUST: Remove all shadows in dark mode - use `dark:shadow-none`. Separation comes from the surface ladder and faint inset rings, not elevation.
+- SHOULD: Prefer surface contrast and faint inset rings for routine separation. Remove light-mode shadows that turn muddy or glowing; retain a restrained, re-tuned shadow only when it still explains real overlap or elevation.
 - MUST: On dark-only sites, add `scheme-only-dark` to `<html>` (or the top-level element) so native elements - scrollbars, form controls, `color-scheme` - render dark.
 
 ## Surface And Component Rules
 
-- MUST NOT: Keep large branded or colored panels in dark mode. Use the page background and separate sections with a light divider instead.
+- SHOULD: Re-evaluate large branded or colored panels in dark mode. Keep one when brand meaning or hierarchy warrants it and the palette remains comfortable; otherwise quiet it into the surface ladder.
 - SHOULD: Style cards only slightly lighter than the page (e.g. `dark:bg-gray-900` on a `dark:bg-gray-950` page); add `dark:inset-ring dark:inset-ring-white/5` for definition.
 - SHOULD: Make decorative quote marks and similar ornaments very faint (e.g. `dark:text-white/5`).
-- MUST NOT: Use multiple heading text colors in dark mode (e.g. dark gray + brand). Use one light color - `white` or `gray-100` - for all heading text.
+- SHOULD: Keep heading contrast coherent. Multiple heading colors are acceptable when they encode hierarchy or brand meaning and each remains legible; avoid arbitrary alternation.
 
 ## SVG Rules
 

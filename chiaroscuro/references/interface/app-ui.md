@@ -4,6 +4,8 @@
 
 ## Intent First
 
+An app is a working shell, not a document-shaped landing page. Tools, dashboards, and workflows usually need a persistent frame with purposeful panes, local navigation, and independently managed overflow. A single document flow is still valid when the user's task is genuinely linear; choose from the task rather than defaulting to marketing-page structure.
+
 Before any visual decisions, answer explicitly:
 
 - **Who is this human?** Specific role and context, not "users"
@@ -46,7 +48,7 @@ For every label, navigation item, status, empty state, and error, ask: does this
 
 ## Depth Strategy
 
-Pick ONE approach and commit across the entire app:
+Choose a dominant depth strategy and keep exceptions legible:
 
 | Strategy | Feel | When to use |
 |----------|------|-------------|
@@ -54,8 +56,8 @@ Pick ONE approach and commit across the entire app:
 | Subtle shadows | Approachable, soft | General SaaS, collaborative tools |
 | Layered shadows | Premium, dimensional | Design tools, luxury products |
 
-- NEVER: Mix strategies in the same interface
-- NEVER: Dramatic elevation jumps between adjacent surfaces
+- Avoid mixing strategies casually. A border-led base can still use shadow for a popover or drag object when the elevation has meaning.
+- Avoid dramatic elevation jumps between adjacent routine surfaces.
 
 ## Subtle Layering
 
@@ -95,8 +97,8 @@ Navigation teaches users how to think about the product space. It IS the product
 
 ## Data Display
 
-- MUST: Tables sortable by at least one column
-- SHOULD: Pagination or virtualization for 50+ items
+- SHOULD: Make a table sortable when users compare or locate records by column values; preserve a deliberate fixed order when sequence itself is meaningful.
+- SHOULD: Paginate, progressively load, or virtualize when the measured collection and task require it; do not use an arbitrary item count as the only trigger.
 - SHOULD: Filters visible, not buried in menus
 - SHOULD: Numbers with context - what's good, what's bad, what changed
 - NEVER: Truncate data without tooltip or expansion
@@ -104,7 +106,7 @@ Navigation teaches users how to think about the product space. It IS the product
 
 ## Interactive Patterns
 
-- MUST: Hover states on all clickable elements
+- MUST: Interactive elements expose a perceivable state for the available input modes; hover supplements focus, active, and touch feedback rather than standing alone.
 - MUST: Loading indicator for async actions
 - SHOULD: Optimistic updates where safe
 - SHOULD: Undo for destructive actions instead of confirmation dialogs

@@ -1,458 +1,151 @@
 ---
 name: chiaroscuro
-description: "Design distinctive Tailwind v4 interfaces: visual direction, wireframes, `@theme` tokens, responsive layouts, dark mode, and polish. Use when creating or restyling a screen, page, app, or component whose visual character matters. For brand identity use `foundry`; for reuse audits use `componentize`."
+description: "Design, build, restyle, and polish user-facing web interfaces end to end with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for components, screens, pages, apps, dark mode, responsiveness, or UI that should feel complete. For brand identity use `foundry`; for reuse audits use `componentize`."
 ---
 
 # Chiaroscuro
 
-Use this skill to make UI design concrete before code, and to polish UI code after it exists. It produces specific visual direction - not decoration - that another agent or engineer can implement without drifting into generic AI output.
+Take a user-facing web interface from request to finished, browser-verified implementation. Work in the product's language, use its real content and behavior, and give the result a specific visual point of view without adding furniture or exposing the system underneath.
 
-Design for the user's task, not for the implementation underneath it. Chiaroscuro must produce interfaces that feel like coherent products, not exposed schemas, prompt scaffolds, agent logs, or ornamental screenshots.
+State at the start that you are using the `chiaroscuro` skill and name the operating mode.
 
-State at the start that you are using the `chiaroscuro` skill.
+## The Standard
 
-## First Principles
+**Everything earns its place.** Every panel, label, divider, shadow, control, and typographic treatment must improve clarity, utility, hierarchy, affordance, state, navigation, or domain meaning. Remove what does not.
 
-**Everything must earn its place.** The default is removal, not addition. Every visible element - every panel, badge, divider, label, shadow, wrapper, and typographic treatment - must justify itself by serving clarity, utility, hierarchy, affordance, state communication, navigation, or domain meaning. If an element can be removed without reducing comprehension, remove it. Optimise for clarity and utility above all.
+**Design the user's task.** Build the shortest legible path through the real job. Hide schemas, prompts, agent mechanics, API names, and implementation state behind user-centered nouns, verbs, and progressive disclosure.
 
-**No UI furniture.** Decorative chrome, wrapper panels, floating badges, ornamental dividers, status strips, fake controls, empty accent shapes, background effects, and visual clutter are furniture - they fill space without serving the user. The instinct to make a screen "look more designed" by adding visual weight is the instinct to reach for furniture. Resist it. A screen with fewer elements and better hierarchy always beats a screen with more elements and equal hierarchy.
+**Build an interface, not an explanation.** Prefer controls, comparisons, tables, diagrams, and direct manipulation to paragraphs that describe what the interface should do. Use copy for orientation and consequence, not as a substitute for design.
 
-**Prose is not an interface.** A region carrying its meaning in paragraphs is a region that has not been designed yet. Long text in a UI is the tell that the work stopped at describing the thing instead of building it: reams of copy where a control, a table, a chart, or a visualisation belongs. Headlines and findings first, detail revealed on interrogation. When you catch yourself writing a sentence into the screen, ask what the reader is meant to do with it and build that instead.
+**Make one system.** Reuse the product's shell, grid, components, tokens, content model, and interaction conventions. The result should belong to the product while still having a deliberate direction.
 
-**An app is a shell, not a document.** Tools, dashboards and workflows get an app shell - a persistent frame, panels and panes that scroll independently, filter, search and collapse in place. A page that scrolls as one long document is a website, and shipping one where a tool belongs is the same failure as the wall of prose.
+**Finish the path.** Empty, loading, failure, success, overflow, persistence, keyboard, mobile, and downstream states are part of the interface. A polished screenshot with an unfinished path is unfinished work.
 
-**No system leakage.** Hide implementation concepts, prompt/workflow mechanics, database schemas, API names, internal state machines, and agent reasoning behind user-centered nouns, verbs, progressive disclosure, and task-focused states.
+## Choose the Operating Mode
 
-## Operating Rules
+Choose the smallest mode that covers the request:
 
-- Keep design creation collaborative. Ask short questions one at a time when direction is missing.
-- Prefer concrete decisions over conceptual themes.
-- Make every design decision expressible as Tailwind v4 `@theme` tokens, CSS-first Tailwind utilities, custom variants, and component class shapes.
-- Treat Tailwind v4 as non-negotiable. If a project is not already Tailwind v4-based, the design spec must include the Tailwind v4 token and utility model required to implement the design.
-- Use the project's existing design system, components, and domain rules before inventing new primitives, but express all styling through Tailwind v4.
-- Project-local visual tokens may inform values, but they do not override the Tailwind v4 requirement. Translate them into Tailwind v4 `@theme` tokens where needed.
-- Do not default to marketing-page structure for apps, tools, games, dashboards, or workflows. Design the actual usable surface first.
-- Apply the "earn its place" test to every element. If you cannot name what the element clarifies, cut it.
-- One shell, one grid. Every view sits in the same frame with content starting at the same positions, built from shared components rather than laid out per page. A layout that shifts between views reads as carelessness before it reads as design.
-- Cap the type scale. Around five text styles across the whole surface, no more; form controls share one size. Never author text sizing inline - the styles are named in the theme, and projects that enforce this ban inline `text-*` classes with oxlint.
-- Images are square or landscape. Square for samples, uploads, cards and anything gridded. Never 16:9, which goes skinny and awkwardly cropped at the sizes a UI actually uses.
-- Write UI copy in the user's words, never the codebase's. Internal nouns - pile, shelf, plate, run-as-a-noun - and symbols like the delta are system leakage wearing a label. Assume a savvy consumer or a designer who is not technical.
-- Do not let the design spec contradict existing `docs/brand-system.md`, `docs/design-context.md`, project rules, or implemented design tokens.
-- For substantial UI work, save the design spec to `docs/design/specs/design-[name].md`. For small components, an inline spec is acceptable unless the user wants a file.
+- **Direct implementation** - a component, contained region, or work with a supplied direction. Produce one finished direction and implementation.
+- **Page directions** - a new or redesigned complete route, page, or full-screen workflow without a settled direction. Render the current page as a baseline plus five new directions, then pause once for selection.
+- **Design-only** - the user asks for direction, a wireframe, or a design spec without implementation. Produce only the requested artifact.
+- **Structural polish** - an existing interface needs hierarchy, responsive behavior, accessibility, dark mode, or finish without a new visual concept. Preserve and refine the existing direction as one finished implementation across the complete path.
 
-## References
+Do not enter page-directions mode when the user supplied a direction, asked to match or extend an existing design, requested one implementation, or scoped the work to a component or contained region.
 
-Load references only as needed. All paths are relative to this skill folder.
+### Mode Completion
 
-For full design direction, read:
+Direct implementation and structural polish each produce one finished direction. They are complete when the requested UI works in context and the affected user path has been exercised.
 
-- `references/frontend-design.md`
-- `references/brand-identity.md` if no project brand system exists
-- `references/design-philosophy.md`
-- `references/ux-laws.md`
-- `references/font-recommendations.md`
-- `references/typography-opentype.md`
-- `references/ascii-ui-patterns.md`
-- `references/tailwind-v4.md`
-- `references/interface/index.md`
-- `references/interface/tailwind-authoring.md`
-- `references/interface/buttons.md`
-- `references/interface/surfaces.md`
-- `references/interface/sections.md`
+Page directions proceed in two phases:
 
-Then read the relevant interface rules:
+1. Exploration is complete when the baseline and five new directions are rendered, reviewed, and ready for one informed selection.
+2. Delivery is complete only after selection, cleanup, production hardening, and final browser verification.
 
-- App UI: `references/interface/app-ui.md`
-- Marketing/site work: `references/interface/marketing.md`
-- Visual design: `references/interface/design.md`, `references/interface/colors.md`, `references/interface/typography.md`
-- Layout and responsiveness: `references/interface/layout.md`, `references/interface/spacing.md`, `references/interface/responsive.md`
-- Forms: `references/interface/forms.md`
-- Interactions: `references/interface/interactions.md`
-- Motion: `references/interface/animation.md`
-- Dark mode: `references/interface/dark-mode.md`
-- Accessibility/content: `references/interface/content-accessibility.md`
-- Performance-heavy UI: `references/interface/performance.md`
-- In-browser variant comparison: `references/interface/ui-picker.md`
-- Spec output templates (Change Spec, Design Spec): `references/spec-templates.md`
+Design-only work is complete when the requested artifact makes hierarchy, behavior, responsive change, states, and Tailwind v4 expression unambiguous. Do not save a design spec unless the user requested a file or the project requires one.
 
-Component-specific references - load only the ones present in the work, not the whole set. Small components are grouped into four files; open the file and jump to the `##` anchor for the component:
+For structural polish, the original behavior must remain intact and the targeted hierarchy, accessibility, responsive, dark-mode, or finish problem must be resolved across the full affected path.
 
-- Structure/sections: `section` patterns live in `references/interface/layout.md`; page-wide consistency in `references/interface/marketing-components.md` (Landing Pages)
-- Marketing components (headers, footers, heading groups, feature lists, testimonials, team sections, logo clouds, login pages): `references/interface/marketing-components.md`; pricing tiers in `references/interface/pricing-cards.md`
-- Data/app components (tables, dashboards, navigation, pagination, description lists): `references/interface/data-components.md`
-- Primitives (badges, avatars, icons, images, svg, border radius): `references/interface/primitives.md`
-- Type/content (copywriting, prose, custom fonts): `references/interface/type-content.md`; font pairings in `references/font-recommendations.md` (at the `references/` root, not `interface/`)
+## Work End to End
 
-For a single component or small fragment, read only `frontend-design.md` plus the 2-3 most relevant interface files.
+### 1. Inspect the Product and Task
 
-Do not produce framework-agnostic, CSS Modules, styled-components, emotion, or plain-CSS-first design specs. Raw CSS is acceptable only inside Tailwind v4 CSS-first primitives such as `@theme`, `@utility`, `@custom-variant`, or unavoidable global base rules.
+Read project instructions, product and brand documents, the relevant route and components, existing tokens, and the runnable interface. Identify:
 
-## Mode Detection
+- the user's job and core path;
+- real content, data, and states;
+- the established shell, grid, components, and vocabulary;
+- technical constraints and the styling system;
+- what must remain unchanged.
 
-Choose a mode before loading heavy references.
+Do not begin by inventing a visual theme in isolation. Inspection is complete when you can describe the user's task, the product constraints, and the interface boundary in a few concrete sentences.
 
-**Design mode:** The user wants visual direction, a page/screen layout, a wireframe, a design doc, or a new interface concept. Load the full reference set as listed above.
+### 2. Load Only the Relevant References
 
-**Component fast-path:** The user wants a single component or small UI fragment. Load only `references/frontend-design.md` plus 2-3 relevant interface files - do not load the full reference set.
+Read [`references/interface/index.md`](references/interface/index.md) and open only the branch needed for this task.
 
-**Polish mode:** The user wants to clean up, componentize, deduplicate, organize, or improve existing UI code without changing product direction.
+- For page directions, read [`references/interface/ui-picker.md`](references/interface/ui-picker.md).
+- Read [`references/tailwind-v4.md`](references/tailwind-v4.md) only for an authorized or already-configured migration.
+- For design-only work, load the wireframe or design-spec references only when that artifact was requested.
+- For motion, begin with [`references/interface/animation.md`](references/interface/animation.md). If installed, use `animate` for specialist implementation craft and `motion` for current library or API facts.
 
-Announce the chosen mode.
+The reference files are a router, not a checklist. Never load every rule file by default.
 
-## Component Fast-Path Workflow
+### 3. Set the Direction
 
-Use this for a single component, a small UI fragment, or a contained piece like a card, input, modal, or data row.
+For direct implementation, state the chosen direction briefly: hierarchy, typography, color behavior, density, and interaction temperament. A direction should be specific enough to constrain implementation, not a mood-board slogan.
 
-1. **Load light context.** Read `references/frontend-design.md` and 1-3 interface files relevant to the component type (e.g. `buttons.md` for a button, `forms.md` for an input, `surfaces.md` for a card). Check for `docs/brand-system.md` or `docs/design-context.md` to inherit existing tokens. Do not load the full reference set.
-2. **Check what exists.** Search for existing shared components, tokens, and patterns in the project before proposing anything new. If a design system is in place, work within it.
-3. **Make decisions, not specs.** Skip wireframes and multi-step direction gathering. Decide: font, size, weight, color tokens, spacing, radius, states (default, hover, focus, active, disabled, loading, error). Name each decision concretely.
-4. **Build.** Implement directly with Tailwind v4 utilities and project conventions. Apply the earn-its-place test - no decorative wrappers, no furniture, no mono small-caps unless the component contains numeric or data-like content.
-5. **Verify.** Run typecheck and lint. Screenshot if a browser tool is available.
+For page directions:
 
-## Design Mode Workflow
+1. Preserve the current page as the baseline. For a new route with no prior page, create `Current` as a conservative baseline using the product's existing shell, components, tokens, and conventions.
+2. Create five genuinely different rendered directions.
+3. Keep content, data, state, and behavioral code shared. Vary presentation structure, hierarchy, typography, color, density, and interaction treatment.
+4. Make every direction communicate the complete page hierarchy and core path. Production hardening follows selection.
+5. Review the picker in the browser, then present one structured selection to choose the direction.
 
-### 1. Load Project Context
+If the app cannot run, still produce the coded directions and present screenshots when possible. If neither preview nor screenshots are possible, present concise descriptions in a structured selection instead of stalling.
 
-Check for these files first:
+### 4. Implement in Tailwind v4
 
-- `docs/brand-system.md`
-- `docs/design-context.md`
-- relevant project rules such as `AGENTS.md`, `.ruler/`, `rules/`, or design-system docs
+Use the project's components and conventions before creating new primitives. Express visual decisions through Tailwind v4 utilities, variants, and `@theme` tokens rather than scattered arbitrary values.
 
-If `docs/brand-system.md` exists, treat it as canonical for palette, typography, tone, and visual character. Do not re-ask settled brand questions.
+Tailwind has a mechanical authorization boundary:
 
-If only `docs/design-context.md` exists, inherit it and avoid re-asking settled visual decisions.
+- Existing Tailwind v4 work is in scope.
+- Converting touched UI files to an already-configured v4 system is in scope.
+- If v4 adoption requires changing package manifests, build configuration, or the global CSS entry point, pause with a strong migration recommendation unless the user already authorized migration.
+- Never turn a contained UI request into a repository-wide styling migration silently.
 
-If neither exists and the work is substantial, ask whether to establish persistent design context. If yes, create `docs/design-context.md` with:
+Build stable states, not just a stable initial frame. Dynamic geometry must not cause avoidable layout shift; keyboard actions must preserve native form semantics; focus must remain visible and move into view; clipping must not create accidental scroll containers; and interactive states must not jump because borders, labels, or controls appear late.
 
-- brand personality and tone
-- display, body, and mono font choices
-- Tailwind `@theme` color tokens in OKLCH
-- spacing and radius scale
-- surface ladder and depth model
-- button, card, input, and dense data patterns
-- motion philosophy
-- project-specific anti-patterns
+### 5. Exercise and Refine the Rendered Experience
 
-Write every recorded principle so an agent can grade its own output against it - countable or checkable. "Every screen has one primary action, and only that action uses the accent color" is gradable; an agent can count accented elements. "Keep the interface clean" is not. If a principle cannot be graded, rewrite it until it can.
+Run the real app and complete the core user path. Verify, as relevant:
 
-### 2. Inspect What Exists
+- desktop and mobile layouts;
+- keyboard and pointer operation;
+- focus order, focus visibility, semantics, and the accessibility tree;
+- long, empty, loading, failure, and success states;
+- console errors and failed network requests;
+- persistence and the downstream effect of the user's action;
+- motion interruption and reduced-motion behavior;
+- contrast and real raster assets in dark mode.
 
-If redesigning existing UI:
+Use `fieldtest` for a deeper browser-QA pass when it is installed and the risk warrants it. Tests support this pass; they do not replace it. Refine until the complete path is coherent, responsive, accessible, and visually resolved.
 
-- Open or run the app when practical.
-- Capture screenshots at desktop and mobile widths when a browser tool is available.
-- Inspect existing components, tokens, and layout conventions.
-- Report what is working, what is generic, and what is incoherent before proposing changes.
+### 6. Clean Up and Report
 
-If designing from scratch:
+After a page direction is selected, remove every rejected direction and all picker scripts, attributes, temporary wrappers, hidden branches, suppressions, and unused imports. Re-run the relevant checks and the complete user path.
 
-- Confirm the product context, target user, and whether the UI is marketing, app UI, component, game, or tool.
-- Ask for reference URLs, screenshots, or brand constraints if they matter.
+Report the direction, what changed, verification performed, and any honest limitation. Do not claim browser verification when only static checks ran.
 
-### 3. Gather Direction
+Before reporting completion, confirm that:
 
-Ask only what is missing. Prefer one question at a time.
+- the primary task is apparent without explanatory scaffolding;
+- real content and adverse states do not break the hierarchy;
+- keyboard, pointer, and touch behavior agree where they should;
+- temporary direction or migration scaffolding is gone;
+- the implementation still follows the project's architecture and vocabulary.
 
-For most work, resolve:
+## Taste and Craft Guardrails
 
-- UI type: app UI, marketing/site, component, tool, game, or content surface
-- tone: minimal, bold, editorial, playful, luxury, brutalist, industrial, organic, retro, quiet operational, or another specified direction
-- density: sparse, balanced, or dense
-- memorable element: typography, layout structure, interaction model, data treatment, imagery, motion, or navigation - the memorable element must serve comprehension or utility, not just visual interest
-- frame/chrome: standard site chrome, app-like focus, or hybrid navigation
-- constraints: existing brand, component library, accessibility, responsive needs, performance, implementation stack
+- Use authentic product content. Placeholder slogans and generic dashboard data conceal design problems.
+- Keep hierarchy compact. A small, named type system is stronger than ad hoc sizes; sentence case is the default. Reserve monospace or all-caps treatment for genuinely technical or compact numeric content.
+- Use one coherent icon family. Icons need accessible names or adjacent labels when their meaning is not obvious.
+- Make touch targets at least 44 by 44 CSS pixels, including invisible padding, without making every visual control bulky.
+- Align optical shapes by eye where mathematical centering looks wrong. Nested rounded shapes should use concentric radii, not repeated arbitrary values.
+- Avoid generic AI defaults: stacked rounded cards, gratuitous gradients, glowing borders, ornamental pills, oversized hero copy, and decorative status chrome.
+- In dark mode, rebuild contrast relationships rather than invert colors. Use dark-mode variants for raster assets when the light asset does not hold up.
+- Motion needs a purpose, an origin, an interruption behavior, a frequency budget, and a reduced-motion treatment. Fast feedback and perceived speed matter more than spectacle.
 
-Do not ask for aesthetic choices already implied by the product domain or existing design context.
+## Specialist Boundaries
 
-### Design Routes (5 Directions)
+Chiaroscuro remains usable on its own. Delegate only when a specialist skill is installed and the task benefits from depth:
 
-When the user asks for a broad-strokes redesign - a whole page, a full view, a screen, a design system overhaul, or any work that sets visual direction for an entire surface - present **5 visually distinct design routes** before committing to implementation.
+- `foundry` for brand identity and positioning;
+- `componentize` for a reuse and duplication audit;
+- `animate`, `motion`, `review-animations`, `improve-animations`, or `find-animation-opportunities` for focused motion work;
+- `fieldtest` for evidence-heavy browser QA;
+- `apple-design` for Apple-platform craft;
+- `dark-mode-image`, `canonicalize-tailwind`, `markup-from-image`, `prototype`, or `pick-ui-library` for their narrow utilities.
 
-This is the default behavior for page-level and system-level design work. Do not wait for the user to ask for alternatives. Do not skip this step unless:
-- The user explicitly says they already know the direction they want, or
-- The work is a single component, a small fragment, or a contained piece (use the component fast-path instead).
-
-Each route must be genuinely different - not five minor theme tweaks or color swaps on the same layout. Vary across these axes:
-- Typography pairing and hierarchy
-- Palette mood and contrast model
-- Layout structure and density
-- Shape language and radius
-- Surface treatment and depth
-- Motion personality
-- Overall character (e.g., one route could be editorial and typographic, another dense and tool-like, another bold and graphic, another quiet and spacious, another brutalist and high-contrast)
-
-**Route format:**
-
-For each route, provide:
-1. A short evocative name (e.g., "Swiss Utility", "Dark Editorial", "Soft Spatial")
-2. 2-3 sentence personality description
-3. Key decisions: display font, body font, palette direction (warm/cool/neutral, light/dark), density (sparse/balanced/dense), shape language (sharp/soft/mixed), surface model (flat/layered/elevated), and memorable element
-4. A rough wireframe sketch showing how layout differs from the other routes
-
-Keep each route description concise - the goal is quick visual differentiation, not a full spec. The user picks one (or mixes elements), and only then do you develop the full design spec.
-
-### Exploring Alternatives (General)
-
-For smaller decision points within a chosen direction, or when iterating on an existing design:
-
-- Define each decision point with a human-readable label, such as `Hero style`, `Navigation model`, or `Pricing layout`.
-- Unless the user asks for a different count, generate 3-4 options per decision point.
-- When iterating on existing UI, make option 1 the current implementation and label it `(current)`.
-- Write a style definition before implementation for each option: layout, typography, color, spacing, surfaces, shape language, and personality.
-- New options must be faithful executions of their style definition. Existing-design options should vary layout and component choices while still belonging to the current aesthetic.
-- After the user selects an option, remove unselected variant scaffolding and any temporary comments or wrappers created only for comparison.
-
-### In-Browser Comparison (Variant Picker)
-
-When the project runs in a browser and the user wants to compare the design routes or alternatives as *real rendered UI* rather than in chat or ASCII, use the in-browser variant picker to toggle between annotated variants live, then keep only the chosen one.
-
-- Read `references/interface/ui-picker.md` for the full mechanism: `data-uidotsh-pick` / `data-uidotsh-option` annotations, the `contents` class, framework-native toolbar injection, and the select-and-clean-up flow.
-- This is the execution mechanism for the routes and alternatives above - annotate the variants you already generated, let the user pick in-browser, then remove the unselected branches and picker scaffolding.
-- Skip it for ASCII-only exploration, non-browser targets, or when the user already knows the direction.
-
-### 4. Optional Inspiration Research
-
-Use inspiration research when it will sharpen concrete choices, not as procrastination.
-
-- For websites and marketing surfaces, use curated examples such as Siteinspire when available.
-- For app UI, mobile screens, onboarding, dashboards, settings, and interaction patterns, use product UI references such as Mobbin when available.
-- If the user provides a reference URL, screenshot or inspect it immediately when a browser tool is available.
-- Summarize observed typography, color relationships, layout patterns, spacing, and interaction details.
-- Translate useful observations into Tailwind v4 tokens, class shapes, and component patterns.
-
-Do not copy another design. Use references to identify reusable structural ideas and visual constraints.
-
-### 5. Make Concrete Visual Decisions
-
-Produce specific decisions, not mood-board language.
-
-Include:
-
-- typography: exact display/body/mono font choices and where each is used. Consult fontsinuse.com and typewolf.com to validate pairings with real-world evidence before committing.
-- color: Tailwind v4 `@theme` tokens in OKLCH, including neutrals, surfaces, text, accents, hover states, and destructive states
-- spacing: base unit, section gaps, component padding, layout rhythm
-- surface system: canvas, surface, raised, overlay, borders, shadows, radius scale
-- controls: button heights, icon sizing, input/select treatment, focus and disabled states
-- layout: grid, asymmetry, density, scrolling model, mobile adaptation, state placement
-- motion: where motion clarifies interaction, timing, easing, reduced-motion behavior
-- content/state design: empty, loading, error, success, dense data, long text, and user-generated content behavior
-- abstraction: user-facing labels, navigation, states, and workflows that describe what people are trying to do, not how the software is implemented
-
-Never:
-
-- Instrument Serif as a display or brand font - it is the number one AI-slop serif, used on every generated landing page
-- purple-to-blue gradients as a default flourish
-- default system fonts as the design answer
-- white background plus gray cards as the whole interface
-- UI furniture: chrome, decorations, separator bars, visual effects, or repeated wrappers that exist only to make the screen look more designed
-- exposed internals: raw schema fields, API names, prompt/agent mechanics, "step 1/2/3" workflow scaffolds, debug statuses, or system terminology unless the target user explicitly needs them
-- uppercase wide-tracked eyebrows on sans/serif headings
-- icon-only controls without accessible names
-
-Mono small-caps discipline:
-
-- Mono small-caps (`font-variant-caps: all-small-caps` on a monospace face, or uppercase monospace at reduced size) is a refined, high-signal typographic treatment. It is not a default label style.
-- Appropriate uses: numeric metadata (`v2.4.1`, `$49/mo`, `3 min read`), short data-adjacent labels in dense UI (`ID`, `STATUS`, `ETA`), and sparse section markers where a quiet structural cue is needed (typically one per screen, not one per section).
-- Inappropriate uses: every section eyebrow, every card label, every sidebar heading, every tag, every piece of metadata. When mono small-caps appear on more than a few elements per screen, the treatment loses its signal and becomes wallpaper.
-- Before applying mono small-caps, ask: is this label numeric or data-like? Is it short (1-3 words)? Would sentence-case in the body font at a lighter weight work just as well? If the answer to the last question is yes, use sentence-case.
-- The test: if you removed all mono small-caps from the screen, would the hierarchy collapse? If not, most of them are decorative.
-
-Avoid:
-
-- generic centered hero plus cards layout unless the product truly needs it
-- decorative cards inside cards
-
-### 6. Wireframe
-
-Create a low-fidelity structure before implementation.
-
-Use ASCII wireframes from `references/ascii-ui-patterns.md`.
-
-Include:
-
-- desktop structure
-- mobile structure for responsive work
-- primary interactions
-- at least one non-happy state for app UI: empty, loading, error, or permission denied
-
-Ask whether the structure feels right before writing a final design spec when the user is actively collaborating.
-
-### 7. Write the Change Spec
-
-Translate the direction into measurable implementation changes. Use the Change Spec skeleton in `references/spec-templates.md`.
-
-Rules:
-
-- Use specific values, tokens, class shapes, and component names.
-- Reference the local rule or reference file that justifies each meaningful change.
-- If the spec only changes padding, spacing, or copy, stop and deepen the design.
-
-### 8. Save the Design Spec
-
-For substantial work, create `docs/design/specs/design-[name].md`.
-
-Include:
-
-- aesthetic direction and tone
-- target user and surface type
-- typography choices
-- OKLCH Tailwind token palette
-- spacing and radius scale
-- surface and depth system
-- canonical button, card/panel, input/select, and data-row patterns
-- desktop and mobile wireframes
-- state designs
-- implementation notes tied to the project's component system
-- anti-patterns to avoid
-- abstraction rules: user-facing language, hidden implementation details, and what can be progressively disclosed
-- complexity guardrails
-- interactive state requirements
-- contrast and accessibility requirements
-- verification checklist
-
-Use the compact Design Spec skeleton in `references/spec-templates.md`.
-
-In complexity guardrails, name concrete limits for the implementation. Every element must earn its place - cut wrapper elements with no purpose, cards inside cards, excessive nesting for simple content, decorative chrome, too many font sizes, too many accent colors, arbitrary spacing values, mono small-caps used as a general label style rather than for numeric or data-adjacent content, and Tailwind class strings that should become reusable components. Write the verification checklist and every guardrail so an implementing agent can check compliance by counting or inspecting, not by taste.
-
-In abstraction rules, name which internal details must be hidden, translated, or deferred. Replace implementation-first copy with domain language: `API key created` can become `Connection ready`; `vector index sync failed` can become `Search is still updating`; `agent step running` can become `Checking the next section`. Keep debug details available only behind explicit affordances when the user needs diagnosis.
-
-In interactive states, specify expectations for default, hover, focus, active, disabled, loading, error, and success states when the UI includes controls or forms.
-
-### 9. Critique Before Handoff
-
-Review the draft like a design lead:
-
-- Does every visible element earn its place? For each panel, badge, divider, label, shadow, and wrapper: what does it clarify? If nothing, cut it.
-- Does the layout have rhythm, or is every block the same weight?
-- Is priority clear from proportion, spacing, contrast, and placement?
-- Does the design have one memorable element that is actually visible - and does that element serve comprehension, not just visual interest?
-- Would a real user in this product domain find it plausible?
-- Can the implementation be built cleanly with the target component system?
-- Are there any cards, wrappers, arbitrary values, or decorative fragments that exist only to make the screenshot feel busier?
-- Are mono small-caps limited to numeric content and short data labels, or have they spread to every label on the screen?
-- Does any visible text expose the database, API, prompt, model, chain, agent, workflow engine, or internal state instead of explaining the user's task?
-- Would a non-engineer target user understand what to do without reading implementation vocabulary?
-
-Revise the spec before handoff if any answer is weak.
-
-### 10. Verify Against Red Flags
-
-The design is not complete until these are true:
-
-- zero default-font-as-design decisions
-- zero purple-blue gradient defaults
-- zero generic admin-template or AI landing-page feel
-- zero repeated uppercase tracked eyebrows on sans/serif headings
-- zero inaccessible icon-only controls
-- zero UI furniture - every visible element passes the "earn its place" test: it serves clarity, utility, hierarchy, affordance, state, navigation, or domain meaning
-- zero unnecessary system leakage in visible labels, navigation, empty states, errors, or progress states
-- zero regions carrying their meaning in prose where a control, table, chart, or visualisation belongs
-- zero document-scroll layouts where the surface is a tool
-- layout frame and content start positions identical across every view
-- text styles across the surface count five or fewer, with no inline `text-*` sizing
-- zero 16:9 images; square or landscape only
-- zero internal vocabulary in visible copy
-- mono small-caps used only for numeric content and short data-adjacent labels, not sprayed across section eyebrows, card labels, sidebar headings, or general metadata
-- all critical states accounted for
-- contrast requirements named
-- mobile and desktop structures both considered
-- implementation notes are specific enough to guide code
-
-### 11. Continue Into Implementation When Asked
-
-If the user asked to design and implement in the same request:
-
-- Create the smallest useful spec first.
-- Implement against the project conventions immediately after the spec.
-- Visually verify the rendered result when a browser or screenshot tool is available.
-- Keep the final answer focused on the implemented UI and checks run, not the full design process.
-
-## Polish Mode Workflow
-
-Use polish mode when UI code already exists and the request is cleanup, componentization, deduplication, or visual tightening.
-
-### 1. Scan Current State
-
-Look for:
-
-- large components with mixed responsibilities
-- repeated section shells, heading groups, cards, controls, and empty states
-- Tailwind class strings that encode reusable patterns inline
-- components that bake in margins instead of accepting layout from callers
-- dead wrapper elements
-- duplicate component names or near-identical components
-- inconsistent button, input, card, and surface treatments
-
-Search for existing shared components before proposing new ones.
-
-### 2. Extract and Consolidate
-
-Keep changes behavior-preserving unless the user asked for redesign.
-
-- Split large components by domain role, not by arbitrary JSX chunks.
-- Extract reusable UI pieces only when duplication or complexity justifies it.
-- Prefer existing design-system primitives.
-- Ensure reusable React components accept `className` when local conventions expect it.
-- Keep layout responsibility with the caller where possible.
-- Never bake margins into reusable components; apply outer spacing at the call site.
-- Use `clsx` or the project's existing class-merge helper when components need conditional classes.
-- Extract form controls by HTML element, not by use case: one `Input` for text/email/password/etc., one `Select`, one `Textarea`. Do not create `EmailInput`/`PasswordInput` variants unless the domain behavior is genuinely different.
-- When two or more elements share structure and styling but differ only by labels, placeholders, icons, or types, extract one prop-driven component.
-- After extracting, scan again for repeated section containers, heading groups, card shells, button styles, and form controls.
-- Avoid introducing compatibility shims or old/new comments.
-
-### 3. Clean Tailwind Authoring
-
-Read `references/interface/tailwind-authoring.md`.
-
-- Prefer tokens and utilities over bespoke CSS.
-- Remove conflicting utilities.
-- Replace arbitrary values with scale values when the exact value is not meaningful.
-- Consolidate repeated class shapes into components or small helpers only when it reduces real duplication.
-- When available, use `npx @tailwindcss/cli canonicalize` to normalize class lists. Pass the project's CSS entry file with `--css path/to/input.css` when custom Tailwind v4 tokens or utilities are required for accurate output. If the subcommand is unavailable, use the sibling `canonicalize-tailwind` skill, or normalize manually per `references/tailwind-authoring.md`.
-- Use structured output such as `--format json` or `--format jsonl` when processing many class strings.
-
-### 4. Visual De-Generification (When In Scope)
-
-When the request is "make it look less AI" rather than structural cleanup, work in max-impact/min-risk order, verifying after each step:
-
-1. font swap, 2. palette cleanup, 3. hover/focus/active states, 4. layout and spacing (grid, max-width, rhythm), 5. replace cliché components, 6. add missing empty/loading/error states, 7. type-scale and spacing polish.
-
-Check `references/frontend-design.md` (AI slop checks, content authenticity) for what to hunt, and stay within the existing stack - no rewrite.
-
-### 5. Dark Mode (When In Scope)
-
-When the request includes dark mode - adding it, improving an existing treatment, or converting a light-only UI - read `references/interface/dark-mode.md` and run a dedicated pass:
-
-- Re-derive colors to preserve light-mode contrast relationships; do not invert.
-- Default to `prefers-color-scheme` via Tailwind's `dark:` variant; add a manual toggle only if the user asks.
-- Remove shadows (`dark:shadow-none`) and lean on the surface ladder and faint inset rings for separation.
-- Audit raster images and external SVGs for dark variants. Chiaroscuro identifies and wires them in; generating raster assets is a handoff to an image-generation workflow (out of scope here).
-
-### 6. Verify
-
-Run scoped checks appropriate to the changed project:
-
-- typecheck
-- lint or formatter
-- package/app tests
-- browser screenshot review for user-facing UI
-
-Report any checks that could not be run.
-
-## Output
-
-For design work, end with:
-
-- where the design spec was saved, or the inline spec
-- the chosen visual direction
-- the key implementation constraints
-- unresolved user decisions, if any
-
-For polish work, end with:
-
-- changed files
-- extracted components or consolidated patterns
-- checks run
-- remaining visual or architectural risks
+Do ordinary end-to-end interface work here. Do not force a specialist dependency, a saved design spec, a wireframe, or an approval pause unless the selected mode or the user requires it.

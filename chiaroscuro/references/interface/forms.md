@@ -104,15 +104,15 @@ To vertically center a checkbox/radio with adjacent text, wrap it in an element 
 
 ## Form Behavior
 
-- MUST: Wrap inputs in `<form>` for Enter submission
-- MUST: ⌘/Ctrl+Enter submits `<textarea>`; Enter adds newline
+- MUST: Preserve native form submission: Enter submits from single-line fields when the form semantics allow it, and Enter inserts a newline in a `<textarea>`.
+- SHOULD: Add ⌘/Ctrl+Enter submission for a `<textarea>` only when it matches the product convention, is discoverable, and invokes the same form submit path.
 - MUST: Keep submit enabled until request starts, then disable + show spinner + keep original label
-- MUST: Use idempotency keys on submit to prevent duplicate requests
+- MUST: Make consequential or retryable submissions idempotent at the appropriate system boundary; a disabled button alone is not duplicate-request protection.
 - MUST: Accept free text input; validate after, don't block typing
-- MUST: Allow submitting incomplete forms to surface validation errors
-- MUST: Warn on unsaved changes before navigation
+- SHOULD: Let submission reveal a complete, actionable validation summary. Early field validation may supplement it without blocking ordinary typing.
+- SHOULD: Warn before abandoning meaningful unsaved work; do not interrupt navigation for trivial or recoverable state.
 - MUST: Allow pasting (never block paste)
-- MUST: Trim whitespace from values
+- SHOULD: Normalize whitespace only where it is not meaningful. Preserve intentional whitespace in passwords, code, prose, and domain values that allow it.
 - MUST: Hydration-safe inputs - no lost focus or value after hydration
 - MUST: Compatible with password managers and 2FA; allow pasting one-time codes
 - SHOULD: Prefill with user data when available

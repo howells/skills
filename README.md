@@ -38,7 +38,7 @@ npx skills@latest add howells/skills --skill aperture --agent codex --global
 
 ### `chiaroscuro`
 
-Design distinctive Tailwind v4 interfaces: visual direction, wireframes, `@theme` tokens, responsive layouts, dark mode, and polish. Use when creating or restyling a screen, page, app, or component whose visual character matters. For brand identity use `foundry`; for reuse audits use `componentize`.
+Design, build, restyle, and polish user-facing web interfaces end to end with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for components, screens, pages, apps, dark mode, responsiveness, or UI that should feel complete. For brand identity use `foundry`; for reuse audits use `componentize`.
 
 Install globally for Codex:
 

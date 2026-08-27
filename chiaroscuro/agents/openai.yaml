@@ -1,4 +1,4 @@
 interface:
   display_name: "Chiaroscuro"
-  short_description: "Distinctive Tailwind v4 UI direction, polish, and dark mode"
-  default_prompt: "Use $chiaroscuro to create a distinctive Tailwind v4 design direction for this interface without UI furniture or system leakage."
+  short_description: "End-to-end UI design, implementation, and polish"
+  default_prompt: "Use $chiaroscuro to take this interface from request to a distinctive, responsive, accessible, browser-verified Tailwind v4 implementation without UI furniture or system leakage."

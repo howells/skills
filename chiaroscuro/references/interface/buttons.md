@@ -4,9 +4,9 @@ Buttons define action hierarchy. Treat them as deliberate system primitives, not
 
 ## Sizing
 
-- MUST: Provide at least three control heights across the system: compact, default, and prominent.
+- SHOULD: Define only the control heights the product needs. Most systems benefit from compact, default, and prominent roles, but a smaller product need not manufacture all three.
 - SHOULD: Use `min-h-11` or larger for primary actions on touch surfaces.
-- MUST: Hit targets meet the canonical touch-target spec (see `interactions.md`: 48×48px on coarse pointers, 24px on fine pointers).
+- MUST: Hit targets meet the canonical touch-target guidance (see `interactions.md`: at least 44×44 CSS pixels on coarse pointers, including invisible padding).
 - SHOULD: Use horizontal padding that matches the control height (`px-3` / `px-4` / `px-5`), not oversized pill padding by default.
 - MUST: Keep button labels on one line unless the layout explicitly supports wrapped CTAs.
 

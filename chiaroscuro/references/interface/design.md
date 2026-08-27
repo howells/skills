@@ -2,7 +2,7 @@
 
 ## Shadows
 
-- SHOULD: Layer shadows (ambient + direct): `shadow-[0_2px_4px_rgba(0,0,0,0.05),0_12px_24px_rgba(0,0,0,0.1)]`
+- MAY: Layer ambient and direct shadows when the product's elevation model benefits from it. Derive the values from the surface, scale, and background rather than copying a universal recipe.
 - SHOULD: Prefer `box-shadow` over `border` for subtle edges - shadows blend with backgrounds and avoid subpixel rendering issues:
 
 ```css
@@ -18,7 +18,7 @@ border: 1px solid rgb(0 0 0 / 0.05);
 
 ## Borders
 
-- SHOULD: Hairline borders on retina:
+- MAY: Use device-pixel-aware hairlines when the rendering remains crisp across the target browsers:
 
 ```css
 :root {
@@ -29,12 +29,12 @@ border: 1px solid rgb(0 0 0 / 0.05);
 
 ## Radii
 
-- SHOULD: Nested radii: `innerRadius = outerRadius - padding`
+- SHOULD: Derive nested radii concentrically (`innerRadius ≈ outerRadius - inset`) and adjust optically when the geometry looks uneven.
 
 ## Contrast
 
-- MUST: APCA contrast compliance ([apcacontrast.com](https://apcacontrast.com))
-- MUST: Increase contrast on `:hover/:active/:focus`
+- MUST: Meet the project's adopted accessibility contrast standard; use WCAG requirements as the shipping floor unless the project specifies a stricter method. APCA can be an additional design diagnostic, not an assumed compliance standard.
+- MUST: Keep `:hover`, `:active`, and `:focus` states at least as legible as the default while making the state perceptible.
 - MUST: Color-blind friendly chart palettes
 
 ## Gradients
@@ -55,7 +55,7 @@ border: 1px solid rgb(0 0 0 / 0.05);
 
 ## Focus
 
-- NEVER: Colored focus outlines on general interactive elements (use grey/black/white only). Exception: form controls (checkboxes, radios, toggles, inputs) may use a brand-colored `focus-visible` ring where it aids affordance - see `forms.md`.
+- MUST: Focus indicators reach sufficient contrast against adjacent colors and remain coherent with the system. Neutral or brand-colored indicators are both valid when visible.
 
 ## Color Restraint
 
@@ -87,7 +87,7 @@ Concrete patterns that signal AI-generated design. Grep-friendly - each is a spe
 | Uniform border-radius | Same `rounded-*` on every element | AI applies one radius globally instead of varying by context |
 | White cards on white bg | Cards with `bg-white` on a `bg-white` or `bg-gray-50` parent | Creates a flat, lifeless hierarchy with no real depth |
 | Centered everything | Every section center-aligned with `text-center mx-auto` | AI defaults to center alignment; real layouts use asymmetry |
-| System font stack | No custom fonts loaded; falls back to `system-ui` or `sans-serif` | Zero typographic personality |
+| Unconsidered font fallback | A generic stack is used accidentally and conflicts with the intended voice | Typographic character should be chosen; a deliberate system stack can still be right for product UI |
 
 ### Code Tells
 

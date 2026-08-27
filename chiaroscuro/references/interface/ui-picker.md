@@ -1,93 +1,89 @@
-# Interface: In-Browser Variant Picker
+# Interface: Page-Direction Picker
 
-Covers: previewing and choosing between multiple UI variants live in the browser using a picker toolbar.
+Use this only for Chiaroscuro's page-directions mode: a complete route, page, or full-screen workflow without a settled direction. It owns generation, rendered comparison, selection, fallback, and cleanup.
 
-Use this when the design routes or alternatives from the SKILL workflow should be compared *in the running app* rather than in chat or ASCII. The picker lets the user toggle between annotated variants in the real rendered UI, then keeps only the chosen one.
+## The Set
 
-## When To Use
+Produce six rendered states of the same page:
 
-- The project runs in a browser and the user wants to see real, rendered variants side by side.
-- You are presenting alternatives for a hero, section, layout, or component and want a live A/B/C toggle.
+1. the current page, labeled `Current`; for a new route with no prior page, a conservative baseline built from the existing product system;
+2. five new, genuinely different directions.
 
-Skip it for ASCII-only exploration, non-browser targets, or when the user already knows the direction.
+All six share content, data, state, events, validation, and downstream behavior. Do not fork API calls, data loaders, mutations, or business logic to make directions. Change presentation structure, hierarchy, typography, color, density, and interaction treatment.
 
-## Reset First
+Every direction must communicate the complete page hierarchy and core path. It may defer production hardening until selection, but it cannot be a fragment, mood board, or decorative hero standing in for the page.
 
-If the picker was used earlier in the same project, clean up before a new round:
+Name directions by their visible idea, not `A`, `B`, or abstract adjectives. The labels shown in the picker must match the labels used in the selection question.
 
-- Use the currently selected/visible UI as the baseline.
-- Remove stale artifacts: old unselected branches, leftover `hidden` attributes, picker wrappers no longer needed.
-- Keep exactly one toolbar script tag if still comparing; remove duplicates.
-- Each area must be back to one clean implementation before generating new options.
+## Start Clean
 
-## Annotate Variants
+Before a new round:
 
-Do all variant work in the existing source files - never a standalone preview file.
+- use the currently selected page as the baseline;
+- remove stale rejected branches, wrappers, attributes, `hidden` states, scripts, imports, and suppressions;
+- confirm the baseline path still works;
+- keep a single source for shared content and behavior.
 
-1. Give each decision a human-readable label (`Hero style`, `Pricing layout`).
-2. Wrap the decision: `data-uidotsh-pick="Human readable label"`.
-3. Wrap each option: `data-uidotsh-option="Human readable option"`.
-4. Apply the Tailwind `contents` class to wrapper and option nodes so they don't affect layout.
-5. Exactly one option is visible; all others get `hidden`.
-6. When the current implementation is included, it must be option 1 and carry `(current)` in its label.
+## Mark Up the Directions
 
-```html
-<div data-uidotsh-pick="Hero style" class="contents">
-  <div data-uidotsh-option="Minimal (current)" class="contents">...</div>
-  <div data-uidotsh-option="Bold" class="contents" hidden>...</div>
-  <div data-uidotsh-option="Editorial" class="contents" hidden>...</div>
-</div>
-```
+Keep direction code in the existing route and component structure. A local presentation switch is acceptable; a standalone fake preview app is not.
+
+Use the picker attributes where the framework can safely render all directions in one page:
 
 ```tsx
-<div data-uidotsh-pick="Hero style" className="contents">
-  <div data-uidotsh-option="Minimal" className="contents">...</div>
-  <div data-uidotsh-option="Bold" className="contents" hidden>...</div>
+<div data-uidotsh-pick="Page direction" className="contents">
+  <div data-uidotsh-option="Current" className="contents">...</div>
+  <div data-uidotsh-option="Working ledger" className="contents" hidden>...</div>
+  <div data-uidotsh-option="Material index" className="contents" hidden>...</div>
 </div>
 ```
 
-## Inject The Toolbar (once)
+- Apply `contents` only when it preserves valid semantics and layout. Otherwise place the attributes on existing suitable elements.
+- Exactly one direction begins visible.
+- Keep IDs unique even while hidden alternatives are mounted.
+- Do not duplicate expensive effects merely to keep hidden directions alive. Lift behavior above the presentation choice or render the active presentation from shared state.
 
-After variants exist, inject the script once in the shared root layout, idempotently - never in leaf components, never duplicated. Prefer framework-native script APIs.
+If mounting every direction would violate framework semantics, create a development-only presentation switch at the route boundary. Preserve the same labels and cleanup contract.
 
-- **Next.js**: `next/script` (a plain `<script>` in JSX can fail to execute until a full refresh in dev).
+## Inject the Picker Safely
 
-  ```tsx
-  import Script from 'next/script'
+When using the `data-uidotsh-*` mechanism, load `https://ui.sh/ui-picker.js` exactly once in the shared root with the framework's supported script facility:
 
-  export default function RootLayout({ children }: { children: React.ReactNode }) {
-    return (
-      <html lang="en">
-        <body>
-          {children}
-          <Script src="https://ui.sh/ui-picker.js" />
-        </body>
-      </html>
-    )
-  }
-  ```
+- Next.js: `next/script` in the root layout.
+- TanStack Router: the root route's supported head/script configuration.
+- Nuxt: `useHead` in `app.vue` or a shared layout.
+- Vite, Laravel, or plain HTML: once in the shared document immediately before `</body>`.
 
-- **TanStack**: inject via the `scripts` array in the `head` option of `createRootRoute` in `src/routes/__root.tsx` - not a raw `<script>` in markup.
-- **Nuxt**: `useHead` in `app.vue` or a layout file.
-- **Vite / Laravel / plain HTML**: inject once before `</body>` in `index.html` / `resources/views/layouts/app.blade.php` / the shared root shell.
+Do not add a raw script to a leaf component. Make injection idempotent. If a content-security policy or offline environment blocks the script, use the route-level switch or the fallback below.
 
-  ```html
-  <script src="https://ui.sh/ui-picker.js"></script>
-  ```
+## Review Before Asking
 
-## Choose And Finalize
+Exercise every direction in the running app before presenting it:
 
-1. Let the user preview in-browser. If the toolbar can't load (CSP/offline), skip preview and ask for the selection in chat using the labels.
-2. Ask for the selection using a structured question tool if one is available (one clear question per decision, option labels matching the picker labels, custom input left enabled); otherwise ask in chat with the labels. Keep the `(current)` option first when present.
-3. After selection:
-   - Keep only selected variants; remove unselected ones and now-unneeded picker wrapper attributes, `hidden` attributes, and empty wrappers.
-   - Remove temporary comments/suppressions used only for scaffolding.
-   - During cleanup, remove picker script usage *first*, then any now-unused script imports (ideally in one file edit) so intermediate saves never leave an invalid state.
-   - Keep a single toolbar script tag if another comparison round is coming; otherwise remove the script and all remaining picker-only scaffolding.
+- core hierarchy and path are visible;
+- content and behavior match the baseline;
+- desktop and mobile are legible;
+- no direction creates obvious overflow, duplicate IDs, broken semantics, console errors, or failed requests;
+- labels accurately describe the rendered choices.
 
-## Verify
+This is exploration, so avoid polishing six production implementations. Do enough to make the choice real and comparable.
 
-- Check desktop and mobile.
-- No broken semantics, no duplicate `id`s across surviving markup.
-- No stale picker artifacts remain unless intentionally staging a fresh round.
-- Run lint/typecheck/tests when available.
+## One Selection Pause
+
+After browser review, pause exactly once. Present all five new directions and `Current` in one structured selection. Use a native structured-question tool only when it can represent every choice; otherwise ask one concise numbered question in chat. Do not split selection across questions or ask a chain of aesthetic questions before or after it.
+
+If the app cannot run, present screenshots when possible. If neither preview nor screenshots are possible, present concise descriptions of all six directions in the same structured selection. Keep implementing after the user chooses.
+
+## Finalize and Remove the Picker
+
+After selection:
+
+1. keep the selected presentation;
+2. remove the other five directions;
+3. remove picker scripts before removing now-unused script imports;
+4. remove all `data-uidotsh-pick`, `data-uidotsh-option`, `hidden`, temporary switch state, wrappers, comments, and suppressions;
+5. remove dead styles, components, imports, and dependencies;
+6. production-harden the selected path;
+7. run browser verification again.
+
+Search for `uidotsh`, direction labels, temporary switch names, and picker-script URLs. Final source must contain no rejected code or comparison scaffolding.

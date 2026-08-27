@@ -1,6 +1,6 @@
 # Spec Templates
 
-Copy-ready skeletons for the two artifacts chiaroscuro produces. Load when writing a Change Spec or a Design Spec; the workflow rules for each live in `SKILL.md`.
+Copy-ready skeletons for optional design artifacts. Load only when the user or project asks for a Change Spec or Design Spec; ordinary implementation does not produce either automatically.
 
 ## Change Spec
 
@@ -36,7 +36,7 @@ Translate the direction into measurable implementation changes. Use specific val
 
 ## Design Spec
 
-For substantial work, create `docs/design/specs/design-[name].md` using this compact structure. Section-by-section guidance (what belongs in complexity guardrails, abstraction rules, and interactive states) is in `SKILL.md`.
+When a saved Design Spec is required, follow the project's documentation location or use `docs/design/specs/design-[name].md` when no convention exists. Adapt this compact structure to the work rather than filling sections that do not apply.
 
 ```markdown
 # Design Direction: [Name]

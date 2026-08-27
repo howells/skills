@@ -1,70 +1,67 @@
-# Interface Rules
+# Interface Reference-File Map
 
-UI/UX guidelines for building polished, accessible interfaces.
+Read this after selecting Chiaroscuro's operating mode. Open only the files in the relevant branch; this is a router, not a load order.
 
-## Rules
+## Product Shape
 
-| File | Description |
-|------|-------------|
-| [design.md](design.md) | Visual design principles |
-| [colors.md](colors.md) | Color palettes, shade scales, accessibility |
-| [spacing.md](spacing.md) | Spacing system, layout methodology |
-| [typography.md](typography.md) | Type hierarchy and readability |
-| [layout.md](layout.md) | Layout patterns |
-| [tailwind-authoring.md](tailwind-authoring.md) | Tailwind class-level authoring discipline |
-| [buttons.md](buttons.md) | Button sizing, hierarchy, focus, touch targets |
-| [surfaces.md](surfaces.md) | Surface hierarchy, cards, dividers |
-| [sections.md](sections.md) | Section composition and cross-section consistency |
-| [forms.md](forms.md) | Form design and validation |
-| [interactions.md](interactions.md) | User interaction patterns |
-| [animation.md](animation.md) | Motion and transitions |
-| [performance.md](performance.md) | UI performance optimization |
-| [marketing.md](marketing.md) | Marketing page guidelines |
-| [app-ui.md](app-ui.md) | App UI guidelines (dashboards, SaaS, data tools) |
-| [responsive.md](responsive.md) | Responsive design, input detection, safe areas, tactical breakpoint rules |
-| [dark-mode.md](dark-mode.md) | Dark-mode color, surfaces, shadows, images, SVGs |
-| [content-accessibility.md](content-accessibility.md) | Accessible content |
-| [ui-picker.md](ui-picker.md) | In-browser variant picker for live A/B comparison |
+| Work | Read |
+| --- | --- |
+| App, dashboard, tool, or workflow | [app-ui.md](app-ui.md) |
+| Marketing site or public landing page | [marketing.md](marketing.md) |
+| Page-scale direction exploration | [ui-picker.md](ui-picker.md) |
+| Behavioral heuristics or a contested flow | [ux-laws.md](../ux-laws.md) |
 
-## Component References
+## Visual System
 
-Load only the ones present in the work. Small components are grouped into four files; open the file and jump to the `##` anchor named after the component.
+| Need | Read |
+| --- | --- |
+| Color roles and accessible palettes | [colors.md](colors.md) |
+| Type hierarchy and readable measure | [typography.md](typography.md) |
+| Selecting a typeface | [font-recommendations.md](../font-recommendations.md) |
+| OpenType and typographic detail | [typography-opentype.md](../typography-opentype.md) |
+| Spacing rhythm | [spacing.md](spacing.md) |
+| Grids, shells, clipping, and alignment | [layout.md](layout.md) |
+| Surface hierarchy and dividers | [surfaces.md](surfaces.md) |
+| Visual composition and restraint | [design.md](design.md) |
+| Tailwind class authoring | [tailwind-authoring.md](tailwind-authoring.md) |
+| An authorized Tailwind v4 migration | [tailwind-v4.md](../tailwind-v4.md) |
 
-| File | Covers (anchors) |
-|------|-------------|
-| [marketing-components.md](marketing-components.md) | Landing Pages, Headers, Footers, Heading Groups, Feature Lists, Testimonials, Team Sections, Logo Clouds, Login Pages |
-| [data-components.md](data-components.md) | Tables, Dashboards, Navigation, Pagination, Description Lists |
-| [primitives.md](primitives.md) | Badges, Avatars, Icons, Images, SVG, Border Radius |
-| [type-content.md](type-content.md) | Copywriting, Prose Content, Custom Fonts |
-| [pricing-cards.md](pricing-cards.md) | Pricing tiers, emphasized plans |
+## Components
 
-## Related References
+Open only the file containing a component present in the work.
 
-| Reference | Description |
-|-----------|-------------|
-| [design-philosophy.md](../../references/design-philosophy.md) | Timeless design principles |
-| [frontend-design.md](../../references/frontend-design.md) | Fonts, component checklist, anti-patterns |
-| [ascii-ui-patterns.md](../../references/ascii-ui-patterns.md) | ASCII wireframe patterns |
-| [tailwind-v4.md](../../references/tailwind-v4.md) | Tailwind v4 migration guide |
-| [brand-identity.md](../../references/brand-identity.md) | Brand and identity typography |
-| [typography-opentype.md](../../references/typography-opentype.md) | OpenType features and fine typography |
-| [ux-laws.md](../../references/ux-laws.md) | UX heuristics and laws |
+| Components | Read |
+| --- | --- |
+| Buttons and action hierarchy | [buttons.md](buttons.md) |
+| Forms and validation | [forms.md](forms.md) |
+| Tables, dashboards, navigation, pagination, description lists | [data-components.md](data-components.md) |
+| Headers, footers, heading groups, features, testimonials, teams, logos, login | [marketing-components.md](marketing-components.md) |
+| Pricing tiers | [pricing-cards.md](pricing-cards.md) |
+| Badges, avatars, icons, images, SVG, radii | [primitives.md](primitives.md) |
+| Copy, prose, and custom fonts | [type-content.md](type-content.md) |
+| Section composition | [sections.md](sections.md) |
 
-## Quick Reference
+## Behavior and Quality
 
-### When Building UI
+| Need | Read |
+| --- | --- |
+| Interactive states, focus, and feedback | [interactions.md](interactions.md) |
+| Motion decisions and implementation contract | [animation.md](animation.md) |
+| Breakpoints, input modes, safe areas | [responsive.md](responsive.md) |
+| Dark-mode surfaces, media, and contrast | [dark-mode.md](dark-mode.md) |
+| Content, semantics, keyboard, and accessibility | [content-accessibility.md](content-accessibility.md) |
+| Rendering and perceived performance | [performance.md](performance.md) |
 
-1. Check `design.md` for visual principles
-2. Check `colors.md` for palette rules
-3. Check `spacing.md` for spacing methodology
-4. Check `typography.md` for text styling
-5. Check `tailwind-authoring.md` before composing class strings
-6. Check `buttons.md` / `surfaces.md` / `sections.md` when those patterns appear
-7. Check `animation.md` before adding motion
+## Design-Only Artifacts
 
-### Accessibility Minimums
+Load these only when the user asked for a design artifact rather than implementation.
 
-- 4.5:1 contrast for normal text
-- 3:1 contrast for large text
-- Never rely on color alone
-- Honor `prefers-reduced-motion`
+| Artifact | Read |
+| --- | --- |
+| Design principles | [design-philosophy.md](../design-philosophy.md) |
+| ASCII wireframe | [ascii-ui-patterns.md](../ascii-ui-patterns.md) |
+| Design spec | [spec-templates.md](../spec-templates.md) |
+
+## Baseline Quality
+
+Every branch still inherits Chiaroscuro's entrypoint: authentic content, stable responsive geometry, keyboard and pointer operation, visible focus, inclusive touch targets, accessible semantics, dark-mode integrity, purposeful motion, real browser exercise, and cleanup of temporary direction scaffolding.

@@ -1,123 +1,65 @@
 # Interface: Performance
 
-## Principles
+Performance is part of finish: input should acknowledge immediately, content should not jump, and the interface should remain usable while work is pending. Measure the real route before prescribing a fix.
 
-- MUST: Measure reliably (disable extensions that skew runtime)
-- MUST: Track re-renders (React DevTools/React Scan)
-- MUST: Batch layout reads/writes - avoid reflows/repaints
-- MUST: Mutations (`POST/PATCH/DELETE`) < 500ms
-- MUST: Virtualize large lists (`@tanstack/react-virtual` or `virtua`)
-- MUST: Preload above-fold images; lazy-load rest
-- SHOULD: Test iOS Low Power Mode and macOS Safari
-- SHOULD: Prefer uncontrolled inputs; make controlled loops cheap
+## Establish the Problem
 
-## CSS
+- Reproduce with representative data and the actual device or browser class at risk.
+- Separate network latency, server work, JavaScript execution, rendering, image cost, and animation cost.
+- Record the visible symptom and a measurement before optimizing.
+- Disable extensions or development instrumentation when they distort the result, but keep a normal development pass for framework warnings and rerenders.
 
-Decorative elements are doubly costly - they are UI furniture AND performance drains. Every blur, shadow, gradient, and backdrop effect that doesn't serve clarity, hierarchy, or state is a wasted frame budget. Remove the element before optimizing it.
+Do not adopt fixed latency budgets or a virtualization library without product context. The useful threshold is the one at which this task loses continuity or blocks input.
 
-- SHOULD: Avoid large `blur()` values (GPU-heavy)
-- SHOULD: Replace blurred rectangles with radial gradients
-- SHOULD: `transform: translateZ(0)` sparingly for GPU layer promotion
-- SHOULD: Toggle `will-change` only during scroll, then remove
-- SHOULD: Audit decorative `backdrop-blur-*`, `shadow-*`, and `bg-gradient-*` - if they don't earn their place functionally, removal is the best optimization
+## Stable Rendering
 
-### CSS Variables
+- Reserve intrinsic space for images, media, async controls, validation, and loading content.
+- Keep button width and labels stable while submitting; expose pending state with `aria-busy` where appropriate.
+- Match skeleton geometry to final content and avoid indefinite shimmer as decoration.
+- Use tabular figures where changing numbers would shift adjacent content.
+- Preserve focus and user input through hydration and async updates.
+- Prevent a flash of the wrong theme or persisted state with server-provided state, an early bootstrap, or CSS that does not hide usable content indefinitely.
 
-- NEVER: Animate global CSS variables - triggers style recalc on ALL descendants (F-Tier)
-- CSS variables ALWAYS trigger paint, even inside `opacity: var(--x)`
-- If unavoidable, use `@property { inherits: false }` to prevent cascade
+Persist only state that should survive. Do not put every tab, accordion, or toggle in storage by default; decide whether it belongs in the URL, server state, local storage, session storage, or nowhere.
 
-### Thrashing (F-Tier)
+## Layout and Rendering Work
 
-- NEVER: Interleave DOM reads and writes (read-write-read-write)
-- MUST: Batch all reads, then all writes
+- Batch related DOM reads before writes when imperative code is unavoidable.
+- Avoid work proportional to the whole document for a local interaction.
+- Virtualize only when rendering the actual collection is measurably costly and accessibility, search, print, and variable-height behavior remain sound.
+- `content-visibility: auto` can defer off-screen rendering for suitable long sections; provide a realistic `contain-intrinsic-size` and test scroll anchoring.
+- Large blurs, filters, shadows, masks, and many promoted layers can be expensive. Remove unearned effects first, then measure retained ones.
+- Use `will-change` narrowly and temporarily when evidence shows it helps. Layer promotion consumes memory and is not a general performance switch.
 
-```js
-// Bad: Thrashing
-element.style.width = "100px"
-const width = element.offsetWidth // Forces layout
-element.style.width = width * 2 + "px"
+CSS custom properties are not inherently slow. The cost depends on inheritance, invalidation scope, the consuming property, and update frequency. Avoid high-frequency updates to inherited variables across large subtrees; register non-inheriting typed properties or scope variables locally when that reduces measured work.
 
-// Good: Batched
-const width = element.offsetWidth // Read first
-element.style.width = width * 2 + "px" // Then write
-```
+## Images and Media
 
-### Theme Switching
+- Give images intrinsic dimensions or an aspect ratio.
+- Prioritize the actual largest-content image; lazy-load content that begins off screen.
+- Serve appropriate formats, resolutions, and responsive sources.
+- Pause or unmount off-screen video when continuing playback serves no user purpose.
+- Autoplaying inline video needs `muted` and `playsinline`, a poster, and a reduced-motion or user-control strategy.
 
-- MUST: Disable transitions during theme change (see `animation.md`)
+## Motion
 
-## Hydration & Refresh
+Prefer properties and implementation paths that meet the visual need with stable frame times, but do not repeat categorical compositor or main-thread claims across browsers and library versions. Profile the chosen implementation.
 
-- MUST: No flash of wrong content on page refresh for interactive components (tabs, toggles, accordions, theme)
-- MUST: Persist client state in `localStorage`/`sessionStorage` and read before first render
-- MUST: Set initial state server-side or use CSS to prevent flash:
+- CSS is often sufficient for local deterministic transitions.
+- Web Animations or a library may help with interruption, gesture input, exit presence, or orchestration.
+- `transform` and `opacity` are useful defaults for spatial and visibility changes, not a guarantee of zero paint or memory cost.
+- Theme changes usually should not animate every descendant. Limit transitions to intentional surfaces or temporarily suppress only the transitions that create a visible flash.
 
-```jsx
-// Read persisted state before render to avoid flash
-const [activeTab, setActiveTab] = useState(() => {
-  if (typeof window === 'undefined') return 'default';
-  return localStorage.getItem('activeTab') ?? 'default';
-});
-```
+See [animation.md](animation.md) for the motion contract.
 
-```css
-/* CSS-only: hide content until JS hydrates to prevent flash */
-[data-hydrated="false"] .interactive-content {
-  visibility: hidden;
-}
-```
+## Perceived Speed
 
-- SHOULD: Use proper SSR hydration - match server/client initial state
+- Acknowledge input immediately.
+- Keep the user's context visible during work.
+- Show determinate progress when the system can estimate it honestly.
+- Use optimistic updates only when failure can be reversed and pending state remains clear.
+- Stream or reveal meaningful partial results when they are independently useful; do not animate placeholders to disguise avoidable delay.
 
-## Video & Media
+## Verify
 
-- MUST: Pause/unmount off-screen videos (especially iOS)
-- MUST: `muted playsinline` for iOS autoplay:
-
-```html
-<video autoplay loop muted playsinline>
-  <source src="video.mp4" type="video/mp4">
-</video>
-```
-
-## React
-
-- SHOULD: Refs for real-time DOM updates that bypass render (mouse position, scroll)
-- SHOULD: Detect/adapt to device capabilities and network conditions
-
-### Motion/Framer Motion
-
-Motion uses WAAPI (S-Tier) for most animations. However, "independent transforms" (`x`, `y`, `rotate`, `scale`) use a main-thread approach (A-Tier).
-
-```jsx
-// S-Tier: WAAPI, compositor thread
-<motion.div animate={{ transform: "translateX(100px)" }} />
-<motion.div animate={{ opacity: 1 }} />
-
-// A-Tier: Main thread (independent transforms)
-<motion.div animate={{ x: 100 }} />
-```
-
-For performance-critical transforms, prefer string syntax to ensure WAAPI.
-
-### Long Lists Without Virtualization
-
-When full virtualization (`@tanstack/react-virtual`) isn't feasible, use CSS `content-visibility`:
-
-```css
-.list-item {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 80px; /* estimated height */
-}
-```
-
-This lets the browser skip rendering off-screen items. Simpler than JS virtualization, works for moderate lists (100-500 items).
-
-### Hydration Mismatches
-
-For content that legitimately differs between server and client (timestamps, locale-dependent text), suppress the warning:
-
-```tsx
-<time suppressHydrationWarning>{new Date().toLocaleString()}</time>
-```
+Exercise the complete path with representative data, slow network or CPU where relevant, keyboard and pointer input, background-tab return, mobile viewport, and reduced motion. Check console and network errors alongside responsiveness, layout shift, memory growth, and whether the user's action reaches its downstream effect.

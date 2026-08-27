@@ -19,14 +19,12 @@ Covers: profile photos, user thumbnails, testimonial people, comments, team memb
 
 Covers: SVG icons, Heroicons, inline checkmarks, icon buttons, icon sizing, and icon alignment with text.
 
-- Never generate raw SVG icons - import from the project's existing icon library, or use Heroicons if no library is established
-- Never wrap icons in decorative containers (colored squares, circles with backgrounds) - use the icon directly
-- Never scale icons - `viewBox="0 0 24 24"` always uses `size-6`, `viewBox="0 0 20 20"` uses `size-5`, `viewBox="0 0 16 16"` uses `size-4`; if the icon looks too small, use a different icon set, don't increase the size class
-- Always use 16px/micro icons (`size-4`) when inline with `text-sm` text - checklists, feature items, comparison tables, inline labels; only use 20px/mini icons (`size-5`) for navigation list icons
+- Import from the project's existing icon family. Add a raw or custom SVG only when the domain needs a mark the family cannot supply.
+- Do not wrap icons in decorative containers by default. A container is justified when it communicates a control boundary, state, category, or brand mark.
+- Size icons by optical weight, adjacent type, touch target, and the family's intended grid. Do not mix outline weights or enlarge a weak glyph until it looks unlike its siblings.
 - Icons next to a text group (label + supporting text) - align the icon with the first line/label using `items-start` or `items-baseline`, never `items-center` on the group
-- Application UIs (dashboards, settings, admin, sidebar nav, forms) - only use Heroicons Micro (16px, `size-4`); never use 20px/mini or 24px/outline icons in application UIs
 - Use `size-{n} h-lh` on SVG icons to vertically center them with adjacent text; set the `font-size` on a wrapper element instead of using top margins or manual alignment
-- Use `fill-{color}` for filled icons and `stroke-{color}` for stroked icons - never use `text-{color}` with `currentColor` (legacy v2 hack)
+- Use `fill-*` and `stroke-*` for explicit icon colors. `currentColor` is appropriate when an icon should inherit the surrounding control or text color.
 - Always add `shrink-0` to icons inside flex containers
 
 ## Images
@@ -36,6 +34,7 @@ Covers: photos, thumbnails, screenshots, app mockups, product images, media fram
 - Never use borders on photos or thumbnails - use `outline-1 -outline-offset-1 outline-black/5` or `outline-black/10` if the image needs a visible edge
 - Use `outline-1 -outline-offset-1 outline-black/5` or `outline-black/10` on light surfaces; use `outline-white/10` on dark surfaces for screenshots and app UI mockups
 - Use `alt=""` on images when the subject is identified by adjacent visible text
+- Choose aspect ratio from the source material and layout role. Preserve a stable ratio to prevent layout shift; use consistent square or landscape crops for repeated grids, but do not force every image into one recipe or reject 16:9 when the content is natively widescreen.
 
 ## SVG
 
@@ -49,7 +48,7 @@ Covers: inline SVG, SVG color styling, `fill`, `stroke`, `currentColor`, and SVG
 
 Covers: horizontally scrolling chip rows, tab bars, carousels, wide tables, and code blocks - anything that clips at a container edge.
 
-- Fade overflowing content at the container edge instead of hard-clipping it - the fade is the affordance that says "more this way". Tailwind v4.1 mask utilities: `mask-r-from-85%` (fade the right edge), `mask-x-from-90%` (both edges); raw CSS: `mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent)`
+- When a horizontally scrolling region needs a visual continuation cue, an edge fade can communicate "more this way". Keep controls and meaningful text fully legible; a scrollbar, partial item, or explicit control may be clearer.
 - Only mask edges that can actually scroll - a faded edge on fully visible content falsely signals hidden items; if both states occur, toggle the mask based on scroll position
 
 ## Border Radius
@@ -57,4 +56,4 @@ Covers: horizontally scrolling chip rows, tab bars, carousels, wide tables, and 
 Covers: rounded cards, panels, buttons, images, screenshots, nested surfaces, and any UI element where radius consistency matters.
 
 - Use concentric border radii on closely nested rounded elements - define the relationship explicitly with CSS variables and `calc()` so the math is enforced, e.g. `rounded-(--radius) p-(--padding)` on the outer element, `rounded-[calc(var(--radius)-var(--padding))]` on the inner
-- Use `min()` with viewport units for image/screenshot border radii instead of fixed `rounded-*` values - e.g. `rounded-[min(1vw,12px)]`; the radius should match the intended value at full desktop width and scale proportionally as the screen shrinks
+- Scale large media radii when a fixed desktop radius looks exaggerated on narrow screens. `min()` with viewport units is one available technique, not a requirement for every image.

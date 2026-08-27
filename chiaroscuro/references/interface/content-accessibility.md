@@ -22,7 +22,7 @@ Common patterns that fail accessibility, mapped to WCAG success criteria. Use as
 | Focus outline removed | 2.4.7 | `outline-none` or `outline: none` without `focus-visible:ring` replacement |
 | Missing keyboard handlers | 2.1.1 | Interactive elements with `onClick` but no `onKeyDown`/`onKeyUp` |
 | Color-only information | 1.4.1 | Status/error indicated by color alone (no icon or text) |
-| Touch target too small | 2.5.5 | Clickable elements below the `interactions.md` spec (48×48px on coarse pointers) |
+| Touch target too small | 2.5.5 | Clickable elements below the `interactions.md` guidance (44×44 CSS pixels on coarse pointers) |
 | Heading hierarchy skipped | 1.3.1 | `h1` followed by `h3` (skipping `h2`) |
 
 ### Moderate (Consider Fixing)
@@ -56,8 +56,8 @@ Common patterns that fail accessibility, mapped to WCAG success criteria. Use as
 }
 ```
 
-- MUST: Enable arrow-key navigation (↑↓) in sequential focusable lists
-- SHOULD: Enable ⌘/Ctrl+Backspace deletion in sequential lists
+- MUST: Implement the keyboard model expected by the chosen semantic pattern. Composite widgets such as menus, tabs, listboxes, and radio groups commonly use arrow keys; ordinary link and button lists remain in natural Tab order.
+- SHOULD: Add destructive shortcuts only when the product establishes them, exposes an alternative, and provides undo or confirmation appropriate to the consequence.
 
 ## UX Copy & Writing Voice
 
@@ -99,5 +99,4 @@ AI-generated text has recognizable patterns that erode trust. Avoid these tells:
 - MUST: `scroll-margin-top` on headings for anchored links; include a "Skip to content" link; hierarchical `<h1–h6>`
 - MUST: Resilient to user-generated content (short/avg/very long)
 - MUST: Locale-aware dates/times/numbers/currency
-- SHOULD: Right-clicking the nav logo surfaces brand assets
 - MUST: Use non-breaking spaces to glue terms: `10\u00A0MB`, `⌘\u00A0+\u00A0K`, `Vercel\u00A0SDK`

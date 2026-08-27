@@ -1,4 +1,3 @@
-<!-- generated from shared/brand-identity.md by scripts/sync-shared.py. Edit the source, not this copy. -->
 # Brand Identity Reference
 
 Opinionated guidance for creating distinctive visual identities. This reference file owns brand-level taste: typography personality, color psychology, visual character.
@@ -49,7 +48,7 @@ that hold it, rather than starting from a shortlist and rationalising the pick.
 
 Before committing to any font or pairing, validate with real-world evidence at **fontsinuse.com** and **typewolf.com**.
 
-chiaroscuro carries a fuller curated list - UI fonts alongside brand fonts, Google Fonts picks, proven pairings, and pairing research guidance - in `references/font-recommendations.md`.
+This skill carries a fuller curated list - UI fonts alongside brand fonts, Google Fonts picks, proven pairings, and pairing research guidance - in `references/font-recommendations.md`.
 
 ---
 

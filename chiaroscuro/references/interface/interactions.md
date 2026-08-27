@@ -1,8 +1,8 @@
 # Interface: Interactions
 
-## The Eight Interactive States
+## Interactive States
 
-Every interactive element needs these states designed:
+Design the states that apply to each interactive element; do not leave browser, async, or validation states to chance:
 
 | State | When | Tailwind Treatment |
 |-------|------|-------------------|
@@ -21,27 +21,27 @@ Common miss: Designing hover without focus, or vice versa. Keyboard users never 
 
 Canonical touch-target spec for the whole skill - `responsive.md` defers here.
 
-- MUST: On coarse pointers (touch), interactive targets are at least 48×48px. A 24px visual minimum is fine on fine pointers (mouse/trackpad).
-- MUST: When the visual element is smaller than 48px, keep it visually small but expand the hit area with a child span, gated so it only applies on coarse pointers:
+- MUST: On coarse pointers (touch), interactive targets are at least 44×44 CSS pixels, inclusive of invisible hit padding. A smaller visual control is fine when its full interactive area meets the minimum.
+- MUST: When the visual element is smaller than 44px, keep it visually small but expand the hit area without overlapping neighboring targets:
 
 ```jsx
 <button className="relative">
   <span
-    className="absolute top-1/2 left-1/2 size-[max(100%,3rem)] -translate-1/2 pointer-fine:hidden"
+    className="absolute top-1/2 left-1/2 size-[max(100%,2.75rem)] -translate-1/2 pointer-fine:hidden"
     aria-hidden="true"
   />
   <Icon className="size-4" />
 </button>
 ```
 
-`3rem` = 48px; `pointer-fine:hidden` removes the padded hit area on mouse/trackpad where it isn't needed. Define `@custom-variant pointer-fine (@media (pointer: fine))` if the project doesn't already.
+`2.75rem` = 44px. `pointer-fine:hidden` can remove the extra area for a fine pointer when neighboring controls need the space. Define `@custom-variant pointer-fine (@media (pointer: fine))` if the project does not already.
 
 ## Tap and Gesture Feel
 
 - MUST: Show press feedback on pointer-*down*, commit the action on pointer-*up*. Waiting for `click` to show any feedback feels dead
 - MUST: Allow cancel-by-dragging-away - moving off the target before release aborts the tap, moving back re-arms it (native `:active` + `click` behave this way; custom pointer-event handlers must reproduce it)
 - SHOULD: Require ~10px of movement (hysteresis) before committing a drag to a direction; below that, treat the gesture as a tap
-- SHOULD: Detect all plausible gestures in parallel from the first move, then cancel the losers once intent is clear. Avoid end-state-only recognizers (`swipeleft`-style events) - they throw away the continuous tracking needed for 1:1 feedback (see `animation.md`: Gesture-Driven Motion)
+- SHOULD: For custom gestures, track plausible directions from the first move and cancel alternatives once intent is clear. End-state-only recognizers discard the continuous input needed for direct feedback; see [animation.md](animation.md).
 - SHOULD: Only pay the double-tap disambiguation delay (which delays every single tap) where double-tap genuinely exists
 
 ## Input
@@ -79,13 +79,13 @@ For stricter pointer gating, define a CSS-first Tailwind v4 custom variant:
 
 ## State & Navigation
 
-- MUST: URL reflects state (filters, tabs, pagination). Use [nuqs](https://nuqs.dev)
-- MUST: Back/Forward restores scroll position
+- SHOULD: Put shareable or navigational state such as filters, tabs, and pagination in the URL. Use the project's router or a compatible helper rather than adding a library reflexively.
+- MUST: Back and Forward restore meaningful state and scroll position.
 
 ## Feedback
 
 - SHOULD: Optimistic UI with rollback on failure
-- MUST: `AlertDialog` for destructive actions (not `Dialog`)
+- MUST: Use the project's accessible alert-dialog pattern for an irreversible action that requires confirmation; prefer undo for safe reversible actions.
 - MUST: `aria-live="polite"` for toasts/validation
 - SHOULD: Ellipsis for follow-up actions ("Rename…", "Loading…")
 
@@ -118,9 +118,7 @@ Use for: hidden panels, content behind modals, drag containers.
 
 ## Tooltips
 
-- MUST: 200ms delay before showing
-- MUST: After first tooltip opens, subsequent tooltips show immediately (warm state)
-- SHOULD: Clear warm state 300ms after all tooltips close
+- SHOULD: Delay the first pointer-triggered tooltip enough to avoid accidental activation, then shorten or skip delay while traversing a related toolbar. Tune the delay to density and frequency rather than treating 200ms as universal.
 
 ## Menus
 
@@ -165,6 +163,8 @@ Focus ring requirements:
 - Offset from element (not inside it)
 - Consistent across all interactive elements
 
+When validation, disclosure, route changes, or keyboard navigation moves focus, ensure the focused element is visible. Prefer native focus scrolling; use `scrollIntoView({ block: "nearest" })` only when nested scrolling or sticky chrome obscures it, and honor reduced motion for any smooth scroll.
+
 ## Native Popover API
 
 For tooltips, dropdowns, and non-modal overlays, prefer native popovers:
@@ -177,7 +177,7 @@ For tooltips, dropdowns, and non-modal overlays, prefer native popovers:
 </div>
 ```
 
-Benefits: Light-dismiss (click outside closes), proper stacking, no z-index wars, accessible by default.
+Benefits include top-layer stacking and built-in light-dismiss behavior. Native popover does not supply every component's semantics, focus policy, keyboard model, or accessible name; add and verify those for the actual pattern.
 
 ## Roving Tabindex
 

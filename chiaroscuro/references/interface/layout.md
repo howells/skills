@@ -7,7 +7,8 @@
 - MUST: Remove UI furniture: purposeless chrome, decorative wrappers, filler panels, floating badges, fake controls, ornamental dividers, and background effects that do not change user understanding
 - MUST: Verify mobile, laptop, ultra-wide (simulate at 50% zoom)
 - MUST: Respect safe areas via `env(safe-area-inset-*)`
-- MUST: No unwanted scrollbars - fix overflows
+- MUST: No unwanted scrollbars - identify and fix the source of overflow.
+- SHOULD: Use `overflow-clip` when a visual effect must be clipped without creating a scroll container. Use `overflow-hidden` only when its scroll-container and programmatic-scrolling behavior are intended.
 - SHOULD: Optical alignment: ±1px when perception beats geometry - icons beside text, play triangles in circular buttons, and text in buttons usually need a 1–2px nudge to look centered; section vertical padding often wants slightly more bottom than top to feel balanced
 - SHOULD: Balance icon/text lockups (stroke, weight, size, spacing, color)
 

@@ -10,7 +10,7 @@ The hero is the first impression. It sets the tone for everything below.
 - SHOULD: Typography creates drama - large size contrast between headline and subtext
 - SHOULD: One primary CTA, visually dominant. Secondary CTA (if present) clearly subordinate.
 - NEVER: Generic stock imagery that could belong to any product
-- NEVER: More than 2 CTAs in the hero
+- SHOULD: Keep the hero action hierarchy tight. One primary and, when useful, one clearly secondary action is usually enough.
 - NEVER: Auto-playing video without user consent
 
 **Hero patterns (pick one, don't combine):**
@@ -28,12 +28,12 @@ The hero is the first impression. It sets the tone for everything below.
 
 Marketing pages are narratives. Each section advances the story.
 
-- MUST: Consistent vertical rhythm between sections (pick a value: 96px, 128px, or 160px and commit)
+- MUST: Use a consistent section rhythm derived from the type scale, content density, and viewport rather than a fixed universal spacing recipe.
 - SHOULD: Alternate visual weight - dense section followed by spacious, text followed by visual
 - SHOULD: Each section has one clear purpose (don't combine testimonials with feature lists)
 - SHOULD: Visual transitions between sections - background color shifts, not just whitespace
 - NEVER: Cookie-cutter repeating layout (3-column cards, 3-column cards, 3-column cards)
-- NEVER: More than 7-8 sections total (if you need more, you're not editing)
+- SHOULD: Edit the page to the fewest sections that tell the complete story. A long page is justified only when each section advances the decision.
 - NEVER: Decorative filler - gradient blobs, floating shapes, ornamental dividers, accent badges, or background effects that exist to fill space rather than communicate meaning
 
 **Section rhythm matters more than individual section design.** A page with 5 well-paced sections beats a page with 10 beautifully designed sections that feel relentless.

@@ -2,14 +2,14 @@
 
 ## Mobile-First
 
-MUST write base styles for mobile, use `min-width` queries (Tailwind responsive prefixes) to layer complexity:
+Start with the narrowest common layout when that exposes the essential content order, then use Tailwind's `min-width` prefixes to add room-dependent structure:
 
 ```html
 <!-- Mobile-first: base → sm → md → lg -->
 <div class="flex flex-col md:flex-row gap-4 md:gap-8">
 ```
 
-Desktop-first means mobile loads unnecessary styles first.
+Mobile-first is an authoring and hierarchy discipline, not a network-performance claim. An existing desktop-oriented system can be adapted incrementally when a wholesale inversion would create unnecessary risk.
 
 ---
 
@@ -147,13 +147,12 @@ Concrete breakpoint rules. Audit order: page shell → navigation → text/forms
 
 ### Navigation
 
-- MUST: Every app has a mobile nav menu below `lg`, regardless of whether desktop nav is a header or sidebar - a dialog/disclosure with a hamburger toggle. Hide header nav with `hidden lg:flex`, sidebar nav with `hidden lg:block`, and the mobile toggle with `lg:hidden`. See [navigation](./data-components.md#navigation).
+- MUST: Every app keeps essential navigation available at narrow widths. Choose a disclosure, dialog, compact bar, or another pattern that fits the information architecture; do not assume `lg` or a hamburger without testing the content.
 - MUST: Horizontal menus (tabs, pill navs) never overflow the parent - horizontally scroll when items don't fit.
 
 ### Text, Forms, And Touch Targets
 
-- MUST: Body text, subheadings, form controls, and icons are **larger on mobile** and scale *down* at `sm:` - write the mobile (larger) size as the default, the desktop size with `sm:` (e.g. `text-base/7 sm:text-sm/6`, `size-5 sm:size-4`, `py-2.5 sm:py-1.5`). Applies to body text, subheadings, stat values, input labels, badges, buttons, and icons - **not** h1s/page titles, which stay the same or get smaller on mobile.
-- MUST: Body/paragraph content is at least `text-base` (16px) on mobile - never `text-xs`; `text-sm` only at `sm:` or larger (`text-base/7 sm:text-sm/6`, never bare `text-sm/6` for body copy).
+- MUST: Body copy and controls remain comfortably readable and operable on mobile. `16px` is a strong baseline for body text and text inputs; dense metadata may be smaller when contrast, typeface, and context keep it legible.
 - MUST: If a text input's font size is below `16px`, add `max-sm:text-base/{lh}` to prevent iOS zoom.
 - MUST: Small/icon buttons meet the touch-target minimum on coarse pointers - see [interactions.md](./interactions.md) → Touch Targets for the canonical size and hit-area pattern.
 - MUST NOT: Fix cramped heading groups by constraining the wrapper with `max-w-*`; constrain each text element directly with `max-w-[*ch]`. See [heading groups](./marketing-components.md#heading-groups).
@@ -165,7 +164,7 @@ Concrete breakpoint rules. Audit order: page shell → navigation → text/forms
 
 ### Component Patterns
 
-- MUST: Use container queries (`@container`) for component-level responsiveness - anything whose layout depends on available space, not the viewport (dashboard widgets, feature cards, pricing tiers, testimonial grids). Place `@container` as close to the responsive content as possible - a direct wrapper around the items, never a page-level container.
+- SHOULD: Use container queries when a reusable component's layout genuinely depends on its allocated width rather than the viewport. Place the query container close enough to express that boundary without creating unnecessary containment.
 - SHOULD: Reconfigure divider-separated grids at each breakpoint where columns change - reset first/last padding, drop vertical dividers when collapsing to one column, add horizontal dividers between rows.
 - SHOULD: Keep wrapped logo clouds balanced on every breakpoint (avoid `5+1`). See [logo clouds](./marketing-components.md#logo-clouds).
 - SHOULD: Use `min()` with viewport units for image/screenshot border radii instead of fixed `rounded-*` - e.g. `rounded-[min(1vw,12px)]`.
@@ -179,7 +178,7 @@ Don't trust DevTools alone. DevTools device emulation misses:
 - Font rendering differences
 - Browser chrome/keyboard appearances
 
-SHOULD test on: one real iPhone, one real Android, a tablet if relevant. Cheap Android phones reveal performance issues simulators hide.
+Test on representative real devices when the audience, risk, or available hardware warrants it. At minimum combine responsive browser exercise with keyboard, pointer, touch emulation, zoom, landscape, and slow-device checks where relevant.
 
 ---
 
@@ -198,7 +197,7 @@ The goal is not a stripped-down version - it's the essential version. Mobile sho
 
 ## Anti-Patterns
 
-- NEVER: Desktop-first CSS (base styles should be mobile)
+- AVOID: New desktop-only assumptions that make the narrow layout an afterthought.
 - NEVER: Device detection instead of feature detection
 - NEVER: Separate mobile/desktop codebases
 - NEVER: Ignore tablet and landscape orientations

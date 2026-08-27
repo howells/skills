@@ -19,7 +19,7 @@ Covers: landing pages, marketing pages, stacked page sections, heroes, CTAs, pri
 Covers: site headers, navigation bars, top bars, logos, mobile menus, hamburger menus, and header CTAs.
 
 - Always wrap the main logo in an `<a href="/">` with `aria-label="Homepage"`
-- Navbar button actions must always feel secondary to the hero's primary CTA - use ghost, outline, subtle, or a smaller solid button; matching the hero's color is fine if the navbar button is noticeably smaller
+- Navbar actions should preserve the page's action hierarchy. On a conversion page they usually read quieter than the hero's primary action; in a returning-user or transactional flow the navbar action may legitimately be primary.
 
 ## Footers
 

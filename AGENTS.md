@@ -5,7 +5,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 ## The skills
 
 - `aperture` - extract a component, hook, utility or subsystem into a reusable package.
-- `chiaroscuro` - UI design direction, wireframes, Tailwind v4 systems, `@theme` tokens, design specs, polish.
+- `chiaroscuro` - end-to-end UI design, implementation, responsive and accessible behavior, browser verification, and polish.
 - `componentize` - audit a codebase for duplicated UI and plan or implement shared components.
 - `deslop` - audit and rewrite prose carrying AI-writing tells.
 - `fail-fast` - remove fallbacks, silent compatibility paths, legacy aliases and default env values.
@@ -37,7 +37,7 @@ Keep shared discovery in portable `SKILL.md` frontmatter: `name` and `descriptio
 
 ## Shared reference files
 
-Six reference documents are used by more than one skill. `shared/` holds the single
+Five reference documents are used by more than one skill. `shared/` holds the single
 source of truth; `shared/manifest.json` lists where each one is copied to. Every skill
 still ships a real file in its own `references/` directory, because `npx skills`
 installs one skill at a time and an installed skill has to stand alone.
