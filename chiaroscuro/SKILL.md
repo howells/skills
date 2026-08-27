@@ -114,7 +114,7 @@ Use `fieldtest` for a deeper browser-QA pass when it is installed and the risk w
 
 ### 6. Clean Up and Report
 
-After a page direction is selected, remove every rejected direction and all picker scripts, attributes, temporary wrappers, hidden branches, suppressions, and unused imports. Re-run the relevant checks and the complete user path.
+After a page direction is selected, remove every rejected direction and all local picker components, presentation switches, temporary parameters, wrappers, hidden branches, suppressions, and unused imports. Re-run the relevant checks and the complete user path.
 
 Report the direction, what changed, verification performed, and any honest limitation. Do not claim browser verification when only static checks ran.
 

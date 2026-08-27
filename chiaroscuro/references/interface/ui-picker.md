@@ -24,37 +24,41 @@ Before a new round:
 - confirm the baseline path still works;
 - keep a single source for shared content and behavior.
 
-## Mark Up the Directions
+## Build the Directions
 
-Keep direction code in the existing route and component structure. A local presentation switch is acceptable; a standalone fake preview app is not.
+Keep direction code in the existing route and component structure. Use a local presentation switch; a standalone fake preview app is not.
 
-Use the picker attributes where the framework can safely render all directions in one page:
+Render the active presentation from shared data, state, events, validation, and mutations:
 
 ```tsx
-<div data-uidotsh-pick="Page direction" className="contents">
-  <div data-uidotsh-option="Current" className="contents">...</div>
-  <div data-uidotsh-option="Working ledger" className="contents" hidden>...</div>
-  <div data-uidotsh-option="Material index" className="contents" hidden>...</div>
-</div>
+const directions = {
+  current: CurrentDirection,
+  ledger: WorkingLedgerDirection,
+  index: MaterialIndexDirection,
+}
+
+const Direction = directions[activeDirection]
+return <Direction model={sharedModel} actions={sharedActions} />
 ```
 
-- Apply `contents` only when it preserves valid semantics and layout. Otherwise place the attributes on existing suitable elements.
-- Exactly one direction begins visible.
-- Keep IDs unique even while hidden alternatives are mounted.
-- Do not duplicate expensive effects merely to keep hidden directions alive. Lift behavior above the presentation choice or render the active presentation from shared state.
+- Exactly one direction is mounted at a time unless side-by-side review genuinely helps.
+- Keep the presentation key in local development state or a temporary URL parameter so refresh and screenshot review remain practical.
+- Do not duplicate effects, API calls, loaders, or mutations. Lift behavior above the presentation choice.
+- Keep direction labels and keys local to the temporary exploration code.
 
-If mounting every direction would violate framework semantics, create a development-only presentation switch at the route boundary. Preserve the same labels and cleanup contract.
+## Mount a Local Development Picker
 
-## Inject the Picker Safely
+Add a small, accessible picker component at the route or shared-layout boundary used by the exploration. It should:
 
-When using the `data-uidotsh-*` mechanism, load `https://ui.sh/ui-picker.js` exactly once in the shared root with the framework's supported script facility:
+- render only in the local development environment;
+- use a native `<select>` or ordinary buttons with visible labels and keyboard support;
+- update the local presentation key without resetting shared state;
+- stay outside the page's layout flow so it does not alter the direction being judged;
+- identify itself clearly as temporary review tooling.
 
-- Next.js: `next/script` in the root layout.
-- TanStack Router: the root route's supported head/script configuration.
-- Nuxt: `useHead` in `app.vue` or a shared layout.
-- Vite, Laravel, or plain HTML: once in the shared document immediately before `</body>`.
+Use the framework's normal local component and state mechanisms. Do not fetch, inject, or execute a remote picker script, and do not add a picker dependency for temporary exploration.
 
-Do not add a raw script to a leaf component. Make injection idempotent. If a content-security policy or offline environment blocks the script, use the route-level switch or the fallback below.
+If the app cannot safely mount development tooling, use screenshots or the structured fallback rather than weakening the application's content-security policy or production boundary.
 
 ## Review Before Asking
 
@@ -80,10 +84,10 @@ After selection:
 
 1. keep the selected presentation;
 2. remove the other five directions;
-3. remove picker scripts before removing now-unused script imports;
-4. remove all `data-uidotsh-pick`, `data-uidotsh-option`, `hidden`, temporary switch state, wrappers, comments, and suppressions;
+3. remove the local picker component, presentation map, temporary URL parameter, and development guard;
+4. remove temporary switch state, wrappers, comments, and suppressions;
 5. remove dead styles, components, imports, and dependencies;
 6. production-harden the selected path;
 7. run browser verification again.
 
-Search for `uidotsh`, direction labels, temporary switch names, and picker-script URLs. Final source must contain no rejected code or comparison scaffolding.
+Search for `DirectionPicker`, the temporary presentation key or URL parameter, all direction labels, and rejected component names. Final source must contain no rejected code or comparison scaffolding.
