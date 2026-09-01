@@ -21,6 +21,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `memento` - report what you are working on right now, from current state, in one screen.
 - `muster` - roll-call of work in flight: transcripts, live git state, peer sessions, tracker.
 - `nomen` - generate and validate names, with availability and conflict checks.
+- `paste-up` - design in Paper: build a file from a spec, or audit and repair an existing one from its URL.
 - `polyplugin` - create, audit or migrate agent plugins across Claude Code, Codex and Cursor.
 - `product-description` - document a product's user-visible behaviour outside-in, then verify and triage it.
 - `salvage` - rescue work that exists in only one place, then clear away branches, worktrees and stashes that are provably redundant.

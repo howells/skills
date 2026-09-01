@@ -196,6 +196,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill nomen --agent codex --global
 ```
 
+### `paste-up`
+
+Build or audit mockups in Paper (app.paper.design): tokens, fonts, artboard layout, crops, labels.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill paste-up --agent codex --global
+```
+
 ### `polyplugin`
 
 Create, audit, or migrate agent plugins across Claude Code, Codex, and Cursor. Use for multi-host manifests, marketplace metadata, shared capability paths, release and version alignment, or deciding whether a skill collection should become a plugin.

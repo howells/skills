@@ -1,0 +1,4 @@
+interface:
+  display_name: "Paste-up"
+  short_description: "Build and repair design files in Paper"
+  default_prompt: "Use $paste-up on this Paper file to check shared tokens, fonts, artboard layout, image crops and labels, and repair what has drifted."
