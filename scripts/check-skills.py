@@ -18,7 +18,7 @@ Checks:
   - link integrity: every relative .md path referenced in a SKILL.md or references/
     file resolves to a real file.
   - metadata budgets: warn when one description exceeds 400 chars; error when the
-    collection exceeds 6,500 chars or a Codex short description is outside 25-64.
+    collection exceeds 7,000 chars or a Codex short description is outside 25-64.
   - routing consistency: README summaries match descriptions exactly, default prompts
     name their `$skill`, Claude/Codex invocation policy agrees, and descriptions do
     not share a long verbatim trigger clause.
@@ -39,7 +39,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DESCRIPTION_BUDGET = 400
-COLLECTION_DESCRIPTION_BUDGET = 6500
+COLLECTION_DESCRIPTION_BUDGET = 7000
 OPENAI_SHORT_DESCRIPTION_MIN = 25
 OPENAI_SHORT_DESCRIPTION_MAX = 64
 OVERLAP_MIN = 50

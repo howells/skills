@@ -1,6 +1,6 @@
 ---
 name: deslop
-description: "Rewrite prose that sounds synthetic, inflated, generic, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts, or copy that should sound grounded and human. Applies to prose; for machine-written code tells use `unslop`."
+description: "Rewrite prose that sounds synthetic, inflated, generic, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts, or copy that should sound grounded and human. Applies to prose; for interface labels and microcopy use `signage`; for machine-written code tells use `unslop`."
 ---
 
 # Deslop
@@ -31,6 +31,7 @@ State at the start that you are using the `deslop` skill.
 - File path: read the file, then review its prose.
 - URL: fetch page content before reviewing if browsing is available.
 - Code or structured data: review comments, docstrings, docs, or surrounding copy only; ask if unclear.
+- Interface strings - labels, headings, buttons, status lines, empty states: hand to `signage`. They are signage rather than prose, and the tells differ.
 - No input: ask for the text or file to review.
 
 ## Workflow

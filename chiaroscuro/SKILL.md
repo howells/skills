@@ -1,6 +1,6 @@
 ---
 name: chiaroscuro
-description: "Design, build, restyle, and polish user-facing web interfaces end to end with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for components, screens, pages, apps, dark mode, responsiveness, or UI that should feel complete. For brand identity use `foundry`; for reuse audits use `componentize`."
+description: "Design, build, restyle, and polish user-facing web interfaces end to end with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for components, screens, pages, apps, dark mode, responsiveness, or UI that should feel complete. For brand identity use `foundry`; for reuse audits use `componentize`; for interface copy use `signage`."
 ---
 
 # Chiaroscuro
@@ -120,6 +120,7 @@ Report the direction, what changed, verification performed, and any honest limit
 
 Before reporting completion, confirm that:
 
+- every label, heading, button, status line, and empty state has been read against `signage`, and no string carries vocabulary the audience does not use;
 - the primary task is apparent without explanatory scaffolding;
 - real content and adverse states do not break the hierarchy;
 - keyboard, pointer, and touch behavior agree where they should;
@@ -144,6 +145,7 @@ Chiaroscuro remains usable on its own. Delegate only when a specialist skill is 
 - `foundry` for brand identity and positioning;
 - `componentize` for a reuse and duplication audit;
 - `animate`, `motion`, `review-animations`, `improve-animations`, or `find-animation-opportunities` for focused motion work;
+- `signage` for the words on the interface, whenever the copy was written by an agent;
 - `fieldtest` for evidence-heavy browser QA;
 - `apple-design` for Apple-platform craft;
 - `dark-mode-image`, `canonicalize-tailwind`, `markup-from-image`, `prototype`, or `pick-ui-library` for their narrow utilities.

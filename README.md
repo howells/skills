@@ -28,7 +28,7 @@ Use `--copy` if you want independent files rather than symlinks. Restart your ag
 
 ### `aperture`
 
-Extract app-local components, hooks, utilities, or subsystems into reusable workspace or publishable packages with stable exports, tests, and examples. Use for package extraction, reusable npm packages, canonical import boundaries, or moving code into its own repository. For decomposition inside the current codebase, use `heathen`.
+Extract app-local components, hooks, utilities, or subsystems into reusable packages with stable exports and tests. Use for package extraction or moving code to its own repository. For in-place decomposition use `heathen`.
 
 Install globally for Codex:
 
@@ -38,7 +38,7 @@ npx skills@latest add howells/skills --skill aperture --agent codex --global
 
 ### `chiaroscuro`
 
-Design, build, restyle, and polish user-facing web interfaces end to end with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for components, screens, pages, apps, dark mode, responsiveness, or UI that should feel complete. For brand identity use `foundry`; for reuse audits use `componentize`.
+Design, build, restyle, and polish user-facing web interfaces end to end with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for components, screens, pages, apps, dark mode, responsiveness, or UI that should feel complete. For brand identity use `foundry`; for reuse audits use `componentize`; for interface copy use `signage`.
 
 Install globally for Codex:
 
@@ -58,7 +58,7 @@ npx skills@latest add howells/skills --skill componentize --agent codex --global
 
 ### `deslop`
 
-Rewrite prose that sounds synthetic, inflated, generic, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts, or copy that should sound grounded and human. Applies to prose; for machine-written code tells use `unslop`.
+Rewrite prose that sounds synthetic, inflated, generic, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts, or copy that should sound grounded and human. Applies to prose; for interface labels and microcopy use `signage`; for machine-written code tells use `unslop`.
 
 Install globally for Codex:
 
@@ -114,6 +114,16 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill foundry --agent codex --global
+```
+
+### `glm-review`
+
+Get an independent read-only review from GLM 5.3 Flash on the Z.AI Coding Plan via OpenCode, then verify its claims before acting. Use when the user asks for a GLM review, or a cheap second opinion on a diff, plan, contract or UI.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill glm-review --agent codex --global
 ```
 
 ### `heathen`
@@ -198,7 +208,7 @@ npx skills@latest add howells/skills --skill polyplugin --agent codex --global
 
 ### `product-description`
 
-Build or extend an outside-in product description: a feature-by-feature, event-by-event account of user-visible behavior drafted from code and tests, verified against the running product, and consolidated into bug triage. Use for behavior-spec repositories or complete product-experience documentation across web, mobile, canvas, CLI, chat, or agent products.
+Document a product outside-in as user-visible behavior drafted from code and tests, verified in the running product, and consolidated into bug triage. Use for complete experience documentation across web, mobile, canvas, CLI, chat, or agent products.
 
 Imported from [Steve Ruiz's original `product-description` gist](https://gist.github.com/steveruizok/83ae5c53f2784ebf8f5fe0a3fb94480f).
 
@@ -216,6 +226,16 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill salvage --agent codex --global
+```
+
+### `signage`
+
+Replace invented interface vocabulary with the words the audience already uses. Labels, headings, buttons, status lines, empty states and template-generated strings, checked against how a person doing that job would say them out loud. Use after building or designing any UI. For body prose use `deslop`; for names use `nomen`.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill signage --agent codex --global
 ```
 
 ### `survey`

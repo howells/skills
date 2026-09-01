@@ -1,0 +1,4 @@
+interface:
+  display_name: "GLM Review"
+  short_description: "Independent GLM 5.3 Flash second opinion"
+  default_prompt: "Use $glm-review to get an independent GLM 5.3 Flash review of this work on the Z.AI Coding Plan, then verify its findings."

@@ -13,6 +13,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `fieldtest` - browser QA of a rendered app with evidence-backed findings.
 - `foreman` - foreman-mode implementation: the main loop plans and reviews, subagents write the code.
 - `foundry` - visual identity systems, brand positioning, rendered direction options.
+- `glm-review` - request a read-only GLM 5.3 Flash review on the Z.AI Coding Plan, then verify its findings.
 - `heathen` - find and refactor god components, god scripts and oversized modules.
 - `inquest` - sweep every available evidence source and return a cited answer with a coverage map.
 - `marginalia` - JSDoc for public APIs and exported symbols.
@@ -23,6 +24,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `polyplugin` - create, audit or migrate agent plugins across Claude Code, Codex and Cursor.
 - `product-description` - document a product's user-visible behaviour outside-in, then verify and triage it.
 - `salvage` - rescue work that exists in only one place, then clear away branches, worktrees and stashes that are provably redundant.
+- `signage` - replace invented interface vocabulary with the words the audience already uses.
 - `survey` - grade a whole codebase and return a stage-calibrated verdict with a comparable score, clustered by what you would fix in one sitting.
 - `unslop` - strip machine-written tells out of a diff without changing behaviour.
 - `what` - cut the last message down to what happened, short and in plain language.

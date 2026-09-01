@@ -1,6 +1,6 @@
 ---
 name: aperture
-description: "Extract app-local components, hooks, utilities, or subsystems into reusable workspace or publishable packages with stable exports, tests, and examples. Use for package extraction, reusable npm packages, canonical import boundaries, or moving code into its own repository. For decomposition inside the current codebase, use `heathen`."
+description: "Extract app-local components, hooks, utilities, or subsystems into reusable packages with stable exports and tests. Use for package extraction or moving code to its own repository. For in-place decomposition use `heathen`."
 ---
 
 # Aperture

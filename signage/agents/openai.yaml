@@ -1,0 +1,4 @@
+interface:
+  display_name: "Signage"
+  short_description: "Replace invented UI vocabulary with words users actually use"
+  default_prompt: "Use $signage to check every label, heading, button and status line in this UI against how a real person would say it."
