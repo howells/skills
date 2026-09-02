@@ -51,6 +51,7 @@ Look first for clusters of:
 - source-listing or media-name dropping used as a substitute for substance,
 - vague attribution such as "experts say" or "observers note",
 - negative parallelisms such as "not just X, but Y",
+- mannered metaphor standing in for a direct statement, such as "a dial worth turning" for "a parameter worth varying",
 - outline-style "Despite its X, faces challenges" endings and bolt-on "Future Prospects" sections,
 - assistant-style formatting: Markdown leakage, bold sprawl, title case drift, curly quotes where the house style uses straight quotes, ornamental lists,
 - a pronounced style or register shift between sections (pasted-in passage),
@@ -65,8 +66,27 @@ Look first for clusters of:
 - Cut vague praise, policy-sounding abstractions, and promotional framing.
 - Prefer direct verbs over "serves as", "stands as", "represents", or "underscores".
 - Rewrite fake contrasts as direct statements.
+- Replace mannered metaphor with the literal phrase, per the section below.
 - Remove conclusion-style recaps unless the genre needs them.
 - Cut the crutch phrases below on sight.
+
+## Mannered Prose
+
+Mannered prose substitutes metaphor and flourish for direct statement. Instead of "a parameter worth varying", the mannered writer produces "a dial worth turning". Instead of "this point still matters", they write "this point earns its keep". The phrases exist to display the writer, not to convey the idea, and readers can tell. That is why mannered prose irritates: it makes the reader work harder so the writer can perform. It is also imprecise. Metaphors drag in connotations the writer did not choose and cannot control.
+
+The fix is to say what you mean. When a literal phrase is available, use it.
+
+Ask of any figurative phrase: what is the literal claim underneath, and is the figure doing work the literal claim cannot? A metaphor that names something with no plain word - a term of art, a genuinely novel idea - stays. One that dresses up a claim you could have written straight goes.
+
+| Written | Say |
+| --- | --- |
+| A dial worth turning | A parameter worth varying |
+| This point earns its keep | This point still matters |
+| The load-bearing wall of the argument | Name the claim the argument depends on |
+| Where the rubber meets the road | Name the step that actually decides it |
+| The north star for the team | The goal, or the metric |
+
+The table is direction rather than a lookup: each fix names what the figure was standing in for. Judge a mannered phrase by whether the plain version says the same thing in fewer words, and prefer the plain version when it does.
 
 ## Overused Crutch Phrases (Cut On Sight)
 
