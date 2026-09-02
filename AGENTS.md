@@ -11,6 +11,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `fable-review` - request an independent Claude Fable 5.1 read on a hard judgement call, then verify it.
 - `fieldtest` - browser QA of a rendered app with evidence-backed findings.
 - `foreman` - foreman-mode implementation: the main loop plans and reviews, subagents write the code.
+- `gog` - use the authenticated GOG CLI for Daniel's Google accounts instead of generic connectors.
 - `glm-review` - request a read-only GLM 5.3 Flash review on the Z.AI Coding Plan, then verify its findings.
 - `linear` - select the right one of Daniel's two Linear accounts and use its GraphQL API directly.
 - `marginalia` - JSDoc for public APIs and exported symbols.

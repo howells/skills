@@ -1,0 +1,5 @@
+interface:
+  display_name: "GOG"
+  short_description: "Use GOG for Daniel's Google accounts"
+  default_prompt: "Use $gog to work with my Google accounts through the authenticated GOG CLI."
+

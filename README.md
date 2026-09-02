@@ -58,7 +58,7 @@ npx skills@latest add howells/skills --skill deslop --agent codex --global
 
 ### `fail-fast`
 
-Remove hidden fallbacks, swallowed errors, legacy aliases, permissive defaults, and silent compatibility paths, including deterministic environment handling with Envy. Use when behaviour quietly substitutes another value or path instead of enforcing one contract. Not for behaviour-preserving cleanup (`unslop`), ordinary error handling, or a compatibility path the product requires.
+Remove hidden fallbacks, swallowed errors, legacy aliases and permissive defaults. Not for behaviour-preserving cleanup (`unslop`) or required compatibility.
 
 Install globally for Codex:
 
@@ -94,6 +94,16 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill foreman --agent codex --global
+```
+
+### `gog`
+
+Use gogcli for Daniel's Google accounts instead of Google connectors.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill gog --agent codex --global
 ```
 
 ### `glm-review`
