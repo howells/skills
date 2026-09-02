@@ -1,0 +1,37 @@
+#!/bin/sh
+set -eu
+
+account=${1:-}
+
+case "$account" in
+  howells)
+    credential_ref='op://keys/linear/credential'
+    ;;
+  material-instruments)
+    credential_ref='op://keys/linear material-instruments/credential'
+    ;;
+  *)
+    echo 'usage: graphql <howells|material-instruments>' >&2
+    exit 64
+    ;;
+esac
+
+if [ -z "${OP_SERVICE_ACCOUNT_TOKEN:-}" ]; then
+  credential_file='/Users/danielhowells/.codex/plugins/secrets/1password-service-account.env'
+  if [ ! -r "$credential_file" ]; then
+    echo "Linear credential bootstrap is missing: $credential_file" >&2
+    exit 78
+  fi
+  set -a
+  . "$credential_file"
+  set +a
+fi
+
+linear_key=$(op read "$credential_ref")
+
+curl --fail-with-body --silent --show-error \
+  https://api.linear.app/graphql \
+  -H "Authorization: $linear_key" \
+  -H 'Content-Type: application/json' \
+  --data-binary @-
+

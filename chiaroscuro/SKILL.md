@@ -1,6 +1,6 @@
 ---
 name: chiaroscuro
-description: "Design, build and polish user-facing web interfaces with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for a component, screen, page or app that needs visual direction or structural polish. Not for QA-only browser testing (`fieldtest`), reuse audits (`componentize`), interface copy (`signage`), or the type ramp (`typecase`)."
+description: "Design polished responsive web UI with Tailwind v4. Not for browser QA (`fieldtest`), reuse (`componentize`), copy (`signage`) or typography (`typecase`)."
 ---
 
 # Chiaroscuro

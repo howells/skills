@@ -1,0 +1,4 @@
+interface:
+  display_name: "Starling Bank"
+  short_description: "Query every configured Starling account"
+  default_prompt: "Use $starling to query my Starling Bank accounts."

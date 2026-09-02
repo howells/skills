@@ -1,0 +1,4 @@
+interface:
+  display_name: "Xero"
+  short_description: "Use the existing Xero CLI and credentials"
+  default_prompt: "Use $xero to query Xero through the existing offledger CLI."

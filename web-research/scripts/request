@@ -1,0 +1,61 @@
+#!/bin/sh
+set -eu
+
+provider=${1:-}
+operation=${2:-}
+resource_id=${3:-}
+
+if [ -z "${OP_SERVICE_ACCOUNT_TOKEN:-}" ]; then
+  credential_file='/Users/danielhowells/.codex/plugins/secrets/1password-service-account.env'
+  if [ ! -r "$credential_file" ]; then
+    echo "Web research credential bootstrap is missing: $credential_file" >&2
+    exit 78
+  fi
+  set -a
+  . "$credential_file"
+  set +a
+fi
+
+case "$provider:$operation" in
+  exa:search|exa:answer)
+    exa_key=$(op read 'op://keys/Exa/credential')
+    curl --fail-with-body --silent --show-error \
+      "https://api.exa.ai/$operation" \
+      -H "x-api-key: $exa_key" \
+      -H 'Content-Type: application/json' \
+      --data-binary @-
+    ;;
+  exa:contents)
+    exa_key=$(op read 'op://keys/Exa/credential')
+    curl --fail-with-body --silent --show-error \
+      'https://api.exa.ai/contents' \
+      -H "Authorization: Bearer $exa_key" \
+      -H 'Content-Type: application/json' \
+      --data-binary @-
+    ;;
+  tavily:search|tavily:extract|tavily:map|tavily:crawl|tavily:research)
+    tavily_key=$(op read 'op://keys/Tavily/credential')
+    curl --fail-with-body --silent --show-error \
+      "https://api.tavily.com/$operation" \
+      -H "Authorization: Bearer $tavily_key" \
+      -H 'Content-Type: application/json' \
+      --data-binary @-
+    ;;
+  tavily:research-status)
+    case "$resource_id" in
+      ''|*[!A-Za-z0-9_-]*)
+        echo 'usage: request tavily research-status <request-id>' >&2
+        exit 64
+        ;;
+    esac
+    tavily_key=$(op read 'op://keys/Tavily/credential')
+    curl --fail-with-body --silent --show-error \
+      "https://api.tavily.com/research/$resource_id" \
+      -H "Authorization: Bearer $tavily_key"
+    ;;
+  *)
+    echo 'usage: request exa <search|contents|answer> | request tavily <search|extract|map|crawl|research|research-status> [request-id]' >&2
+    exit 64
+    ;;
+esac
+

@@ -12,6 +12,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `fieldtest` - browser QA of a rendered app with evidence-backed findings.
 - `foreman` - foreman-mode implementation: the main loop plans and reviews, subagents write the code.
 - `glm-review` - request a read-only GLM 5.3 Flash review on the Z.AI Coding Plan, then verify its findings.
+- `linear` - select the right one of Daniel's two Linear accounts and use its GraphQL API directly.
 - `marginalia` - JSDoc for public APIs and exported symbols.
 - `mastraudit` - audit a Mastra codebase against what actually breaks it, execution semantics before structure.
 - `memento` - report what you are working on right now, from current state, in one screen.
@@ -22,10 +23,13 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `product-description` - document a product's user-visible behaviour outside-in, then verify and triage it.
 - `salvage` - rescue work that exists in only one place, then clear away branches, worktrees and stashes that are provably redundant.
 - `signage` - replace invented interface vocabulary with the words the audience already uses.
+- `starling` - query every configured Starling Bank account through the agent-first CLI and synced 1Password credentials.
 - `survey` - grade a whole codebase and return a stage-calibrated verdict with a comparable score, clustered by what you would fix in one sitting.
 - `typecase` - constrain text styling to a few named type roles and enforce it with a scanner.
 - `unslop` - strip machine-written tells out of a diff without changing behaviour.
 - `what` - cut the last message down to what happened, short and in plain language.
+- `web-research` - combine Exa and Tavily discovery and extraction into one source-grounded synthesis.
+- `xero` - query Xero through the existing offledger CLI and synced 1Password credentials.
 
 ## Three sync surfaces
 

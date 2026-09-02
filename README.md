@@ -28,7 +28,7 @@ Use `--copy` if you want independent files rather than symlinks. Restart your ag
 
 ### `chiaroscuro`
 
-Design, build and polish user-facing web interfaces with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for a component, screen, page or app that needs visual direction or structural polish. Not for QA-only browser testing (`fieldtest`), reuse audits (`componentize`), interface copy (`signage`), or the type ramp (`typecase`).
+Design polished responsive web UI with Tailwind v4. Not for browser QA (`fieldtest`), reuse (`componentize`), copy (`signage`) or typography (`typecase`).
 
 Install globally for Codex:
 
@@ -104,6 +104,16 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill glm-review --agent codex --global
+```
+
+### `linear`
+
+Use either Linear account when MCP has the wrong one. Not for transcripts (`muster`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill linear --agent codex --global
 ```
 
 ### `marginalia`
@@ -208,6 +218,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill signage --agent codex --global
 ```
 
+### `starling`
+
+Query Starling. Not for Xero (`xero`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill starling --agent codex --global
+```
+
 ### `survey`
 
 Grade an entire codebase with a stage-calibrated verdict, clustered findings, and comparable scores. Use for repository health audits where mechanical checks, source-confirmed findings, lifecycle stage, and multiple review lenses matter. For a diff or PR use code review; for Mastra use `mastraudit`.
@@ -246,6 +266,26 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill what --agent codex --global
+```
+
+### `web-research`
+
+Synthesize Exa and Tavily research. Not for browser QA (`fieldtest`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill web-research --agent codex --global
+```
+
+### `xero`
+
+Query Xero. Not for Starling (`starling`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill xero --agent codex --global
 ```
 
 ## Removed
