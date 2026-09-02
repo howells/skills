@@ -1,7 +1,7 @@
 # 3. Shared files ship as generated copies
 
 Date: 2026-08-24
-Status: Accepted
+Status: Superseded by [0004](0004-the-shared-source-layer-is-removed.md)
 
 ## Context
 
@@ -18,6 +18,12 @@ This decision was taken some time ago and has held since. It's being written dow
 `shared/` holds the single source of each of the five files. `scripts/sync-shared.py` materialises a real copy into each consuming skill's own `references/`. Every copy opens with a comment saying not to edit it.
 
 The duplication is deliberate and load-bearing.
+
+### 2026-09-02 supersession
+
+`foundry` was removed, leaving `chiaroscuro` as the only consumer of all five files, and a source layer with one consumer shares nothing. `shared/` and `scripts/sync-shared.py` are gone; the files live in `chiaroscuro/references/` and are edited in place. See [0004](0004-the-shared-source-layer-is-removed.md).
+
+The reasoning below still governs how a reference is placed: a skill installs alone, so every file it reads sits inside it, and a file two skills need is copied into both. Only the machinery for keeping copies in step is retired.
 
 ### 2026-08-27 amendment
 

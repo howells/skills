@@ -44,13 +44,9 @@ _Avoid_: see-also, reference, link
 A `.md` file under a skill's own `references/`, loaded at the step that needs it rather than up front.
 _Avoid_: bare "reference", doc, supporting file
 
-**Shared source**:
-A file in `shared/` that more than one skill needs. The single place it is edited.
-_Avoid_: canonical file, master copy, original
-
-**Generated copy**:
-The copy of a shared source written into a skill's `references/` by `scripts/sync-shared.py`. Every one opens with a comment saying not to edit it, because a skill installs alone and has to stand alone.
-_Avoid_: materialised copy, synced file, duplicate
+**Deliberate copy**:
+The same reference file present in two skills on purpose, because a skill installs alone and cannot reach a sibling. Distinct from drift, which is two copies that were meant to agree and no longer do.
+_Avoid_: duplicate, fork, generated copy
 
 ### What a skill returns
 

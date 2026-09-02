@@ -1,4 +1,3 @@
-<!-- generated from shared/typography-opentype.md by scripts/sync-shared.py. Edit the source, not this copy. -->
 # Typography & OpenType Reference
 
 Advanced typography features for polished, professional work - interface and identity alike. Companion to the baseline typography rules the consuming skill keeps in its own interface references.

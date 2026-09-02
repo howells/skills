@@ -134,27 +134,13 @@ SCOPED: dict[str, str] = {
 
 
 def governed_files() -> list[Path]:
-    """Every SKILL.md and reference file, excluding generated copies.
-
-    Generated copies are excluded because editing one is itself an error — the
-    shared source is the only place a shared file is fixed. check-skills.py
-    already enforces that copies match their source.
-    """
-    import json
-
-    manifest_path = REPO_ROOT / "shared" / "manifest.json"
-    generated: set[Path] = set()
-    if manifest_path.exists():
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        generated = {REPO_ROOT / rel for copies in manifest.values() for rel in copies}
-
+    """Every SKILL.md and reference file in the collection."""
     files: list[Path] = []
     for skill_md in sorted(REPO_ROOT.glob("*/SKILL.md")):
         files.append(skill_md)
         refs = skill_md.parent / "references"
         if refs.is_dir():
-            files.extend(sorted(p for p in refs.rglob("*.md") if p not in generated))
-    files.extend(sorted(REPO_ROOT.glob("shared/*.md")))
+            files.extend(sorted(refs.rglob("*.md")))
     return [f for f in files if f.name not in SKIP_NAMES]
 
 

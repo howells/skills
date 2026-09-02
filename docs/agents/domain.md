@@ -20,7 +20,8 @@ This repo is **single-context** - one `CONTEXT.md` and one `docs/adr/` at the ro
 ├── docs/adr/
 │   ├── 0001-report-is-never-a-file.md
 │   ├── 0002-spec-is-the-tracker-item.md
-│   └── 0003-shared-files-ship-as-generated-copies.md
+│   ├── 0003-shared-files-ship-as-generated-copies.md
+│   └── 0004-the-shared-source-layer-is-removed.md
 └── (skill directories)
 ```
 

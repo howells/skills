@@ -1,4 +1,3 @@
-<!-- generated from shared/tailwind-v4.md by scripts/sync-shared.py. Edit the source, not this copy. -->
 # Tailwind CSS v4 Reference
 
 Quick reference for Tailwind v4 syntax, breaking changes from v3, and new patterns.

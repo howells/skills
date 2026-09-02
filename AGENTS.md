@@ -34,20 +34,19 @@ Keep each frontmatter `description` within about 400 characters and the collecti
 
 Keep shared discovery in portable `SKILL.md` frontmatter: `name` and `description`. A description states when the skill should fire *and when it should not* - every one carries a `Not for …` clause naming the skill that owns the adjacent territory. Codex-only metadata belongs in `agents/openai.yaml`, under `interface` (UI), `policy` (invocation) or `dependencies` (required MCP servers, declared as `tools` entries with `type`, `value`, `description`, `transport` and `url`); the consistency gate checks each field sits in its own section. If a skill becomes explicit-only, pair Claude's `disable-model-invocation: true` with Codex's `policy.allow_implicit_invocation: false`; otherwise omit both and keep implicit discovery enabled. Current sources: [OpenAI Build skills](https://learn.chatgpt.com/docs/build-skills) and [Claude Code Skills](https://code.claude.com/docs/en/skills).
 
-## Shared reference files
+## Reference files live in the skill that uses them
 
-Five reference documents are used by more than one skill. `shared/` holds the single
-source of truth; `shared/manifest.json` lists where each one is copied to. Every skill
-still ships a real file in its own `references/` directory, because `npx skills`
-installs one skill at a time and an installed skill has to stand alone.
+`npx skills` installs one skill at a time, so an installed skill has to stand alone:
+every file it references sits inside its own directory. A reference needed by two
+skills is copied into both, and the duplication is deliberate.
 
-- Edit the file in `shared/`, then run `python3 scripts/sync-shared.py`.
-- Never edit a generated copy. Each one opens with a comment saying so, and
-  `check-skills.py` fails if a copy has drifted from its source.
-- A shared file must not link to a path that exists in only one skill. Name the topic
-  and let each skill's SKILL.md carry the pointer, or the link breaks in the other skill.
-- Content that genuinely belongs to one skill goes in a skill-local file, not a fork of
-  the shared one. Forking is how these drifted apart in the first place.
+There is no shared source layer. One existed while five design references served two
+skills; the second was removed on 2026-09-02, leaving `chiaroscuro` as the only
+consumer, so the sources were folded into it. See `docs/adr/0004`.
+
+If a second skill ever needs one of those files again, copy it and note both copies
+here. Reintroduce a source layer only when the copies are numerous enough that keeping
+them in step by hand is the thing going wrong.
 
 ## Editing skills
 
@@ -61,8 +60,7 @@ installs one skill at a time and an installed skill has to stand alone.
 
 ## Commands
 
-- `python3 scripts/sync-shared.py` - materialise `shared/` into the skills that consume it. `--check` reports drift without writing. Run it after editing anything in `shared/`.
-- `python3 scripts/check-skills.py` - the consistency gate. Run before committing any skill change: it checks the three sync surfaces, Claude/Codex invocation-policy parity, Codex UI metadata bounds, portable names, intra-skill `.md` links, per-skill and collection description budgets, trigger-clause overlap, generated copies, `agents/openai.yaml` section structure, and pointers to removed skills. Exits non-zero on errors.
+- `python3 scripts/check-skills.py` - the consistency gate. Run before committing any skill change: it checks the three sync surfaces, Claude/Codex invocation-policy parity, Codex UI metadata bounds, portable names, intra-skill `.md` links, per-skill and collection description budgets, trigger-clause overlap, `agents/openai.yaml` section structure, and pointers to removed skills. Exits non-zero on errors.
 - `python3 scripts/check-vocabulary.py` - the vocabulary gate. Flags prose that contradicts `CONTEXT.md`: a bare "surface", a bare "reference", foreman's "spec" where it means a brief, "stage" used for a staged migration, a report written as a file. Several governed words are also ordinary verbs, so the rules match the noun uses and exempt the verb ones - "surface the conflict" is correct and stays. A flagged line that is genuinely right is fixed by adding it to `ALLOW` with a reason, not by loosening the rule. Exits non-zero on violations.
 - `npx skills@latest add howells/skills --list` - list installable skills.
 - `npx skills@latest add howells/skills --skill '*' --agent codex --global` - install all globally for Codex.

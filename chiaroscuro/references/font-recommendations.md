@@ -1,4 +1,3 @@
-<!-- generated from shared/font-recommendations.md by scripts/sync-shared.py. Edit the source, not this copy. -->
 # Font Recommendations
 
 Curated font guidance for both UI work (body, interface, data, mono) and brand/display work (headlines, identity, editorial). Every font listed here has been chosen for quality, distinctiveness, and practical utility.

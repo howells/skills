@@ -25,9 +25,6 @@ Checks:
   - openai schema: every field in agents/openai.yaml sits in its own section
     (interface / policy / dependencies) per the published Codex skill schema, so a
     field at the wrong depth fails instead of being silently ignored by Codex.
-  - shared sources: every generated copy listed in shared/manifest.json matches the
-    file in shared/ it was written from, so a copy edited in place fails instead of
-    drifting back apart.
   - removed skills: no document points at a skill the collection no longer has, which
     the three-surface check cannot see because the surviving copies still agree.
 
@@ -37,7 +34,6 @@ Run from the repo root: `python3 scripts/check-skills.py`.
 
 from __future__ import annotations
 
-import json
 import re
 import sys
 from pathlib import Path
@@ -463,29 +459,6 @@ def check_links() -> None:
                 err(f"{file.relative_to(REPO_ROOT)}: broken .md reference '{target}'")
 
 
-def check_shared_sources() -> None:
-    """Generated copies must match their source in shared/ (see scripts/sync-shared.py)."""
-    manifest_path = REPO_ROOT / "shared" / "manifest.json"
-    if not manifest_path.is_file():
-        return
-    manifest = json.loads(manifest_path.read_text())
-    header = ("<!-- generated from shared/{source} by scripts/sync-shared.py."
-              " Edit the source, not this copy. -->\n")
-    for source, destinations in manifest.items():
-        src = REPO_ROOT / "shared" / source
-        if not src.is_file():
-            err(f"shared/manifest.json names a missing source: shared/{source}")
-            continue
-        want = header.format(source=source) + src.read_text()
-        for destination in destinations:
-            target = REPO_ROOT / destination
-            if not target.is_file():
-                err(f"{destination}: generated copy missing. Run scripts/sync-shared.py")
-            elif target.read_text() != want:
-                err(f"{destination}: edited in place, drifted from shared/{source}. "
-                    f"Edit the source and run scripts/sync-shared.py")
-
-
 # Skills removed from the collection. A deletion leaves the name behind in every
 # neighbour that pointed at it, and the sync-surface check passes because the three
 # copies still agree with each other. Add a name here when a skill is removed; drop
@@ -522,7 +495,6 @@ def main() -> int:
     check_drift()
     check_budget_and_overlap()
     check_links()
-    check_shared_sources()
     check_cross_pointers()
 
     for w in warnings:
