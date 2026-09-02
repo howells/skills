@@ -166,6 +166,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill paste-up --agent codex --global
 ```
 
+### `plimsoll`
+
+Cut process weight when gate ladders, build-watch loops and re-planning have displaced shipping. Use near a deadline, or after a stretch with nothing user-visible. Aims verification at what ships, not the workspace. Not `survey`.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill plimsoll --agent codex --global
+```
+
 ### `product-description`
 
 Document a product outside-in as user-visible behavior drafted from code and tests, verified in the running product, and consolidated into bug triage. Use for complete experience documentation across web, mobile, canvas, CLI, chat, or agent products. Not for marketing copy, a README, a single-feature spec, or browser QA alone (`fieldtest`).

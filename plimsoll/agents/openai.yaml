@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plimsoll"
+  short_description: "Cut process weight and ship the payload"
+  default_prompt: "Use $plimsoll to stop the current checking, name what the person waiting will actually look at, and cut the process weight down to the one gate that matters."

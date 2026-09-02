@@ -18,6 +18,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `muster` - roll-call of work in flight: transcripts, live git state, peer sessions, tracker.
 - `nomen` - generate and validate names, with availability and conflict checks.
 - `paste-up` - design in Paper: build a file from a spec, or audit and repair an existing one from its URL.
+- `plimsoll` - cut process weight when gates, polling and re-planning have displaced shipping.
 - `product-description` - document a product's user-visible behaviour outside-in, then verify and triage it.
 - `salvage` - rescue work that exists in only one place, then clear away branches, worktrees and stashes that are provably redundant.
 - `signage` - replace invented interface vocabulary with the words the audience already uses.
