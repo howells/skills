@@ -1,4 +1,0 @@
-interface:
-  display_name: "Foundry"
-  short_description: "Create, review, or revise visual identity systems"
-  default_prompt: "Use $foundry to create a distinctive visual identity system with rendered directions and Tailwind v4 tokens."

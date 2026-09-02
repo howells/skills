@@ -9,7 +9,7 @@ The code-side counterpart to `deslop`. Same instinct, different material: `deslo
 
 Agent-written code carries a signature. Not bugs - it typechecks, the tests pass, it works. It is padded with ceremony that exists because a model was being thorough rather than because anything needs it, and the cost lands on whoever reads it next.
 
-**The rule that decides every call: nothing here changes behaviour.** Remove a tell and the tests still pass unchanged. If a cleanup would alter what the program does, it is not this skill's - a fallback that hides a failure belongs to `fail-fast`, a file too big to hold in your head belongs to `heathen`. Say so and move on rather than smuggling a behaviour change into a tidy-up.
+**The rule that decides every call: nothing here changes behaviour.** Remove a tell and the tests still pass unchanged. If a cleanup would alter what the program does, it is not this skill's - a fallback that hides a failure belongs to `fail-fast`, a file too big to hold in your head belongs to `componentize`. Say so and move on rather than smuggling a behaviour change into a tidy-up.
 
 ## The tells
 
@@ -59,6 +59,6 @@ Copy these steps into your todolist verbatim before you start. A step you skip s
 ## What this is not
 
 - Not a style pass. Formatting is `@howells/lint`.
-- Not a refactor. Moving logic between modules is `heathen`; extracting a package is `aperture`.
+- Not a refactor. Moving logic between modules or extracting a package is `componentize`.
 - Not a hardening pass. Deleting a fallback so it fails loudly is `fail-fast`, and that one changes behaviour on purpose.
 - Not a review. Correctness bugs are a different job; if you find one, report it and leave it.

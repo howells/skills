@@ -14,7 +14,7 @@ Checks:
     skill dir (or vice versa); frontmatter `name` and openai `$name` match the dir.
   - strict YAML: unquoted scalar values in SKILL.md frontmatter and openai.yaml must
     not contain patterns that strict parsers (GitHub, installers) reject or silently
-    truncate — `: `, ` #`, a leading indicator character, or a trailing colon.
+    truncate - `: `, ` #`, a leading indicator character, or a trailing colon.
   - link integrity: every relative .md path referenced in a SKILL.md or references/
     file resolves to a real file.
   - metadata budgets: warn when one description exceeds 400 chars; error when the
@@ -22,9 +22,14 @@ Checks:
   - routing consistency: README summaries match descriptions exactly, default prompts
     name their `$skill`, Claude/Codex invocation policy agrees, and descriptions do
     not share a long verbatim trigger clause.
+  - openai schema: every field in agents/openai.yaml sits in its own section
+    (interface / policy / dependencies) per the published Codex skill schema, so a
+    field at the wrong depth fails instead of being silently ignored by Codex.
   - shared sources: every generated copy listed in shared/manifest.json matches the
     file in shared/ it was written from, so a copy edited in place fails instead of
     drifting back apart.
+  - removed skills: no document points at a skill the collection no longer has, which
+    the three-surface check cannot see because the surviving copies still agree.
 
 Exit codes: 0 = clean (warnings allowed), 1 = one or more errors.
 Run from the repo root: `python3 scripts/check-skills.py`.
@@ -107,21 +112,98 @@ def read_frontmatter(skill_md: Path) -> dict[str, str]:
     return fields
 
 
-def read_openai_yaml(path: Path) -> dict[str, str]:
+# The `agents/openai.yaml` schema, from
+# https://learn.chatgpt.com/docs/build-skills. A field is only valid inside its
+# own section, so matching names at any indentation would accept
+# `display_name` at top level or `allow_implicit_invocation` under `interface`.
+OPENAI_SCHEMA: dict[str, set[str]] = {
+    "interface": {
+        "display_name",
+        "short_description",
+        "default_prompt",
+        "icon_small",
+        "icon_large",
+        "brand_color",
+    },
+    "policy": {"allow_implicit_invocation"},
+    "dependencies": {"tools"},
+}
+TOOL_FIELDS = {"type", "value", "description", "transport", "url"}
+YAML_BOOLEANS = {"true", "false"}
+
+
+def unquote(value: str) -> str:
+    if len(value) >= 2 and value[0] in "\"'" and value[-1] == value[0]:
+        return value[1:-1]
+    return value
+
+
+def read_openai_yaml(path: Path, report: bool = False) -> dict[str, str]:
+    """Read `agents/openai.yaml`, validating section structure when `report`.
+
+    Returns the interface and policy fields flattened by name, which is what the
+    surface checks compare against. Structural errors are reported rather than
+    returned, so a malformed file still yields whatever it did define.
+    """
     fields: dict[str, str] = {}
     if not path.exists():
         return fields
-    for line in path.read_text(encoding="utf-8").split("\n"):
-        kv = re.match(
-            r"^\s*(display_name|short_description|default_prompt|allow_implicit_invocation):\s*(.*)$",
-            line,
-        )
+
+    rel = path.relative_to(REPO_ROOT)
+    section = ""
+    subkey = ""
+    for lineno, raw in enumerate(path.read_text(encoding="utf-8").split("\n"), 1):
+        line = raw.rstrip()
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        indent = len(line) - len(line.lstrip())
+        stripped = line.strip()
+
+        if indent == 0:
+            section = stripped.split(":", 1)[0].strip()
+            subkey = ""
+            if report and section not in OPENAI_SCHEMA:
+                owner = next((s for s, keys in OPENAI_SCHEMA.items() if section in keys), None)
+                if owner:
+                    err(f"{rel}:{lineno}: `{section}` belongs under `{owner}`, not at top level")
+                else:
+                    err(f"{rel}:{lineno}: unknown top-level section `{section}`")
+            continue
+
+        if stripped.startswith("- ") or stripped == "-":
+            if report and (section, subkey) != ("dependencies", "tools"):
+                err(f"{rel}:{lineno}: list item outside `dependencies.tools`")
+            stripped = stripped[2:].strip()
+            if not stripped:
+                continue
+
+        kv = re.match(r"^([A-Za-z_][\w-]*):\s*(.*)$", stripped)
         if not kv:
             continue
-        value = kv.group(2).strip()
-        if len(value) >= 2 and value[0] in "\"'" and value[-1] == value[0]:
-            value = value[1:-1]
-        fields[kv.group(1)] = value
+        key, value = kv.group(1), kv.group(2).strip()
+
+        if section == "dependencies":
+            if key == "tools" and not value:
+                subkey = "tools"
+                continue
+            if subkey == "tools":
+                if report and key not in TOOL_FIELDS:
+                    err(f"{rel}:{lineno}: unknown field `{key}` in a `dependencies.tools` entry")
+                continue
+
+        if report:
+            allowed = OPENAI_SCHEMA.get(section)
+            if allowed is not None and key not in allowed:
+                owner = next((s for s, keys in OPENAI_SCHEMA.items() if key in keys), None)
+                if owner:
+                    err(f"{rel}:{lineno}: `{key}` belongs under `{owner}`, not `{section}`")
+                else:
+                    err(f"{rel}:{lineno}: unknown field `{key}` under `{section}`")
+            if key == "allow_implicit_invocation" and unquote(value) not in YAML_BOOLEANS:
+                err(f"{rel}:{lineno}: `allow_implicit_invocation` must be true or false")
+
+        if section in ("interface", "policy"):
+            fields[key] = unquote(value)
     return fields
 
 
@@ -173,7 +255,7 @@ def check_yaml_strictness() -> None:
                 if hazard:
                     err(
                         f"{path.relative_to(REPO_ROOT)}:{lineno}: "
-                        f"`{kv.group(2)}` — {hazard}; quote the value or reword"
+                        f"`{kv.group(2)}` - {hazard}; quote the value or reword"
                     )
 
 
@@ -216,7 +298,7 @@ def check_surfaces() -> None:
             err(f"{name}: no `### `{name}`` section in README.md")
         elif not readme[name]:
             err(f"{name}: README section has no summary paragraph")
-        oy = read_openai_yaml(skill / "agents" / "openai.yaml")
+        oy = read_openai_yaml(skill / "agents" / "openai.yaml", report=True)
         if not oy.get("display_name"):
             err(f"{name}: agents/openai.yaml missing display_name")
         if not oy.get("short_description"):
@@ -404,6 +486,36 @@ def check_shared_sources() -> None:
                     f"Edit the source and run scripts/sync-shared.py")
 
 
+# Skills removed from the collection. A deletion leaves the name behind in every
+# neighbour that pointed at it, and the sync-surface check passes because the three
+# copies still agree with each other. Add a name here when a skill is removed; drop
+# it only if the name is ever reused.
+REMOVED_SKILLS = (
+    "aperture",
+    "fenceline",
+    "foundry",
+    "heathen",
+    "inquest",
+    "polyplugin",
+)
+
+
+def check_cross_pointers() -> None:
+    """Flag a backticked reference to a skill the collection no longer has."""
+    pattern = re.compile(r"`(" + "|".join(REMOVED_SKILLS) + r")`")
+    readme = REPO_ROOT / "README.md"
+    docs = iter_reference_files() + [readme, REPO_ROOT / "CLAUDE.md", REPO_ROOT / "AGENTS.md"]
+    for path in docs:
+        for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+            # The README's removal table is the one place the names belong.
+            if path == readme and line.lstrip().startswith("| `"):
+                continue
+            m = pattern.search(line)
+            if m:
+                rel = path.relative_to(REPO_ROOT)
+                err(f"{rel}:{i}: points at `{m.group(1)}`, removed from the collection")
+
+
 def main() -> int:
     check_surfaces()
     check_yaml_strictness()
@@ -411,6 +523,7 @@ def main() -> int:
     check_budget_and_overlap()
     check_links()
     check_shared_sources()
+    check_cross_pointers()
 
     for w in warnings:
         print(f"WARN  {w}")

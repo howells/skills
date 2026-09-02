@@ -119,12 +119,12 @@ SKIP_NAMES = {"CONTEXT.md", "CHANGELOG.md"}
 SUBJECT_FILES: dict[str, set[str]] = {}
 
 # Whole trees a rule does not govern, because the word's domain sense lives
-# there. chiaroscuro and foundry mean a UI surface — a card, a panel, a raised
+# there. chiaroscuro means a UI surface — a card, a panel, a raised
 # layer. product-description means the bounded user experience under study.
 # Both are real domain senses, not the sync/public/host sense this rule polices.
 SUBJECT_TREES: dict[str, tuple[str, ...]] = {
-    "bare-surface": ("chiaroscuro/", "foundry/", "product-description/"),
-    "bare-surface-plural": ("chiaroscuro/", "foundry/", "product-description/"),
+    "bare-surface": ("chiaroscuro/", "product-description/"),
+    "bare-surface-plural": ("chiaroscuro/", "product-description/"),
 }
 
 # Rules that apply only within certain paths.

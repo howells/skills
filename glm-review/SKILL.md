@@ -1,11 +1,13 @@
 ---
 name: glm-review
-description: "Get an independent read-only review from GLM 5.3 Flash on the Z.AI Coding Plan via OpenCode, then verify its claims before acting. Use when the user asks for a GLM review, or a cheap second opinion on a diff, plan, contract or UI."
+description: "Get an independent read-only review from GLM 5.3 Flash on the Z.AI Coding Plan via OpenCode, then verify its claims before acting. Use when the user names GLM, or for a cheap bounded check: conformance to stated criteria, a contract, UI copy. Not for a hard judgement call (`fable-review`) or a codebase grade (`survey`)."
 ---
 
 # GLM review
 
 GLM 5.3 Flash is the cheap second-opinion lane: a bounded contract check, conformance to stated criteria, UI copy, search relevance, or any concrete review that benefits from an independent read. What comes back is a set of leads. Verify each one before you act on it.
+
+The question decides the lane rather than its importance. A check with a right answer comes here. A judgement call with no checkable answer goes to `fable-review`, which costs a great deal more.
 
 ## The coding plan is the only route
 

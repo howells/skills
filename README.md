@@ -26,19 +26,9 @@ Use `--copy` if you want independent files rather than symlinks. Restart your ag
 
 ## Skills
 
-### `aperture`
-
-Extract app-local components, hooks, utilities, or subsystems into reusable packages with stable exports and tests. Use for package extraction or moving code to its own repository. For in-place decomposition use `heathen`.
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill aperture --agent codex --global
-```
-
 ### `chiaroscuro`
 
-Design, build, restyle, and polish user-facing web interfaces end to end with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for components, screens, pages, apps, dark mode, responsiveness, or UI that should feel complete. For brand identity use `foundry`; for reuse audits use `componentize`; for interface copy use `signage`.
+Design, build and polish user-facing web interfaces with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for a component, screen, page or app that needs visual direction or structural polish. Not for QA-only browser testing (`fieldtest`), reuse audits (`componentize`), interface copy (`signage`), or the type ramp (`typecase`).
 
 Install globally for Codex:
 
@@ -48,7 +38,7 @@ npx skills@latest add howells/skills --skill chiaroscuro --agent codex --global
 
 ### `componentize`
 
-Find duplicated UI and turn it into scoped shared components or UI-package primitives. Use for componentization, repeated React/Tailwind patterns, Turborepo `ui` packages, or adapting an existing component through props and composition. For standalone package extraction use `aperture`; for oversized logic files use `heathen`.
+Consolidate code around a clear ownership boundary: deduplicate shared UI, split a confirmed multi-responsibility file, or extract a coherent package. Use when the outcome asked for is reuse, decomposition or a package boundary. Not for visual redesign (`chiaroscuro`), typography rules (`typecase`), or behaviour-preserving cleanup (`unslop`).
 
 Install globally for Codex:
 
@@ -58,7 +48,7 @@ npx skills@latest add howells/skills --skill componentize --agent codex --global
 
 ### `deslop`
 
-Rewrite prose that sounds synthetic, inflated, generic, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts, or copy that should sound grounded and human. Applies to prose; for interface labels and microcopy use `signage`; for machine-written code tells use `unslop`.
+Rewrite prose that sounds synthetic, inflated, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts, or copy that should sound grounded and human. Applies to prose; for interface labels use `signage`; for machine-written code tells use `unslop`.
 
 Install globally for Codex:
 
@@ -68,7 +58,7 @@ npx skills@latest add howells/skills --skill deslop --agent codex --global
 
 ### `fail-fast`
 
-Remove hidden fallbacks, swallowed errors, legacy aliases, permissive defaults, and silent compatibility paths. Use when configuration or control flow should have one canonical path and explicit failure modes, including deterministic environment handling with Envy.
+Remove hidden fallbacks, swallowed errors, legacy aliases, permissive defaults, and silent compatibility paths, including deterministic environment handling with Envy. Use when behaviour quietly substitutes another value or path instead of enforcing one contract. Not for behaviour-preserving cleanup (`unslop`), ordinary error handling, or a compatibility path the product requires.
 
 Install globally for Codex:
 
@@ -76,19 +66,19 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill fail-fast --agent codex --global
 ```
 
-### `fenceline`
+### `fable-review`
 
-Add, check, explain, or repair JavaScript and TypeScript architecture boundaries with `@howells/boundaries`. Use for Turborepo package rules, app-to-app import prevention, source-layer profiles, package tags, or fixing violations without weakening the intended architecture.
+Get an independent review from Claude Fable 5.1 through the Claude CLI, then verify its claims before acting. Use for a hard judgement call: a design or architecture decision, a taste question, a plan worth arguing with. Not for a cheap conformance check (`glm-review`), a codebase grade (`survey`), or a routine diff.
 
 Install globally for Codex:
 
 ```bash
-npx skills@latest add howells/skills --skill fenceline --agent codex --global
+npx skills@latest add howells/skills --skill fable-review --agent codex --global
 ```
 
 ### `fieldtest`
 
-Test a rendered web app in a real browser and return evidence-backed QA findings. Use for dogfooding, localhost review, responsive or mobile defects, console or accessibility checks, persona walkthroughs, and frontend validation that must exercise the running interface rather than inspect code alone.
+Exercise a running web app in a real browser and return evidence-backed QA findings. Use for dogfooding, localhost review, responsive or mobile defects, console and accessibility checks, and persona walkthroughs; fix only when asked. Not for code-only review, or designing and building the UI (`chiaroscuro`).
 
 Install globally for Codex:
 
@@ -106,19 +96,9 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill foreman --agent codex --global
 ```
 
-### `foundry`
-
-Create, review, or revise a distinctive visual identity system: positioning, rendered direction options, OKLCH palette, typography, visual character, and Tailwind v4 tokens. Use when a product needs brand identity established before interface design. For screen-level UI direction use `chiaroscuro`.
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill foundry --agent codex --global
-```
-
 ### `glm-review`
 
-Get an independent read-only review from GLM 5.3 Flash on the Z.AI Coding Plan via OpenCode, then verify its claims before acting. Use when the user asks for a GLM review, or a cheap second opinion on a diff, plan, contract or UI.
+Get an independent read-only review from GLM 5.3 Flash on the Z.AI Coding Plan via OpenCode, then verify its claims before acting. Use when the user names GLM, or for a cheap bounded check: conformance to stated criteria, a contract, UI copy. Not for a hard judgement call (`fable-review`) or a codebase grade (`survey`).
 
 Install globally for Codex:
 
@@ -126,29 +106,9 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill glm-review --agent codex --global
 ```
 
-### `heathen`
-
-Find and refactor god components, oversized modules, tangled scripts, and multi-responsibility JavaScript or TypeScript files. Use for safe decomposition, responsibility splits, and extracting duplicated logic inside a codebase. For repeated UI components use `componentize`; for package extraction use `aperture`.
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill heathen --agent codex --global
-```
-
-### `inquest`
-
-Answer a question about intent, history, or provenance by sweeping every available evidence source in parallel, then return a cited answer and coverage map. Use when a claim, decision, or number needs proving beyond the code. For rebuilding current working context use `muster`.
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill inquest --agent codex --global
-```
-
 ### `marginalia`
 
-Add concise, useful JSDoc where IDE hover help matters. Use for public JavaScript or TypeScript APIs, exports, components, hooks, classes, complex types, generated API docs, or package publishing. Clarifies non-obvious behavior without commenting everything or changing code.
+Add concise, useful JSDoc where IDE hover help or a generated API reference needs a non-obvious contract. Use for exported JavaScript or TypeScript APIs, components, hooks, classes, complex types, or package publishing. Not for self-explanatory internal code, narrating comments, prose docs, or anything that changes behavior.
 
 Install globally for Codex:
 
@@ -178,7 +138,7 @@ npx skills@latest add howells/skills --skill memento --agent codex --global
 
 ### `muster`
 
-Rebuild working context across concurrent or older agent tasks from transcripts, git state, peer sessions, and the tracker. Use for 'catch me up', 'where did I leave off', or 'what is in flight', returning every active thread and its next move. For evidence-backed investigation use `inquest`.
+Rebuild working context across concurrent or older agent tasks from transcripts, git state, peer sessions, and the tracker. Use for 'catch me up', 'where did I leave off', or 'what is in flight', returning every active thread and its next move. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`).
 
 Install globally for Codex:
 
@@ -188,7 +148,7 @@ npx skills@latest add howells/skills --skill muster --agent codex --global
 
 ### `nomen`
 
-Generate, critique, and validate names for products, projects, packages, CLIs, apps, brands, or features. Use for naming or renaming work where domain, package, GitHub, App Store, directory, or web conflict checks matter.
+Generate, critique, and validate names for products, projects, packages, CLIs, apps, brands, or features, with domain, package, GitHub, App Store and web conflict checks. Use for naming and renaming decisions. Not for interface labels (`signage`), body prose (`deslop`), or legal clearance.
 
 Install globally for Codex:
 
@@ -198,7 +158,7 @@ npx skills@latest add howells/skills --skill nomen --agent codex --global
 
 ### `paste-up`
 
-Build or audit mockups in Paper (app.paper.design): tokens, fonts, artboard layout, crops, labels.
+Build a Paper mockup from a written specification, or audit and repair an existing Paper file: tokens, fonts, artboard layout, crops, labels. Use only for work in app.paper.design. Not for coded UI implementation (`chiaroscuro`), browser QA (`fieldtest`), or design critique with no Paper file involved.
 
 Install globally for Codex:
 
@@ -206,19 +166,9 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill paste-up --agent codex --global
 ```
 
-### `polyplugin`
-
-Create, audit, or migrate agent plugins across Claude Code, Codex, and Cursor. Use for multi-host manifests, marketplace metadata, shared capability paths, release and version alignment, or deciding whether a skill collection should become a plugin.
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill polyplugin --agent codex --global
-```
-
 ### `product-description`
 
-Document a product outside-in as user-visible behavior drafted from code and tests, verified in the running product, and consolidated into bug triage. Use for complete experience documentation across web, mobile, canvas, CLI, chat, or agent products.
+Document a product outside-in as user-visible behavior drafted from code and tests, verified in the running product, and consolidated into bug triage. Use for complete experience documentation across web, mobile, canvas, CLI, chat, or agent products. Not for marketing copy, a README, a single-feature spec, or browser QA alone (`fieldtest`).
 
 Imported from [Steve Ruiz's original `product-description` gist](https://gist.github.com/steveruizok/83ae5c53f2784ebf8f5fe0a3fb94480f).
 
@@ -240,7 +190,7 @@ npx skills@latest add howells/skills --skill salvage --agent codex --global
 
 ### `signage`
 
-Replace invented interface vocabulary with the words the audience already uses. Labels, headings, buttons, status lines, empty states and template-generated strings, checked against how a person doing that job would say them out loud. Use after building or designing any UI. For body prose use `deslop`; for names use `nomen`.
+Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states and generated text. Use when reviewing UI copy for comprehension. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`).
 
 Install globally for Codex:
 
@@ -258,6 +208,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill survey --agent codex --global
 ```
 
+### `typecase`
+
+Design, migrate and enforce a small set of named type roles across a UI codebase, with a census and a scanner. Use when raw size, weight, tracking, leading, family or case utilities have multiplied, or a type ramp needs designing or collapsing. Not for general visual direction (`chiaroscuro`), interface wording (`signage`), or one-off typography polish.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill typecase --agent codex --global
+```
+
 ### `unslop`
 
 Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. Use before commit or review. For behavior-changing fallback cleanup use `fail-fast`; for prose use `deslop`.
@@ -270,10 +230,25 @@ npx skills@latest add howells/skills --skill unslop --agent codex --global
 
 ### `what`
 
-Rewrite only the previous agent reply into three short, plain-language lines: what happened, where things stand, and what comes next. Use when the last message was dense, jargon-heavy, or unclear. It re-explains existing content; for whole-task status use `memento`.
+Rewrite only the previous agent reply into three short, plain-language lines: what happened, where things stand, and what comes next. Use when the last message was dense, jargon-heavy, or unclear. It re-explains existing content and gathers no new facts. Not for whole-task status (`memento`) or cross-session context (`muster`).
 
 Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill what --agent codex --global
 ```
+
+## Removed
+
+`npx skills` copies files and does not track deletions, so a skill removed here stays on disk wherever it was installed. Uninstall the stale copy by hand: `rm -rf ~/.agents/skills/<name> ~/.claude/skills/<name> ~/.codex/skills/<name>`.
+
+Removed on 2026-09-02. Not one had been invoked, in either Claude Code or Codex, in the whole time since it was added:
+
+| Skill | Added | Where its work went |
+| --- | --- | --- |
+| `aperture` | 2026-05-21 | `componentize`, as the standalone-package scope |
+| `heathen` | 2026-05-21 | `componentize`, as the god-file scope, with its scanner |
+| `fenceline` | 2026-05-21 | Nothing; import-boundary work has no host |
+| `foundry` | 2026-05-21 | Nothing; its shared references live on in `chiaroscuro` |
+| `polyplugin` | 2026-05-22 | Nothing |
+| `inquest` | 2026-08-20 | Nothing; `muster` covers rebuilding context |

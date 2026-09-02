@@ -1,6 +1,6 @@
 ---
 name: fail-fast
-description: "Remove hidden fallbacks, swallowed errors, legacy aliases, permissive defaults, and silent compatibility paths. Use when configuration or control flow should have one canonical path and explicit failure modes, including deterministic environment handling with Envy."
+description: "Remove hidden fallbacks, swallowed errors, legacy aliases, permissive defaults, and silent compatibility paths, including deterministic environment handling with Envy. Use when behaviour quietly substitutes another value or path instead of enforcing one contract. Not for behaviour-preserving cleanup (`unslop`), ordinary error handling, or a compatibility path the product requires."
 ---
 
 # Fail Fast

@@ -1,6 +1,6 @@
 ---
 name: chiaroscuro
-description: "Design, build, restyle, and polish user-facing web interfaces end to end with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for components, screens, pages, apps, dark mode, responsiveness, or UI that should feel complete. For brand identity use `foundry`; for reuse audits use `componentize`; for interface copy use `signage`."
+description: "Design, build and polish user-facing web interfaces with distinctive visual direction, Tailwind v4, responsive and accessible behavior, and browser verification. Use for a component, screen, page or app that needs visual direction or structural polish. Not for QA-only browser testing (`fieldtest`), reuse audits (`componentize`), interface copy (`signage`), or the type ramp (`typecase`)."
 ---
 
 # Chiaroscuro
@@ -142,7 +142,7 @@ Before reporting completion, confirm that:
 
 Chiaroscuro remains usable on its own. Delegate only when a specialist skill is installed and the task benefits from depth:
 
-- `foundry` for brand identity and positioning;
+- `typecase` for the type ramp and its scanner;
 - `componentize` for a reuse and duplication audit;
 - `animate`, `motion`, `review-animations`, `improve-animations`, or `find-animation-opportunities` for focused motion work;
 - `signage` for the words on the interface, whenever the copy was written by an agent;

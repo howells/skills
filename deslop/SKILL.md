@@ -1,6 +1,6 @@
 ---
 name: deslop
-description: "Rewrite prose that sounds synthetic, inflated, generic, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts, or copy that should sound grounded and human. Applies to prose; for interface labels and microcopy use `signage`; for machine-written code tells use `unslop`."
+description: "Rewrite prose that sounds synthetic, inflated, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts, or copy that should sound grounded and human. Applies to prose; for interface labels use `signage`; for machine-written code tells use `unslop`."
 ---
 
 # Deslop

@@ -38,7 +38,7 @@ rg --files | rg "(component-name|thing|feature-name)"
 Prefer one stable import path:
 
 ```ts
-import { Aperture } from "@scope/aperture";
+import { Thing } from "@scope/thing";
 ```
 
 Use subpath exports only when each represents a deliberate public surface:

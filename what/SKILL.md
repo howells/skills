@@ -1,6 +1,6 @@
 ---
 name: what
-description: "Rewrite only the previous agent reply into three short, plain-language lines: what happened, where things stand, and what comes next. Use when the last message was dense, jargon-heavy, or unclear. It re-explains existing content; for whole-task status use `memento`."
+description: "Rewrite only the previous agent reply into three short, plain-language lines: what happened, where things stand, and what comes next. Use when the last message was dense, jargon-heavy, or unclear. It re-explains existing content and gathers no new facts. Not for whole-task status (`memento`) or cross-session context (`muster`)."
 ---
 
 # What

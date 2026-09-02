@@ -1,4 +1,0 @@
-interface:
-  display_name: "Inquest"
-  short_description: "Evidence sweep with a cited verdict"
-  default_prompt: "Use $inquest to answer this from the record, across every source available."

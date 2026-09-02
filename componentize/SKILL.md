@@ -1,6 +1,6 @@
 ---
 name: componentize
-description: "Find duplicated UI and turn it into scoped shared components or UI-package primitives. Use for componentization, repeated React/Tailwind patterns, Turborepo `ui` packages, or adapting an existing component through props and composition. For standalone package extraction use `aperture`; for oversized logic files use `heathen`."
+description: "Consolidate code around a clear ownership boundary: deduplicate shared UI, split a confirmed multi-responsibility file, or extract a coherent package. Use when the outcome asked for is reuse, decomposition or a package boundary. Not for visual redesign (`chiaroscuro`), typography rules (`typecase`), or behaviour-preserving cleanup (`unslop`)."
 ---
 
 # Componentize
@@ -204,6 +204,56 @@ Do not make a component so configurable that it hides five unrelated designs. If
 Do not use `asChild`, `render`, or slot props as an escape hatch for unclear ownership. They are for preserving valid semantics and composition, not for hiding unrelated components behind one API.
 Do not move a component across a server/client boundary until you know whether its imports, props, and children are valid in the target environment.
 
+## Two jobs beyond the UI
+
+The work above is UI-shaped. Splitting an overloaded file and lifting code into its own package use the same reconnaissance and the same rule - prove the duplication before consolidating it - so they live here.
+
+### Splitting a god file
+
+A file carrying so many responsibilities that changing one means reading all of them. **Length alone is never the reason to split.** Split when the file has multiple responsibilities, duplicated logic, unstable change reasons, hard-to-test branches, or a public interface that can be made smaller.
+
+Find candidates with the scanner, then read them - it ranks files heuristically and the judgement is still yours:
+
+```bash
+python3 scripts/find-god-files.py /path/to/repo
+python3 scripts/find-god-files.py /repo --min-score 20 --duplicate-window 10
+python3 scripts/find-god-files.py /repo --include-tests --json
+```
+
+It flags files scoring at least 35 by default, roughly length past 200-500 lines combined with multiple responsibility signals. Lower `--min-score` to widen the net.
+
+Classify each confirmed candidate as a **god component** (rendering, data shaping, effects, mutations, validation and subview control in one file), a **god script** (argument parsing, I/O, domain logic, formatting and side effects mixed), a **god module** (non-UI, multiple unrelated responsibilities), or **duplication**.
+
+Then split in this order, one candidate at a time, running the smallest relevant check after each step:
+
+1. Pure helpers.
+2. Duplicated logic, before moving any caller.
+3. Hooks and state machines, before child components, where state is tangled.
+4. Leaf subcomponents, before layout shells, where JSX is large.
+5. I/O adapters away from domain logic, in scripts.
+
+Keep public imports stable until tests pass, then clean up barrels and exports.
+
+For components: move data fetching into a hook only when it is reused or removes real branching; move repeated JSX into named domain components rather than a generic `Content` or `Wrapper`; keep state near the component that owns the interaction. Avoid many shallow files where each must be opened to understand one small behaviour.
+
+For scripts: separate argument parsing, configuration, transformation, I/O and output formatting; put deterministic logic behind a unit-testable function; keep the entrypoint thin; preserve exit codes and stream behaviour.
+
+For duplication: consolidate only after confirming the copies are meant to stay the same. Coincidentally similar code with different domain meaning stays apart, and shared schemas come out only when they represent the same concept.
+
+### Extracting a standalone package
+
+Where the target is a publishable package or its own repository rather than a shared folder, the package decision above still applies and these carry the rest. The full validation checklist is in [`references/package-extraction.md`](references/package-extraction.md).
+
+**Define the boundary before editing.** In: the component, hook, utility, its types, styles, assets, fixtures, tests, intrinsic support modules, and examples demonstrating the intended API. Out: routes, auth and session code, database clients, environment access, product copy, analytics, feature flags, unrelated design-system wrappers, and compatibility shims for old import paths. If the extraction exposes hidden coupling, report it before editing and choose the smallest coherent boundary.
+
+**Design the public API before creating files:** package name, entrypoints, exported symbols, peer versus bundled dependencies, styling contract, asset handling, and server/client runtime constraints. Prefer a narrow API - exporting every internal file because it exists is how a package becomes unmaintainable.
+
+For a publishable npm package: an explicit `exports` map, emitted or referenced types, a `files` field, and React, framework and styling libraries marked as peers when consumers must provide them.
+
+**Moving to a separate repo copies first** and leaves the original intact unless removal was explicitly requested. Inside one repo, update usage sites only when the requested migration scope says the app should switch now.
+
+Never auto-publish, tag, push or create a release without explicit approval, and never change licensing, publishing visibility, registry scope or package ownership silently.
+
 ## Workflow
 
 ### 1. Inventory
@@ -243,7 +293,7 @@ Define the public component API before moving files:
 
 Extract one coherent group at a time. Update imports and call sites immediately so the repo does not keep two canonical versions.
 
-Only load related skills when the user request requires that concern, the repo already uses that workflow, or the current extraction is blocked without it. Use `chiaroscuro` for visual direction and polish only, `aperture` for standalone/publishable package extraction, and `fenceline` for package boundary enforcement. Deduplication and shared-component extraction decisions stay in this skill; keep its componentization workflow as the controlling scope.
+Load `chiaroscuro` only when the request needs visual direction and polish; load `typecase` when the duplicated styling is typographic. Deduplication and shared-component decisions stay in this skill, and its componentization workflow is the controlling scope.
 
 ### 5. Validate
 

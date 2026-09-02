@@ -1,6 +1,6 @@
 ---
 name: muster
-description: "Rebuild working context across concurrent or older agent tasks from transcripts, git state, peer sessions, and the tracker. Use for 'catch me up', 'where did I leave off', or 'what is in flight', returning every active thread and its next move. For evidence-backed investigation use `inquest`."
+description: "Rebuild working context across concurrent or older agent tasks from transcripts, git state, peer sessions, and the tracker. Use for 'catch me up', 'where did I leave off', or 'what is in flight', returning every active thread and its next move. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`)."
 ---
 
 # Muster
@@ -34,7 +34,7 @@ Copy these steps into your todolist verbatim before you reason about the task. A
 
 4. **Verify every claim against live state.** Take each branch, PR and ticket the mining surfaced and check it: `git log`, `git status`, `gh pr view`. Merge detection is where this goes wrong - in a squash-merging repo, `git cherry` and patch-ids lie. Use ancestry or the PR's own state. A pushed branch with no PR is not a backup, and a ticket marked done proves only that someone said so.
 
-5. **Sweep the shared record when a named target is involved.** A feature, file, subsystem or bug carries history your own transcripts never saw. Hand it to `inquest`, steering the question from "why is it like this" to "what is the current state, what was tried and did not hold, what is still being reported". Run it in parallel with step 3. Skip only for pure activity recall with no named target.
+5. **Sweep the shared record when a named target is involved.** A feature, file, subsystem or bug carries history your own transcripts never saw. Search the tracker and the repo history for it, asking what the current state is, what was tried and did not hold, and what is still being reported. Run it in parallel with step 3. Skip only for pure activity recall with no named target.
 
 6. **Write the brief to the contract below.**
 

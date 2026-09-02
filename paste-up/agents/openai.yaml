@@ -2,3 +2,10 @@ interface:
   display_name: "Paste-up"
   short_description: "Build and repair design files in Paper"
   default_prompt: "Use $paste-up on this Paper file to check shared tokens, fonts, artboard layout, image crops and labels, and repair what has drifted."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "paper"
+      description: "Read and edit Paper design files in Paper Desktop"
+      transport: "streamable_http"
+      url: "http://127.0.0.1:29979/mcp"

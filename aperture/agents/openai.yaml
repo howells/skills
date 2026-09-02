@@ -1,4 +1,0 @@
-interface:
-  display_name: "Aperture"
-  short_description: "Extract reusable packages"
-  default_prompt: "Use $aperture to extract this component into a reusable package."

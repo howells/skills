@@ -16,9 +16,9 @@ So the order is: **stage, then mechanics, then judgement, then vetting.** Each p
 Survey grades a codebase. It does not fix one, and it deliberately stops short of the specialists:
 
 - **A diff, PR or branch** is `/code-review`. Survey judges the repo, not the change.
-- **God files and oversized modules** get reported here as a signal, then routed to `heathen` to actually decompose.
+- **God files and oversized modules** get reported here as a signal, then routed to `componentize` to actually decompose.
 - **Fallbacks, swallowed errors and env defaults** get reported as determinism smells, then routed to `fail-fast`.
-- **Package and import boundaries** route to `fenceline`; **duplicated UI** routes to `componentize`.
+- **Duplicated UI, oversized files and package extraction** all route to `componentize`.
 - **Mastra execution semantics** are `mastraudit`'s. When Mastra is detected, defer that lens to it rather than re-deriving it badly.
 - **Rendered behaviour in a browser** is `fieldtest`. Survey reads code.
 - **Implementing the fixes** is `foreman`, taking the clusters as briefs.

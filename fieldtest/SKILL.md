@@ -1,6 +1,6 @@
 ---
 name: fieldtest
-description: "Test a rendered web app in a real browser and return evidence-backed QA findings. Use for dogfooding, localhost review, responsive or mobile defects, console or accessibility checks, persona walkthroughs, and frontend validation that must exercise the running interface rather than inspect code alone."
+description: "Exercise a running web app in a real browser and return evidence-backed QA findings. Use for dogfooding, localhost review, responsive or mobile defects, console and accessibility checks, and persona walkthroughs; fix only when asked. Not for code-only review, or designing and building the UI (`chiaroscuro`)."
 ---
 
 # Fieldtest

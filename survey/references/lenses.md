@@ -84,7 +84,7 @@ Scores axis 2, Performance.
 
 Is the codebase organised for change? God files - authored source over 1000 lines, or anything over 2000. God page-clients: a thin `page.tsx` or `layout.tsx` passing straight through to one enormous `"use client"` component. Circular dependencies. Barrel files. Cross-workspace app imports. Business logic tangled into UI. Server and client boundary hacks - `*-wrapper`, `*-client`, boundaries hoisted higher than they need to be.
 
-Report the structural defects; route the decomposition to `heathen` and the boundary rules to `fenceline`.
+Report the structural defects; route the decomposition to `componentize`.
 
 Scores axis 3, Architecture.
 

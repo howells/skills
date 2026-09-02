@@ -1,6 +1,6 @@
 ---
 name: signage
-description: "Replace invented interface vocabulary with the words the audience already uses. Labels, headings, buttons, status lines, empty states and template-generated strings, checked against how a person doing that job would say them out loud. Use after building or designing any UI. For body prose use `deslop`; for names use `nomen`."
+description: "Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states and generated text. Use when reviewing UI copy for comprehension. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`)."
 ---
 
 # Signage

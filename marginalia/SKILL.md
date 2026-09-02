@@ -1,6 +1,6 @@
 ---
 name: marginalia
-description: "Add concise, useful JSDoc where IDE hover help matters. Use for public JavaScript or TypeScript APIs, exports, components, hooks, classes, complex types, generated API docs, or package publishing. Clarifies non-obvious behavior without commenting everything or changing code."
+description: "Add concise, useful JSDoc where IDE hover help or a generated API reference needs a non-obvious contract. Use for exported JavaScript or TypeScript APIs, components, hooks, classes, complex types, or package publishing. Not for self-explanatory internal code, narrating comments, prose docs, or anything that changes behavior."
 ---
 
 # Marginalia

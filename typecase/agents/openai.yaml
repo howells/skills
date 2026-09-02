@@ -1,0 +1,4 @@
+interface:
+  display_name: "Typecase"
+  short_description: "Constrain text styling to a few named type roles"
+  default_prompt: "Use $typecase to census the inline typography in this codebase, design the smallest set of type roles that covers it, and install a scanner that keeps it there."

@@ -1,6 +1,6 @@
 ---
 name: product-description
-description: "Document a product outside-in as user-visible behavior drafted from code and tests, verified in the running product, and consolidated into bug triage. Use for complete experience documentation across web, mobile, canvas, CLI, chat, or agent products."
+description: "Document a product outside-in as user-visible behavior drafted from code and tests, verified in the running product, and consolidated into bug triage. Use for complete experience documentation across web, mobile, canvas, CLI, chat, or agent products. Not for marketing copy, a README, a single-feature spec, or browser QA alone (`fieldtest`)."
 ---
 
 # Product description repo
