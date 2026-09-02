@@ -88,7 +88,7 @@ npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 
 ### `foreman`
 
-Implement substantial production changes in foreman mode: the main agent plans, briefs, and reviews while subagents write code, routed by taste, heavy, or grunt work. Use for implementation or refactoring that benefits from delegated execution. Skip for tiny fixes or documentation-only work.
+Run an explicitly requested delegation mode for substantial changes: the main agent decides and inspects while subagents write code. Use only when the user asks for Foreman or delegated execution. Delegation never requires new tests. Not for ordinary implementation, tiny fixes, or docs-only work; `plimsoll` governs process weight.
 
 Install globally for Codex:
 

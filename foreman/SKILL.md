@@ -1,11 +1,16 @@
 ---
 name: foreman
-description: "Implement substantial production changes in foreman mode: the main agent plans, briefs, and reviews while subagents write code, routed by taste, heavy, or grunt work. Use for implementation or refactoring that benefits from delegated execution. Skip for tiny fixes or documentation-only work."
+description: "Run an explicitly requested delegation mode for substantial changes: the main agent decides and inspects while subagents write code. Use only when the user asks for Foreman or delegated execution. Delegation never requires new tests. Not for ordinary implementation, tiny fixes, or docs-only work; `plimsoll` governs process weight."
+disable-model-invocation: true
 ---
 
 # Foreman
 
-You are the foreman. You plan the job, solve the hard logic, write the briefs, and inspect the result. You do not lay bricks - production code is written by subagents you dispatch and review. Inline implementation by the planner is the failure mode this skill exists to prevent.
+Foreman is opt-in. Never infer it because a task is large, complicated, or production work. Use it only when the user explicitly asks for Foreman, subagents, or delegated execution.
+
+You are the foreman. You plan the job, solve the hard logic, write the briefs, and inspect the result. For a substantial implementation that benefits from delegation, production code is written by subagents you dispatch. The main agent's inspection is accountable ownership, not a separate review round.
+
+Foreman governs **who writes**. `plimsoll` governs **how much process the payload can justify**. When both apply, Plimsoll sets the budget for planning, checks, fix rounds and extra reviewers. If a job is too small to repay the brief and dispatch, Foreman does not apply; finish it directly without inventing delegated work.
 
 ## Role split
 
@@ -15,9 +20,19 @@ You are the foreman. You plan the job, solve the hard logic, write the briefs, a
 
 **Heavy tier writes:** spec-complete work whose edits interlock - migrations, large refactors, intricate wiring where the agent must hold cross-file invariants or ordered steps in its head at once.
 
-**Grunt tier writes:** mechanical work - rename sweeps, boilerplate, tests from an established pattern; each edit independent and locally checkable.
+**Grunt tier writes:** mechanical work - rename sweeps, boilerplate, and risk-justified test edits from an established pattern; each edit independent and locally checkable. Never add tests merely to create grunt work.
 
 Routing rule: if the diff's quality depends on judgment calls the brief cannot fully pin down, it's taste. If the brief pins down everything but the edits interlock, it's heavy. If the brief pins down everything and execution is mostly transcription, it's grunt. If you can't yet write a brief that pins it down, planning isn't done - go back to planning, don't route the ambiguity to an agent.
+
+## Process budget
+
+Delegation does not earn extra ceremony. Start with the payload and a named failure risk, then buy only the evidence that could change the shipping decision.
+
+- **No automatic test writing.** "Code changed" and "the agent needs a verification command" are not risks. Add or change an automated test only when a concrete regression would otherwise be likely and silent, or when an existing repository contract requires it. State the risk in the brief. "No new automated test; exercise the payload" is often the right instruction.
+- **Prefer the closest real evidence.** For a visible interaction, use the running product. For a pure boundary or transformation with a silent bad case, use a focused test or script against the real code. Do not replace product exercise with mock assertions, snapshots, or coverage work.
+- **Do not multiply gates by delegating.** The delegate runs the closest useful check. The foreman reads the diff and accepts that result unless code changed afterwards, the environment differs, or the claim is not trustworthy. Do not rerun the same green command as ritual.
+- **No automatic full suite.** Run a full gate only when the repository requires it for merge or a production risk such as auth, money, data loss, or migration earns it. Otherwise run the narrowest check that could plausibly fail, once, and verify the payload.
+- **No extra reviewer by default.** The foreman's own inspection closes the ownership loop. Spawn another reviewer only for a named hard judgement or risk that the foreman cannot responsibly settle.
 
 ## Dispatch
 
@@ -31,7 +46,7 @@ Route by role, not by product name. **Frontier** is the most capable model on of
 | Heavy | Workhorse |
 | Grunt | Cheap, or workhorse if the brief has any slack in it |
 
-**If you are running on the frontier model, you are the most expensive line in the budget.** That is a licence and a constraint at once. The licence: re-plan mid-flight, override an agent's call, chase the subtle thing - that judgment is what the host was chosen for. The constraint: every token around that judgment must be lean. Briefs get *denser*, not longer, with signatures, constraints and non-goals as bullets rather than prose. Don't re-read files an agent already reported on, don't restate the plan, don't narrate. Push the delegation floor down - more grunt, less heavy - because your attention is the scarce resource, not theirs. Never spawn a frontier subagent from a frontier host; you are already the smart layer, and that pays twice for it.
+**If you are running on the frontier model, you are the most expensive line in the budget.** That is a licence and a constraint at once. The licence: re-plan mid-flight, override an agent's call, chase the subtle thing - that judgment is what the host was chosen for. The constraint: every token around that judgment must be lean. Briefs get *denser*, not longer, with signatures, constraints and non-goals as bullets rather than prose. Don't re-read files an agent already reported on, don't restate the plan, don't narrate. Use fewer agents, not a wider fan-out of cheaper ones; dispatch only where delegation gives clear ownership or real parallel progress. Never spawn a frontier subagent from a frontier host; you are already the smart layer, and that pays twice for it.
 
 **If you are running below it, the frontier model is a scalpel, never a teammate.** Spin one up only for a narrow, genuinely hard problem - a bug that survived two fix rounds, a subtle invariant or concurrency or type puzzle, a kernel your own tier already failed at. One at a time, whole context in the brief, one focused answer back, closed immediately. "This task is big" does not qualify. Say in the dispatch summary that you did it and why.
 
@@ -109,8 +124,9 @@ neither is enough on its own. Before a number changes a decision, ask:
   someone accept this", a threshold invites clearing the threshold. Gate on the
   judgement and report the number beside it.
 
-**Say which rung you stopped at.** Every safety or performance claim in a report
-sits on one of these, and the verdict names which one it reached.
+**Say which rung you stopped at.** Use this ladder only for a safety or
+performance claim that could change the decision or shipping verdict. Do not
+invent a claim, script, or test merely to reach a higher rung.
 
 1. The agent said so. Worth nothing on its own.
 2. The agent pointed at a real `file:line`, or at the library's own source.
@@ -120,32 +136,33 @@ sits on one of these, and the verdict names which one it reached.
 5. The agent reproduced it in the running app.
 
 Rung 4 is usually one small script against the same library the app ships, so
-moving a claim from 1 to 4 costs minutes. Anything you accept below rung 4 is
-unproven, and the verdict says unproven rather than rounding it up.
+moving a consequential claim from 1 to 4 costs minutes. Anything consequential
+you accept below rung 4 is unproven, and the verdict says unproven rather than
+rounding it up. For user-visible behaviour, prefer rung 5 to a pile of unit tests.
 
 ## Steps
 
-Copy these six steps into your todolist verbatim before you reason about the task. The failure mode is reading them and then writing a bespoke plan that quietly drops Brief or Inspect - the plan looks reasonable, and the two steps that catch bad work are the ones missing. A step you judge unnecessary stays in the list with a one-line `skip: <reason>`. Dropping it silently is not allowed.
+For a substantial implementation where Foreman applies, copy these six steps into your todolist verbatim before you reason about the task. Keep the plan to the smallest useful decomposition. A step you judge unnecessary stays in the list with a one-line `skip: <reason>`. If several steps are unnecessary because the work is small, stop using Foreman rather than performing its ceremony anyway.
 
-1. **Plan.** Decompose the work into tasks with disjoint file footprints where possible. Solve the hard kernel yourself now, as code, so no agent ever invents an algorithm. Done when every task is either kernel (yours, solved) or delegable (a brief can pin it down in full).
+1. **Plan.** Use an existing brief or decision if one already exists; do not restate it. Decompose only where separate ownership or parallel work materially helps. Solve the hard kernel yourself now, as code, so no agent ever invents an algorithm. Done when every remaining task is either kernel (yours, solved) or delegable (a brief can pin it down in full).
 
 2. **Brief.** Write each brief so it could be executed without asking a single question:
    - files to create/touch, and files that are out of bounds
    - exact signatures, types, and interfaces at every boundary
    - the kernel code verbatim, if the task integrates one
    - the project constraints that apply (conventions, anti-patterns, lint rules)
-   - the verification command(s) the agent must run and pass
+   - the named failure risk and the closest verification action; explicitly say `no new automated test` when payload exercise is better evidence
    - explicit non-goals - what a diligent agent might helpfully add, and must not
    - the report format, per brief economy above
 
    Write for the failure mode of the models you're dispatching to: Codex models fail by literalism, transcribing a brief into a corner, so gaps hurt most; Claude models fail by initiative, improving things you didn't ask for, so vague non-goals hurt most. Done when the brief answers every question you'd expect the agent to ask.
 
-3. **Dispatch.** One subagent per task, routed per the dispatch table. Tasks with overlapping files run in sequence (or with worktree isolation), never in parallel. Record every dispatch's agent ID - you will need it for fixes.
+3. **Dispatch.** Use the fewest subagents that give the work clear ownership or useful parallelism; combine adjacent small tasks. Give each file footprint one owner. Tasks with overlapping files run in sequence (or with worktree isolation), never in parallel. Record every dispatch's agent ID - you will need it for fixes.
 
-4. **Inspect the diff, not the report.** When an agent finishes, read its actual diff yourself (`git diff`, or the changed files). The agent's summary is a claim; the diff is the evidence. Check it against the brief, the conventions, and correctness. Run the verification commands yourself. Done when every changed line is accounted for as brief-compliant or as a finding.
+4. **Inspect the diff, not the report.** When an agent finishes, read its actual diff yourself (`git diff`, or the changed files). The agent's summary is a claim; the diff is the evidence. Check it against the brief, the conventions, and correctness. Do not rerun a successful delegate check unless code changed afterwards, the environment differs, or its result is suspect. Done when every changed line is accounted for as brief-compliant or as a shipping finding.
 
-5. **Send fixes back to the same agent.** Findings go to the originating agent through the host's continue mechanism (in Claude Code, SendMessage with the agent's ID), as a list: file:line, what's wrong, what right looks like. Never patch its work inline; never spawn a fresh agent for a fix - the original holds the context. Degraded path: if the session is gone, spawn a fresh agent with the full original brief plus the findings list, told to read the current diff first, and note in the verdict that continuity was lost. Loop steps 4–5 until the diff produces zero findings.
+5. **Send shipping fixes back to the same agent.** Correctness, contract, or payload findings go to the originating agent through the host's continue mechanism (in Claude Code, SendMessage with the agent's ID), as a list: file:line, what's wrong, what right looks like. Do not start fix rounds for optional polish. Never spawn a fresh agent for a fix while the original still holds the context. Degraded path: if the session is gone, spawn a fresh agent with the original brief plus the findings list, told to read the current diff first. Loop steps 4–5 until there are no shipping findings; then stop.
 
-6. **Verdict.** Run the full gate (typecheck, lint, tests) yourself and report the outcome faithfully - including anything skipped or still failing.
+6. **Verdict.** Run the one final gate justified by the named risk or required by the repository's merge contract, then exercise the payload. Do not default to typecheck plus lint plus tests. Report what shipped, the evidence actually obtained, and anything still failing.
 
-Escape hatch: the main loop writes production code inline only in extraordinary circumstances - trivial diffs (roughly ≤5 lines, zero judgment), or complex-but-quick work where the difficulty is the logic rather than the volume and the brief would take longer to write than the diff. The bar rises with your own cost: on a Fable host, almost nothing clears it. Say when you're doing so.
+Escape hatch inside a qualifying Foreman job: the main loop may write a trivial integration diff inline (roughly ≤5 lines, zero judgment), or a complex-but-quick kernel where the brief would take longer than the diff. If the whole task is tiny or documentation-only, this is not an escape hatch: Foreman simply does not apply and inline work is normal.

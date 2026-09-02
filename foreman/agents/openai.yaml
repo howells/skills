@@ -1,4 +1,6 @@
 interface:
   display_name: "Foreman"
-  short_description: "Delegate implementation through reviewed briefs"
-  default_prompt: "Use $foreman to implement this by briefing delegated agents, reviewing their diffs, and running the final gates."
+  short_description: "Delegate substantial implementation without ceremony"
+  default_prompt: "Use $foreman because I explicitly requested delegated implementation. Use the fewest agents, inspect each owned diff, and verify only named risks and the shipped payload. Do not add tests merely because code changed."
+policy:
+  allow_implicit_invocation: false

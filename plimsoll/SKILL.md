@@ -39,9 +39,10 @@ Cite by number so the pattern is visible rather than the instance.
 10. **Re-planning work already specified.** Another plan, another review round, another restatement of the decision. If the spec exists, build against it.
 11. **A reviewer for every task.** A test-writer, a spec-reviewer and a code-quality reviewer dispatched for a change one person could read in a minute.
 12. **A branch and a PR per item.** Separate branches and PRs per item when one would land the lot.
-13. **Tests written against mocks.** They assert the spy was called and pass forever. They prove nothing and cost the same as a real one. Stripping them out of an existing diff is `unslop`.
-14. **Tests for paths the payload never takes.** Exhaustive coverage of a code path nobody will exercise between now and the deadline.
-15. **Trial and error at length.** After three failed attempts at the same thing, a fourth will not fix it. Stop and get an outside read - `fable-review` for a judgement call, `glm-review` for a bounded conformance check.
+13. **Tests without a named risk.** "Code changed" is not a risk. Do not send a test-writer to manufacture unit tests because a diff exists or a workflow expects a test step.
+14. **Tests written against mocks.** They assert the spy was called and pass forever. They prove nothing and cost the same as a real one. Stripping them out of an existing diff is `unslop`.
+15. **Tests for paths the payload never takes.** Exhaustive coverage of a code path nobody will exercise between now and the deadline.
+16. **Trial and error at length.** After three failed attempts at the same thing, a fourth will not fix it. Stop and get an outside read - `fable-review` for a judgement call, `glm-review` for a bounded conformance check.
 
 ## Stop conditions
 
@@ -77,10 +78,16 @@ The axis is reversibility, not importance.
 
 Deleting data, rotating credentials and touching production sit outside this calibration. Those are always slow.
 
+Before writing a new automated test, finish this sentence: "The likely silent failure is ___, and this test catches it by ___." If you cannot, do not write the test. Prefer using the real payload when that exposes the failure more directly. Existing repository-required checks can still run at the final merge gate; they do not justify adding a new test to every change.
+
+## When Foreman also applies
+
+Explicitly requested `foreman` governs implementation ownership; Plimsoll governs the weight around it. Never invoke Foreman merely because work is substantial. Keep one main-agent inspection of delegated code because that is ownership, not an extra review round. Cut additional reviewer agents, duplicate verification, generated tests without a named risk, repeated fix rounds for optional polish, and any full gate the risk or merge contract does not earn. If the brief and dispatch cost more than the job, Foreman no longer applies: finish the small change directly and verify the payload.
+
 ## What this is not
 
 - Not permission to ship broken work, or to claim something works without opening it.
 - Not an argument against tests. It argues against tests aimed at the workspace while the payload sits unopened.
 - Not a codebase audit. Grading a repository's health is `survey`.
 - Not a QA pass. Exercising a running app in a browser is `fieldtest`.
-- Not a delegation strategy. Routing implementation to subagents is `foreman`; this skill only says when the ceremony around that routing has outgrown the work.
+- Not a delegation strategy. Routing substantial implementation to subagents is `foreman`; this skill has final say over the process weight around that routing when both apply.
