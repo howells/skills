@@ -1,6 +1,6 @@
 ---
 name: web-research
-description: "Synthesize Exa and Tavily research. Not for browser QA (`fieldtest`)."
+description: "Research the open web with Exa and Tavily and synthesize one cited answer. Not for browser QA (`fieldtest`) or scraping (`firecrawl-*`)."
 ---
 
 # Web research
@@ -21,6 +21,12 @@ The provider credentials are:
 - `TAVILY_API_KEY` from `op://keys/Tavily/credential`.
 
 Use [scripts/request](scripts/request) to call either API without printing a key. Never copy the keys into a project `.env` or substitute another search provider because authentication failed.
+
+Pass a complete JSON request body on standard input:
+
+```sh
+printf '%s' '{"query":"current timber reuse standards","type":"auto","numResults":5}' | scripts/request exa search
+```
 
 ## Research
 

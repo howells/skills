@@ -16,30 +16,45 @@ if [ -z "${OP_SERVICE_ACCOUNT_TOKEN:-}" ]; then
   set +a
 fi
 
+exec 3<&0
+
+post_with_bearer() {
+  request_url=$1
+  credential_ref=$2
+  credential=$(op read "$credential_ref")
+
+  printf 'Authorization: Bearer %s\n' "$credential" | \
+    curl --fail-with-body --silent --show-error \
+      --connect-timeout 10 \
+      --max-time 90 \
+      "$request_url" \
+      -H @- \
+      -H 'Content-Type: application/json' \
+      --data-binary @/dev/fd/3
+}
+
+get_with_bearer() {
+  request_url=$1
+  credential_ref=$2
+  credential=$(op read "$credential_ref")
+
+  printf 'Authorization: Bearer %s\n' "$credential" | \
+    curl --fail-with-body --silent --show-error \
+      --connect-timeout 10 \
+      --max-time 90 \
+      "$request_url" \
+      -H @-
+}
+
 case "$provider:$operation" in
   exa:search|exa:answer)
-    exa_key=$(op read 'op://keys/Exa/credential')
-    curl --fail-with-body --silent --show-error \
-      "https://api.exa.ai/$operation" \
-      -H "x-api-key: $exa_key" \
-      -H 'Content-Type: application/json' \
-      --data-binary @-
+    post_with_bearer "https://api.exa.ai/$operation" 'op://keys/Exa/credential'
     ;;
   exa:contents)
-    exa_key=$(op read 'op://keys/Exa/credential')
-    curl --fail-with-body --silent --show-error \
-      'https://api.exa.ai/contents' \
-      -H "Authorization: Bearer $exa_key" \
-      -H 'Content-Type: application/json' \
-      --data-binary @-
+    post_with_bearer 'https://api.exa.ai/contents' 'op://keys/Exa/credential'
     ;;
   tavily:search|tavily:extract|tavily:map|tavily:crawl|tavily:research)
-    tavily_key=$(op read 'op://keys/Tavily/credential')
-    curl --fail-with-body --silent --show-error \
-      "https://api.tavily.com/$operation" \
-      -H "Authorization: Bearer $tavily_key" \
-      -H 'Content-Type: application/json' \
-      --data-binary @-
+    post_with_bearer "https://api.tavily.com/$operation" 'op://keys/Tavily/credential'
     ;;
   tavily:research-status)
     case "$resource_id" in
@@ -48,14 +63,10 @@ case "$provider:$operation" in
         exit 64
         ;;
     esac
-    tavily_key=$(op read 'op://keys/Tavily/credential')
-    curl --fail-with-body --silent --show-error \
-      "https://api.tavily.com/research/$resource_id" \
-      -H "Authorization: Bearer $tavily_key"
+    get_with_bearer "https://api.tavily.com/research/$resource_id" 'op://keys/Tavily/credential'
     ;;
   *)
-    echo 'usage: request exa <search|contents|answer> | request tavily <search|extract|map|crawl|research|research-status> [request-id]' >&2
+    echo 'usage: <request.json request exa <search|contents|answer> | <request.json request tavily <search|extract|map|crawl|research>; request tavily research-status <request-id>' >&2
     exit 64
     ;;
 esac
-

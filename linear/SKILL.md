@@ -5,7 +5,7 @@ description: "Use either Linear account when MCP has the wrong one. Not for tran
 
 # Linear
 
-Use the read-only 1Password service account token in:
+Use the read-only 1Password service account token in (the Linear API keys themselves are full-access):
 
 `/Users/danielhowells/.codex/plugins/secrets/1password-service-account.env`
 
@@ -17,6 +17,10 @@ There are two accounts:
 - `material-instruments` uses `op://keys/linear material-instruments/credential`.
 
 Use [scripts/graphql](scripts/graphql) to call `https://api.linear.app/graphql` without exposing either key. Pass the account name as its first argument and a complete GraphQL JSON request on standard input.
+
+```sh
+printf '%s' '{"query":"query { viewer { name } }"}' | scripts/graphql howells
+```
 
 ## Choose the account
 

@@ -28,10 +28,13 @@ if [ -z "${OP_SERVICE_ACCOUNT_TOKEN:-}" ]; then
 fi
 
 linear_key=$(op read "$credential_ref")
+exec 3<&0
 
-curl --fail-with-body --silent --show-error \
-  https://api.linear.app/graphql \
-  -H "Authorization: $linear_key" \
-  -H 'Content-Type: application/json' \
-  --data-binary @-
-
+printf 'Authorization: %s\n' "$linear_key" | \
+  curl --fail-with-body --silent --show-error \
+    --connect-timeout 10 \
+    --max-time 30 \
+    https://api.linear.app/graphql \
+    -H @- \
+    -H 'Content-Type: application/json' \
+    --data-binary @/dev/fd/3

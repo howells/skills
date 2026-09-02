@@ -98,7 +98,7 @@ npx skills@latest add howells/skills --skill foreman --agent codex --global
 
 ### `gog`
 
-Use gogcli for Daniel's Google accounts instead of Google connectors.
+Use gogcli for Daniel's Google accounts instead of Google connectors. Not for public web research (`web-research`).
 
 Install globally for Codex:
 
@@ -280,7 +280,7 @@ npx skills@latest add howells/skills --skill what --agent codex --global
 
 ### `web-research`
 
-Synthesize Exa and Tavily research. Not for browser QA (`fieldtest`).
+Research the open web with Exa and Tavily and synthesize one cited answer. Not for browser QA (`fieldtest`) or scraping (`firecrawl-*`).
 
 Install globally for Codex:
 

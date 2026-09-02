@@ -23,7 +23,7 @@ Do not invoke Exa Agent by default. It is a beta, long-running and potentially e
 
 ### Search
 
-`POST https://api.exa.ai/search` uses the `x-api-key` header.
+`POST https://api.exa.ai/search` uses `Authorization: Bearer` in the current coding-agent reference.
 
 - Keep `text`, `highlights` and `summary` inside `contents`.
 - Prefer `highlights: true` for agent work; full text consumes far more context.
@@ -43,7 +43,7 @@ Do not invoke Exa Agent by default. It is a beta, long-running and potentially e
 
 ### Answer
 
-`POST /answer` can provide a cited answer for a bounded factual question. Treat it as a cross-check or lead. The final synthesis must still inspect and cite the underlying sources.
+`POST /answer` can provide a cited answer for a bounded factual question. Send `stream: false` when a JSON response is required. Treat it as a cross-check or lead. The final synthesis must still inspect and cite the underlying sources.
 
 ## Tavily
 
@@ -68,6 +68,7 @@ Map discovers URLs without retrieving their content. Prefer map followed by targ
 - Use `mini` for focused questions and `pro` for complex multi-angle work.
 - Give the request the user's real scope, constraints and known context.
 - Check once after doing other source work rather than repeatedly polling and narrating an unchanged task.
+- If it is still running, finish the remaining source work and check once more. If it remains incomplete, proceed with the evidence already collected rather than polling again.
 - Treat its report and citation list as one research input. Verify decisive claims against the cited pages.
 
 ## Reconcile the providers
@@ -78,4 +79,3 @@ Map discovers URLs without retrieving their content. Prefer map followed by targ
 4. Open the source pages that support the decisive claims; do not cite search result pages.
 5. When sources disagree, state the disagreement and explain which source is stronger rather than silently averaging them.
 6. Write a single answer at the detail level the user asked for, with links adjacent to supported claims.
-

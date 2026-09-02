@@ -1,6 +1,6 @@
 ---
 name: gog
-description: "Use gogcli for Daniel's Google accounts instead of Google connectors."
+description: "Use gogcli for Daniel's Google accounts instead of Google connectors. Not for public web research (`web-research`)."
 ---
 
 # GOG
@@ -11,17 +11,19 @@ GOG already owns its OAuth credentials in `/Users/danielhowells/Library/Applicat
 
 The authenticated accounts are:
 
-- `daniel.howells@gmail.com`
-- `daniel@danielhowells.com`
-- `daniel@materialinstruments.com`
-- `mail@siteinspire.com`
+- `daniel.howells@gmail.com` — personal Gmail
+- `daniel@danielhowells.com` — personal domain
+- `daniel@materialinstruments.com` — Material Instruments
+- `mail@siteinspire.com` — SiteInspire
 
-Honour an account the user names. Infer Material Instruments and SiteInspire from their domains or repository context. For an unspecified read, query the plausible accounts and combine the result rather than stopping for account selection. Before a mutation, ask only when the destination account remains genuinely ambiguous.
+Honour an account the user names. Infer Material Instruments and SiteInspire from their domains or repository context. For an unspecified read, query the plausible accounts and combine the result rather than stopping for account selection. Do not default between the two personal accounts for a mutation; ask when the destination remains genuinely ambiguous.
 
 Before using an unfamiliar command, run `gog schema <command path> --json` or focused `gog <command> --help`; do not guess flags. Prefer structured, non-interactive output:
 
 ```bash
-gog --account <email> --json --no-input --wrap-untrusted --readonly <command>
+gog --account <email> --json --results-only --no-input --wrap-untrusted --readonly <command>
 ```
 
-Use `--readonly` for reads and omit it only when the user requested a mutation. Sending mail, changing calendar events, sharing files and other writes require explicit user intent. Do not use `--force` unless the user explicitly asked to skip the CLI confirmation for that exact action.
+On an account or authentication error, report it. Never run `gog login`, `gog logout` or `gog auth manage`, and never set a default account.
+
+Use `--readonly` for reads and omit it only when the user requested a mutation. Preview writes with `--dry-run` when supported. For a mutation other than sending email, add `--gmail-no-send`. Sending mail, changing calendar events, sharing files and other writes require explicit user intent. Do not use `--force` unless the user explicitly asked to skip the CLI confirmation for that exact action.
