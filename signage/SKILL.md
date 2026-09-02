@@ -35,7 +35,7 @@ Cite by number in findings, so a reviewer sees the pattern rather than the insta
 
 11. **Template-assembled descriptions.** `A Hospitality Lobby in Mid-Century Modern, feeling calm, in warm muted green, evoking Nordic, in the Mid-Century.` Every slot filled, no sentence produced, and the same fact stated twice. Read generated strings as strings, and judge the words against the audience rather than against the template's own logic.
 12. **Portentous compression.** `Candor reads the warehouse through one governed instrument, before the panel sits.` Grammatical, meaningless, and unsayable to another person.
-13. **Being clever in front of someone trying to work.** Wordplay, metaphor, and a knowing voice in a label. The user is mid-task.
+13. **Metaphor and flourish where a direct statement belongs.** Mannered copy substitutes the figure for the fact: `A dial worth turning` where the label means `Sample size`, `Earns its keep` where it means `Still in use`. The phrase displays the writer rather than conveying the idea, so the user does extra work mid-task to recover a plain meaning that could have been written plainly. It is also imprecise, because a metaphor drags in connotations nobody chose. Wordplay and a knowing voice fail the same way. Say what you mean; when a literal phrase is available, use it.
 14. **Rule-of-three cadence and the closing flourish** in body copy, tooltips, and empty states. Three options the user can actually take are a list, which is fine; the tell is three parallel clauses with nothing behind them.
 
 **Typographic tells that read as machine-made**
@@ -66,6 +66,9 @@ The model's word on the left, the audience's word on the right. Direction for th
 | Instrument / Governed | Delete; say what it does |
 | Sampleability | Whether you can get a sample |
 | Artefact | The thing's actual name |
+| A dial worth turning / Tune the dial | Name the setting, and the verb for changing it |
+| Earns its keep / Pulls its weight | State the plain fact - in use, kept, still needed |
+| Where the rubber meets the road | Name the step |
 
 ## Steps
 
@@ -75,7 +78,7 @@ Copy these steps into your todolist verbatim before you start. A step you skip s
 2. **Find the ubiquitous language.** Read any glossary the project keeps before judging a word. Where it keeps none, judge by the test alone and report the gap as a finding for `domain-modeling`, rather than blocking the pass or inventing a glossary.
 3. **Extract every string.** Labels, headings, buttons, status lines, tooltips, empty states, error text, and anything generated from a template. Read them as a flat list, out of layout. Copy that survives only because the design carries it is the copy this pass exists to catch.
 4. **Apply the test mechanically, string by string.** Reject any label over eight words, any label carrying a subordinate clause, any label using a verb phrase where a noun belongs, and any word the step 1 audience would not use in a work conversation. Each rejection gets a tell number and a `file:line` or a node reference.
-5. **Rewrite to the shortest sayable form.** Shorter is only better when it stays sayable, because a shortened piece of jargon is still jargon. Keep every fact the user needs, drop facts the same string already states, and where a string comes from a template, fix the template rather than the rendered instance.
+5. **Rewrite to the shortest sayable form, and the most literal.** Take the literal phrase over the figurative one wherever both exist, per tell 13. Shorter is only better when it stays sayable, because a shortened piece of jargon is still jargon. Keep every fact the user needs, drop facts the same string already states, and where a string comes from a template, fix the template rather than the rendered instance.
 6. **Check the rewrites against the glossary and its avoid-list**, so the fix does not reintroduce a term the domain model rejected, or invent a second word for a thing that already has one.
 7. **Render it and read it in place.** A label that works in a list can still be wrong at its real size next to its real neighbours.
 8. **Report.** Counts by tell number, the before-and-after table, and any term you could not settle without a decision from the owner.
