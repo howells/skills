@@ -9,7 +9,7 @@ A ship carries a load line painted on its hull. Loaded past it, the vessel sits 
 
 **Payload** - the thing the person waiting will look at. A page they open, a query that returns the right answer, a video that plays, a deploy they can click. If nobody outside this session can see it, it is not payload.
 
-**Process weight** - everything carried to make the payload safe to move: checks, gates, polls, reviews, plans, PR hygiene, subagent ceremony. All of it costs turns, and it is worth carrying in proportion to what it protects.
+**Process weight** - everything carried to make the payload safe to move: checks, CI gates, polls, reviews, plans, PR hygiene, subagent ceremony. All of it costs turns, and it is worth carrying in proportion to what it protects.
 
 **The rule that decides every call: process weight is justified by the payload it protects, never by its own completeness.** A check nobody would act on is weight. A gate that cannot fail given what you changed is weight. A poll that changes nothing is weight. Running one more because the last one passed is how a session overloads.
 
@@ -39,7 +39,7 @@ Cite by number so the pattern is visible rather than the instance.
 10. **Re-planning work already specified.** Another plan, another review round, another restatement of the decision. If the spec exists, build against it.
 11. **A reviewer for every task.** A test-writer, a spec-reviewer and a code-quality reviewer dispatched for a change one person could read in a minute.
 12. **A branch and a PR per item.** Separate branches and PRs per item when one would land the lot.
-13. **Tests written against mocks.** They assert the spy was called and pass forever. They prove nothing and cost the same as a real one.
+13. **Tests written against mocks.** They assert the spy was called and pass forever. They prove nothing and cost the same as a real one. Stripping them out of an existing diff is `unslop`.
 14. **Tests for paths the payload never takes.** Exhaustive coverage of a code path nobody will exercise between now and the deadline.
 15. **Trial and error at length.** After three failed attempts at the same thing, a fourth will not fix it. Stop and get an outside read - `fable-review` for a judgement call, `glm-review` for a bounded conformance check.
 
@@ -47,11 +47,12 @@ Cite by number so the pattern is visible rather than the instance.
 
 Any one of these means you are over the line. Stop the current command and run the steps.
 
-- Three consecutive tool calls that check, read or poll without an edit between them.
+- Three consecutive tool calls that check, poll or re-read settled ground - re-running a test, polling a build, opening a file you have already read - with no edit landing between them.
 - A second poll of something you cannot influence.
 - A gate wider than the package you edited.
-- A deadline named in the conversation and no payload that survives it.
+- A deadline named in the conversation, and what you are doing right now will not be visible in the result before it.
 - Someone asks whether you have actually done the thing yet, and the answer is no.
+- You have already been told once to cut the checking, and you are reaching for another check.
 - An hour has passed and you cannot name a user-visible change.
 
 ## Steps
@@ -64,7 +65,7 @@ Copy these into your todolist verbatim before you start. A step you skip stays i
 4. **Cut the gate ladder to one gate.** Pick the narrowest check that could plausibly catch a break in what you actually changed. Everything wider gets deferred to one pass at the end, and you say so.
 5. **Build the payload.** Straight line. No new branch per item, no reviewer for a change you can read yourself, no plan for work already specified.
 6. **Verify against the payload, not the workspace.** Open the page. Run the query. Play the video. Click the deploy. `fieldtest` if it is an app in a browser. Do not skip this step.
-7. **Report in three lines.** What landed and can be seen. What was cut and when it comes back. What is still broken. Never pair "done" with a caveat list - either it is done, or it is not and you keep working.
+7. **Report in three lines.** What landed and can be seen. What was cut, and the tracker item holding it. What is still broken. Never pair "done" with a caveat list - either it is done, or it is not and you keep working.
 
 ## How much checking is enough
 
