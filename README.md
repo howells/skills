@@ -188,7 +188,7 @@ npx skills@latest add howells/skills --skill paste-up --agent codex --global
 
 ### `plimsoll`
 
-Cut process weight when gate ladders, build-watch loops and re-planning have displaced shipping. Use near a deadline, or after a stretch with nothing user-visible. Aims verification at what ships, not the workspace. Not `survey`.
+Cut process weight when gate ladders, CI/build watch loops, remote Vercel builds or re-planning displace shipping. Keeps Vercel builds on the user's machine. Use near a deadline or after nothing user-visible has landed. Not `survey`.
 
 Install globally for Codex:
 

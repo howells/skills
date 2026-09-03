@@ -1,4 +1,4 @@
 interface:
   display_name: "Plimsoll"
-  short_description: "Cut the checking when it has displaced shipping"
-  default_prompt: "Use $plimsoll to stop the current checking, name what the person waiting will actually look at, and cut the checks down to the one that could really fail."
+  short_description: "Cut slow checks and keep Vercel builds local"
+  default_prompt: "Use $plimsoll to stop the current checking, name what the person waiting will actually look at, keep every Vercel build on the user's machine, and cut checks to the one that could really fail."
