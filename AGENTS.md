@@ -4,6 +4,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 
 ## The skills
 
+- `blender` - drive Blender through the Blender Lab MCP server or headless, and measure a scene without lying to yourself.
 - `chiaroscuro` - end-to-end UI design, implementation, responsive and accessible behavior, browser verification, and polish.
 - `componentize` - consolidate duplicated UI, god files and code that should be a package.
 - `deslop` - audit and rewrite prose carrying AI-writing tells.

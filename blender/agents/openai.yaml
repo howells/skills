@@ -1,0 +1,10 @@
+interface:
+  display_name: "Blender"
+  short_description: "Drive Blender via MCP or headless CLI"
+  default_prompt: "Use $blender to inspect this scene, run the render, and open the image before reporting."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "blender"
+      description: "Inspect and drive a running Blender through the Blender Lab MCP server"
+      transport: "stdio"

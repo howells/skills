@@ -1,6 +1,6 @@
 ---
 name: muster
-description: "Rebuild working context across concurrent or older agent tasks from transcripts, git state, peer sessions, and the tracker. Use for 'catch me up', 'where did I leave off', or 'what is in flight', returning every active thread and its next move. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`)."
+description: "Rebuild context across concurrent or older tasks from transcripts, git, peer sessions and the tracker. Use for catch-ups and in-flight inventories. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`)."
 ---
 
 # Muster

@@ -1,6 +1,6 @@
 ---
 name: typecase
-description: "Design, migrate and enforce a small set of named type roles across a UI codebase, with a census and a scanner. Use when raw size, weight, tracking, leading, family or case utilities have multiplied, or a type ramp needs designing or collapsing. Not for general visual direction (`chiaroscuro`), interface wording (`signage`), or one-off typography polish."
+description: "Design and enforce named typography roles across a UI codebase. Use when raw font utilities have multiplied or a type ramp needs consolidating. Not for visual direction (`chiaroscuro`), interface wording (`signage`), or one-off type polish."
 ---
 
 # Typecase

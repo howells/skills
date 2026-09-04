@@ -26,6 +26,16 @@ Use `--copy` if you want independent files rather than symlinks. Restart your ag
 
 ## Skills
 
+### `blender`
+
+Inspect, measure and render Blender scenes through MCP or headless CLI. Use for Blender scene, render-pipeline or MCP work. Not for 2D design files (`paste-up`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill blender --agent codex --global
+```
+
 ### `chiaroscuro`
 
 Design polished responsive web UI with Tailwind v4. Not for browser QA (`fieldtest`), reuse (`componentize`), copy (`signage`) or typography (`typecase`).
@@ -158,7 +168,7 @@ npx skills@latest add howells/skills --skill memento --agent codex --global
 
 ### `muster`
 
-Rebuild working context across concurrent or older agent tasks from transcripts, git state, peer sessions, and the tracker. Use for 'catch me up', 'where did I leave off', or 'what is in flight', returning every active thread and its next move. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`).
+Rebuild context across concurrent or older tasks from transcripts, git, peer sessions and the tracker. Use for catch-ups and in-flight inventories. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`).
 
 Install globally for Codex:
 
@@ -198,7 +208,7 @@ npx skills@latest add howells/skills --skill plimsoll --agent codex --global
 
 ### `product-description`
 
-Document a product outside-in as user-visible behavior drafted from code and tests, verified in the running product, and consolidated into bug triage. Use for complete experience documentation across web, mobile, canvas, CLI, chat, or agent products. Not for marketing copy, a README, a single-feature spec, or browser QA alone (`fieldtest`).
+Document user-visible product behaviour from code, tests and the running product, then consolidate defects into triage. Use for complete experience documentation. Not for marketing copy, READMEs, single-feature specs, or browser QA alone (`fieldtest`).
 
 Imported from [Steve Ruiz's original `product-description` gist](https://gist.github.com/steveruizok/83ae5c53f2784ebf8f5fe0a3fb94480f).
 
@@ -250,7 +260,7 @@ npx skills@latest add howells/skills --skill survey --agent codex --global
 
 ### `typecase`
 
-Design, migrate and enforce a small set of named type roles across a UI codebase, with a census and a scanner. Use when raw size, weight, tracking, leading, family or case utilities have multiplied, or a type ramp needs designing or collapsing. Not for general visual direction (`chiaroscuro`), interface wording (`signage`), or one-off typography polish.
+Design and enforce named typography roles across a UI codebase. Use when raw font utilities have multiplied or a type ramp needs consolidating. Not for visual direction (`chiaroscuro`), interface wording (`signage`), or one-off type polish.
 
 Install globally for Codex:
 
