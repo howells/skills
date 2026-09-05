@@ -1,22 +1,15 @@
 ---
 name: gog
-description: "Use gogcli for Daniel's Google accounts instead of Google connectors. Not for public web research (`web-research`)."
+description: "Use gogcli for configured Google accounts instead of Google connectors. Not for web research (`web-research`)."
 ---
 
 # GOG
 
-Use the installed `/opt/homebrew/bin/gog` CLI for Daniel's Gmail, Calendar, Drive, Docs, Sheets and other Google services. Do not use the generic Gmail or Google connectors when this skill applies.
+Use the installed `gog` CLI for Gmail, Calendar, Drive, Docs, Sheets and other Google services. Check `command -v gog` and report a missing installation. Do not use generic Google connectors when this skill applies.
 
-GOG already owns its OAuth credentials in `/Users/danielhowells/Library/Application Support/gogcli/`. Do not ask for an API key, copy its credentials into a project, or replace its authentication with a connector.
+Discover authenticated accounts with `gog auth list`; confirm its flags with current help. GOG owns its OAuth credentials in its configured storage. Do not copy them into a project or replace its authentication with a connector. If no account is authenticated, report the missing setup; do not initiate login unless requested.
 
-The authenticated accounts are:
-
-- `daniel.howells@gmail.com` — personal Gmail
-- `daniel@danielhowells.com` — personal domain
-- `daniel@materialinstruments.com` — Material Instruments
-- `mail@siteinspire.com` — SiteInspire
-
-Honour an account the user names. Infer Material Instruments and SiteInspire from their domains or repository context. For an unspecified read, query the plausible accounts and combine the result rather than stopping for account selection. Do not default between the two personal accounts for a mutation; ask when the destination remains genuinely ambiguous.
+Honour an account the user names. Use repository context only when it explicitly identifies the owning account or domain. For an unspecified read, query the plausible configured accounts and label their results. Ask before a mutation whose destination remains ambiguous; never invent account aliases or assume an account inventory.
 
 Before using an unfamiliar command, run `gog schema <command path> --json` or focused `gog <command> --help`; do not guess flags. Prefer structured, non-interactive output:
 

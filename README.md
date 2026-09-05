@@ -26,7 +26,7 @@ Use `--copy` if you want independent files rather than symlinks. Restart your ag
 
 ## Skills
 
-The collection includes general-purpose workflows and personal integrations. `gog`, `linear`, `starling`, `xero` and `web-research` assume Daniel's local tools, accounts and 1Password setup; Xero also uses a private repository. Installing those skills does not provision access. The other skills may require their named applications or CLIs, as documented inside each skill.
+The integration skills (`gog`, `linear`, `starling`, `xero` and `web-research`) use tools, accounts and credentials configured by the installing user. They include no account inventory or private repository dependency. Installing a skill does not provision access. The other skills may require their named applications or CLIs, as documented inside each skill.
 
 ### `blender`
 
@@ -110,7 +110,7 @@ npx skills@latest add howells/skills --skill foreman --agent codex --global
 
 ### `gog`
 
-Use gogcli for Daniel's Google accounts instead of Google connectors. Not for public web research (`web-research`).
+Use gogcli for configured Google accounts instead of Google connectors. Not for web research (`web-research`).
 
 Install globally for Codex:
 
@@ -130,7 +130,7 @@ npx skills@latest add howells/skills --skill glm-review --agent codex --global
 
 ### `linear`
 
-Use Daniel's Linear accounts via GraphQL; choose the account that owns the target. Not for transcripts (`muster`).
+Use configured Linear accounts via GraphQL; choose the account that owns the target. Not for transcripts (`muster`).
 
 Install globally for Codex:
 
@@ -242,7 +242,7 @@ npx skills@latest add howells/skills --skill signage --agent codex --global
 
 ### `starling`
 
-Query Daniel's Starling Bank balances and transactions. Not for Xero (`xero`).
+Query configured Starling Bank balances and transactions. Not for Xero (`xero`).
 
 Install globally for Codex:
 
@@ -302,7 +302,7 @@ npx skills@latest add howells/skills --skill web-research --agent codex --global
 
 ### `xero`
 
-Query Xero accounting data through Daniel's offledger CLI. Not for Starling (`starling`).
+Query Xero accounting data through a configured integration. Not for Starling (`starling`).
 
 Install globally for Codex:
 

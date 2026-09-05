@@ -25,7 +25,7 @@ Four to six roles. Every text element in the product picks exactly one.
 | `type-small` | Metadata, labels, captions, controls. The workhorse. |
 | `type-data` | Numerics and codes. A **family variant** of the smallest role, sharing its size and weight. |
 
-Add a role only when a real, nameable job has no home. A products-and-editorial site justified nine; an ops console justified four. Nine is the ceiling, and every role past the fifth needs a sentence saying what it does that its neighbour cannot.
+Add a role only when a real, nameable job has no home. A products-and-editorial site may need more roles than an operations console. Nine is the ceiling, and every role past the fifth needs a sentence saying what it does that its neighbour cannot.
 
 **Two roles that share a size are one role wearing two coats**, and that is how a case grows past the count anyone chose. Collapse them and let weight or family carry the difference.
 
@@ -91,7 +91,7 @@ Use these steps at the requested scope. For an audit or proposal, return the cen
 
 7. **Migrate**, following the mapping. Convert whole files rather than leaving a file half on the case - a stylesheet with some rules converted and some raw is worse than one consistently raw.
 
-8. **Install the scanner.** `@howells/lint` already ships one - turn on `howells/no-raw-type-utilities` and pass the roles in `allow`. Where that is not available, [`references/gates.md`](references/gates.md) has the three shapes to write instead, the token list, and the five ways a size hides from a naive matcher. Wire it into CI.
+8. **Install the scanner.** Use an existing project typography rule when its verified coverage fits. Otherwise, [`references/gates.md`](references/gates.md) has the three shapes to write instead, the token list, and the five ways a size hides from a naive matcher. Wire it into CI.
 
 9. **Prove the scanner bites.** Plant a violation in a file it should cover, confirm it is named with a `file:line` and a suggested role, then restore. Do this once per configured root, checking each against where the UI actually lives.
 

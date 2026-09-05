@@ -87,7 +87,7 @@ Clearing a bbox guarantees no penetration. A crossing bbox does **not** prove pe
 
 A checklist for "why does the render not match the viewport".
 
-- **`ob.hide_render = True`.** Shows in the viewport, excluded from every render. A pendant light rendered as a bare wire frame for hours because the woven shade mesh carried it. Sweep for it:
+- **`ob.hide_render = True`.** Shows in the viewport, excluded from every render. For example, a hidden shade mesh can leave a pendant light rendering as a bare wire frame. Sweep for it:
   ```python
   [o.name for o in bpy.data.objects if o.hide_render]
   ```
@@ -104,11 +104,11 @@ A checklist for "why does the render not match the viewport".
 
 ### What is actually installed
 
-The official server is `projects.blender.org/lab/blender_mcp`. Discover its actual checkout and add-on from the current harness configuration. This is an example of the author's Claude registration, not a portable install path:
+The official server is `projects.blender.org/lab/blender_mcp`. Discover its actual checkout and add-on from the current harness configuration. A stdio registration can have this shape; replace the placeholder with the discovered absolute checkout path:
 
 ```json
 "blender": {"type":"stdio","command":"uv",
-  "args":["--directory","$HOME/blender_mcp/mcp","run","blender-mcp"],"env":{}}
+  "args":["--directory","/absolute/path/to/blender_mcp/mcp","run","blender-mcp"],"env":{}}
 ```
 
 The Blender-side add-on ships separately as `mcp-<version>.zip` and installs to
@@ -119,8 +119,8 @@ add-on against the release zip, ignoring `__pycache__`.
 Bundled reference docs, worth grepping before trusting memory of the `bpy` API:
 
 ```
-$HOME/blender_mcp/mcp/blmcp/data/api      ~2,000 .rst
-$HOME/blender_mcp/mcp/blmcp/data/manual   ~2,200 .rst
+<server-checkout>/mcp/blmcp/data/api      ~2,000 .rst
+<server-checkout>/mcp/blmcp/data/manual   ~2,200 .rst
 ```
 
 `blender.org/lab/mcp-server` is behind Cloudflare and returns 403 to most fetchers. The wiki is a git repo and is wide open — `git clone https://projects.blender.org/lab/blender_mcp.wiki.git` — as is the Gitea JSON API at `projects.blender.org/api/v1/repos/lab/blender_mcp/{releases,tags,issues}`.

@@ -1,6 +1,6 @@
 # Interface: Marketing Pages
 
-**Quality bar:** Build marketing sites worthy of [siteinspire.com](https://siteinspire.com). Distinctive, refined, memorable - not generic template work. Every element earns its place; decorative furniture erodes credibility.
+**Quality bar:** Build marketing sites with a clear visual identity, strong typography and deliberate composition. Distinctive, refined, memorable - not generic template work. Every element earns its place; decorative furniture erodes credibility.
 
 ## Hero Section
 

@@ -33,11 +33,11 @@ A fallback is allowed only when it is a real product requirement, a documented m
 3. Read `references/remediation.md` when findings involve environment variables, legacy compatibility, broad catch blocks, or staged migrations.
 4. Classify each finding:
    - `remove`: dead compatibility, legacy aliases, duplicate option names, fallback branches without a live caller.
-   - `require`: missing config, absent dependencies, invalid user input, or an env var that belongs in the Envy schema.
+   - `require`: missing config, absent dependencies, invalid user input, or an env var that belongs in the environment schema.
    - `validate`: boundary input that must accept unknown data but should reject invalid states clearly.
    - `keep`: documented product behavior, real external API compatibility, or temporary migration with owner and removal date.
 5. Edit narrowly. Remove the fallback state and update call sites/tests to use the canonical path.
-6. Add or update tests that prove the code fails deterministically when the dependency, input, config, or Envy-declared env var is missing.
+6. Add or update tests that prove the code fails deterministically when the dependency, input, config, or schema-declared env var is missing.
 7. Run the scanner again, plus the repo's relevant tests, typecheck, lint, or build.
 8. Report remaining fallbacks explicitly. Do not leave them invisible.
 
@@ -45,17 +45,9 @@ A fallback is allowed only when it is a real product requirement, a documented m
 
 Environment variables are configuration contracts, not suggestion fields.
 
-In TypeScript projects that use `@howells/envy`, missing required env vars are already enforced by the schema. Do not add app-level "maybe missing" branches, default values, or defensive fallbacks for those keys. Application code should import typed env values from the env module instead of reading `process.env` directly. If a required key is not in the schema, add it to the Envy schema rather than adding a runtime fallback.
+In projects with a validated environment schema, required values should fail validation before application code uses them. Import typed values from the project's environment module. If a required key is missing from the schema, declare and validate it there rather than adding an application fallback.
 
-Use Envy checks when available:
-
-```bash
-npx --no-install envy check local --schema ./src/env/schema.ts --from .env.production
-npx --no-install envy check local --schema ./src/env/schema.ts --mode all --json
-npx --no-install envy check turbo --schema ./src/env/schema.ts --task build
-```
-
-(`--no-install` ensures npx runs the project's `@howells/envy` binary rather than downloading an unrelated `envy` package if it is not a dependency.)
+Use the project's existing environment validation and build checks. Inspect its scripts and validator documentation for the actual commands; do not install a new package just to follow this skill.
 
 Accept direct `process.env` reads only in env schema modules, generated env wiring, narrow system keys such as `NODE_ENV` and `CI`, or explicitly documented migration escape hatches.
 
@@ -66,13 +58,13 @@ const apiKey = process.env.OPENAI_API_KEY || "dev-key";
 const databaseUrl = process.env.DATABASE_URL ?? "postgres://localhost";
 ```
 
-Replace with typed Envy access:
+Replace with typed environment access:
 
 ```ts
 const apiKey = env.OPENAI_API_KEY;
 ```
 
-Use explicit validation only in codebases that do not use Envy and where adding Envy is outside the task scope.
+When no environment schema exists, validate required values explicitly at the configuration boundary using the project's existing conventions.
 
 ## Error Handling
 

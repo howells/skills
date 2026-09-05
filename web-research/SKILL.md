@@ -9,18 +9,9 @@ Use Exa and Tavily as complementary research providers, then write one synthesis
 
 ## Authentication
 
-Use the read-only 1Password service account token in:
+Inject `EXA_API_KEY` and `TAVILY_API_KEY` from the user's configured secret manager or environment into the request subprocess. Only the selected provider's key is required for a call. This skill contains no account inventory, vault names or credential-file paths.
 
-`/Users/danielhowells/.codex/plugins/secrets/1password-service-account.env`
-
-Source that file to set `OP_SERVICE_ACCOUNT_TOKEN`. This is non-interactive and must not prompt for 1Password authentication.
-
-The provider credentials are:
-
-- `EXA_API_KEY` from `op://keys/Exa/credential`.
-- `TAVILY_API_KEY` from `op://keys/Tavily/credential`.
-
-Use [scripts/request](scripts/request) to call either API without printing a key. Never copy the keys into a project `.env` or substitute another search provider because authentication failed.
+Use [scripts/request](scripts/request) to call either API without exposing a key in diagnostics or command arguments. Never copy keys into a project `.env` or substitute another search provider because authentication failed. Report which provider is unavailable and any resulting coverage gap. Credential loading must be non-interactive and bounded by the host's timeout; do not initiate login as a repair step.
 
 Pass a complete JSON request body on standard input:
 
@@ -40,4 +31,4 @@ Read [references/providers.md](references/providers.md) before choosing endpoint
 
 Use deep or agentic research only when ordinary search and extraction cannot answer the question. Provider-generated research reports remain inputs to the synthesis, not the final answer.
 
-The bundled helpers require Python 3. [scripts/read-credential.py](scripts/read-credential.py) bounds each credential lookup to 30 seconds; a failure stops the request without interactive authentication.
+The bundled helpers require Python 3. [scripts/read-credential.py](scripts/read-credential.py) requires a nonempty, single-line environment credential before any request. Inject secrets before invoking the helper; it never reads a credential file or initiates authentication.

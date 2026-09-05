@@ -100,7 +100,7 @@ RULES = [
         "environment",
         "high",
         re.compile(r"\bprocess\.env\.[A-Z0-9_]+\s*(?:\|\||\?\?)\s*[^;\n]+"),
-        "Use an Envy schema and typed env module; do not add app-level fallbacks for potentially missing env vars.",
+        "Use an environment schema and typed env module; do not add app-level fallbacks for potentially missing env vars.",
     ),
     Rule(
         "direct-env-read",

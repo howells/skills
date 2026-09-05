@@ -27,7 +27,7 @@ Require the value when code cannot work correctly without it.
 Typical fixes:
 
 - fail during startup or module initialization with a specific message;
-- move env vars into an Envy schema and read them through the typed env module;
+- move env vars into an environment schema and read them through the typed env module;
 - replace `foo || defaultFoo` with a required function argument;
 - change tests to pass explicit fixtures.
 
@@ -52,28 +52,25 @@ For a temporary migration, record the owner, removal date or version window, and
 
 Environment handling should be deterministic.
 
-In TypeScript repos that use `@howells/envy`, required env var presence is already enforced by the schema. "The env var might be missing" is not a reason to add an application fallback, because the Envy schema should make that state unreachable. If a required key is not declared, add it to the schema.
+Where an environment schema exists, required values should fail validation before application code uses them. Add undeclared required keys to that schema. Keep server-only secrets out of client bundles.
 
-Use Envy schemas for env contracts:
+For example, a server environment module in a project already using Zod can validate only its required keys:
 
 ```ts
-import { defineEnv } from "@howells/envy";
 import { z } from "zod";
 
-export const envSchema = defineEnv({
-  server: {
-    DATABASE_URL: z.string().url(),
-    OPENAI_API_KEY: z.string().min(1),
-  },
-  public: {
-    NEXT_PUBLIC_APP_URL: z.string().url(),
-  },
-  system: {
-    NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
-    CI: z.coerce.boolean().default(false),
-  },
+const envSchema = z.object({
+  DATABASE_URL: z.string().url(),
+  OPENAI_API_KEY: z.string().min(1),
+});
+
+export const env = envSchema.parse({
+  DATABASE_URL: process.env.DATABASE_URL,
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 });
 ```
+
+Use the existing validator and module conventions; this example does not require introducing Zod. Never log the raw environment or validation input containing secrets.
 
 Application code should use typed env modules:
 
@@ -97,13 +94,7 @@ const apiKey = env.OPENAI_API_KEY;
 const url = env.DATABASE_URL;
 ```
 
-Use Envy commands when present:
-
-```bash
-npx --no-install envy check local --schema ./src/env/schema.ts --from .env.production
-npx --no-install envy check local --schema ./src/env/schema.ts --mode all --json
-npx --no-install envy check turbo --schema ./src/env/schema.ts --task build
-```
+Run the project's documented environment validation command and the relevant build check. Inspect package scripts rather than guessing a validator binary or downloading a similarly named package.
 
 Allowed direct `process.env` reads:
 
@@ -112,7 +103,7 @@ Allowed direct `process.env` reads:
 - system keys such as `NODE_ENV` and `CI`;
 - documented temporary migration escape hatches.
 
-Do not replace an env fallback with another hand-rolled guard in an Envy project. The proper failure point is schema parsing or an Envy preflight command.
+When a schema already owns environment validation, extend it rather than duplicating guards in application code. The failure point belongs in schema parsing or the project's configuration preflight.
 
 ## Common Refactors
 
@@ -173,7 +164,7 @@ if (!input.projectId) {
 
 Add tests for the failure mode, not just the happy path:
 
-- missing Envy-declared env var fails schema validation;
+- missing schema-declared env var fails schema validation;
 - missing required argument throws a specific error;
 - legacy key is rejected when compatibility is removed;
 - catch block rethrows with useful context;

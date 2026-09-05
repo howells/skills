@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
-"""Read one 1Password credential with a bounded, non-interactive bootstrap."""
-import subprocess
+"""Read one injected environment credential for an internal request pipe."""
+import os
+import re
 import sys
 
-try:
-    result = subprocess.run(["op", "read", sys.argv[1]], stdin=subprocess.DEVNULL, capture_output=True, timeout=30)
-except subprocess.TimeoutExpired:
-    print("Credential bootstrap exceeded 30 seconds; no interactive authentication attempted.", file=sys.stderr)
-    raise SystemExit(124)
-except FileNotFoundError:
-    print("Credential bootstrap requires the op CLI.", file=sys.stderr)
-    raise SystemExit(127)
-if result.returncode or not result.stdout.strip():
-    print("Credential bootstrap failed or returned an empty value; check configured non-interactive access.", file=sys.stderr)
-    raise SystemExit(result.returncode or 1)
-sys.stdout.buffer.write(result.stdout)
+if len(sys.argv) != 2 or not re.fullmatch(r"[A-Z][A-Z0-9_]*", sys.argv[1]):
+    print("Usage: read-credential.py ENVIRONMENT_VARIABLE", file=sys.stderr)
+    raise SystemExit(64)
+value = os.environ.get(sys.argv[1], "")
+if not value.strip() or any(ord(char) < 32 or ord(char) == 127 for char in value):
+    print("Required credential is missing or invalid; inject a nonempty, single-line value.", file=sys.stderr)
+    raise SystemExit(78)
+sys.stdout.write(value)

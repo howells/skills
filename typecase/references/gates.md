@@ -1,39 +1,16 @@
 # Scanners
 
-**Reach for `@howells/lint` first.** It ships `howells/no-raw-type-utilities`, which does this generically: it carries no project token table, governs a configurable namespace, and permits exactly what you pass in `allow`. It scans `className`/`class` attributes, `cn`/`cx`/`clsx`/`cva`/`tv`/`twMerge`/`twJoin`/`classNames` arguments, and `Record<*Size, string>` size ladders through real AST scoping, so it never fires on a same-spelled word in a comment, a JSDoc `@example`, or an unrelated string prop.
+Use an existing project typography rule when it covers the required syntax. Inspect its configuration and enable it with the agreed role classes and sanctioned modifiers. Verify coverage for `className`/`class`, class-composition calls and size maps; a familiar rule name is not evidence of coverage.
 
-```ts
-import react from "@howells/lint/oxlint/react";
-
-export default {
-  extends: [react],
-  rules: {
-    "howells/no-raw-type-utilities": [
-      "error",
-      {
-        allow: [
-          "type-display", "type-heading", "type-body", "type-small", "type-data",
-          "font-medium", "font-mono", "capitalize",
-        ],
-      },
-    ],
-  },
-};
-```
-
-Inspect the installed rule’s governed namespace: it may also cover `italic`, `not-italic` and `normal-case`, which the lexical census does not count. Decide whether those belong to roles or sanctioned modifiers, and align `match`/`allow` before migration. Every sanctioned modifier must appear in the allow list.
-
-It is opt-in and enabled by no preset, so it does nothing until a project turns it on. `match` widens or narrows the governed namespace; the default is standard Tailwind typography, excluding colour, alignment and wrapping.
-
-Write one of the three shapes below only where `@howells/lint` is not available, or where the delivery has to be a baseline or a test rather than a lint rule.
+Otherwise choose one of the shapes below. The bundled lexical census helps inventory debt, but a lint rule should use AST scoping so comments, documentation and unrelated string props do not become violations. Align the governed namespace with the migration: colour, alignment and wrapping remain outside typography unless explicitly included.
 
 ## Writing your own
 
-Three shapes, all in production. Pick by the codebase's state, not by taste.
+Three implementation shapes. Pick by the codebase's state, not by taste.
 
 | Shape | Pick it when | Cost |
 | --- | --- | --- |
-| **oxlint plugin** | The codebase is clean, or close. Editor squiggles and a per-line message. | Needs `@howells/lint` and a JS plugin entry. |
+| **oxlint plugin** | The codebase is clean, or close. Editor squiggles and a per-line message. | Needs oxlint with JS plugin support and a local rule implementation. |
 | **Baselined script** | Existing debt is real and cannot be paid down now. Files may not grow their count; new files must be clean. | A checked-in baseline that needs deliberate refreshing. |
 | **Test** | The test suite is already the CI gate and you want no new script. | Runs at test speed, reports as a test failure. |
 
@@ -121,15 +98,15 @@ if (LEADING.test(base)) {
 }
 ```
 
-Config, scoped so the UI package's control primitives stay out:
+Example configuration; add the project's intended file scope and permitted primitive exceptions:
 
 ```ts
 // oxlint.typography.config.ts
 const specifier = new URL("scripts/oxlint-plugins/no-inline-typography.mjs", import.meta.url).href;
 
 export default {
-  jsPlugins: [{ name: "howells-ui", specifier }],
-  rules: { "howells-ui/no-inline-typography": "error" },
+  jsPlugins: [{ name: "typography", specifier }],
+  rules: { "typography/no-inline-typography": "error" },
 };
 ```
 
@@ -171,7 +148,7 @@ Anchoring `CLASS_FN` on `className=` is the common mistake: it reads `className=
 Exceptions go in a `Set` of paths beside a comment naming the reason and the ADR:
 
 ```ts
-const EXCEPTIONS = new Set(["app/(site)/(editorial)/pulse/animated-figure.tsx"]);
+const EXCEPTIONS = new Set(["app/editorial/animated-figure.tsx"]);
 ```
 
 ## Scoping the roots

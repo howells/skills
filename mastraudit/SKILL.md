@@ -33,9 +33,9 @@ When there is no time for the full audit, these catch the most:
 
 ## Use the scanners before you grep
 
-Several of these checks are deterministic and already implemented. Where `@howells/mastra` is installed, `@howells/mastra/boundary` exports scanners that each return sorted `path: reason` findings - as of 0.2.1: `findDirectMastraImports`, `findToolIdFilenameMismatches`, `findToolsMissingAnnotations`, `findBarrelFiles`, `findFlatGenerateSettings`, `findShorthandToolKeys`, `findUnkeyedMcpClients`. Check the installed version's exports rather than trusting this list.
+Some projects already provide deterministic checks for import boundaries, tool IDs and annotations, barrel files, model-setting nesting, tool keys or MCP client identity. Discover applicable scanners in the project's installed packages and scripts. Verify their documented coverage instead of assuming a particular package or export exists.
 
-Inspect the installed scanner signatures and bundled usage examples, then call the applicable exports against the scoped implementation root. Do not invent arguments from the export names. If the package or runnable interface is unavailable, use manual search and state the coverage gap. Scanner output is a lead: verify it against the implementation and supported contracts.
+Inspect the installed scanner signatures and bundled usage examples, then call the applicable exports against the scoped implementation root. Do not invent arguments from the export names. If a suitable scanner is unavailable, use manual search and state the coverage gap. Scanner output is a lead: verify it against the implementation and supported contracts.
 
 ## The check catalogue
 

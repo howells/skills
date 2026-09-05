@@ -43,7 +43,7 @@ This is the part that goes wrong. Worktrees on a shared machine belong to whiche
 
 A rescued branch nobody can identify gets deleted next month by whoever is tidying up. Naming it is what makes the rescue stick, so do this for every at-risk item before reporting it.
 
-- **Read the branch name for a ticket ID.** `feat/mg-1168-channel` carries `MG-1168`. Look it up in whatever tracker the session can reach and report the title and status beside the branch.
+- **Read the branch name for a ticket ID.** `feat/APP-123-search` carries `APP-123`. Look it up in whatever tracker the session can reach and report the title and status beside the branch.
 - **The ticket's state is evidence about the branch's state.** An open ticket says the work is still wanted, whatever the timestamps suggest; a closed one with the branch merged is the strongest safe-to-remove signal there is.
 - **No ticket means read the commits.** Subjects and diffstat, one line: "three commits, adds the facet-filter timeout guard."
 - **Say what it is not.** Work superseded by something already on the default branch is the finding, not a footnote - cite the commit that replaced it.

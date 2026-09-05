@@ -1,42 +1,24 @@
 ---
 name: xero
-description: Query Xero accounting data through Daniel's offledger CLI. Not for Starling (`starling`).
+description: Query Xero accounting data through a configured integration. Not for Starling (`starling`).
 ---
 
 # Xero
 
-Use the read-only 1Password service account token in:
+Use an existing authenticated Xero connector, API client or CLI. Discover the integration from available tools and project documentation, then inspect its current schema, help or source. This skill supplies no private repository, account inventory or credentials. If access is absent, report the missing setup instead of cloning a client or starting authentication unasked.
 
-`/Users/danielhowells/.codex/plugins/secrets/1password-service-account.env`
+## Select the organisation
 
-Run the bootstrap and requested command in the same non-interactive subprocess. Require the service-account file and assignment before invoking `op`:
+Honour the organisation or tenant the user names. Use the integration's supported read operation to inspect accessible organisations and select the matching identifier. Do not assume a default tenant. Read-only work may inspect plausible organisations; ask before an ambiguous selection changes the requested result.
 
-```sh
-set -eu
-credential_file=/Users/danielhowells/.codex/plugins/secrets/1password-service-account.env
-test -r "$credential_file" || { echo 'Service-account file missing' >&2; exit 1; }
-set -a
-. "$credential_file"
-set +a
-test -n "${OP_SERVICE_ACCOUNT_TOKEN:-}" || { echo 'Service-account token missing' >&2; exit 1; }
-```
+Use credentials supplied by the configured client or secret manager. Keep secrets out of command arguments, logs, project `.env` files and examples. Allow the client's documented token refresh and private token cache; do not copy caches or create ad hoc credential files. Never initiate interactive authentication as a repair step without user intent.
 
-Load the Xero credentials at runtime with `op run` using:
+## Query and report
 
-- `XERO_CLIENT_ID=op://keys/Xero Custom Connection/username`
-- `XERO_CLIENT_SECRET=op://keys/Xero Custom Connection/credential`
+1. Establish the organisation, requested records or report, date range, currency and accounting basis where relevant. Preserve the source's distinctions between cash and accrual, tax-inclusive and tax-exclusive, and draft and posted records.
+2. Check that the chosen operation reads data. A command named “balances” or “report” may also persist rows or synchronise a database; inspect its behaviour before running it. Use a documented read-only mode when available. Local synchronisation and remote mutations require the user's request.
+3. Follow the integration's pagination and filtering rules. Report partial access, missing pages and stale cached data. Do not equate a partial response with a complete ledger.
+4. Bound each request or process tree, normally to 30 seconds per call. Report credential and API failures separately only when evidence distinguishes them; do not guess from silence or automatically retry an uncertain write.
+5. Return the requested figures with organisation, period, currency, accounting basis and retrieval time. Reconcile totals to the returned records or report, and explain any gap instead of filling it with estimates.
 
-Never print a credential or token or create ad hoc credential files. The CLI-managed access-token cache at `~/.offledger/xero-tokens.json` is the sole file exception; verify the directory and file remain private (0700/0600). Never copy that cache or write credentials to `.env`. The offledger CLI's stale “must be set in .env” error means environment variables; do not follow it literally.
-
-Use the private repository `https://github.com/howells/offledger`, whose Xero CLI is `scripts/xero.mjs`. If `/Users/danielhowells/Sites/offledger` is absent, clone there with `gh repo clone howells/offledger /Users/danielhowells/Sites/offledger`, then run `pnpm install --frozen-lockfile` in that checkout. Use a clean checkout with no `.env` because the CLI loads that file over injected variables. If an existing checkout has one, preserve it and use a separate owned clean checkout following the host’s worktree policy. If that is unavailable, report the blocker; never delete or bypass the file silently.
-
-Run commands under `op run`; there is no `--` between `xero` and its subcommand:
-
-```sh
-cd /Users/danielhowells/Sites/offledger
-XERO_CLIENT_ID='op://keys/Xero Custom Connection/username' \
-XERO_CLIENT_SECRET='op://keys/Xero Custom Connection/credential' \
-op run -- pnpm xero bank-balances --dry-run </dev/null
-```
-
-For reads, use `revenue`, `director-loan`, `bank-transactions`, or `bank-balances --dry-run`. Plain `bank-balances` initializes SQLite and writes balance rows; it is a mutation, as are commands beginning `sync`. Run these only when the user requested that mutation. Reads refresh authentication as needed; do not run a separate `auth` command routinely. Use it for an explicitly requested authentication check or a diagnosed token problem. It may update the approved token cache. Inspect current command help/source if its behaviour is unclear. Enforce a 30-second process-tree timeout through the host runner or a Python subprocess runner. Stdin redirection alone does not prevent desktop authentication. On timeout, distinguish credential lookup from the API request only when evidence identifies the stage, and never fall back to desktop authentication. Use the API/CLI directly; do not substitute browser scraping.
+Use the configured API integration directly; do not substitute browser scraping. For direct API work, consult current official Xero developer documentation for the selected authentication flow, tenant requirements and endpoints before constructing requests.

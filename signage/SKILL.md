@@ -34,7 +34,7 @@ Cite by number in findings, so a reviewer sees the pattern rather than the insta
 **Sentences no human would say**
 
 11. **Template-assembled descriptions.** `A Hospitality Lobby in Mid-Century Modern, feeling calm, in warm muted green, evoking Nordic, in the Mid-Century.` Every slot filled, no sentence produced, and the same fact stated twice. Read generated strings as strings, and judge the words against the audience rather than against the template's own logic.
-12. **Portentous compression.** `Candor reads the warehouse through one governed instrument, before the panel sits.` Grammatical, meaningless, and unsayable to another person.
+12. **Portentous compression.** `The system reads the warehouse through one governed instrument, before the panel sits.` Grammatical, meaningless, and unsayable to another person.
 13. **Metaphor and flourish where a direct statement belongs.** Mannered copy substitutes the figure for the fact: `A dial worth turning` where the label means `Sample size`, `Earns its keep` where it means `Still in use`. The phrase displays the writer rather than conveying the idea, so the user does extra work mid-task to recover a plain meaning that could have been written plainly. It is also imprecise, because a metaphor drags in connotations nobody chose. Wordplay and a knowing voice fail the same way. Say what you mean; when a literal phrase is available, use it.
 14. **Rule-of-three cadence and the closing flourish** in body copy, tooltips, and empty states. Three options the user can actually take are a list, which is fine; the tell is three parallel clauses with nothing behind them.
 

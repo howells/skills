@@ -94,7 +94,7 @@ If production settings, sensitive environment variables or required Vercel syste
 Use these steps to resume delivery. Keep notes only where they clarify scope, ownership, time limits or deferred work; do not turn the intervention into a new planning ceremony.
 
 1. **Stop and say what was running.** Name the command or the loop, in one line. Cancel only this session’s owned work, subject to the ownership and evidence restrictions in hard limit 6.
-2. **Name the payload, the audience and the deadline.** "Newsstand grid renders real catalogue rows, for the Materia demo, in 45 minutes." Use the stated deadline, or write "no stated deadline" and continue. Ask only when an unknown deliverable or audience changes the work that should ship.
+2. **Name the payload, the audience and the deadline.** "Catalogue page shows live products, for the customer demo, in 45 minutes." Use the stated deadline, or write "no stated deadline" and continue. Ask only when an unknown deliverable or audience changes the work that should ship.
 3. **Split the remaining work into payload and weight.** Two lists, counted. A task that appears in neither is finished or does not matter.
 4. **Cut the gate ladder to one gate.** Pick the narrowest check that could plausibly catch a break in what you actually changed. Everything wider gets deferred to one pass at the end, and you say so.
 5. **Timebox every build and remote gate.** Write its normal duration and hard stop, enforce the runner timeout, and arrange a completion notification or one check at the hard stop. Do this before starting it. For Vercel, build locally and deploy only with `--prebuilt`.

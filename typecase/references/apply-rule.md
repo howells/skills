@@ -1,6 +1,6 @@
 # The `@apply` rule
 
-Where the house style is *"align to using the `@apply` syntax for any custom Tailwind classes"*, custom CSS is written as `@apply` runs rather than raw declarations, and the type case is defined the same way. This is the contract that survived a six-agent conversion of thirty stylesheets.
+Where the house style is *"align to using the `@apply` syntax for any custom Tailwind classes"*, custom CSS is written as `@apply` runs rather than raw declarations, and the type case is defined the same way.
 
 Read the best-converted file in the codebase before writing a line. Copy its shape.
 

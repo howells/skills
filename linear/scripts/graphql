@@ -2,33 +2,11 @@
 set -eu
 
 script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-account=${1:-}
-
-case "$account" in
-  howells)
-    credential_ref='op://keys/linear/credential'
-    ;;
-  material-instruments)
-    credential_ref='op://keys/linear material-instruments/credential'
-    ;;
-  *)
-    echo 'usage: graphql <howells|material-instruments>' >&2
-    exit 64
-    ;;
-esac
-
-if [ -z "${OP_SERVICE_ACCOUNT_TOKEN:-}" ]; then
-  credential_file='/Users/danielhowells/.codex/plugins/secrets/1password-service-account.env'
-  if [ ! -r "$credential_file" ]; then
-    echo "Linear credential bootstrap is missing: $credential_file" >&2
-    exit 78
-  fi
-  set -a
-  . "$credential_file"
-  set +a
+if [ "$#" -ne 0 ]; then
+  echo 'usage: graphql <request.json (requires injected LINEAR_API_KEY)' >&2
+  exit 64
 fi
-
-linear_key=$(python3 "$script_dir/read-credential.py" "$credential_ref")
+linear_key=$(python3 "$script_dir/read-credential.py" LINEAR_API_KEY)
 exec 3<&0
 
 response_file=$(mktemp)

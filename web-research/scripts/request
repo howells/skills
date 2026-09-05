@@ -6,23 +6,12 @@ provider=${1:-}
 operation=${2:-}
 resource_id=${3:-}
 
-if [ -z "${OP_SERVICE_ACCOUNT_TOKEN:-}" ]; then
-  credential_file='/Users/danielhowells/.codex/plugins/secrets/1password-service-account.env'
-  if [ ! -r "$credential_file" ]; then
-    echo "Web research credential bootstrap is missing: $credential_file" >&2
-    exit 78
-  fi
-  set -a
-  . "$credential_file"
-  set +a
-fi
-
 exec 3<&0
 
 post_with_bearer() {
   request_url=$1
-  credential_ref=$2
-  credential=$(python3 "$script_dir/read-credential.py" "$credential_ref")
+  credential_variable=$2
+  credential=$(python3 "$script_dir/read-credential.py" "$credential_variable")
 
   printf 'Authorization: Bearer %s\n' "$credential" | \
     curl --fail-with-body --silent --show-error \
@@ -36,8 +25,8 @@ post_with_bearer() {
 
 get_with_bearer() {
   request_url=$1
-  credential_ref=$2
-  credential=$(python3 "$script_dir/read-credential.py" "$credential_ref")
+  credential_variable=$2
+  credential=$(python3 "$script_dir/read-credential.py" "$credential_variable")
 
   printf 'Authorization: Bearer %s\n' "$credential" | \
     curl --fail-with-body --silent --show-error \
@@ -49,13 +38,13 @@ get_with_bearer() {
 
 case "$provider:$operation" in
   exa:search|exa:answer)
-    post_with_bearer "https://api.exa.ai/$operation" 'op://keys/Exa/credential'
+    post_with_bearer "https://api.exa.ai/$operation" EXA_API_KEY
     ;;
   exa:contents)
-    post_with_bearer 'https://api.exa.ai/contents' 'op://keys/Exa/credential'
+    post_with_bearer 'https://api.exa.ai/contents' EXA_API_KEY
     ;;
   tavily:search|tavily:extract|tavily:map|tavily:crawl|tavily:research)
-    post_with_bearer "https://api.tavily.com/$operation" 'op://keys/Tavily/credential'
+    post_with_bearer "https://api.tavily.com/$operation" TAVILY_API_KEY
     ;;
   tavily:research-status)
     case "$resource_id" in
@@ -64,7 +53,7 @@ case "$provider:$operation" in
         exit 64
         ;;
     esac
-    get_with_bearer "https://api.tavily.com/research/$resource_id" 'op://keys/Tavily/credential'
+    get_with_bearer "https://api.tavily.com/research/$resource_id" TAVILY_API_KEY
     ;;
   *)
     echo 'usage: <request.json request exa <search|contents|answer> | <request.json request tavily <search|extract|map|crawl|research>; request tavily research-status <request-id>' >&2

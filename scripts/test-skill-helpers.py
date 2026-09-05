@@ -129,5 +129,66 @@ class GraphQLOutcomes(unittest.TestCase):
                          (ROOT / "web-research/scripts/read-credential.py").read_bytes())
 
 
+class ConfiguredCredentials(unittest.TestCase):
+    def test_environment_credential_validation(self):
+        for value in [None, "", " ", "fixture\nInjected: header", "fixture\rvalue", "fixture\tvalue", "fixture-token"]:
+            env = {"PATH": os.environ["PATH"]}
+            if value is not None:
+                env["TEST_API_KEY"] = value
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "linear/scripts/read-credential.py"), "TEST_API_KEY"],
+                env=env, capture_output=True, text=True, timeout=10)
+            if value == "fixture-token":
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout, value)
+            else:
+                self.assertEqual(result.returncode, 78)
+                self.assertEqual(result.stdout, "")
+                self.assertNotIn("fixture", result.stderr)
+
+    def test_wrappers_stop_before_transport_without_credentials(self):
+        with tempfile.TemporaryDirectory() as directory:
+            marker = Path(directory, "called")
+            transport = Path(directory, "curl")
+            transport.write_text(f"#!{sys.executable}\nfrom pathlib import Path\nPath({str(marker)!r}).touch()\n")
+            transport.chmod(0o700)
+            for script, args in [("linear/scripts/graphql", []), ("web-research/scripts/request", ["exa", "search"]), ("web-research/scripts/request", ["tavily", "search"])]:
+                result = subprocess.run(["/bin/sh", str(ROOT / script), *args],
+                    input='{"query":"fixture"}', capture_output=True, text=True, timeout=10,
+                    env={"PATH": directory + os.pathsep + os.environ["PATH"]})
+                self.assertEqual(result.returncode, 78, result.stderr)
+                self.assertFalse(marker.exists())
+                self.assertEqual(result.stdout, "")
+
+    def test_wrappers_preserve_body_and_select_injected_provider_key(self):
+        # A local transport fixture exercises the real shell/credential pipes,
+        # including fd 3, without calling a provider or using a real credential.
+        with tempfile.TemporaryDirectory() as directory:
+            transport = Path(directory, "curl")
+            transport.write_text(f"#!{sys.executable}\n" + """import json, sys
+args = sys.argv[1:]
+body = open('/dev/fd/3').read() if '--data-binary' in args else None
+print(json.dumps({'data': {'header': sys.stdin.read(), 'body': body, 'args': args}}))
+""")
+            transport.chmod(0o700)
+            cases = [
+                ("linear/scripts/graphql", [], "LINEAR_API_KEY", "", "https://api.linear.app/graphql"),
+                ("web-research/scripts/request", ["exa", "search"], "EXA_API_KEY", "Bearer ", "https://api.exa.ai/search"),
+                ("web-research/scripts/request", ["tavily", "search"], "TAVILY_API_KEY", "Bearer ", "https://api.tavily.com/search"),
+                ("web-research/scripts/request", ["tavily", "research-status", "request-123"], "TAVILY_API_KEY", "Bearer ", "https://api.tavily.com/research/request-123"),
+            ]
+            body = '{"query":"fixture with spaces"}\n'
+            for script, args, key, prefix, url in cases:
+                env = {"PATH": directory + os.pathsep + os.environ["PATH"], key: "fixture-token"}
+                result = subprocess.run(["/bin/sh", str(ROOT / script), *args], input=body,
+                    capture_output=True, text=True, timeout=10, env=env)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                data = json.loads(result.stdout)["data"]
+                self.assertEqual(data["header"], f"Authorization: {prefix}fixture-token\n")
+                self.assertEqual(data["body"], None if "research-status" in args else body)
+                self.assertIn(url, data["args"])
+                self.assertNotIn("fixture-token", " ".join(data["args"]))
+
+
 if __name__ == "__main__":
     unittest.main()
