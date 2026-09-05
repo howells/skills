@@ -45,7 +45,7 @@ Establish scope from the argument if one was given - a path, or a plain-language
 
 Detect project type, scale and **lifecycle stage** using the signal tables in the reference file. Then apply the **security readiness gate**, which decides whether a deep security lens runs at all.
 
-**Confirm the stage with the user before going further.** Stage drives every severity rating in the run, so an unconfirmed stage means an unreliable verdict. If they correct it, their answer wins. If no answer is available, proceed with the detected stage and mark it unconfirmed in the output.
+Infer stage from current evidence and state the assumption. Ask only when ambiguity would materially change the review, and continue independent inspection while awaiting clarification. The user's correction wins; otherwise mark the stage inferred.
 
 Produces a detection summary:
 
@@ -65,12 +65,12 @@ Cheap checks before expensive judgement. Anything a machine can settle should no
 
 Detect tooling from the repo itself - package manager from lockfiles, build and test scripts from `package.json`, typechecker from `tsconfig.json`, linter from its config. Then run, in this order:
 
-1. **Build.** If it fails, stop and report that. Nothing downstream is trustworthy on a broken build.
+1. **Build**, when this project has one. Record failures and distinguish missing local prerequisites from source defects. Skip checks that actually require a successful build, but continue independent source review. Cap Operations for a confirmed broken build; report an unavailable build without inventing its outcome.
 2. **Typecheck.** Report errors, continue.
 3. **Lint.** Report; do not auto-fix during a survey - you are measuring, not changing.
 4. **Tests**, where test tooling exists.
 5. **Secrets scan**, using a scanner the repo has or a careful grep.
-6. **Per-workspace pipeline coverage.** Lint and typecheck must be configured in *every* app and package, not only at the root. A monorepo whose root has the scripts while `apps/*` and `packages/*` do not has workspaces shipping unchecked. Then confirm the scripts actually run in CI - one that exists but is never executed is a soft gap.
+6. **Pipeline coverage.** Trace which source roots the configured checks actually cover, including root-level orchestration. Packages do not need duplicate local scripts when a root check already covers them. Confirm required checks run in CI where CI is part of the project's delivery contract. For docs, libraries and CLIs, use their actual tooling; do not demand web-app infrastructure.
 
 Run scanners the project already has wired, including any house packages. Offer an unwired third-party scanner with one question and skip it without comment if declined - `npx`-ing someone else's code into a user's repo is never a silent decision.
 
@@ -101,7 +101,7 @@ Hunt three failure classes explicitly, because they will be there:
 
 1. **By-design.** Platform conventions and tradeoffs recorded in an ADR or an architecture doc are settled decisions, not findings. Flag them only where the implementation adds risk beyond the convention. One exception cuts the other way - **code that has drifted from what its decision doc says is itself a finding.** Don't let a stale doc suppress the drift it failed to describe.
 2. **Mis-attributed.** The problem is real, the citation is wrong. Re-locate it and correct the citation, or dismiss it - a finding nobody can locate cannot be fixed.
-3. **Duplicate.** Already tracked in the tracker, or already considered and rejected. Drop it and say so. Merging two lenses that flagged the same line in this run is ordinary dedup and happens here too.
+3. **Known or duplicate.** Retain unresolved tracked defects in the findings and score, linking the existing item instead of creating another. Dismiss only resolved, disproven or explicitly accepted-by-design claims, recording the reason. Merge duplicate observations in this review without erasing the underlying defect.
 
 Then downgrade against the severity validation table for the detected stage, annotating each change: `[adjusted for <stage> - would be <original> in production]`.
 
@@ -121,7 +121,7 @@ Derive the scorecard using `references/scorecard.md` - take each lens's axis sco
 
 Report to the output contract below.
 
-Where a tracker is connected, write each cluster as an item there - that is the durable record, and it is what makes the next survey's score comparable to this one. **Do not write a report file into the repo** unless the user asks for one; scattered markdown reports are how drift starts.
+Where the user has requested tracker updates, create or update one item per cluster and reuse existing items. Otherwise return the clusters in conversation; a connected tracker alone does not authorize writes. **Do not write a report file into the repo** unless the user asks for one; scattered markdown reports are how drift starts.
 
 Then route each cluster to whatever actually fixes it, using the boundaries at the top of this file.
 

@@ -22,7 +22,7 @@ Load the Xero credentials at runtime with `op run` using:
 - `XERO_CLIENT_ID=op://keys/Xero Custom Connection/username`
 - `XERO_CLIENT_SECRET=op://keys/Xero Custom Connection/credential`
 
-Never print a credential or token, and never write one to `.env` or any other file. The offledger CLI's stale “must be set in .env” error means environment variables; do not follow it literally.
+Never print a credential or token or create ad hoc credential files. The CLI-managed access-token cache at `~/.offledger/xero-tokens.json` is the sole file exception; verify the directory and file remain private (0700/0600). Never copy that cache or write credentials to `.env`. The offledger CLI's stale “must be set in .env” error means environment variables; do not follow it literally.
 
 Use the private repository `https://github.com/howells/offledger`, whose Xero CLI is `scripts/xero.mjs`. If `/Users/danielhowells/Sites/offledger` is absent, clone there with `gh repo clone howells/offledger /Users/danielhowells/Sites/offledger`, then run `pnpm install --frozen-lockfile` in that checkout. Use a clean checkout with no `.env` because the CLI loads that file over injected variables.
 
@@ -35,4 +35,4 @@ XERO_CLIENT_SECRET='op://keys/Xero Custom Connection/credential' \
 op run -- pnpm xero auth
 ```
 
-The Xero query commands are `auth`, `revenue`, `director-loan`, `bank-balances` and `bank-transactions`. Commands beginning `sync` write to Google Sheets or local SQLite and run only when the user requested that mutation. Use the API/CLI directly; do not substitute browser scraping.
+For reads, use `revenue`, `director-loan`, `bank-transactions`, or `bank-balances --dry-run`. Plain `bank-balances` initializes SQLite and writes balance rows; it is a mutation, as are commands beginning `sync`. Run these only when the user requested that mutation. `auth` establishes CLI authentication and may update its approved token cache. Inspect current command help/source if its behaviour is unclear. Use the API/CLI directly; do not substitute browser scraping.

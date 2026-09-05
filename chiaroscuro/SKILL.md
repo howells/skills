@@ -120,7 +120,7 @@ Report the direction, what changed, verification performed, and any honest limit
 
 Before reporting completion, confirm that:
 
-- every label, heading, button, status line, and empty state has been read against `signage`, and no string carries vocabulary the audience does not use;
+- every label, heading, button, status line, and empty state uses familiar audience vocabulary and states its purpose or outcome plainly; use `signage` for deeper review when installed and useful;
 - the primary task is apparent without explanatory scaffolding;
 - real content and adverse states do not break the hierarchy;
 - keyboard, pointer, and touch behavior agree where they should;

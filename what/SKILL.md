@@ -19,7 +19,7 @@ Length and jargon are two failures and fixing one does not fix the other. Cuttin
 
 - **Never let a tool name stand in for what happened.** Not "ran Edit on `foreman/SKILL.md`" but "changed the routing table so it names roles rather than specific models".
 - **Drop internal nouns.** Say it the way you would to someone who does not know this codebase.
-- **Facts survive exactly.** Every path, command, filename, number, URL and decision stays as it was. Simplify the explanation around the facts, never the facts.
+- **Facts survive exactly.** Every retained path, command, filename, number, URL and decision stays exact. Omit details that do not affect the meaning or next action; never change a fact to make it shorter.
 - **Flatten the structure.** Drop headings and ceremony. A table becomes sentences. Keep a list only where the thing genuinely had parts.
 
 ## Say if the fog was real
@@ -44,4 +44,4 @@ Next:  <what happens now, or what they need to decide>
 
 If something genuinely will not compress, give the one-line version and offer the detail rather than delivering it unasked.
 
-House voice: plain, direct, no filler and no persona. Write it through `deslop`.
+House voice: plain, direct, no filler and no persona. Use plain, direct prose; `deslop` is optional when installed and useful.

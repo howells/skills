@@ -127,9 +127,13 @@ def should_ignore_file(path: Path, *, include_tests: bool = False) -> bool:
     return any(name.endswith(pattern) for pattern in ignored_patterns)
 
 
+def traversal_error(error: OSError) -> None:
+    raise error
+
+
 def iter_source_files(root: Path, *, include_tests: bool = False) -> list[Path]:
     files = []
-    for current_root, dirnames, filenames in os.walk(root):
+    for current_root, dirnames, filenames in os.walk(root, onerror=traversal_error):
         dirnames[:] = [
             name
             for name in dirnames
@@ -433,6 +437,8 @@ def build_report(
     *,
     include_tests: bool = False,
 ) -> dict[str, Any]:
+    if not root.is_dir():
+        raise ValueError(f"Scan root must be a directory: {root}")
     metrics = [file_metrics(path, root) for path in iter_source_files(root, include_tests=include_tests)]
     candidates = [
         metric.__dict__
@@ -442,6 +448,7 @@ def build_report(
     duplicates = duplicate_blocks(root, duplicate_window, include_tests=include_tests)[:25]
     return {
         "root": str(root),
+        "scannedFileCount": len(metrics),
         "candidateCount": len(candidates),
         "duplicateGroupCount": len(duplicates),
         "includeTests": include_tests,
@@ -452,6 +459,7 @@ def build_report(
 
 def print_report(report: dict[str, Any]) -> None:
     print(f"Repo: {report['root']}")
+    print(f"Scanned eligible source files: {report['scannedFileCount']}")
     print(f"Likely god-file candidates: {report['candidateCount']}")
     for item in report["candidates"]:
         reasons = ", ".join(item["reasons"]) if item["reasons"] else "heuristic match"
@@ -496,16 +504,20 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     root = Path(args.repo).expanduser().resolve()
-    if not root.exists():
-        print(f"Path does not exist: {root}", file=sys.stderr)
+    if not root.is_dir():
+        print(f"Scan root must be a directory: {root}", file=sys.stderr)
         return 2
-    report = build_report(
-        root,
-        args.min_score,
-        args.duplicate_window,
-        args.max_files,
-        include_tests=args.include_tests,
-    )
+    try:
+        report = build_report(
+            root, args.min_score, args.duplicate_window, args.max_files,
+            include_tests=args.include_tests,
+        )
+    except OSError as error:
+        print(f"Scan incomplete: {error}", file=sys.stderr)
+        return 2
+    if not report["scannedFileCount"]:
+        print("No eligible source files scanned; no clean verdict.", file=sys.stderr)
+        return 2
     if args.json:
         print(json.dumps(report, indent=2, sort_keys=True))
     else:

@@ -91,10 +91,10 @@ If production settings, sensitive environment variables or required Vercel syste
 
 ## Steps
 
-Copy these into your todolist verbatim before you start. A step you skip stays in the list with a one-line `skip: <reason>`.
+Use these steps to resume delivery. Keep notes only where they clarify scope, ownership, time limits or deferred work; do not turn the intervention into a new planning ceremony.
 
 1. **Stop and say what was running.** Name the command or the loop, in one line. Cancel anything still burning money or build minutes.
-2. **Name the payload, the audience and the deadline.** "Newsstand grid renders real catalogue rows, for the Materia demo, in 45 minutes." If you cannot fill in all three, the first question goes to the user, not to another check.
+2. **Name the payload, the audience and the deadline.** "Newsstand grid renders real catalogue rows, for the Materia demo, in 45 minutes." Use the stated deadline, or write "no stated deadline" and continue. Ask only when an unknown deliverable or audience changes the work that should ship.
 3. **Split the remaining work into payload and weight.** Two lists, counted. A task that appears in neither is finished or does not matter.
 4. **Cut the gate ladder to one gate.** Pick the narrowest check that could plausibly catch a break in what you actually changed. Everything wider gets deferred to one pass at the end, and you say so.
 5. **Timebox every build and remote gate.** Write its normal duration and hard stop, enforce the runner timeout, and arrange a completion notification or one check at the hard stop. Do this before starting it. For Vercel, build locally and deploy only with `--prebuilt`.
@@ -108,7 +108,7 @@ The axis is reversibility, not importance.
 
 - **Prototype and demo work.** One gate at the end. Verify by using the thing. Skip the suite, skip coverage, skip the review round. A demo is judged on whether it works in front of people.
 - **Development.** Narrow gate per change, full gate before merge. Real tests over mocked ones, and only where a break would be silent.
-- **Pre-launch and production.** The full ladder earns its weight. Data loss, auth, money and migrations are worth every check you can run.
+- **Pre-launch and production.** Choose checks for named failure risks and the release contract. Data loss, auth, money and migrations warrant deeper verification of the affected behaviour; the lifecycle label alone does not justify every check for every edit.
 
 Deleting data, rotating credentials and touching production sit outside this calibration. Those are always slow.
 

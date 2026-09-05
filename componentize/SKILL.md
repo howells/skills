@@ -76,7 +76,7 @@ When componentizing in an RSC-aware app:
 - identify files marked with `'use client'` and inspect their import trees before extracting or moving UI
 - avoid turning a large route, layout, shell, table, form, or panel into a Client Component only because one nested control needs state, effects, browser APIs, context, or event handlers
 - extract the interactive part into the smallest practical Client Component and render it inside a Server Component that owns data fetching, server-only modules, secrets, routing params, static markup, and non-interactive layout
-- pass serializable data from Server Components into Client Components; do not pass functions, class instances, server-only objects, or non-serializable data across the boundary
+- pass serializable data from Server Components into Client Components; allow supported Server Function references, but do not pass ordinary callbacks, unsupported class instances, server-only objects, or other non-serializable data across the boundary
 - use `children` or explicit slots to visually nest server-rendered UI inside a small client wrapper when the interaction is only a shell such as a modal, disclosure, tabs state, or popover
 - keep providers and third-party client-only wrappers as deep in the tree as possible instead of wrapping an entire app, layout, or page by default
 - preserve `server-only` and `client-only` guard imports when they exist, and add them only if the repo already uses that convention or boundary mistakes are a concrete risk

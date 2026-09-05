@@ -19,6 +19,8 @@ Confirm the lane before the first invocation in a session:
 opencode models zai-coding-plan | grep -qx 'zai-coding-plan/glm-5.3-flash' && echo lane-ok
 ```
 
+Model listing establishes availability, not successful authentication. Check the actual invocation outcome before reporting a completed review.
+
 Without `lane-ok`, stop and name the cause: `opencode` missing from the path, Z.AI Coding Plan credentials absent (`opencode auth list` shows no `Z.AI Coding Plan` entry), or the lane authenticated but no longer serving that model. Swapping in another provider, another GLM size, or another model is a failed run.
 
 ## Build a bounded brief

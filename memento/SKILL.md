@@ -17,7 +17,7 @@ Someone has lost the thread and wants it back in ten seconds. Answer from what i
 
 Task list, working tree, running processes, the last few tool results. Stop as soon as you can answer. No transcript mining, no tracker, no subagents - if the honest answer needs those, say so and offer `muster`.
 
-Three attempts at the same failing command is "stuck", not "working on it". A step nobody has edited is "not started", however certain the plan. Uncommitted work is a risk, so give the file count. "Waiting on a build" is a complete answer.
+Three attempts at the same failing command is "stuck", not "working on it". A plan alone is "not started"; source reading, diagnosis and validation are work when they produce evidence, even without edits. Uncommitted work is a risk, so give the file count. "Waiting on a build" is a complete answer.
 
 ## Output contract
 
@@ -30,4 +30,4 @@ One screen. These lines, nothing else - no preamble, no restating the question.
 - **Next.** One concrete action.
 - **Drift** or **Blocked**, only when true, leading with the mismatch.
 
-Write it through `deslop`. If it takes three paragraphs, they have to read it twice to decide whether to interrupt you.
+Use plain, direct prose; `deslop` is optional when installed and useful. If it takes three paragraphs, they have to read it twice to decide whether to interrupt you.

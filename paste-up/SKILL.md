@@ -22,16 +22,17 @@ Never read node ids back to the person who asked. Name artboards by what they sh
 
 1. `get_guide({ topic: "paper-mcp-instructions" })`. Once per session, and again if the thread has been long enough to lose it.
 2. Read the specification. Linear, the strategy repo, the project's own context and domain docs. Every view is named in writing before a single one is drawn. Building from your own idea of the product, when a spec exists, is the failure this step prevents.
-3. `get_basic_info`, `get_font_family_info`, `get_tokens`. Three calls, and they decide the type and colour of everything that follows.
+3. `get_basic_info`, `get_font_family_info`, `get_tokens`. Use the existing design and written direction to establish type and colour.
+4. Record the in-scope page/artboards and permitted edits. Carry that boundary through every read, repair and completion check. Inspect out-of-scope consumers before changing shared token definitions; reassign in-scope nodes or create a distinct token if a global change is not authorized.
 
 ## Build lane
 
-**Direct and draw are different jobs.** A Fable subagent produces the view inventory and the creative direction for each view: what it is for, who is looking at it, what is on it, what its states are. Opus subagents draw. The agent drawing a view never decides what the view is.
+**Establish direction before drawing.** Define each view's purpose, audience, content and states from the supplied specification. The current agent can direct and draw sequentially. Delegate only when available and useful; use installed specialist skills or models as optional aids, not prerequisites. A delegated drawing brief must preserve the agreed direction.
 
 **Set the file up once, before any view exists.**
 
 - Create the tokens: colour names and the type scale. Parallel agents that skip this invent four names for one hex value and the file has to be reconciled by hand afterwards.
-- One artboard per view, laid out on a single horizontal row, no overlaps, named for the view. Horizontal keeps you unencumbered by height.
+- Name artboards for the views they show. Follow the file's existing organization or supplied direction; a horizontal row is one useful default for a new linear flow, not a requirement for every file.
 - Confirm the font family with `get_font_family_info` and use it. Fonts set from memory have needed a dedicated repair agent across a thousand nodes.
 
 **Then draw.** One visual group per `write_html`, screenshot after each one, `finish_working_on_nodes` when a set is done. Screenshotting only at the end means finding six problems at once, all of them compounded.
@@ -40,14 +41,14 @@ Never read node ids back to the person who asked. Name artboards by what they sh
 
 Order matters here, because a token fix touches every node and a layout fix moves them.
 
-1. **Inventory.** `get_tree_summary`, then list every artboard: name, size, position, whether it is current or abandoned.
-2. **Tokens.** `get_tokens`, then find every hard-coded value in the file. Collapse duplicates onto one name, `create_tokens` / `set_tokens`, `update_styles` across the nodes. Report which values were the same colour under different names.
-3. **Fonts.** `get_font_family_info`, then every text node onto the file's family and scale.
-4. **Layout.** Overlapping artboards, inconsistent gaps, a canvas that reads as a pile. Single row, even spacing.
+1. **Inventory.** `get_tree_summary`, then list the in-scope artboards: name, size, position and purpose. Inspect neighbours only as needed to understand context.
+2. **Tokens.** Inspect hard-coded values within scope and their intended roles. Equal values can have different semantic roles; merge only confirmed duplication. Before `create_tokens` / `set_tokens`, check all consumers affected by a definition change. Use `update_styles` only on in-scope nodes.
+3. **Fonts.** Confirm installed families and correct departures from the agreed type roles. Preserve deliberate display/body/mono distinctions and existing typography outside scope.
+4. **Layout.** Correct unintended overlap or spacing within scope while preserving the file's organization. Do not rearrange unrelated artboards.
 5. **Names.** `rename_nodes` so each artboard says what it shows.
 6. **Dead work.** Old experiments and superseded versions. Ask before deleting anything you did not make.
 7. **The checklist below**, artboard by artboard.
-8. **Comments.** `list_comment_threads`, address each one, `set_comment_thread_status`. Comments are the review channel and they are routinely never read.
+8. **Comments.** Read in-scope comment threads. Address requests covered by the user's task; report unrelated requests separately. Resolve only comments whose requested work has actually been completed within the authorized scope.
 
 Report as a table: artboard, what changed, what was left alone and why.
 
@@ -56,22 +57,22 @@ Report as a table: artboard, what changed, what was left alone and why.
 Every line here is a correction that has had to be given more than once.
 
 - **Real images.** Actual product and material photography from the real source. Not placeholders, not stand-ins, not something approximate.
-- **Every image distinct.** Repeating one photo across a view makes the design unreadable.
-- **Square or landscape.** Samples and uploads are square; scenes are landscape. Never 16:9 with an awkward crop, and never a single axis scaled - set the frame and crop inside it.
+- **Purposeful imagery.** Avoid accidental repetition; keep repetition when it identifies the same item or supports comparison.
+- **Appropriate crops.** Choose aspect ratios from the content and supplied direction. Preserve the subject, crop inside the frame, and never distort one axis.
 - **Imagery that flatters the product.** A realistic photograph can still be the wrong photograph. Match the aspiration of the audience.
-- **Shared chrome on every view.** The same sidebar, header and navigation, so the set reads as one product.
-- **An app, not a document.** Browser-based does not mean a scrolling page. It should feel like a tool.
+- **Consistent navigation.** Reuse shared chrome where the product requires it; focused or standalone views may intentionally omit it.
+- **Appropriate interaction.** Follow the product's purpose. An editor, document, marketing page and dashboard need different structures.
 - **Text is not interface.** Paragraphs standing in for controls is a failed view, however well written.
-- **One design per page.** A page with three half-ideas on it cannot be reviewed.
+- **Reviewable alternatives.** Clearly label alternatives when exploration is requested; keep the selected direction identifiable.
 - **Density a stranger can parse.** The test is someone seeing it for the first time in a meeting, with the presenter talking over it. Depth is fine, an unreadable wall is not.
-- **Labels and copy.** `signage` over every label, heading, button, status line and empty state. `deslop` over every sentence.
+- **Labels and copy.** Use words the audience understands, state outcomes plainly, and remove filler. Use `signage` or `deslop` for deeper review when installed and useful.
 - **Data the product can actually serve.** Query the real API or database for the numbers on screen. A view designed around data that does not exist is a promise someone has to break.
 
 ## Before calling it done
 
-- `glm-review` each artboard for clarity and whether the interface works.
-- Sweep the comments and resolve them.
-- Screenshot every artboard and look at it. A view that reads well alone can be wrong beside its neighbours.
+- Review the in-scope artboards for clarity and task completion. An independent review is optional when a material uncertainty warrants it.
+- Recheck in-scope comments and report their actual resolution.
+- Screenshot the changed artboards and inspect them in context. A view that reads well alone can be wrong beside its neighbours.
 - `export_combined_pdf` when it has to leave Paper, since a file link cannot always be shared.
 
 ## Gotchas, all of them measured

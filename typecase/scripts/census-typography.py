@@ -21,6 +21,7 @@ Colour, alignment, wrapping and truncation are not shape and are ignored.
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from collections import Counter, defaultdict
@@ -71,8 +72,8 @@ SIZE_SHORTHAND = re.compile(r"^text-\(length:--[\w-]+\)$")
 WEIGHT = re.compile(r"^font-(thin|extralight|light|normal|medium|semibold|bold|extrabold|black|\[\d+\])$")
 # An arbitrary family or weight is still the role's business: `font-[Inter]`.
 FAMILY = re.compile(r"^font-(sans|serif|mono|display|\[[^\]]+\])$")
-TRACKING = re.compile(r"^tracking-[\w.\[\]-]+$")
-LEADING = re.compile(r"^leading-[\w.\[\]-]+$")
+TRACKING = re.compile(r"^-?tracking-(?:[\w.-]+|\[[^\]]+\]|\(--[\w-]+\))$")
+LEADING = re.compile(r"^leading-(?:[\w.-]+|\[[^\]]+\]|\(--[\w-]+\))$")
 CASE = re.compile(r"^(uppercase|lowercase|capitalize)$")
 
 # Rough px equivalents so the size soup sorts and groups sensibly.
@@ -210,9 +211,8 @@ def source_files(root: Path, roots: list[str] | None) -> list[Path]:
     bases = [root / r for r in roots] if roots else [root]
     found: list[Path] = []
     for base in bases:
-        if not base.exists():
-            print(f"warning: {base} does not exist", file=sys.stderr)
-            continue
+        if not base.is_dir():
+            raise ValueError(f"Scan root must be a directory: {base}")
         for path in base.rglob("*"):
             if not path.is_file() or path.suffix not in EXTENSIONS:
                 continue
@@ -238,7 +238,25 @@ def enclosing_selector(text: str, position: int) -> str:
     return text[start + 1 : opened].strip()
 
 
-def class_lists(text: str, is_stylesheet: bool, prefix: str):
+COMMENT_OR_STRING = re.compile(
+    r'''(?P<string>"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`)|(?P<comment>//[^\n]*|/\*[\s\S]*?\*/|<!--[\s\S]*?-->)'''
+)
+CLASS_MAP = re.compile(r"\bRecord\s*<\s*[\w.]*Size[\w.]*\s*,\s*string\s*>\s*=\s*\{(?P<body>[^{}]*)\}")
+
+
+def without_comments(text: str) -> str:
+    """Mask ordinary comments without changing offsets or quoted class strings.
+
+    This is a lexical census, not a JS/TS parser. Dynamic expressions and unusual
+    syntax need inspection with the project's AST-aware scanner.
+    """
+    return COMMENT_OR_STRING.sub(
+        lambda match: re.sub(r"[^\n]", " ", match.group()) if match.group("comment") else match.group(),
+        text,
+    )
+
+
+def class_entries(text: str, is_stylesheet: bool, prefix: str):
     """Every class list in a file: `@apply` runs in CSS, class attributes elsewhere.
 
     A rule that defines a role (`.type-body { @apply … }`) is the case itself, so
@@ -248,11 +266,12 @@ def class_lists(text: str, is_stylesheet: bool, prefix: str):
     table that no class attribute encloses. Each quoted run is keyed by its
     position so a `className={cn("…")}` is counted once rather than twice.
     """
+    text = without_comments(text)
     if is_stylesheet:
         for rule in APPLY.finditer(text):
             if enclosing_selector(text, rule.start()).lstrip(".").startswith(prefix):
                 continue
-            yield rule.group("classes")
+            yield rule.start("classes"), rule.group("classes")
         return
 
     seen: set[int] = set()
@@ -260,11 +279,11 @@ def class_lists(text: str, is_stylesheet: bool, prefix: str):
         body = attr.group("body")
         if body[0] in "\"'`":
             seen.add(attr.start("body") + 1)
-            yield body[1:-1]
+            yield attr.start("body") + 1, body[1:-1]
             continue
         for quoted in QUOTED.finditer(body):
             seen.add(attr.start("body") + quoted.start("text"))
-            yield quoted.group("text")
+            yield attr.start("body") + quoted.start("text"), quoted.group("text")
 
     for call in CLASS_FN.finditer(text):
         for quoted in QUOTED.finditer(call.group("args")):
@@ -272,7 +291,19 @@ def class_lists(text: str, is_stylesheet: bool, prefix: str):
             if position in seen:
                 continue
             seen.add(position)
-            yield quoted.group("text")
+            yield position, quoted.group("text")
+
+    for mapping in CLASS_MAP.finditer(text):
+        for quoted in QUOTED.finditer(mapping.group("body")):
+            position = mapping.start("body") + quoted.start("text")
+            if position not in seen:
+                seen.add(position)
+                yield position, quoted.group("text")
+
+
+def class_lists(text: str, is_stylesheet: bool, prefix: str):
+    for _, classes in class_entries(text, is_stylesheet, prefix):
+        yield classes
 
 
 def main() -> int:
@@ -281,6 +312,7 @@ def main() -> int:
     parser.add_argument("--roots", nargs="*", help="paths under repo to scan (default: whole repo)")
     parser.add_argument("--prefix", default="type-", help="existing style-class prefix to detect (default: type-)")
     parser.add_argument("--top", type=int, default=25, help="how many combinations to list (default: 25)")
+    parser.add_argument("--json", action="store_true", help="all combinations with original tokens and source locations")
     parser.add_argument(
         "--sanctioned",
         nargs="*",
@@ -291,7 +323,14 @@ def main() -> int:
     sanctioned = set(args.sanctioned)
 
     root = args.repo.resolve()
-    files = source_files(root, args.roots)
+    if not root.is_dir():
+        print("repo must be a directory", file=sys.stderr)
+        return 2
+    try:
+        files = source_files(root, args.roots)
+    except ValueError as error:
+        print(str(error), file=sys.stderr)
+        return 2
     if not files:
         print("no source files found", file=sys.stderr)
         return 1
@@ -301,16 +340,20 @@ def main() -> int:
     existing: Counter[str] = Counter()
     modifiers: Counter[str] = Counter()
     files_with_shape: set[str] = set()
+    locations: defaultdict[tuple[str, ...], list[dict]] = defaultdict(list)
+    skipped_files: list[str] = []
 
     for path in files:
         try:
             text = path.read_text(encoding="utf8", errors="ignore")
         except OSError:
+            skipped_files.append(str(path.relative_to(root)))
             continue
         if is_bundle(text):
+            skipped_files.append(str(path.relative_to(root)))
             continue
         rel = str(path.relative_to(root))
-        for class_list in class_lists(text, path.suffix == ".css", args.prefix):
+        for offset, class_list in class_entries(text, path.suffix == ".css", args.prefix):
             shape: list[str] = []
             for raw in class_list.split():
                 token = base_utility(raw.strip())
@@ -323,16 +366,30 @@ def main() -> int:
                     modifiers[token] += 1
                     continue
                 if is_shape(token):
-                    shape.append(token)
+                    shape.append(raw.strip())
                     if is_size(token):
                         sizes[token] += 1
             if shape:
                 key = tuple(sorted(set(shape)))
                 combos[key] += 1
                 files_with_shape.add(rel)
+                locations[key].append({"file": rel, "line": text.count("\n", 0, offset) + 1})
 
     usages = sum(combos.values())
-    print(f"Scanned {plural(len(files), 'file')} under {root}\n")
+    limitation = "Lexical census of supported class forms; dynamic expressions and custom utilities need source/AST review. Counts are not an enforcement verdict."
+    if args.json:
+        print(json.dumps({
+            "scannedFileCount": len(files) - len(skipped_files),
+            "skippedFiles": skipped_files,
+            "limitations": limitation,
+            "combinations": [{"tokens": list(key), "count": count, "locations": locations[key]} for key, count in combos.most_common()],
+            "sizes": dict(sizes), "roles": dict(existing), "sanctionedModifiers": dict(modifiers),
+        }, indent=2))
+        return 2 if skipped_files else 0
+    print(f"Scanned {plural(len(files) - len(skipped_files), 'file')} under {root}\n")
+    print(limitation)
+    if skipped_files:
+        print(f"Skipped {len(skipped_files)} unreadable or bundle-like files: {', '.join(skipped_files)}", file=sys.stderr)
 
     if existing:
         print(f"Existing `{args.prefix}*` classes in use: {len(existing)}")
@@ -348,8 +405,8 @@ def main() -> int:
         print()
 
     if not combos:
-        print("No inline typography defines shape. The case already holds.")
-        return 0
+        print("No raw typography found in the supported forms inspected; verify unsupported forms before claiming completeness.")
+        return 2 if skipped_files else 0
 
     print(f"Inline typography: {plural(len(combos), 'distinct combination')} "
           f"across {plural(usages, 'usage')} in {plural(len(files_with_shape), 'file')}.\n")
@@ -357,6 +414,7 @@ def main() -> int:
     print(f"Most-used combinations (top {args.top}):")
     for key, count in combos.most_common(args.top):
         print(f"  {count:>5}  {' '.join(key)}")
+        print("         " + ", ".join(f"{item['file']}:{item['line']}" for item in locations[key][:3]))
     if len(combos) > args.top:
         print(f"  ... and {len(combos) - args.top} more")
     print()
@@ -374,6 +432,7 @@ def main() -> int:
     by_size: defaultdict[float, list[tuple[tuple[str, ...], int]]] = defaultdict(list)
     for key, count in combos.items():
         for token in key:
+            token = base_utility(token)
             if not is_size(token):
                 continue
             px = size_px(token)
@@ -397,12 +456,12 @@ def main() -> int:
     if not sizes:
         print("No inline sizes to fold. What is left above is weight, family or case,")
         print("each of which belongs to a role rather than becoming one.")
-        return 0
+        return 2 if skipped_files else 0
 
     proposal = propose_case(sizes, modifiers.get("font-mono", 0))
     if not proposal:
         print("Every size resolved to a clamp, calc or var. Read them by hand.")
-        return 0
+        return 2 if skipped_files else 0
 
     print(f"Proposed case - {plural(len(proposal), 'role')}:")
     for name, purpose, members, count in proposal:
@@ -414,7 +473,7 @@ def main() -> int:
     print("Measured from this codebase, as a starting point. Read the collapse")
     print("candidates above and set each band's size by hand, dropping any role")
     print("that would carry only the usages it already has.")
-    return 0
+    return 2 if skipped_files else 0
 
 
 if __name__ == "__main__":

@@ -32,3 +32,7 @@ printf '%s' '{"query":"query { viewer { name } }"}' | scripts/graphql howells
 The attached Linear MCP is optional. Use it only when it exposes the required account. An absent, expired or wrong-account MCP is not a blocker: use GraphQL immediately.
 
 Never copy either key into a project `.env`, export one globally, print it, or replace one account's key with the other. Reads are allowed when they serve the user's request; create, update, close or comment only when the user requested that mutation.
+
+The bundled helpers require Python 3. [scripts/read-credential.py](scripts/read-credential.py) bounds each credential lookup to 30 seconds; a failure stops the request without interactive authentication.
+
+[scripts/check-response.py](scripts/check-response.py) preserves the response and exits nonzero for GraphQL errors, invalid data or an explicit mutation failure. Inspect required fields and the returned entity before claiming success. Partial data is not a complete account lookup. Never automatically retry a mutation after an uncertain outcome; reconcile current state first.

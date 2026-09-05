@@ -21,8 +21,10 @@ Honour an account the user names. Infer Material Instruments and SiteInspire fro
 Before using an unfamiliar command, run `gog schema <command path> --json` or focused `gog <command> --help`; do not guess flags. Prefer structured, non-interactive output:
 
 ```bash
-gog --account <email> --json --results-only --no-input --wrap-untrusted --readonly <command>
+gog --account <email> --json --no-input --wrap-untrusted --readonly <command>
 ```
+
+Preserve the JSON envelope, including pagination tokens. For complete searches or inventories, fetch every page and report any account or page that could not be read. Pagination is command-specific: Gmail message search supports `--all`; calendar events use `--all-pages` (`--all` means all calendars); Drive search uses `--page`. Confirm these with current help. Use `--results-only` only for a singular result or after completeness has been established. A first page is not a complete account or folder review.
 
 On an account or authentication error, report it. Never run `gog login`, `gog logout` or `gog auth manage`, and never set a default account.
 

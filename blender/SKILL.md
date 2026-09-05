@@ -11,7 +11,7 @@ Two ways in, and they are not interchangeable.
 
 **Headless**, `blender -b file.blend --python script.py -- args`. Its own process, no UI, nothing shared. This is where renders and long sweeps belong.
 
-The rule that decides which: *does this touch state the user is looking at?* Anything that mutates the scene, takes minutes, or writes files goes headless. Interactive is for inspection and for a quick look.
+The rule that decides which: *does this touch state the user is looking at?* Use the live MCP for inspection and user-authorized edits to the open scene. Use headless Blender on an explicit copy for long renders or batch processing; never replace the user's open file with a headless result without reconciling live edits. Choose the route by the owned document and task, not merely by whether it writes a file.
 
 ---
 
@@ -205,6 +205,8 @@ def check_is_finished():
 
 ---
 
+The server-specific behaviours below describe the implementation this guidance was derived from, not a guarantee about every release. Record the installed Blender version and MCP server version or source revision at invocation; inspect the relevant implementation when it differs or cannot be identified.
+
 ## 6. The render tools mutate the live file
 
 `render_viewport_to_path` sets `render.filepath`. `render_thumbnail_to_path` also
@@ -218,8 +220,8 @@ rendering will then save using the temporary settings."*
 
 **Therefore:**
 
-1. Read and record `samples`, `resolution_percentage`, `resolution_x/y`, `filepath`, `use_simplify`, `use_denoising` **before** any render.
-2. Restore them explicitly afterwards. Do not rely on the tool.
+1. Inspect the selected tool and engine, then snapshot every property it changes **before** rendering. Include `scene.render.filepath`, `resolution_percentage`, `resolution_x`, `resolution_y`, `use_simplify`, `simplify_subdivision_render`, and the active engine's sample and denoising settings (for Cycles, `scene.cycles.samples` and `scene.cycles.use_denoising`). Verify property paths against the installed Blender version.
+2. Restore the complete snapshot explicitly after completion, error or disconnect, and compare every value before saving. Do not rely on the tool. If the connection prevents restoration, report the altered state and do not save the scene.
 3. Never leave `render.filepath` pointing at a scratch directory — it will be saved into the file and the directory will later vanish.
 4. Long renders go headless. Not through the MCP.
 

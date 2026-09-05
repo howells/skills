@@ -47,10 +47,12 @@ const ARBITRARY_SIZE  = /^text-\[(?!#|var\(|rgb|hsl|okl(?:ch|ab)|color[-:(]|curr
 const VARIABLE_SIZE   = /^text-\(length:--[\w-]+\)$/u;
 const FONT_WEIGHT     = /^font-(thin|extralight|light|normal|medium|semibold|bold|extrabold|black|\[\d+\])$/u;
 const FONT_FAMILY     = /^font-(sans|serif|mono|display|\[[^\]]+\])$/u;
-const TRACKING        = /^tracking-[\w.[\]-]+$/u;
-const LEADING         = /^leading-[\w.[\]-]+$/u;
+const TRACKING        = /^-?tracking-(?:[\w.-]+|\[[^\]]+\]|\(--[\w-]+\))$/u;
+const LEADING         = /^leading-(?:[\w.-]+|\[[^\]]+\]|\(--[\w-]+\))$/u;
 const CASE            = /^(uppercase|lowercase)$/u;
 ```
+
+These patterns include custom-property shorthand, arbitrary values and negative tracking. Cover examples such as `leading-(--line-height)`, `leading-[calc(1em+2px)]`, `tracking-(--tracking)` and `-tracking-2` in scanner checks.
 
 Match against the normalised token from the next section, which is why there is no pattern here for `text-sm/6` - it arrives as `text-sm`.
 

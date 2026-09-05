@@ -1,6 +1,6 @@
 # Feature document template
 
-Every feature document (a tool, a screen, a form, a command, an action, a kind of turn) uses all eight sections. Foundations, UI, and cross-cutting documents may drop sections that do not apply (a settings panel has no extended phase; a static page has no variants) but must still cover interrupt behavior wherever an interaction exists. The pilot document is the complete instance every other document copies. A small feature done properly runs around 150–200 lines; the hardest documents run 250–300.
+Every feature document (a tool, a screen, a form, a command, an action, a kind of turn) uses all eight sections. Foundations, UI, and cross-cutting documents may drop sections that do not apply (a settings panel has no extended phase; a static page has no variants) but must still cover interrupt behavior wherever an interaction exists. The pilot document is the complete instance every other document copies. Length follows the observable behaviour and evidence; do not pad a simple feature to a line target.
 
 Headings are sentence case. The H1 is "The {feature}" for tools, screens, and UI ("The invite form", "The toolbar", "The composer"), the bare noun or command for objects, actions, and commands ("Attachment", "Clipboard", "`init`"), and a descriptive phrase for cross-cutting concerns ("Unsaved changes", "Offline", "Configuration precedence").
 
@@ -93,4 +93,5 @@ A bullet list. Anything a user could notice that the sections above do not cover
 - Behavior that looks like a bug, stated as such: "may be worth treating as a bug rather than documenting."
 - Assumptions the document rests on.
 
-Verified against {source repo} commit `{short sha}`.
+Source inspected: {source repo} commit `{short sha}`.
+Runtime verification: {not run, or environment/date and linked checklist results}.

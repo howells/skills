@@ -47,7 +47,7 @@ If `git rev-parse --git-dir` errors, the project is not a git repo. Treat histor
 
 Default to `development` when signals conflict. **When in doubt, pick the earlier stage** - under-flagging costs less than burying a real finding under premature requirements.
 
-Then confirm, because stage drives every severity in the run:
+State the inferred stage and its evidence; ask for clarification only when ambiguity materially changes the review:
 
 ```
 Detected stage: [stage], from [the two or three signals that decided it].

@@ -1,6 +1,7 @@
 #!/bin/sh
 set -eu
 
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 account=${1:-}
 
 case "$account" in
@@ -27,14 +28,21 @@ if [ -z "${OP_SERVICE_ACCOUNT_TOKEN:-}" ]; then
   set +a
 fi
 
-linear_key=$(op read "$credential_ref")
+linear_key=$(python3 "$script_dir/read-credential.py" "$credential_ref")
 exec 3<&0
 
-printf 'Authorization: %s\n' "$linear_key" | \
+response_file=$(mktemp)
+trap 'rm -f "$response_file"' EXIT HUP INT TERM
+if printf 'Authorization: %s\n' "$linear_key" | \
   curl --fail-with-body --silent --show-error \
     --connect-timeout 10 \
     --max-time 30 \
     https://api.linear.app/graphql \
     -H @- \
     -H 'Content-Type: application/json' \
-    --data-binary @/dev/fd/3
+    --data-binary @/dev/fd/3 >"$response_file"; then
+  python3 "$script_dir/check-response.py" <"$response_file"
+else
+  cat "$response_file"
+  exit 1
+fi

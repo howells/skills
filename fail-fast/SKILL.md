@@ -96,7 +96,7 @@ Avoid:
 
 Backwards compatibility must be intentional.
 
-Keep compatibility only when there is a named external caller, versioned API contract, migration deadline, owner, and tests proving both the old and new behavior. Otherwise delete aliases, legacy branches, dual option names, deprecated flags, and old data-shape adapters.
+Distinguish permanent supported contracts from temporary migrations. Keep compatibility required by a public API, protocol or supported product behaviour; it does not need a removal date or individually named consumers. Temporary compatibility should have an owner, a migration window and checks for both paths. Missing documentation is a reason to investigate and document the contract, not proof that deletion is safe. Remove aliases, legacy branches and adapters only after establishing that no supported caller or contract still needs them.
 
 When compatibility must remain, make it visible:
 

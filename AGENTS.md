@@ -55,6 +55,8 @@ If a second skill ever needs one of those files again, copy it and note both cop
 here. Reintroduce a source layer only when the copies are numerous enough that keeping
 them in step by hand is the thing going wrong.
 
+`linear/scripts/read-credential.py` and `web-research/scripts/read-credential.py` are deliberate identical copies so each skill installs alone. Keep both in step; the focused helper tests check parity.
+
 ## Editing skills
 
 - Keep each `SKILL.md` self-contained enough for a fresh agent to use, with no hidden dependency on a local file that the body doesn't link.
@@ -72,7 +74,7 @@ them in step by hand is the thing going wrong.
 - `npx skills@latest add howells/skills --list` - list installable skills.
 - `npx skills@latest add howells/skills --skill '*' --agent codex --global` - install all globally for Codex.
 
-There is no build. The two Python gates above are the repository-wide checks; otherwise verify by reading and targeted search.
+There is no build. The two Python gates above are the repository-wide checks. For scanner or API-helper changes, also run `python3 scripts/test-skill-helpers.py`; its temporary fixtures exercise coverage, typography evidence and GraphQL outcomes without external accounts. Otherwise verify by reading and targeted search.
 
 ## Agent skills
 

@@ -23,7 +23,7 @@ _Avoid_: run, call, execution
 ### Describing a skill
 
 **Description**:
-The frontmatter field on a `SKILL.md`, kept under about 400 characters and within the collection's 6,500-character budget, that Claude and Codex read to decide whether to route to this skill.
+The frontmatter field on a `SKILL.md`, kept under about 400 characters and within the collection's 7,000-character budget, that Claude and Codex read to decide whether to route to this skill.
 _Avoid_: summary, blurb
 
 **Trigger clause**:

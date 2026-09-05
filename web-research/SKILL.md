@@ -39,3 +39,5 @@ Read [references/providers.md](references/providers.md) before choosing endpoint
 5. Produce one direct synthesis with links beside the claims they support. Preserve uncertainty and source disagreement; do not paste two provider reports beside each other.
 
 Use deep or agentic research only when ordinary search and extraction cannot answer the question. Provider-generated research reports remain inputs to the synthesis, not the final answer.
+
+The bundled helpers require Python 3. [scripts/read-credential.py](scripts/read-credential.py) bounds each credential lookup to 30 seconds; a failure stops the request without interactive authentication.

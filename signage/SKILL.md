@@ -72,12 +72,12 @@ The model's word on the left, the audience's word on the right. Direction for th
 
 ## Steps
 
-Copy these steps into your todolist verbatim before you start. A step you skip stays in the list with a one-line `skip: <reason>`.
+Scale the pass to the requested strings. A few labels need direct edits and a short explanation, not a separate task list or counts.
 
 1. **Fix the scope and the audience.** Name the screens or the diff, and name who reads them in one line, in their own job title. `Working interior designers`, not `end users`. A pass without a named audience produces generic copy, because the test in this skill has nothing to measure against.
 2. **Find the ubiquitous language.** Read any glossary the project keeps before judging a word. Where it keeps none, judge by the test alone and report the gap as a finding for `domain-modeling`, rather than blocking the pass or inventing a glossary.
 3. **Extract every string.** Labels, headings, buttons, status lines, tooltips, empty states, error text, and anything generated from a template. Read them as a flat list, out of layout. Copy that survives only because the design carries it is the copy this pass exists to catch.
-4. **Apply the test mechanically, string by string.** Reject any label over eight words, any label carrying a subordinate clause, any label using a verb phrase where a noun belongs, and any word the step 1 audience would not use in a work conversation. Each rejection gets a tell number and a `file:line` or a node reference.
+4. **Apply the test mechanically, string by string.** Treat labels over eight words or with subordinate clauses as review signals. Preserve length needed for meaningful consent, error recovery or an unambiguous action. Correct verb phrases where a noun belongs and vocabulary the step 1 audience would not use. Each rejection gets a tell number and a `file:line` or a node reference.
 5. **Rewrite to the shortest sayable form, and the most literal.** Take the literal phrase over the figurative one wherever both exist, per tell 13. Shorter is only better when it stays sayable, because a shortened piece of jargon is still jargon. Keep every fact the user needs, drop facts the same string already states, and where a string comes from a template, fix the template rather than the rendered instance.
 6. **Check the rewrites against the glossary and its avoid-list**, so the fix does not reintroduce a term the domain model rejected, or invent a second word for a thing that already has one.
 7. **Render it and read it in place.** A label that works in a list can still be wrong at its real size next to its real neighbours.

@@ -30,7 +30,7 @@ Default to report-only unless the user explicitly asks you to fix issues.
 
 ## Browser Tool Selection
 
-Use the strongest browser available, degrade gracefully to Playwright, and clearly label any static-only results. Full fallback ladder: `references/browser-session.md`.
+Use the strongest browser available, degrade gracefully to Playwright, and clearly label any static-only results as an incomplete field test. Static findings can be useful, but do not claim the browser completion checklist passed without exercising the app. Full fallback ladder: `references/browser-session.md`.
 
 For local web apps, do not satisfy a field test with shell-only checks when a browser-capable tool is available. The point of the skill is rendered behavior.
 

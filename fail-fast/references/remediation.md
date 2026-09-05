@@ -44,13 +44,9 @@ Typical fixes:
 
 ### Keep
 
-Keep a fallback only when it has:
+Keep behaviour required by a supported product, API or protocol contract. Permanent support has no required expiry; document why both paths remain and verify their contract.
 
-- a named external user or protocol requirement;
-- a documented owner;
-- a removal date or version window;
-- tests that describe why both paths exist;
-- logging or metrics if the old path should disappear.
+For a temporary migration, record the owner, removal date or version window, and checks for both paths. Add logging or metrics when they are needed to decide whether the old path can disappear. Missing paperwork is not permission to remove required behaviour.
 
 ## Environment Variables
 

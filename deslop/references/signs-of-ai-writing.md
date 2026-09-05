@@ -16,8 +16,8 @@ Indicators" before concluding anything.
 
 - AI-detection tools are unreliable. They are fooled by light editing and by models
   they were not trained on. Do not rely on them.
-- Most people detect AI prose at roughly chance level. Heavy LLM users reach about
-  90% accuracy, mostly by recognising the patterns below - not by intuition.
+- Familiarity with these patterns can guide an edit, but does not establish who
+  wrote the text. Do not attach an accuracy claim without a relevant cited study.
 - The word lists and tics drift by model and release date. Treat the specific
   vocabulary as era-bound; treat the underlying behaviour (inflated register,
   synonym-swapping, hedged authority) as the durable signal.

@@ -26,6 +26,8 @@ Use `--copy` if you want independent files rather than symlinks. Restart your ag
 
 ## Skills
 
+The collection includes general-purpose workflows and personal integrations. `gog`, `linear`, `starling`, `xero` and `web-research` assume Daniel's local tools, accounts and 1Password setup; Xero also uses a private repository. Installing those skills does not provision access. The other skills may require their named applications or CLIs, as documented inside each skill.
+
 ### `blender`
 
 Inspect, measure and render Blender scenes through MCP or headless CLI. Use for Blender scene, render-pipeline or MCP work. Not for 2D design files (`paste-up`).

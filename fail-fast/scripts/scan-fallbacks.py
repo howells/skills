@@ -135,7 +135,7 @@ RULES = [
         "compatibility",
         "medium",
         re.compile(r"\b(?:backwards?|compat(?:ibility)?|legacy|deprecated|deprecation|migration|old[-_ ]?api)\b", re.I),
-        "Keep compatibility only with an owner, removal condition, and tests; otherwise remove it.",
+        "Check for a supported permanent contract or an owned temporary migration before proposing removal.",
     ),
     Rule(
         "alias-fallback",
@@ -228,8 +228,12 @@ def is_test_path(path: Path) -> bool:
     )
 
 
+def traversal_error(error: OSError) -> None:
+    raise error
+
+
 def iter_files(root: Path, include_tests: bool, include_docs: bool, max_file_bytes: int) -> Iterable[Path]:
-    for current_root, dirs, files in os.walk(root):
+    for current_root, dirs, files in os.walk(root, onerror=traversal_error):
         dirs[:] = [name for name in dirs if name not in DEFAULT_EXCLUDES]
         current = Path(current_root)
         for filename in files:
@@ -279,13 +283,20 @@ def is_comment_line(excerpt: str) -> bool:
     return excerpt.startswith(("//", "#", "*", "/*", "<!--"))
 
 
-def scan(root: Path, include_tests: bool, include_docs: bool, max_file_bytes: int) -> list[Finding]:
+def scan(root: Path, include_tests: bool, include_docs: bool, max_file_bytes: int, coverage: dict | None = None) -> list[Finding]:
+    if not root.is_dir():
+        raise ValueError(f"Scan root must be a directory: {root}")
+    if coverage is None:
+        coverage = {}
+    coverage.update(scanned=0, unreadable=0)
     findings: list[Finding] = []
     env_default_lines: set[tuple[str, int]] = set()
     for path in iter_files(root, include_tests, include_docs, max_file_bytes):
         text = read_text(path)
         if text is None:
+            coverage["unreadable"] += 1
             continue
+        coverage["scanned"] += 1
         rel = str(path.relative_to(root))
         is_manifest = path.name in MANIFEST_FILENAMES
         seen: set[tuple[str, int]] = set()
@@ -344,11 +355,20 @@ def print_text(findings: list[Finding]) -> None:
 def main() -> int:
     args = parse_args()
     root = Path(args.root).resolve()
-    if not root.exists():
-        print(f"error: root does not exist: {root}", file=sys.stderr)
+    if not root.is_dir():
+        print(f"error: root must be a directory: {root}", file=sys.stderr)
         return 2
 
-    findings = scan(root, args.include_tests, args.include_docs, args.max_file_bytes)
+    coverage: dict = {}
+    try:
+        findings = scan(root, args.include_tests, args.include_docs, args.max_file_bytes, coverage)
+    except OSError as error:
+        print(f"Scan incomplete: {error}", file=sys.stderr)
+        return 2
+    print(f"Scanned {coverage['scanned']} eligible text files; {coverage['unreadable']} unreadable or binary. Tests, docs, excluded paths and oversized files follow the selected filters.", file=sys.stderr)
+    if not coverage["scanned"] or coverage["unreadable"]:
+        print("Scan coverage is empty or incomplete; no clean verdict.", file=sys.stderr)
+        return 2
     if args.json:
         print(json.dumps([asdict(finding) for finding in findings], indent=2))
     else:

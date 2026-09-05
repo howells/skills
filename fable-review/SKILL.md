@@ -30,14 +30,16 @@ Run it from the repository under review; the CLI reads files relative to the wor
 Confirm the lane before the first invocation in a session:
 
 ```bash
-printf 'Reply with exactly: lane-ok' | claude -p --model fable --permission-mode plan
+printf 'Reply with exactly: lane-ok' | claude -p --model fable --permission-mode plan --output-format json
 ```
+
+Require a successful JSON response whose `result` is `lane-ok`. Inspect returned model metadata when available and stop if it identifies a different model; the text alone proves responsiveness, not exact model identity. If the CLI omits model metadata, report identity as unverified rather than asserting the exact version.
 
 Without `lane-ok`, stop and name the cause: `claude` missing from the path, credentials absent or expired, or the alias no longer resolving to Fable. Substituting Opus, Sonnet or a different provider's model is a failed run, because the point of the lane is which model answered.
 
 **Do not substitute the Claude Code subagent.** In Claude Code a fable subagent is reachable through the Agent tool, and it inherits this session's context and instructions. That makes it useful for delegated work and useless as an independent read, since it has already been told what you think. The subprocess starts clean, which is the whole value.
 
-Plan mode plus the disallowed tools is the boundary, and it holds: a probe asking Fable to write a file returns `BLOCKED` and creates nothing. Keep the written boundary in the brief as well, because shell access remains available.
+Plan mode and denied edit tools reduce write access, but a successful refusal probe is not proof that every write route is blocked. Keep the written read-only boundary in the brief. When source reading is sufficient, restrict built-in tools to `Read,Glob,Grep`; otherwise remember that shell access can still mutate state and use the host's execution controls.
 
 `--effort high` is the default for this skill. Raise it to `xhigh` or `max` for a question where the reasoning is the deliverable.
 

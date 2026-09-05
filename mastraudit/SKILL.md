@@ -47,7 +47,7 @@ Run them first and spend your own attention on the judgement calls. Manual searc
 
 Copy these steps into your todolist verbatim before you start. A step you skip stays in the list with a one-line `skip: <reason>`.
 
-1. **Scope it and say it back.** Which package owns Mastra, and which surfaces are in range. If zero or several packages declare Mastra dependencies, that ambiguity is the first finding - report it and ask before auditing on a guess.
+1. **Scope it and say it back.** Which package owns Mastra, and which surfaces are in range. Trace runtime owners and import roles; zero or several dependency declarations are discovery signals, not findings. Several independently deployed Mastra apps can be legitimate. Audit clearly identified implementations separately and ask only if unresolved ownership changes the scope.
 
 2. **Establish the source of truth.** Note installed versions. Find any codebase-local conventions document. Say which you are auditing against.
 

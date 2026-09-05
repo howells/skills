@@ -18,6 +18,10 @@ The point of the number is comparison over time. A survey that produces findings
 | ------------- | ------------------ | ------------------- |
 | Accessibility | Frontend projects  | accessibility lens  |
 
+## Applicability
+
+These examples describe web applications. For another project type, name which axes apply and state equivalent criteria before scoring; security can concern credential handling in a CLI, for example. Mark inapplicable or unreviewed axes `--`. Do not penalize documentation for lacking a database, a library for lacking deployment monitoring, or a CLI for lacking loading spinners. Preserve the same criteria and covered axes when comparing runs.
+
 ## Criteria
 
 ### 1. Security Posture
@@ -114,7 +118,7 @@ These override a lens score. A cap is a ceiling, not a value - a lens scoring be
 | -------------------------------------------------------------------------------- | ------------------ |
 | Build broken                                                                     | Operations → 0     |
 | Type errors without build failure                                                | Operations → 1     |
-| Any app or package with no configured lint **and** typecheck                     | Operations → 2     |
+| An applicable source root missing coverage from its required lint/type checks, including root orchestration | Operations → 2 |
 | No test files found                                                              | Test Health → 0    |
 | Test failures in the mechanical pass                                             | Test Health → 1    |
 | Any authored source file at 2000+ lines                                          | Architecture → 1   |
@@ -132,6 +136,9 @@ The 2000-line cap is a presumptive blocker, not a proof. A genuine reason can be
 5. **Bonus axes report separately** as `+n/3`, outside the /21.
 
 ## Bands
+
+For a reduced denominator, show the raw score and coverage, then compute `21 × earned / available` for the band: below 8 Fragile, below 13 Developing, below 18 Solid, otherwise Production-grade. Do not round across thresholds. The band applies only to reviewed axes; `9/9` is full marks on three axes, not evidence that unreviewed axes are healthy. Do not compare totals across different coverage without showing that difference.
+
 
 | Range | Band                 | Meaning                                                                          |
 | ----- | -------------------- | -------------------------------------------------------------------------------- |

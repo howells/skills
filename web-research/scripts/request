@@ -1,6 +1,7 @@
 #!/bin/sh
 set -eu
 
+script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 provider=${1:-}
 operation=${2:-}
 resource_id=${3:-}
@@ -21,7 +22,7 @@ exec 3<&0
 post_with_bearer() {
   request_url=$1
   credential_ref=$2
-  credential=$(op read "$credential_ref")
+  credential=$(python3 "$script_dir/read-credential.py" "$credential_ref")
 
   printf 'Authorization: Bearer %s\n' "$credential" | \
     curl --fail-with-body --silent --show-error \
@@ -36,7 +37,7 @@ post_with_bearer() {
 get_with_bearer() {
   request_url=$1
   credential_ref=$2
-  credential=$(op read "$credential_ref")
+  credential=$(python3 "$script_dir/read-credential.py" "$credential_ref")
 
   printf 'Authorization: Bearer %s\n' "$credential" | \
     curl --fail-with-body --silent --show-error \

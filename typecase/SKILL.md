@@ -73,7 +73,7 @@ Copy these into your todolist verbatim before you start. A step you skip stays i
    python3 scripts/census-typography.py /path/to/repo --roots apps/web/app apps/web/components
    ```
 
-   It counts distinct shape combinations, the size soup, combinations sharing a size, any roles already in use, and proposes a case measured from what it found. Its proposal is a starting point. Report the counts before proposing anything - the numbers are what make the case arguable rather than a preference.
+   It counts combinations while retaining responsive variants, important markers and size/leading modifiers, reports sample locations, and proposes a case from the size census. Use `--json` for the complete migration inventory and all source locations; the default text view shows only the top combinations. This is a lexical census of supported class forms, not a complete AST analysis. Inspect dynamic expressions, custom utilities and reported skipped files with the project's scanner before claiming complete coverage. Its proposal is a starting point. Report the counts before proposing anything - the numbers are what make the case arguable rather than a preference.
 
 2. **Read representative occurrences before naming anything.** For each distinct combination the census found, open two or three of the places it is used and write down the job the text is doing there - a row title, a table header, a form hint, a stat figure. A combination doing two jobs gets both recorded. The census counts tokens and cannot see jobs, and a role named from size alone is a guess wearing a number.
 

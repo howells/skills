@@ -53,7 +53,7 @@ A rescued branch nobody can identify gets deleted next month by whoever is tidyi
 Merge detection is where confident wrong answers come from.
 
 - **Ancestry is the honest test.** `git merge-base --is-ancestor <branch> <default>`.
-- **Squash and rebase merges defeat it.** The commits genuinely are not ancestors, so ancestry reports unmerged and `git cherry` and patch-ids both lie. Fall back to the forge: a PR the forge calls merged is merged.
+- **Squash and rebase merges defeat it.** The commits genuinely are not ancestors, so ancestry reports unmerged and `git cherry` and patch-ids both lie. Use the forge to verify the PR's merged head and destination. Match that head to the current branch tip and confirm its merge landed on the intended pushed default branch. A merged PR describes historical work, not later commits added to the branch. Classify those separately; if equivalence after a squash or rebase cannot be established, leave the branch alone.
 - **A pushed branch is not a backup.** It is safe from local loss, not from someone deleting the remote branch. Pushed plus merged is the bar.
 - **Record every SHA before you delete anything.** Branch tip, worktree HEAD, stash commit. Written down, a deletion is reversible; unwritten, you are relying on someone thinking to check the reflog.
 
@@ -69,7 +69,7 @@ Copy these steps into your todolist verbatim before you start. A step you skip s
 
 4. **Sort into the three buckets, and name every at-risk item** per the section above. Unplaceable goes to in-flight.
 
-5. **Rescue, additively.** A detached HEAD becomes `git branch salvage/<name> <sha>`. A dirty worktree gets a WIP commit on a `salvage/` branch - an ugly commit beats a lost file. An unpushed branch gets pushed. A stash becomes a branch with `git stash branch`. Nothing is deleted in this step, and no rescue may overwrite an existing ref.
+5. **Rescue, additively.** A detached HEAD becomes `git branch salvage/<name> <sha>`. A dirty worktree gets a WIP commit on a `salvage/` branch - an ugly commit beats a lost file. An unpushed branch gets pushed. For a stash, first identify its owner, base and full contents, including staged and untracked files. Preserve its commit under a new durable ref, create a recovery branch at the stash base in an owned clean worktree, and use `git stash apply --index <saved-sha>` without dropping it. Commit the recovered content, inspect that all stash content was preserved, and push when appropriate. `git stash branch` is not additive: it can drop the stash while leaving changes uncommitted. Nothing is deleted in this step, and no rescue may overwrite an existing ref. Follow the host's branch and worktree policy for names and locations.
 
 6. **Re-verify, then remove only from the safe bucket.** Re-run the check that put each item there, because step 5 changed the repo. Then remove, worktrees before their branches, recording each SHA first.
 
