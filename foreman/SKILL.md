@@ -1,6 +1,6 @@
 ---
 name: foreman
-description: "Run an explicitly requested delegation mode for substantial changes: the main agent decides and inspects while subagents write code. Use only when the user asks for Foreman or delegated execution. Delegation never requires new tests. Not for ordinary implementation, tiny fixes, or docs-only work; `plimsoll` governs process weight."
+description: "Run an explicitly requested delegation mode for substantial changes: the main agent decides and inspects while subagents write code. Use only when the user asks for Foreman or delegated execution. Delegation alone never requires new tests. Not for ordinary implementation, tiny fixes, or docs-only work; `plimsoll` governs process weight."
 disable-model-invocation: true
 ---
 
@@ -36,7 +36,7 @@ Delegation does not earn extra ceremony. Start with the payload and a named fail
 
 ## Dispatch
 
-The task decides capability - taste, heavy, or grunt. The model **you** are running on decides economy: how much you do inline, how dense your briefs are, and how cheap the bottom tier can be. Read your own host model out of your environment context.
+The task decides capability - taste, heavy, or grunt. The model **you** are running on decides economy: how much you do inline, how dense your briefs are, and how cheap the bottom tier can be. Use the host model identity only when the environment states it. If it is unavailable, say so, use the host’s default model without an override, and do not infer frontier-specific permissions or pricing.
 
 Route by role, not by product name. **Frontier** is the most capable model on offer, priced to match. **Workhorse** is strong and cheap enough to run all day. **Cheap** is fast and literal, fine once a pattern is established.
 
@@ -46,7 +46,7 @@ Route by role, not by product name. **Frontier** is the most capable model on of
 | Heavy | Workhorse |
 | Grunt | Cheap, or workhorse if the brief has any slack in it |
 
-**If you are running on the frontier model, you are the most expensive line in the budget.** That is a licence and a constraint at once. The licence: re-plan mid-flight, override an agent's call, chase the subtle thing - that judgment is what the host was chosen for. The constraint: every token around that judgment must be lean. Briefs get *denser*, not longer, with signatures, constraints and non-goals as bullets rather than prose. Don't re-read files an agent already reported on, don't restate the plan, don't narrate. Use fewer agents, not a wider fan-out of cheaper ones; dispatch only where delegation gives clear ownership or real parallel progress. Never spawn a frontier subagent from a frontier host; you are already the smart layer, and that pays twice for it.
+**If you are running on the frontier model, you are the most expensive line in the budget.** That is a licence and a constraint at once. The licence: re-plan mid-flight, override an agent's call, chase the subtle thing - that judgment is what the host was chosen for. The constraint: every token around that judgment must be lean. Briefs get *denser*, not longer, with signatures, constraints and non-goals as bullets rather than prose. Don't re-read files an agent already reported on, don't restate the plan, don't narrate. Use fewer agents, not a wider fan-out of cheaper ones; dispatch only where delegation gives clear ownership or real parallel progress. Never spawn a frontier implementation subagent from a frontier host; you are already the smart layer, and that pays twice for it. An explicitly requested independent CLI review through `fable-review` is a separate workflow, not an implementation subagent.
 
 **If you are running below it, the frontier model is a scalpel, never a teammate.** Spin one up only for a narrow, genuinely hard problem - a bug that survived two fix rounds, a subtle invariant or concurrency or type puzzle, a kernel your own tier already failed at. One at a time, whole context in the brief, one focused answer back, closed immediately. "This task is big" does not qualify. Say in the dispatch summary that you did it and why.
 
@@ -142,7 +142,7 @@ rounding it up. For user-visible behaviour, prefer rung 5 to a pile of unit test
 
 ## Steps
 
-For a substantial implementation where Foreman applies, copy these six steps into your todolist verbatim before you reason about the task. Keep the plan to the smallest useful decomposition. A step you judge unnecessary stays in the list with a one-line `skip: <reason>`. If several steps are unnecessary because the work is small, stop using Foreman rather than performing its ceremony anyway.
+For a substantial implementation where Foreman applies, use these steps to organize the work. Keep any task list to the smallest useful decomposition; do not copy the workflow verbatim or add entries solely to mark them skipped. If several steps are unnecessary because the work is small, stop using Foreman rather than performing its ceremony anyway.
 
 1. **Plan.** Use an existing brief or decision if one already exists; do not restate it. Decompose only where separate ownership or parallel work materially helps. Solve the hard kernel yourself now, as code, so no agent ever invents an algorithm. Done when every remaining task is either kernel (yours, solved) or delegable (a brief can pin it down in full).
 

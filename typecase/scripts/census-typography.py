@@ -22,7 +22,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
+import stat
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -213,15 +215,17 @@ def source_files(root: Path, roots: list[str] | None) -> list[Path]:
     for base in bases:
         if not base.is_dir():
             raise ValueError(f"Scan root must be a directory: {base}")
-        for path in base.rglob("*"):
-            if not path.is_file() or path.suffix not in EXTENSIONS:
-                continue
-            relative = path.relative_to(base).parts[:-1]
-            if any(part in SKIP_DIRS or part.startswith(".") for part in relative):
-                continue
-            if path.name.endswith((".min.js", ".min.css", ".bundle.js")):
-                continue
-            found.append(path)
+        def traversal_error(error):
+            raise error
+        for directory, dirs, names in os.walk(base, onerror=traversal_error):
+            dirs[:] = [name for name in dirs if name not in SKIP_DIRS and not name.startswith(".")]
+            for name in names:
+                path = Path(directory) / name
+                if path.suffix not in EXTENSIONS or not stat.S_ISREG(path.stat().st_mode):
+                    continue
+                if path.name.endswith((".min.js", ".min.css", ".bundle.js")):
+                    continue
+                found.append(path)
     return sorted(set(found))
 
 
@@ -328,7 +332,7 @@ def main() -> int:
         return 2
     try:
         files = source_files(root, args.roots)
-    except ValueError as error:
+    except (ValueError, OSError) as error:
         print(str(error), file=sys.stderr)
         return 2
     if not files:

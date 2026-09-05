@@ -65,7 +65,7 @@ Pick one per codebase. Where the house style is `@apply` for custom classes, the
 
 ## Steps
 
-Copy these into your todolist verbatim before you start. A step you skip stays in the list with a one-line `skip: <reason>`.
+Use these steps at the requested scope. For an audit or proposal, return the census and mapping. A request to migrate, consolidate or enforce typography authorizes the implementation steps; do not add another approval gate. Keep any task list brief.
 
 1. **Census before designing.** Run the script and read its output before forming any opinion about how many roles the codebase needs.
 
@@ -73,7 +73,7 @@ Copy these into your todolist verbatim before you start. A step you skip stays i
    python3 scripts/census-typography.py /path/to/repo --roots apps/web/app apps/web/components
    ```
 
-   It counts combinations while retaining responsive variants, important markers and size/leading modifiers, reports sample locations, and proposes a case from the size census. Use `--json` for the complete migration inventory and all source locations; the default text view shows only the top combinations. This is a lexical census of supported class forms, not a complete AST analysis. Inspect dynamic expressions, custom utilities and reported skipped files with the project's scanner before claiming complete coverage. Its proposal is a starting point. Report the counts before proposing anything - the numbers are what make the case arguable rather than a preference.
+   It counts combinations while retaining responsive variants, important markers and size/leading modifiers, reports sample locations, and proposes a case from the size census. Use `--json` for the complete migration inventory and all source locations; the default text view shows only the top combinations. This is a lexical census of supported class forms, not a complete AST analysis. Embedded Vue/Svelte/Astro style blocks are not scanned for `@apply`; inspect those separately. Exit 2 means invalid or incomplete coverage, not a clean census. Inspect dynamic expressions, custom utilities and reported skipped files with the project's scanner before claiming complete coverage. Its proposal is a starting point. Report the counts before proposing anything - the numbers are what make the case arguable rather than a preference.
 
 2. **Read representative occurrences before naming anything.** For each distinct combination the census found, open two or three of the places it is used and write down the job the text is doing there - a row title, a table header, a form hint, a stat figure. A combination doing two jobs gets both recorded. The census counts tokens and cannot see jobs, and a role named from size alone is a guess wearing a number.
 
@@ -87,7 +87,7 @@ Copy these into your todolist verbatim before you start. A step you skip stays i
 
 5. **Define the case once**, in the file that imports Tailwind, with a comment saying what the case is and that a scanner enforces it. Set leading and tracking inside each role.
 
-6. **Name the sanctioned modifiers.** The short list that may sit beside a role: typically `font-medium` for emphasis, `font-mono` for data, `tabular-nums`, and truncation, wrapping, alignment and colour. Everything typographic outside that list belongs to a role.
+6. **Name the sanctioned modifiers.** The short list that may sit beside a role: typically `font-medium` for emphasis, `font-mono` for data, `capitalize` for data casing, `tabular-nums`, and truncation, wrapping, alignment and colour. Every sanctioned modifier must be allowed by the installed scanner; align its namespace with the chosen contract. Everything typographic outside that list belongs to a role.
 
 7. **Migrate**, following the mapping. Convert whole files rather than leaving a file half on the case - a stylesheet with some rules converted and some raw is worse than one consistently raw.
 

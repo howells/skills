@@ -13,13 +13,15 @@ export default {
       {
         allow: [
           "type-display", "type-heading", "type-body", "type-small", "type-data",
-          "font-medium", "font-mono",
+          "font-medium", "font-mono", "capitalize",
         ],
       },
     ],
   },
 };
 ```
+
+Inspect the installed rule’s governed namespace: it may also cover `italic`, `not-italic` and `normal-case`, which the lexical census does not count. Decide whether those belong to roles or sanctioned modifiers, and align `match`/`allow` before migration. Every sanctioned modifier must appear in the allow list.
 
 It is opt-in and enabled by no preset, so it does nothing until a project turns it on. `match` widens or narrows the governed namespace; the default is standard Tailwind typography, excluding colour, alignment and wrapping.
 
@@ -150,7 +152,7 @@ Print the fix in the failure, and say which roles exist:
 ```
 Typography gate: raw type utilities must be a role class (type-*).
   apps/web/features/panel.tsx: 4 (baseline 1)
-Fix by using type-display/heading/title/body/small/micro/data, or run --update if intentional.
+Fix by using the roles defined in this project. Refresh the baseline only for a reviewed, deliberate change.
 ```
 
 ## Shape 3: test

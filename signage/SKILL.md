@@ -27,7 +27,7 @@ Cite by number in findings, so a reviewer sees the pattern rather than the insta
 
 6. **A sentence doing a label's job.** `This page names three products` is a heading trying to be an essay. `3 products`.
 7. **Shouted declarations.** `THE PAGE AND THE RECORD DISAGREE`, `PROOF YOU CAN ORDER`. Caps turn a status into a headline about the system's own reasoning.
-8. **Explanatory subtext under every element.** A caption telling the user what the thing above it means is an admission the label above it has failed. Fix the label; delete the caption.
+8. **Explanatory subtext under every element.** A caption telling the user what the thing above it means is an admission the label above it has failed. Fix the label and remove redundant captions. Preserve distinct help, consent, constraints and error-recovery information.
 9. **Lighter grey text standing in for real UI.** A dimmed sentence is not a state, a control, or an empty state. It is a note to self left on the screen.
 10. **Scaffolding copy.** `Three ways forward:`, `Here's what we found:`, `Overview`, `Getting started` as a heading over content that is neither.
 
@@ -78,10 +78,10 @@ Scale the pass to the requested strings. A few labels need direct edits and a sh
 2. **Find the ubiquitous language.** Read any glossary the project keeps before judging a word. Where it keeps none, judge by the test alone and report the gap as a finding for `domain-modeling`, rather than blocking the pass or inventing a glossary.
 3. **Extract every string.** Labels, headings, buttons, status lines, tooltips, empty states, error text, and anything generated from a template. Read them as a flat list, out of layout. Copy that survives only because the design carries it is the copy this pass exists to catch.
 4. **Apply the test mechanically, string by string.** Treat labels over eight words or with subordinate clauses as review signals. Preserve length needed for meaningful consent, error recovery or an unambiguous action. Correct verb phrases where a noun belongs and vocabulary the step 1 audience would not use. Each rejection gets a tell number and a `file:line` or a node reference.
-5. **Rewrite to the shortest sayable form, and the most literal.** Take the literal phrase over the figurative one wherever both exist, per tell 13. Shorter is only better when it stays sayable, because a shortened piece of jargon is still jargon. Keep every fact the user needs, drop facts the same string already states, and where a string comes from a template, fix the template rather than the rendered instance.
+5. **Rewrite to the shortest sayable form, and the most literal.** Take the literal phrase over the figurative one wherever both exist, per tell 13. Shorter is only better when it stays sayable, because a shortened piece of jargon is still jargon. Keep every fact the user needs, drop facts the same string already states, and where a string comes from a template, fix the template rather than the rendered instance. Change display text only: preserve translation keys, IDs, stored values, interpolation placeholders and formatting syntax. Adjust existing text assertions when needed to verify the intended new wording.
 6. **Check the rewrites against the glossary and its avoid-list**, so the fix does not reintroduce a term the domain model rejected, or invent a second word for a thing that already has one.
-7. **Render it and read it in place.** A label that works in a list can still be wrong at its real size next to its real neighbours.
-8. **Report.** Counts by tell number, the before-and-after table, and any term you could not settle without a decision from the owner.
+7. **Render it and read it in place** when the app and browser are available. A label that works in a list can still be wrong beside its real neighbours. If rendering is unavailable, report that gap and do not claim visual verification.
+8. **Report.** For more than a handful of strings, give counts by tell number and a before-and-after table. For a small pass, name the changes briefly. Include unresolved terms and verification gaps in either case.
 
 ## Where this fits
 

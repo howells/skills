@@ -1,5 +1,5 @@
 interface:
   display_name: "Linear"
   short_description: "Use the right one of Daniel's Linear accounts"
-  default_prompt: "Use $linear to query the Linear account that owns the requested team or issue."
+  default_prompt: "Use $linear to select the account that owns the requested team or issue and query it through GraphQL."
 

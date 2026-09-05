@@ -104,7 +104,7 @@ A checklist for "why does the render not match the viewport".
 
 ### What is actually installed
 
-The official server is `projects.blender.org/lab/blender_mcp`. Registered in `~/.claude.json` as:
+The official server is `projects.blender.org/lab/blender_mcp`. Discover its actual checkout and add-on from the current harness configuration. This is an example of the author's Claude registration, not a portable install path:
 
 ```json
 "blender": {"type":"stdio","command":"uv",
@@ -166,6 +166,8 @@ The add-on sets the client socket non-blocking, then calls `sendall` on it insid
 - zero bytes → `Empty response from Blender`
 - partial → `Invalid response … Unterminated string starting at: line 1 column …`
 
+Do not patch or reinstall the add-on during ordinary scene work; propose that separately unless the user already requested server maintenance.
+
 Measured: 260 KB delivered, 500 KB gone. An upstream issue measured the cut at ~327 KB (5 × 65536). Known and open; a two-line fix exists (`setblocking(True)` around the `sendall`, restored in a `finally`), needing an add-on reinstall and a Blender restart.
 
 **What this means for you.** A large result comes back *empty rather than erroring*. That is the "instrument fails quietly" class. So:
@@ -225,7 +227,7 @@ rendering will then save using the temporary settings."*
 3. Never leave `render.filepath` pointing at a scratch directory — it will be saved into the file and the directory will later vanish.
 4. Long renders go headless. Not through the MCP.
 
-`*_for_cli` variants: **do not call them.** They pass no `stdin`, so the child Blender inherits the MCP client's live JSON-RPC pipe and deadlocks, timing out at 120 s. They cannot corrupt the source file — `synced_blend_for_cli` writes a `copy=True` snapshot — but they leave a stray numbered `<name>_mcp_0001.blend` beside it and return nothing. Run `blender -b` from the shell instead.
+`*_for_cli` variants: **do not call them.** They pass no `stdin`, so the child Blender inherits the MCP client's live JSON-RPC pipe and deadlocks, timing out at 120 s. They cannot corrupt the source file — `synced_blend_for_cli` writes a `copy=True` snapshot — but they leave a stray numbered `<name>_mcp_0001.blend` beside it and return nothing. Run `blender -b` from the shell instead. For an authorized snapshot of the open scene, use `bpy.ops.wm.save_as_mainfile(filepath=snapshot_path, copy=True)` with an absolute path in the owned snapshot directory, then confirm `bpy.data.filepath` is unchanged. Never omit `copy=True` or overwrite the user's source to prepare a headless render.
 
 ---
 
@@ -234,7 +236,7 @@ rendering will then save using the temporary settings."*
 The user is looking at this. Treat their viewport as their document.
 
 - **Never reload the file to make a change.** `bpy.ops.wm.open_mainfile` resets their view. Edit the live session through the MCP instead. If you genuinely must reload, capture and restore `view_perspective`, `view_distance`, `view_location`, `view_rotation`, `lens` and `shading` from `screen.areas` → `VIEW_3D` → `region_3d`.
-- **Check `bpy.data.is_dirty` before touching anything.** Dirty means unsaved edits in progress. Stop.
+- **Check `bpy.data.is_dirty` and live ownership.** A dirty scene can contain user edits or this task's own authorized work. Continue inspection and scoped authorized edits without discarding either. Do not reload, overwrite or save unrelated edits merely to clear the flag; pause if another person is actively editing or ownership is unclear.
 - **Say which paths you own** before writing, and get off the connection entirely when the user says they are editing. Idle, the setup touches nothing; every risk needs a deliberate call.
 - **One source of truth, one file.** A capture/replay layer that records and reapplies arrangements will destroy hand placement — it did, repeatedly. Anchors get captured while child transforms do not; a name-match breaks when a fresh append drops its `.001` suffix; asset wrappers get deleted and orphan every child. Delete the layer. The `.blend` is the truth.
 - **Guard against stray scene files.** Copies accumulate (`.blend1` backups, rescue copies) and each is a file someone can open by mistake and arrange for an hour. Keep exactly one `.blend` in the working directory; put snapshots in a separate `locked/` directory.
@@ -257,6 +259,8 @@ Move the root's `matrix_world.translation`, not the child's `location` — `loca
 ---
 
 ## 8. Render passes and recolouring without re-rendering
+
+The compositor examples below use Blender 5.x API names. Inspect the installed version and node/property schema before applying them to another release; do not assume these names work on 4.x.
 
 The reason to decompose at all: paint applied to an 8-bit render multiplies onto pixels that are already clipped, so the sunlit part of a wall has been flattened to white and there is nothing left to tint. Everything upstream of the tone map must stay float.
 

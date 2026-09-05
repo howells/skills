@@ -36,7 +36,7 @@ Choose the smallest density that satisfies the request.
 - **Meaningful pass:** Document exported symbols plus complex internal functions, tricky types, overloads, state machines, lifecycle behavior, side effects, and non-obvious constraints.
 - **Targeted pass:** Document only the named file, component, or symbol.
 
-Meaningful and targeted passes reuse steps 2-4 of the Package API Workflow (decide, write, validate) without the full surface inventory from step 1.
+Meaningful and targeted passes reuse steps 2-4 of the Package API Workflow (decide, write, validate) without the full public surface inventory from step 1.
 
 Avoid blanket comments on obvious local variables, simple one-line wrappers, and code whose type signature already explains everything.
 
@@ -97,7 +97,7 @@ Rules:
 - Use `@returns` only when return semantics are not obvious from the type.
 - Use `@typeParam` for exported generics when the role, constraints, inference behavior, defaults, or relationship between type parameters is not obvious.
 - Use `@throws`, `@deprecated`, `@example`, `@remarks`, `@defaultValue`, `@see`, `@internal`, `@public`, `@alpha`, or `@beta` when the repo's tooling or docs use them.
-- Do not duplicate TypeScript types in prose, including type annotations inside `@param` or `@returns` tags.
+- In TypeScript sources, do not duplicate declared types in `@param` or `@returns` annotations. In plain JavaScript, JSDoc type annotations supply type information to IDEs and `checkJs`; preserve them and add them when needed.
 - Do not add comments that simply restate the function name.
 - Do not change runtime behavior while documenting.
 
@@ -203,7 +203,7 @@ When planning, provide:
 - symbols to add, improve, leave, and skip
 - validation plan
 
-For package-wide or multi-module passes, present the candidate surface and intended documentation density before editing unless the user already requested implementation.
+For package-wide or multi-module passes, present the candidate public surface and intended documentation density before editing when the user asked for a plan. A request to add or improve documentation already authorizes the scoped edits.
 
 When implementing, finish with:
 
@@ -221,7 +221,7 @@ When implementing, finish with:
 - Do not use JSDoc to hide poor names. Rename only when the user asked for refactoring or the rename is necessary and safe.
 - Do not add examples that are not typechecked or at least consistent with real usage.
 - Do not introduce generated docs tooling unless the user asks or the repo already uses it.
-- Do not alter public API while adding JSDoc unless explicitly requested.
+- Do not alter public API while adding JSDoc unless explicitly requested. Preserve release and deprecation tags; add or remove `@internal`, `@public`, `@alpha`, `@beta` or `@deprecated` only when that API-status change is requested. These can affect emitted declarations or consumer diagnostics.
 
 ## Completion Check
 

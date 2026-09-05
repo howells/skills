@@ -18,6 +18,7 @@ State at the start that you are using the `deslop` skill.
 - Prefer clusters of indicators over isolated phrases.
 - Do not flatten strong human prose just because it is polished.
 - Preserve meaning, but do not preserve synthetic cadence.
+- Preserve text presented as a verbatim quotation. Flag concerns or offer a separately labelled paraphrase; do not silently alter a source's words.
 - Weigh counter-signals before concluding: text predating broad LLM use (ChatGPT
   launched November 2022), an author who can explain their choices, and idiosyncratic
   non-standard syntax all argue against an AI origin.
@@ -31,7 +32,7 @@ State at the start that you are using the `deslop` skill.
 - File path: read the file, then review its prose.
 - URL: fetch page content before reviewing if browsing is available.
 - Code or structured data: review comments, docstrings, docs, or surrounding copy only; ask if unclear.
-- Interface strings - labels, headings, buttons, status lines, empty states: hand to `signage`. They are signage rather than prose, and the tells differ.
+- Interface strings - labels, headings, buttons, status lines, empty states: hand to `signage`. They are signage rather than prose, and the tells differ. If `signage` is unavailable, continue the prose pass, leave interface strings unchanged and identify them as unreviewed.
 - No input: ask for the text or file to review.
 
 ## Workflow
@@ -113,7 +114,7 @@ For short rewrite-only requests, provide only a short note and the revised text.
 
 ## Citation And Markup Checks
 
-When citations or markup look suspicious:
+When citations or markup look suspicious, verify external sources when fetching is available and permitted. Otherwise mark those checks unverified and continue the wording and markup checks that can be done locally.
 
 - Verify links resolve and support the claim.
 - Compare DOI/ISBN identifiers against the claimed publication.

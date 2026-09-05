@@ -31,7 +31,7 @@ Cite by number so the pattern is visible rather than the instance.
 
 6. **Polling something you cannot influence.** A CI run, a Vercel build, a queue. Each poll is a turn that ships nothing. Give the job a hard budget before starting it, use completion notifications where they exist, and make at most one status check at the hard stop. Do other work meanwhile; if there is no other work, say so and stop.
 7. **Narrating the wait.** "Still on the same stage at 7m51s." The person reading learns nothing they could act on.
-8. **Making the blocker the new job.** The build was slow, so now you are optimising the build. Note it as a tracker item and carry on with what you were sent to do.
+8. **Making the blocker the new job.** The build was slow, so now you are optimising the build. Record the deferred issue in the response, or the tracker when updates were requested, and carry on with what you were sent to do.
 9. **Stopping other work so a check can run.** Halting parallel agents to get a still tree is a large cost for a signal that will be stale a minute later.
 
 **Ceremony** - process that produces no payload
@@ -53,7 +53,7 @@ Any one of these means you are over the line. Stop the current command and run t
 - A local build, CI job or deploy has reached its written hard stop.
 - A build or CI job is running and nobody wrote down its normal duration and hard stop before starting it.
 - A Vercel deployment would upload source for Vercel or hosted CI to build.
-- A gate wider than the package you edited.
+- A gate wider than the package you edited, unless the named risk or final repository merge contract requires it.
 - A deadline named in the conversation, and what you are doing right now will not be visible in the result before it.
 - Someone asks whether you have actually done the thing yet, and the answer is no.
 - You have already been told once to cut the checking, and you are reaching for another check.
@@ -79,7 +79,7 @@ This is a hard delivery rule. "Local" means the user's machine and the intended 
 
 For every preview and production deployment:
 
-1. **Disable automatic Git deployments.** Set `git.deploymentEnabled` to `false` in the project's Vercel configuration and confirm the live project setting agrees. Do not substitute an Ignored Build Step: Vercel still starts that deployment, consumes quota and occupies a build slot before cancelling it.
+1. **Enforce the authorized local-build policy.** Check automatic Git deployments. Where the user or repository has already adopted this policy, disable them with `git.deploymentEnabled: false` and verify the effective configuration; do not ask for the same authorization again. For an unrelated project without that authorization, report enabled Git deployments and obtain the missing decision before changing shared delivery settings. Do not substitute an Ignored Build Step: Vercel still starts that deployment, consumes quota and occupies a build slot before cancelling it.
 2. **Pull the target settings locally.** Use `vercel pull --yes --environment=preview` for previews or `vercel pull --yes --environment=production` for production. Pin and use the repository's declared Vercel CLI version.
 3. **Build once, locally.** Run `vercel build` for preview or `vercel build --prod` for production from the linked checkout, under the hard time limit above. The output is `.vercel/output`.
 4. **Deploy only that artifact.** Use `vercel deploy --prebuilt` for preview or `vercel deploy --prebuilt --prod` for production. Preserve the project's required Git commit metadata when creating the deployment.
@@ -93,14 +93,14 @@ If production settings, sensitive environment variables or required Vercel syste
 
 Use these steps to resume delivery. Keep notes only where they clarify scope, ownership, time limits or deferred work; do not turn the intervention into a new planning ceremony.
 
-1. **Stop and say what was running.** Name the command or the loop, in one line. Cancel anything still burning money or build minutes.
+1. **Stop and say what was running.** Name the command or the loop, in one line. Cancel only this session’s owned work, subject to the ownership and evidence restrictions in hard limit 6.
 2. **Name the payload, the audience and the deadline.** "Newsstand grid renders real catalogue rows, for the Materia demo, in 45 minutes." Use the stated deadline, or write "no stated deadline" and continue. Ask only when an unknown deliverable or audience changes the work that should ship.
 3. **Split the remaining work into payload and weight.** Two lists, counted. A task that appears in neither is finished or does not matter.
 4. **Cut the gate ladder to one gate.** Pick the narrowest check that could plausibly catch a break in what you actually changed. Everything wider gets deferred to one pass at the end, and you say so.
 5. **Timebox every build and remote gate.** Write its normal duration and hard stop, enforce the runner timeout, and arrange a completion notification or one check at the hard stop. Do this before starting it. For Vercel, build locally and deploy only with `--prebuilt`.
 6. **Build the payload.** Straight line. No new branch per item, no reviewer for a change you can read yourself, no plan for work already specified.
 7. **Verify against the payload, not the workspace.** Open the page. Run the query. Play the video. Click the deploy. `fieldtest` if it is an app in a browser. Do not skip this step.
-8. **Report in three lines.** What landed and can be seen. What was cut, and the tracker item holding it. What is still broken. Never pair "done" with a caveat list - either it is done, or it is not and you keep working.
+8. **Report in three lines.** What landed and can be seen. What was cut, with its tracker item if updates were authorized. What is still broken. Never pair "done" with a caveat list - either it is done, or it is not and you keep working.
 
 ## How much checking is enough
 

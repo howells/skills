@@ -28,7 +28,7 @@ The documents are for people who need to understand or change the product: desig
 - Technical detail goes in block quotes, prefixed with `Technical note:`. Use it only when the mechanism changes what the user would expect.
 - Use sentence case for headings.
 - Name the vocabulary consistently. The [glossary](glossary.md) is the source of truth for terms like {five or six of the product's load-bearing terms}.
-- Every document ends with the commit of {the source repo} it was verified against and a list of open questions.
+- Every document ends with the inspected source commit, a separate runtime-verification status, and open questions.
 - When a behavior is surprising, say so and say why it is that way if the reason is known. Do not smooth it over.
 
 ## The work to be done
@@ -54,7 +54,7 @@ Every feature document follows the same skeleton so that documents are comparabl
    {Rewrite this list for the product, drawing on the five families in the skill's product-kinds.md: the user's explicit abort, the user doing something else mid-way, the environment failing, something else changing the target, the input channel changing. It must be identical, and in the same order, in every document.}
 6. **Interactions with other systems.** {The product's cross-cutting concerns, in a fixed order: permissions, history or undo, containers or parents, locked or readonly state, offline, collaboration or multi-device, notifications, configuration and preferences.}
 7. **Edge cases.** Anything a user could notice that is not covered above.
-8. **Open questions and verification.** The {source repo} commit the document was verified against, and any behavior that could not be confirmed.
+8. **Open questions and verification.** The inspected {source repo} commit, runtime-verification status, and any behavior that could not be confirmed.
 
 Item 5 matters most. Asking the same interrupt questions of every feature is how gaps and inconsistencies are found.
 
@@ -66,11 +66,11 @@ For each document:
 2. Read the matching tests in {test directory}. Files like {list the ones that read as executable specifications} are close to executable specifications of the edge cases.
 3. Draft the document.
 4. Try anything ambiguous {in the running product: URL, binary, or account}. Tests settle "what happens"; the running product settles how it feels, what is visible while the interaction is in progress, and what the timing is like.
-5. Record the commit verified against.
+5. Record the inspected source commit separately from runtime-verification results.
 
 ### Verification
 
-Drafting reads the code; verification watches the product. The `verification/` directory holds one checklist per cluster of documents, each item a single observable claim with setup, steps, expected result, a priority, and the device it needs. A tester runs them {on the surface}, records `pass`, `fail`, or `blocked` in the Result column, and files every failure in `bug-triage.md` with the item's ID. A document moves from `drafted` to `verified` in the coverage table only when every P1 and P2 item for it has passed or been filed.
+Drafting reads the code; verification watches the product. The `verification/` directory holds one checklist per cluster of documents, each item a single observable claim with setup, steps, expected result, a priority, and the device it needs. A tester runs them {on the surface}, records `pass`, `fail`, or `blocked` in the Result column, and files every failure in `bug-triage.md` with the item's ID. A document moves from `drafted` to `verified` in the coverage table only when every P1 and P2 claim was directly exercised and observed, and passed or has a reproduced failure recorded in triage. Code inspection or mocked assertions alone do not qualify; visual claims require rendered inspection.
 
 `bug-triage.md` is the other half: every behavior the documents flagged as a likely defect, deduplicated, with reproduction steps, the reason in the code, a severity, and the decision the product team needs to make. Entries confirmed {in the running product} carry a Status line.
 

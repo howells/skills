@@ -52,14 +52,14 @@ A rescued branch nobody can identify gets deleted next month by whoever is tidyi
 
 Merge detection is where confident wrong answers come from.
 
-- **Ancestry is the honest test.** `git merge-base --is-ancestor <branch> <default>`.
+- **Verify the pushed target.** Fetch the configured remote successfully, without incidental pruning, and resolve its intended default branch. Test `git merge-base --is-ancestor <branch-tip> <remote>/<default>` against that fresh remote-tracking ref, not local `main`. If the remote cannot be verified, removal is blocked.
 - **Squash and rebase merges defeat it.** The commits genuinely are not ancestors, so ancestry reports unmerged and `git cherry` and patch-ids both lie. Use the forge to verify the PR's merged head and destination. Match that head to the current branch tip and confirm its merge landed on the intended pushed default branch. A merged PR describes historical work, not later commits added to the branch. Classify those separately; if equivalence after a squash or rebase cannot be established, leave the branch alone.
-- **A pushed branch is not a backup.** It is safe from local loss, not from someone deleting the remote branch. Pushed plus merged is the bar.
+- **A pushed branch is an off-machine copy, not integration proof.** It can still be deleted remotely. Verified integration into the pushed default branch is the cleanup bar.
 - **Record every SHA before you delete anything.** Branch tip, worktree HEAD, stash commit. Written down, a deletion is reversible; unwritten, you are relying on someone thinking to check the reflog.
 
 ## Steps
 
-Copy these steps into your todolist verbatim before you start. A step you skip stays in the list with a one-line `skip: <reason>`.
+Use these steps to organize recovery. Keep a compact census and ownership record rather than copying the workflow verbatim.
 
 1. **Fix the scope and say it back.** One repo by default. A sweep of every repo on the machine is a different job with a much larger blast radius, and it needs saying out loud before it starts.
 
@@ -69,9 +69,9 @@ Copy these steps into your todolist verbatim before you start. A step you skip s
 
 4. **Sort into the three buckets, and name every at-risk item** per the section above. Unplaceable goes to in-flight.
 
-5. **Rescue, additively.** A detached HEAD becomes `git branch salvage/<name> <sha>`. A dirty worktree gets a WIP commit on a `salvage/` branch - an ugly commit beats a lost file. An unpushed branch gets pushed. For a stash, first identify its owner, base and full contents, including staged and untracked files. Preserve its commit under a new durable ref, create a recovery branch at the stash base in an owned clean worktree, and use `git stash apply --index <saved-sha>` without dropping it. Commit the recovered content, inspect that all stash content was preserved, and push when appropriate. `git stash branch` is not additive: it can drop the stash while leaving changes uncommitted. Nothing is deleted in this step, and no rescue may overwrite an existing ref. Follow the host's branch and worktree policy for names and locations.
+5. **Rescue, additively.** A detached HEAD becomes `git branch salvage/<name> <sha>`. For an at-risk dirty worktree whose ownership is resolved, inspect staged, unstaged and untracked content before selecting files for a WIP commit on a recovery branch. Do not blindly stage credentials or another person’s active work. Push recovered work only when publication is within the user’s request or standing policy; otherwise preserve it locally and request the missing authorization after preparing the recovery. For a stash, first identify its owner, base and full contents, including staged and untracked files. Preserve its commit under a new durable ref, create a new owned clean worktree at the stash base (`git worktree add -b <recovery-branch> <new-owned-path> <saved-sha>^1`), add that worktree to the ownership census, and use `git stash apply --index <saved-sha>` without dropping it. Commit the recovered content, inspect that all stash content was preserved, and push when appropriate. `git stash branch` is not additive: it can drop the stash while leaving changes uncommitted. Nothing is deleted in this step, and no rescue may overwrite an existing ref. Follow the host's branch and worktree policy for names and locations.
 
-6. **Re-verify, then remove only from the safe bucket.** Re-run the check that put each item there, because step 5 changed the repo. Then remove, worktrees before their branches, recording each SHA first.
+6. **Re-verify, then remove only from the safe bucket.** Re-run the check that put each item there against the verified remote target and current item tip, because step 5 changed the repo. Then remove, worktrees before their branches, recording each SHA first.
 
 7. **Report to the contract below.**
 
@@ -86,7 +86,7 @@ If you are working inside a worktree, stay in it. Running git against the shared
 - **Left alone.** One line each with the reason and the owner where known. A long list here is a good outcome, not a failure.
 - **Needs you.** Anything that could not be placed. One line, one question each.
 
-Lead with the count of rescued items. If nothing was at risk, say that in one line and stop.
+Lead with the count of rescued items. If nothing was at risk, say so, then still report any removals and items left alone.
 
 ## Failure modes
 

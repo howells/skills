@@ -112,7 +112,7 @@ Ready to run and maintain? Derived from the mechanical pass, never from a lens.
 
 ## Mechanical caps
 
-These override a lens score. A cap is a ceiling, not a value - a lens scoring below the cap keeps its lower score.
+These limit an assessed axis. A cap is a ceiling, not a value; it never fills an otherwise unreviewed axis. Operations is scored from available mechanical evidence. One explicit Test Health exception: a completed inventory confirming no applicable tests establishes 0 without a tests lens. If tests exist but their health was not reviewed, use `--`; missing tooling or an incomplete inventory cannot establish no tests. Other caps apply only after the axis has been assessed.
 
 | Condition                                                                        | Cap                |
 | -------------------------------------------------------------------------------- | ------------------ |
@@ -155,4 +155,4 @@ Bending the number to flatter the stage destroys the only thing the number is fo
 
 ## Recording a score
 
-Write the score into the tracker item with the survey, in a form the next run can find: the total, the seven axis values, the stage it was taken at, and the commit it was taken from. A score without its stage and its commit is not comparable to anything.
+When tracker updates were requested, record the score there; otherwise include it in the conversation report. In either case preserve: the total, the seven axis values, the stage it was taken at, and the commit it was taken from. A score without its stage and its commit is not comparable to anything.

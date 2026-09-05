@@ -106,4 +106,4 @@ Concrete patterns that signal AI-generated design. Grep-friendly - each is a spe
 
 - NEVER: Mix component libraries (Radix + Headless + Base UI)
 - MUST: Use project's existing primitives
-- MUST: Use accessible primitives (Radix, Base UI) for keyboard/focus behavior
+- MUST: Preserve accessible keyboard/focus behaviour using the project's existing primitives. For a composite widget with no suitable primitive, choose a library only when the task warrants that dependency; do not add one for a contained change.

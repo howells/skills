@@ -100,7 +100,7 @@ npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 
 ### `foreman`
 
-Run an explicitly requested delegation mode for substantial changes: the main agent decides and inspects while subagents write code. Use only when the user asks for Foreman or delegated execution. Delegation never requires new tests. Not for ordinary implementation, tiny fixes, or docs-only work; `plimsoll` governs process weight.
+Run an explicitly requested delegation mode for substantial changes: the main agent decides and inspects while subagents write code. Use only when the user asks for Foreman or delegated execution. Delegation alone never requires new tests. Not for ordinary implementation, tiny fixes, or docs-only work; `plimsoll` governs process weight.
 
 Install globally for Codex:
 
@@ -130,7 +130,7 @@ npx skills@latest add howells/skills --skill glm-review --agent codex --global
 
 ### `linear`
 
-Use either Linear account when MCP has the wrong one. Not for transcripts (`muster`).
+Use Daniel's Linear accounts via GraphQL; choose the account that owns the target. Not for transcripts (`muster`).
 
 Install globally for Codex:
 
@@ -150,7 +150,7 @@ npx skills@latest add howells/skills --skill marginalia --agent codex --global
 
 ### `mastraudit`
 
-Audit a Mastra codebase against execution failures first: workflow step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, and visible tool keys. Use for pre-ship review or an existing Mastra implementation. For building Mastra features use `$mastra`.
+Audit a Mastra codebase against execution failures first: workflow step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, and visible tool keys. Use for pre-ship review or an existing Mastra implementation. Not for building features; use version-matched Mastra docs.
 
 Install globally for Codex:
 
@@ -242,7 +242,7 @@ npx skills@latest add howells/skills --skill signage --agent codex --global
 
 ### `starling`
 
-Query Starling. Not for Xero (`xero`).
+Query Daniel's Starling Bank balances and transactions. Not for Xero (`xero`).
 
 Install globally for Codex:
 
@@ -302,7 +302,7 @@ npx skills@latest add howells/skills --skill web-research --agent codex --global
 
 ### `xero`
 
-Query Xero. Not for Starling (`starling`).
+Query Xero accounting data through Daniel's offledger CLI. Not for Starling (`starling`).
 
 Install globally for Codex:
 

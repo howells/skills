@@ -29,9 +29,11 @@ Whether the implementation can be trusted to tell you when it is wrong. A codeba
 - **Round-trip tests exist for anything written durably and read back later**, including the refused-write and oversized-payload cases.
 - **Negative tests neutralise every source the code reads.** Neutralising the first environment variable name found, when the code reads several, produces a test that passes by accident.
 - **At least one bounded smoke test covers the critical path** against the real singleton.
-- **Registration changes run the full suite.** New tools and agents touch generated manifests, capability schemas and count pins that targeted runs never execute.
+- **Registration changes verify affected manifests and capability contracts.** Use the required repository gate or the focused checks that cover those outputs; registration alone does not require the full suite.
 
-## Before calling it done
+## Evidence of implementation completion
+
+Check existing logs, tests and records for these claims. Run the system only when the audit brief authorizes its effects; otherwise record missing runtime evidence as not checked.
 
 - **A real run was driven end to end by API**, not clicked through a UI.
 - **The run's own output was inspected** - the ledger, the persisted document - not just its terminal status.

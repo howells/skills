@@ -1,4 +1,4 @@
 interface:
   display_name: "Mastraudit"
   short_description: "Audit Mastra execution semantics before structure"
-  default_prompt: "Use $mastraudit to review this Mastra codebase, checking execution semantics before structure."
+  default_prompt: "Use $mastraudit to audit this Mastra codebase within the requested scope, checking execution semantics before structure."

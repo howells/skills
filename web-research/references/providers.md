@@ -23,7 +23,7 @@ Do not invoke Exa Agent by default. It is a beta, long-running and potentially e
 
 ### Search
 
-`POST https://api.exa.ai/search` uses `Authorization: Bearer` in the current coding-agent reference.
+`POST https://api.exa.ai/search` accepts `x-api-key` or `Authorization: Bearer`; the bundled helper uses Bearer ([Search API](https://exa.ai/docs/reference/search)).
 
 - Keep `text`, `highlights` and `summary` inside `contents`.
 - Prefer `highlights: true` for agent work; full text consumes far more context.
@@ -34,7 +34,7 @@ Do not invoke Exa Agent by default. It is a beta, long-running and potentially e
 
 ### Contents
 
-`POST https://api.exa.ai/contents` uses `Authorization: Bearer` rather than the Search API's `x-api-key` header.
+`POST https://api.exa.ai/contents` accepts `x-api-key` or `Authorization: Bearer`, as Search does; the helper uses Bearer ([Contents API](https://exa.ai/docs/reference/get-contents)).
 
 - Supply `urls`, not a search query.
 - Prefer query-focused `highlights`; request `text` when the whole document matters.

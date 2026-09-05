@@ -1,11 +1,11 @@
 ---
 name: linear
-description: "Use either Linear account when MCP has the wrong one. Not for transcripts (`muster`)."
+description: "Use Daniel's Linear accounts via GraphQL; choose the account that owns the target. Not for transcripts (`muster`)."
 ---
 
 # Linear
 
-Use the read-only 1Password service account token in (the Linear API keys themselves are full-access):
+Use the read-only 1Password service account token in this file. The Linear API keys it unlocks are full-access:
 
 `/Users/danielhowells/.codex/plugins/secrets/1password-service-account.env`
 

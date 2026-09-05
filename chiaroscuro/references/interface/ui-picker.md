@@ -26,7 +26,7 @@ Before a new round:
 
 ## Build the Directions
 
-Keep direction code in the existing route and component structure. Use a local presentation switch; a standalone fake preview app is not.
+Keep direction code in the existing route and component structure. Use a local presentation switch; a standalone fake preview app is not acceptable.
 
 Render the active presentation from shared data, state, events, validation, and mutations:
 
@@ -48,7 +48,7 @@ return <Direction model={sharedModel} actions={sharedActions} />
 
 ## Mount a Local Development Picker
 
-Add a small, accessible picker component at the route or shared-layout boundary used by the exploration. It should:
+Add a small, accessible picker component named `DirectionPicker` at the route or shared-layout boundary used by the exploration. It should:
 
 - render only in the local development environment;
 - use a native `<select>` or ordinary buttons with visible labels and keyboard support;

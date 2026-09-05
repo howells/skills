@@ -40,7 +40,7 @@ The brief is done when someone with no access to this session could act on it al
 
 ## Invoke
 
-Run from the repository under review.
+Run from the repository under review. Set `REPO` to its absolute path, `SCOPE` to a short label and `PROMPT` to the complete brief before using the example. Confirm the installed CLI supports the flags with `opencode run --help`.
 
 ```bash
 opencode run \
@@ -50,14 +50,18 @@ opencode run \
   --model zai-coding-plan/glm-5.3-flash \
   --title "GLM review: $SCOPE" \
   --format default \
-  "$PROMPT"
+  -- "$PROMPT"
 ```
 
-Leave `--auto` off. Plan mode narrows write access, and the written boundary carries the rest, because shell access can remain available.
+Leave `--auto` off. Plan mode and `--pure` do not by themselves isolate MCP integrations or prove read-only access.
+
+Before invoking the model, inspect the resolved configuration locally (`opencode debug config` and `opencode debug agent plan`); do not print credentials or unrelated configuration into the conversation. Apply a run-scoped configuration that denies every tool except `read`, `glob` and `grep`, denies shell/edit/subagent access, and disables each inherited MCP server by name. In V1, permissions use `permission` and MCP entries accept `enabled: false`; V2 uses a different permission schema. Use the installed version's schema and verify the resolved agent's effective permissions before running. Configuration files merge: an empty `mcp` object or a minimal `OPENCODE_CONFIG` file does not erase inherited servers or specific allow rules. Do not change the user's persistent configuration.
+
+If the host cannot establish those restrictions, pass the relevant source and diff as the brief in a verified isolated environment, or report that the read-only lane is unavailable. A prose refusal probe is not a substitute for inspecting permissions. Current primary documentation: [configuration](https://opencode.ai/docs/config/), [permissions](https://opencode.ai/docs/permissions/) and [MCP servers](https://opencode.ai/docs/mcp-servers/).
 
 Retry once on a transport or internal-server failure. Report an authentication, quota, or billing rejection and stop without retrying: those repeat.
 
-Wait for actual output. A started process or a created session is not a review. Give the run about ten minutes; a review still silent past that is a hang, so kill it, say so, and stop. Output that arrives empty or cut off mid-findings is a failed run too, and is reported as one rather than salvaged into a partial verdict.
+Wait for actual output. A started process or a created session is not a review. Enforce a ten-minute wall-clock limit with the host’s process-tree timeout, or a runner using Python `subprocess.Popen(start_new_session=True)` and `communicate(timeout=600)` that terminates the process group on timeout. Short tool yields must preserve the running session. Do not assume GNU `timeout` exists on macOS. At the limit, terminate the run, say so, and stop. Output that arrives empty or cut off mid-findings is a failed run too, and is reported as one rather than salvaged into a partial verdict.
 
 ## Verify, then report
 

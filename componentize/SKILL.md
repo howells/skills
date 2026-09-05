@@ -220,7 +220,7 @@ python3 scripts/find-god-files.py /repo --min-score 20 --duplicate-window 10
 python3 scripts/find-god-files.py /repo --include-tests --json
 ```
 
-It flags files scoring at least 35 by default, roughly length past 200-500 lines combined with multiple responsibility signals. Lower `--min-score` to widen the net.
+It scores length and responsibility signals, flagging files that reach 35 by default; at the default threshold a file of 300 or more lines can be listed on length alone. Inspect the reasons and source before deciding whether it actually mixes responsibilities. Lower `--min-score` to widen the net.
 
 Classify each confirmed candidate as a **god component** (rendering, data shaping, effects, mutations, validation and subview control in one file), a **god script** (argument parsing, I/O, domain logic, formatting and side effects mixed), a **god module** (non-UI, multiple unrelated responsibilities), or **duplication**.
 
@@ -250,7 +250,7 @@ Where the target is a publishable package or its own repository rather than a sh
 
 For a publishable npm package: an explicit `exports` map, emitted or referenced types, a `files` field, and React, framework and styling libraries marked as peers when consumers must provide them.
 
-**Moving to a separate repo copies first** and leaves the original intact unless removal was explicitly requested. Inside one repo, update usage sites only when the requested migration scope says the app should switch now.
+**Moving to a separate repo copies first** and leaves the original intact unless removal was explicitly requested. For extraction within one repo, migrate the in-scope callers and remove their superseded implementation by default. Keep a deliberate staged migration only when requested or required by an existing contract, and record its ownership. A standalone destination repo may intentionally leave the source app unchanged until a separate adoption request.
 
 Never auto-publish, tag, push or create a release without explicit approval, and never change licensing, publishing visibility, registry scope or package ownership silently.
 

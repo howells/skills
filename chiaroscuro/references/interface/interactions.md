@@ -154,7 +154,7 @@ For dynamic positioning, calculate clip-path in JS based on submenu position.
 NEVER `outline: none` without replacement. Use `:focus-visible` to show focus only for keyboard:
 
 ```jsx
-<button className="outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-900">
+<button className="outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-900">
 ```
 
 Focus ring requirements:

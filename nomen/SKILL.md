@@ -63,7 +63,7 @@ Avoid filler. Do not include joke names unless the user asks for them.
 
 ## Validate Mode
 
-When validating names, check current sources appropriate to the request:
+When validating names, check current sources appropriate to the request. For every provider or registry, network, authentication and rate-limit failures mean unknown, not available. Distinguish an authoritative not-found response from a failed lookup:
 
 - General web search for exact name and adjacent terms.
 - GitHub repository and organization conflicts when developer-facing. Concretely: `gh api "repos/OWNER/NAME"` (200 = an existing repository; 404 = not visible to this credential, which can include private repositories) for an exact owner/name, and `gh search repos NAME --limit 20` to gauge how crowded the name is.
@@ -98,12 +98,7 @@ For Android, a web search for `NAME site:play.google.com` is the pragmatic equiv
 
 ### Verify, Don't Trust A Single Lookup
 
-Availability APIs lie - RDAP/WHOIS services rate-limit and return false "available" for
-domains that are in fact registered and serving. Before claiming a domain is free,
-cross-check: a live `curl -s -o /dev/null -w "%{http_code}" https://NAME.TLD` that returns
-`200`/`301`/`302` means it is taken regardless of what RDAP said; a `dig +short NAME.TLD NS`
-with no nameservers is a stronger "unregistered" signal than an RDAP `404` alone. When two
-signals disagree, trust the one showing the name is *taken*.
+Use an authoritative registry RDAP or registrar lookup for registration status, and inspect errors rather than treating every failed response as not found. DNS and HTTP are supporting evidence of use, not availability checks. A working site is strong evidence the domain is in use; an empty `dig +short NAME.TLD NS` result does not establish that it is unregistered. Registered domains can lack delegation ([ICANN status definitions](https://www.icann.org/resources/pages/epp-status-codes-2014-06-16-en)). When signals conflict or the registry lookup fails, report status as unresolved and preserve evidence of existing use. Even an unregistered domain may be reserved or otherwise unavailable to register.
 
 Use cautious language:
 
@@ -132,7 +127,7 @@ When renaming an existing project:
 1. Identify public surfaces that would need to change, such as package names, CLI commands, docs, env prefixes, API identifiers, app titles, and repository names.
 2. Separate brand rename work from technical migration work.
 3. Do not change identifiers unless the user explicitly asks for implementation.
-4. If implementation is requested, update all usage sites canonically rather than adding aliases or compatibility shims.
+4. If implementation is requested, update in-scope usage sites to the chosen name. Preserve supported external contracts until their migration is authorized; a brand rename alone does not authorize breaking published identifiers.
 
 ## Completion Check
 

@@ -4,7 +4,7 @@ Cheap to fix and rarely fatal, which is why it comes second. Still worth getting
 
 ## Containment
 
-- **Exactly one package declares Mastra dependencies and imports from them.** Everything else calls that package's public API rather than constructing Mastra objects.
+- **Each independently deployed Mastra implementation has a clear owner.** When the codebase uses one owner package, callers use its public API. Multiple independently deployed apps can have separate owners.
 - **Containment is narrower than "no `@mastra/*` anywhere else".** The core package is the real boundary; infra clients such as an MCP client are legitimately used outside the Agent-construction boundary in some codebases. Where a shipped scanner defines the default set, adopt its calibration rather than asserting a stricter rule - a blanket ban produces false positives on a pattern the codebase chose deliberately. Widen the set explicitly when a codebase wants a package treated the same way.
 - **No Mastra CLI script outside the owner**, and no stray `mastra.config.*`, `src/mastra/**` or `.mastra/**` in another package.
 - **Code sits in domain folders**: `agents/`, `tools/`, `workflows/`, `prompts/`, `memory/`, `storage/`, `runtime/`, `observability/`, `mcp/`, `scorers/`.

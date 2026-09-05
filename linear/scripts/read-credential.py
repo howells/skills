@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 try:
-    result = subprocess.run(["op", "read", sys.argv[1]], capture_output=True, timeout=30)
+    result = subprocess.run(["op", "read", sys.argv[1]], stdin=subprocess.DEVNULL, capture_output=True, timeout=30)
 except subprocess.TimeoutExpired:
     print("Credential bootstrap exceeded 30 seconds; no interactive authentication attempted.", file=sys.stderr)
     raise SystemExit(124)

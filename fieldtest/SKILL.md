@@ -71,7 +71,7 @@ Work from evidence:
 7. Check responsive behavior at mobile and desktop widths when the task is broad or visual.
 8. Check keyboard and accessible-name basics for primary controls.
 
-For destructive actions, payments, emails, orders, publishing, or production mutations, stop and ask before executing.
+For destructive actions, payments, emails, orders, publishing, or production mutations, proceed only when the user has explicitly authorized that action; ask if the required authorization is missing.
 
 ### Recordings
 
@@ -130,6 +130,7 @@ For a full report, use:
 Target: [URL]
 Mode: [report-only QA | QA plus fixes | focused route/feature/regression | responsive/mobile audit | persona browsing]
 Lens: [persona/lens]
+Browser: [tool used | static inspection only, not browser-verified]
 Viewports: [sizes tested]
 Recordings: [clip paths, or none]
 

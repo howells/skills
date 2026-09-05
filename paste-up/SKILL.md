@@ -11,17 +11,19 @@ Pixel parity with Paper is never the goal downstream. What Paper governs is the 
 
 ## Invoking it
 
-A Paper URL is `https://app.paper.design/file/<fileId>/<page>/<nodeId>` - for example `01M1AMPBSYGK8DPDW1G5824M7K/1-0/FIE-0`. The ULID is the `fileId` every MCP call needs. `1-0` is the page. A trailing node id means the request is scoped to that one artboard; without it, the whole page is in scope.
+A Paper URL is `https://app.paper.design/file/<fileId>/<page>/<nodeId>` - for example `01M1AMPBSYGK8DPDW1G5824M7K/1-0/FIE-0`. The ULID is the `fileId`; pass it on every file-scoped call that accepts it, rather than relying on whichever file was most recently opened. `1-0` is the page. A trailing node id means the request is scoped to that one artboard; without it, the whole page is in scope.
 
-- **URL plus an ask** ("go through this and make sure shared tokens are used") runs the repair lane.
+- **URL plus a repair ask** ("go through this and make sure shared tokens are used") runs the repair lane. An audit-only request uses its inventory and checklist without edits, deletion or comment resolution.
 - **No URL** runs the build lane, and the first thing to settle is which file and page to draw in.
 
 Never read node ids back to the person who asked. Name artboards by what they show.
 
 ## Before the file opens, either lane
 
+Use the Paper MCP connection supplied by the host. If its guide or file tools are unavailable, report the missing connection and ask the user to connect the target file through the host’s supported Paper route (Paper Desktop for the local MCP server). Continue any brief preparation that does not need the connection; do not claim a file was inspected or edited.
+
 1. `get_guide({ topic: "paper-mcp-instructions" })`. Once per session, and again if the thread has been long enough to lose it.
-2. Read the specification. Linear, the strategy repo, the project's own context and domain docs. Every view is named in writing before a single one is drawn. Building from your own idea of the product, when a spec exists, is the failure this step prevents.
+2. Read the available specification, linked tracker context and project docs. If none exists, derive a short list of views and states from the user’s request, state the assumptions and proceed; ask only where missing scope changes what should be built. Name the views in the brief before drawing.
 3. `get_basic_info`, `get_font_family_info`, `get_tokens`. Use the existing design and written direction to establish type and colour.
 4. Record the in-scope page/artboards and permitted edits. Carry that boundary through every read, repair and completion check. Inspect out-of-scope consumers before changing shared token definitions; reassign in-scope nodes or create a distinct token if a global change is not authorized.
 
@@ -56,7 +58,7 @@ Report as a table: artboard, what changed, what was left alone and why.
 
 Every line here is a correction that has had to be given more than once.
 
-- **Real images.** Actual product and material photography from the real source. Not placeholders, not stand-ins, not something approximate.
+- **Real images.** Use supplied assets or appropriate project/public sources within the task’s scope. When product photography is unavailable, state the gap; label any authorized illustrative image rather than presenting it as the real product.
 - **Purposeful imagery.** Avoid accidental repetition; keep repetition when it identifies the same item or supports comparison.
 - **Appropriate crops.** Choose aspect ratios from the content and supplied direction. Preserve the subject, crop inside the frame, and never distort one axis.
 - **Imagery that flatters the product.** A realistic photograph can still be the wrong photograph. Match the aspiration of the audience.
@@ -66,7 +68,7 @@ Every line here is a correction that has had to be given more than once.
 - **Reviewable alternatives.** Clearly label alternatives when exploration is requested; keep the selected direction identifiable.
 - **Density a stranger can parse.** The test is someone seeing it for the first time in a meeting, with the presenter talking over it. Depth is fine, an unreadable wall is not.
 - **Labels and copy.** Use words the audience understands, state outcomes plainly, and remove filler. Use `signage` or `deslop` for deeper review when installed and useful.
-- **Data the product can actually serve.** Query the real API or database for the numbers on screen. A view designed around data that does not exist is a promise someone has to break.
+- **Data the product can actually serve.** Verify displayed facts from supplied evidence or an authorized project data source. Use scoped reads, avoid exposing unrelated records, and do not invent production facts. Label illustrative values clearly and record the source gap when real data is unavailable.
 
 ## Before calling it done
 

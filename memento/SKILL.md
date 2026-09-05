@@ -5,7 +5,7 @@ description: "Report what this task is doing now from live state: original ask, 
 
 # Memento
 
-Someone has lost the thread and wants it back in ten seconds. Answer from what is true this minute - the task list, the working tree, what is running - not from a recap of the conversation. Where the transcript and the repo disagree, the repo is right.
+Someone has lost the thread and wants it back in ten seconds. Answer from what is true this minute - the task list, the working tree, what is running - not from a recap of the conversation. Use live repository state for code-status claims, and the user’s latest instructions for the ask. Work outside Git needs its own current evidence.
 
 `muster` is the archaeological version: many sessions, transcript mining, tracker sweep. This is the cheap one, about a single session, and it should cost seconds.
 

@@ -26,11 +26,11 @@ Do not describe code. Describe what the user sees and does. Technical detail goe
 
 - Follow the eight-section template in the README for every {tool, object, and action} document. Foundations, UI, and cross-cutting documents may drop sections that do not apply (a settings panel has no extended phase) but must still cover cancel/interrupt behavior wherever an interaction exists.
 - Modifiers and cancel/interrupt go in tables, split by phase ({the product's names for "before extended" / "while extended"}) as in `{pilot}.md`. The interrupt rows and the order of cross-cutting concerns are fixed in the README; do not add, drop, or reorder them in a single document.
-- Use the glossary's words. If you need a term the glossary lacks, add it to `glossary.md` in the right section with a one-paragraph definition, then use it.
+- Use the glossary's words. If you need a term the glossary lacks, propose a definition to the coordinator. The coordinator alone edits `glossary.md` and resolves competing definitions before accepting drafts.
 - Sentence case for all headings. Direct, concrete language. No hedging, no marketing.
 - State surprising behavior plainly and say why if the reason is in the code or a comment. If it looks like a bug, say so in "Open questions" rather than smoothing it over.
 - Cross-reference other documents with relative links rather than repeating their content. {The input model} owns thresholds, click detection, modifiers, and the cancel/complete/interrupt definitions. Do not restate them; link.
-- Every document ends with "## Open questions and verification" listing what was read from code but not confirmed by hand, followed by `Verified against {source repo} commit \`{sha}\`` using the current `git rev-parse --short HEAD` of {the source repo}.
+- Every document ends with "## Open questions and verification" listing what was read from code but not confirmed by hand, followed by `Source inspected: {source repo} commit \`{sha}\`.` and `Runtime verification: not run.` Use the scoped source commit; runtime results belong to a separate verification pass.
 - Mermaid `stateDiagram-v2` for each interaction's states. Keep it to the states the user passes through; omit internal bookkeeping states.
 
 ## Things already established (do not re-derive, do not contradict)
@@ -51,15 +51,15 @@ Do not describe code. Describe what the user sees and does. Technical detail goe
 2. `{hardest area}/` next, all {n} documents. This is the hardest part and the bulk of the experience. Read every {state file} before starting any of them, because the states hand off to each other and the documents must agree on where one ends and the next begins. {Say which document owns which states.}
 3. The remaining `{area}/` documents, then `{area}/`, `{area}/`, `cross-cutting/`. These are independent of each other and can be drafted in parallel with subagents once the foundations and {hardest area} documents exist to link to. If you parallelize, give each subagent this prompt, the four exemplars, and the specific document to write; then review every result yourself for consistency with the glossary and the established facts above before accepting it.
 4. Consistency pass over the whole set: same term for the same thing everywhere, no two documents describing the same behavior differently, every relative link resolves, every document has a verification footer, every glossary term used is defined.
-5. Update the coverage table in `README.md` as you go: `drafted` when written, never `verified` (verification by hand is a separate pass you are not doing).
+5. The coordinator updates the coverage table in `README.md` as you go: `drafted` when written, never `verified` (verification by hand is a separate pass you are not doing).
 
 ## Working rules
 
-- Commit after each document or coherent group of documents with a message of the form `docs: add {path}` or `docs: revise {path}`. {State the repo's convention on AI attribution in commits.}
+- The coordinator commits after each document or coherent group of documents with a message of the form `docs: add {path}` or `docs: revise {path}`. {State the repo's convention on AI attribution in commits.}
 - Do not modify anything in {the source repo}. It is read-only reference material.
-- Do not add files outside the README's structure without updating the structure and coverage table to match.
+- Delegates edit only their assigned documents. Return proposed additions or structural changes to the coordinator, who owns README, goal, glossary and coverage updates.
 - When a behavior cannot be determined from code and tests, write down what you could determine, put the rest in "Open questions", and move on. Do not guess and do not block.
-- Depth bar: `{pilot}.md` is roughly {n} lines for a small {feature}. The {hardest area} documents will be longer; UI documents will often be shorter. Completeness matters more than length. Every state, every modifier, every cancel/interrupt row must be accounted for, even if the answer is "no effect".
-- If you find that the README's structure is wrong for something you discover (a document that should be split, two that should merge), make the change, update the structure and coverage table, and note why in the commit message.
+- Depth bar: follow the pilot’s evidence and useful level of detail. Completeness matters more than length. Every state, every modifier, every cancel/interrupt row must be accounted for, even if the answer is "no effect".
+- If you find that the README's structure is wrong for something you discover (a document that should be split, two that should merge), propose the change to the coordinator, who updates the structure and coverage table with its rationale.
 
 You are done when the coverage table has no `not started` rows, the consistency pass is complete, and everything is committed.

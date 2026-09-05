@@ -246,10 +246,7 @@ def iter_files(root: Path, include_tests: bool, include_docs: bool, max_file_byt
                 continue
             if not include_tests and is_test_path(path.relative_to(root)):
                 continue
-            try:
-                if path.stat().st_size > max_file_bytes:
-                    continue
-            except OSError:
+            if path.stat().st_size > max_file_bytes:
                 continue
             yield path
 
@@ -366,13 +363,14 @@ def main() -> int:
         print(f"Scan incomplete: {error}", file=sys.stderr)
         return 2
     print(f"Scanned {coverage['scanned']} eligible text files; {coverage['unreadable']} unreadable or binary. Tests, docs, excluded paths and oversized files follow the selected filters.", file=sys.stderr)
-    if not coverage["scanned"] or coverage["unreadable"]:
-        print("Scan coverage is empty or incomplete; no clean verdict.", file=sys.stderr)
-        return 2
+    incomplete = not coverage["scanned"] or coverage["unreadable"]
     if args.json:
         print(json.dumps([asdict(finding) for finding in findings], indent=2))
-    else:
+    elif findings or not incomplete:
         print_text(findings)
+    if incomplete:
+        print("Scan coverage is empty or incomplete; no clean verdict.", file=sys.stderr)
+        return 2
 
     if args.fail_on:
         threshold = severity_rank(args.fail_on)

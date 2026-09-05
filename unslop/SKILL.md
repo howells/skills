@@ -36,16 +36,18 @@ Cite by number in findings, so a reviewer can see the pattern rather than the in
 
 10. **Redundant defensive handling.** A null check on a value that cannot be absent, a runtime `typeof` after the compiler already narrowed, or a `try/catch` that only rethrows the same error. Establish that the path is trusted; a type annotation alone does not validate runtime input. Keep boundary validation and catches that add meaningful context or cleanup. Catches that swallow errors or supply fallbacks belong to `fail-fast` when removing them would change behaviour.
 11. **Redundant assertions.** `as any` used only to silence a type error, `as unknown as T`, a non-null `!` where narrowing would do the job honestly. Use the correct type or narrowing rather than another assertion. If fixing the mismatch requires a runtime change, report it instead.
-12. **Re-implemented standard library.** A hand-rolled `groupBy`, `chunk`, `debounce`, or date formatter beside one that already ships.
+12. **Re-implemented standard library.** A hand-rolled `groupBy`, `chunk`, `debounce`, or date formatter beside one that already ships. Replace it only after confirming equivalent semantics for its callers, including timing, defaults, errors, locale and edge cases; otherwise refer.
 13. **Redundant async plumbing.** Remove async syntax only after tracing callers and preserving Promise returns, rejection behaviour and scheduling. An `async` function without `await` still returns a Promise and converts throws to rejections; awaiting a plain value still suspends continuation. Neither is redundant merely because the syntax looks unnecessary. Refer uncertain changes instead of guessing.
 
 **Output and leftovers**
+
+Published CLI output, error messages and logs consumed by scripts, users or monitoring are observable contracts. Keep them unchanged unless their alteration was requested separately. Do not update snapshots merely to make a cleanup pass; refer changes whose compatibility you cannot establish.
 
 14. **Decorated console output.** Emoji, box-drawing, ✅/❌ status theatre, banner headers in logs and CLI output.
 15. **Congratulatory strings.** "Successfully completed!", "All done!". Report the outcome or say nothing.
 16. **Error messages that restate the stack.** Say what failed and what the caller should do; the stack is already there.
 17. **Dead scaffolding.** `TODO` placeholders nobody owns, example blocks, and any mock, stub or fixture that leaked into a production path.
-18. **Tests asserting the mock.** A test that checks a spy was called, rather than that the behaviour happened. It passes forever and proves nothing.
+18. **Tests asserting only incidental mock details.** Inspect what the assertion protects: a call count or argument can be a real contract, such as preventing duplicate writes. Preserve meaningful interaction checks. Report tests that prove no behaviour rather than silently deleting coverage or starting a test rewrite outside the request.
 
 **Control flow**
 
@@ -64,7 +66,7 @@ Scale the workflow to the diff. For a small cleanup, keep the scope, reasoning a
 
 ## What this is not
 
-- Not a style pass. Formatting is `@howells/lint`.
+- Not a style pass. Formatting follows the repository’s formatter.
 - Not a refactor. Moving logic between modules or extracting a package is `componentize`.
 - Not a hardening pass. Deleting a fallback so it fails loudly is `fail-fast`, and that one changes behaviour on purpose.
 - Not a review. Correctness bugs are a different job; if you find one, report it and leave it.

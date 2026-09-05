@@ -47,11 +47,12 @@ Common patterns that fail accessibility, mapped to WCAG success criteria. Use as
 
 ## Focus
 
-- SHOULD: Use `box-shadow` for focus rings instead of `outline` (respects border-radius):
+- MUST: Preserve visible focus in forced-colours mode. A custom box-shadow ring needs an outline that survives when shadows are removed:
 
 ```css
 :focus-visible {
-  outline: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
   box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
 }
 ```
@@ -61,7 +62,7 @@ Common patterns that fail accessibility, mapped to WCAG success criteria. Use as
 
 ## UX Copy & Writing Voice
 
-Follow the [Chicago Manual of Style](https://www.chicagomanualofstyle.org/) for UX copy (labels, tooltips, empty states, error messages, marketing pages).
+Follow the project's writing conventions. Default to sentence case for interface strings; use the [Chicago Manual of Style](https://www.chicagomanualofstyle.org/) for unresolved prose questions, without overriding the interface casing rule.
 
 ### No System Leakage
 
@@ -77,7 +78,7 @@ UI copy describes the user's objects, decisions, and next actions. System intern
 
 AI-generated text has recognizable patterns that erode trust. Avoid these tells:
 
-- NEVER: Em dashes ( - ) in UX copy. Use commas, periods, or parentheses instead. Em dashes are the most recognizable LLM tell
+- SHOULD: Prefer plain punctuation that fits the project's voice. A punctuation mark alone is not evidence of AI authorship.
 - NEVER: "Delve", "leverage", "streamline", "empower", "elevate", "robust", "seamless", "cutting-edge"
 - NEVER: "In order to" (just use "to")
 - NEVER: Filler hedges like "It's worth noting that", "Interestingly,", "It's important to note"

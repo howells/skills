@@ -13,7 +13,7 @@ Each check below exists because the failure it describes has happened. Where a c
 ## Fan-out
 
 - **Every unit names itself in its output.** The identity must come from the unit, not from where it landed.
-- **The collector re-keys on that identity, never on array position.** Concurrent iteration order is not guaranteed stable, so position-keyed collection is correct until the first replay and silently wrong after.
+- **The collector preserves unit identity.** Prefer explicit identity keys. Before flagging positional collection as wrong, inspect the installed engine’s ordering guarantee through concurrency and replay; a documented, verified order-preserving operation can be valid.
 - **A failing arm returns a typed failure or shortfall.** Only a failure that invalidates the whole result throws, and the throw site says why. One thrown iteration killing every sibling is a fan-out that cannot tolerate a single bad input.
 - **Arms return receipts, not bulk.** Bulk data goes to durable storage and the arm returns a reference. Where a helper enforces this at the step boundary, use it; a step asserting size by hand is a step that will drift.
 

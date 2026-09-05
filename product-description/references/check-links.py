@@ -8,8 +8,8 @@ relative link, and reports targets whose file does not exist or whose
 `#anchor` does not match a heading slug in the target file. Skips http(s),
 mailto, and fenced code blocks. Exits 1 if anything is broken.
 
-Slugs follow GitHub's rule: lowercase, strip everything except letters,
-digits, spaces, and hyphens, spaces to hyphens, duplicates get -1, -2, ...
+Common ATX heading slugs are approximated: lowercase, strip everything except letters,
+digits, underscores, spaces, and hyphens, spaces to hyphens, duplicates get -1, -2, ...
 """
 import os
 import re
@@ -25,9 +25,10 @@ FENCE = re.compile(r"^\s*(```|~~~)")
 def slugify(text):
     text = re.sub(r"`([^`]*)`", r"\1", text)            # drop inline code ticks
     text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", text)  # drop link targets
-    text = re.sub(r"[*_]", "", text)                        # drop emphasis
-    text = unicodedata.normalize("NFKD", text).lower()
-    text = "".join(ch for ch in text if ch.isalnum() or ch in " -")
+    text = re.sub(r"(?<!\w)_([^_]+)_(?!\w)", r"\1", text)
+    text = re.sub(r"[*]", "", text)                        # drop emphasis
+    text = unicodedata.normalize("NFC", text).lower()
+    text = "".join(ch for ch in text if ch.isalnum() or ch in " _-")
     return text.replace(" ", "-")
 
 
@@ -58,7 +59,9 @@ def headings_of(path):
 
 
 def md_files():
-    for dirpath, dirnames, filenames in os.walk(ROOT):
+    def traversal_error(error):
+        raise error
+    for dirpath, dirnames, filenames in os.walk(ROOT, onerror=traversal_error):
         dirnames[:] = [d for d in dirnames if not d.startswith(".") and d != "node_modules"]
         for name in filenames:
             if name.endswith(".md"):
@@ -66,7 +69,17 @@ def md_files():
 
 
 def main():
-    files = sorted(md_files())
+    if not os.path.isdir(ROOT):
+        print("Root must be a directory.", file=sys.stderr)
+        sys.exit(2)
+    try:
+        files = sorted(md_files())
+    except OSError as error:
+        print(f"Incomplete directory coverage: {error}", file=sys.stderr)
+        sys.exit(2)
+    if not files:
+        print("No Markdown files checked; no clean verdict.", file=sys.stderr)
+        sys.exit(2)
     anchors = {}
     problems = []
     checked = 0

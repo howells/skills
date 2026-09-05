@@ -35,7 +35,7 @@ Load each at the phase that needs it, not up front:
 
 ## Steps
 
-Copy these into your todolist verbatim before you start. A step you skip stays in the list with a one-line `skip: <reason>`.
+Use these phases to organize the review, scaling any task list to the scope. Record skipped coverage without copying the workflow verbatim.
 
 ### 1. Scope and stage
 
@@ -51,6 +51,7 @@ Produces a detection summary:
 
 ```
 Scope:         [path or "full codebase"]
+Commit:        [source SHA and dirty-state note]
 Type:          [Next.js / React / Python / Rust / Go / mixed]
 Scale:         [small / medium / large] ([N] source files)
 Stage:         [prototype / development / pre-launch / production] ([signals]) [confirmed / UNCONFIRMED]
@@ -63,7 +64,7 @@ Focus:         [all, or the user's focus]
 
 Cheap checks before expensive judgement. Anything a machine can settle should not cost a lens.
 
-Detect tooling from the repo itself - package manager from lockfiles, build and test scripts from `package.json`, typechecker from `tsconfig.json`, linter from its config. Then run, in this order:
+Detect tooling from the repo itself - package manager from lockfiles, build and test scripts from `package.json`, typechecker from `tsconfig.json`, linter from its config. Inspect the selected scripts and delegated commands for side effects before running them. Ordinary local generated artifacts are expected; avoid auto-fixes, production data writes, resets, messages or external transactions unless already authorized. Skip unsafe or unavailable checks, record why, and continue independent inspection. Then run applicable checks in this order:
 
 1. **Build**, when this project has one. Record failures and distinguish missing local prerequisites from source defects. Skip checks that actually require a successful build, but continue independent source review. Cap Operations for a confirmed broken build; report an unavailable build without inventing its outcome.
 2. **Typecheck.** Report errors, continue.

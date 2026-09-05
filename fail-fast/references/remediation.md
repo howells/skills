@@ -10,8 +10,8 @@ Remove the fallback when:
 
 - the old caller, config key, flag, import path, or data shape is no longer supported;
 - tests only pass because a default masks missing setup;
-- the fallback creates two valid ways to do the same thing;
-- the branch says `legacy`, `deprecated`, `old`, `compat`, or `migration` without an owner and removal condition.
+- the fallback creates duplicate paths and investigation confirms no supported contract needs both;
+- the branch says `legacy`, `deprecated`, `old`, `compat`, or `migration`, and investigation confirms no supported caller or contract still needs it.
 
 Typical fixes:
 

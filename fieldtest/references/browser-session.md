@@ -4,19 +4,20 @@ Use this reference file when running a rendered app QA session.
 
 ## Browser Tool Selection
 
-Pick the browser with the strongest fit for the active host:
+Honour the browser or tab the user specifies. Otherwise pick the browser with the strongest fit for the active host:
 
 | Environment | Preferred browser path | Notes |
 | --- | --- | --- |
 | Codex desktop or Codex with Browser plugin | Browser plugin / Codex in-app browser | Preferred for local targets, localhost apps, file URLs, screenshots, and current-tab testing. |
 | Claude desktop with in-app browser | Claude desktop in-app browser | Use when it supports navigation, interaction, inspection, and screenshots. |
 | Claude Code CLI with Chrome MCP | Chrome MCP | Strong default for CLI sessions with a real Chrome connection. |
+| Host with agent-browser installed | agent-browser | Use when it fits the task and the host permits it; inspect current help for recording support. |
 | Any environment with no first-class browser | Playwright from terminal | Use for deterministic scripts, viewport checks, screenshots, console capture, and accessibility snapshots. If Playwright browsers are not provisioned, suggest `npx playwright install chromium`, or fall back to static inspection if installation is not permitted. |
 | No browser-capable option | Static inspection only | Clearly say the result was not browser-verified. |
 
 Use the strongest available browser tool before falling back. A field test should exercise rendered behavior, not just source code.
 
-Recording support varies by rung: Claude-in-Chrome (`gif_creator`), agent-browser record, and Playwright video can capture a clip. Static-only inspection cannot record.
+Recording support varies by tool. Inspect the available browser tool documentation or CLI help; do not assume a recording command exists. Static-only inspection cannot record.
 
 If the host supports lazy tool discovery, search for Browser or browser MCP capabilities before choosing Playwright.
 
@@ -30,7 +31,7 @@ Check only URL/port-related keys in `.env`, `.env.local`, `.env.development`, fr
 
 Before starting a dev command, verify that it is local and non-mutating. Ask before running broad scripts such as `dev:all`, scripts that start multiple services, or scripts that appear to target production-backed services.
 
-Common patterns:
+Prefer the actual startup URL over an inferred default, since the configured port may be occupied or overridden. Confirm the loaded app is the target. Common patterns:
 
 | Pattern | Example | URL |
 | --- | --- | --- |
@@ -42,7 +43,6 @@ Common patterns:
 | Astro default | `astro dev` | `http://localhost:4321` |
 | SvelteKit default | `vite dev` | `http://localhost:5173` |
 | Next default | `next dev` | `http://localhost:3000` |
-| React Router default | `react-router dev` | `http://localhost:3000` |
 
 If multiple URLs or apps are plausible, ask which app to field test.
 
@@ -129,3 +129,5 @@ Useful severity guide:
 - **High**: blocks primary flow, causes data loss/security risk, or makes the app unusable on a key viewport.
 - **Medium**: undermines comprehension, trust, conversion, accessibility, or repeated workflow efficiency.
 - **Low**: polish issue, minor inconsistency, weak copy, or localized visual defect.
+
+If you started a temporary dev server, record its process/session identity. Stop only that owned process when it is no longer needed; leave it running if the user needs to inspect the result. Never kill a process merely because it occupies a port.

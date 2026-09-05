@@ -18,8 +18,10 @@ The Claude CLI is the route, and it works the same from Claude Code, Codex and O
 ```bash
 printf '%s' "$PROMPT" | claude -p \
   --model fable \
-  --effort high \
+  --effort medium \
   --permission-mode plan \
+  --tools "Read,Glob,Grep" \
+  --strict-mcp-config --mcp-config '{"mcpServers":{}}' \
   --disallowedTools "Edit,Write,NotebookEdit"
 ```
 
@@ -30,18 +32,18 @@ Run it from the repository under review; the CLI reads files relative to the wor
 Confirm the lane before the first invocation in a session:
 
 ```bash
-printf 'Reply with exactly: lane-ok' | claude -p --model fable --permission-mode plan --output-format json
+printf 'Reply with exactly: lane-ok' | claude -p --model fable --effort medium --permission-mode plan --output-format json
 ```
 
-Require a successful JSON response whose `result` is `lane-ok`. Inspect returned model metadata when available and stop if it identifies a different model; the text alone proves responsiveness, not exact model identity. If the CLI omits model metadata, report identity as unverified rather than asserting the exact version.
+The CLI may return a result object or an array of messages; in the latter case inspect the final message with `type: "result"`. Require a successful result (`is_error: false`) whose `result` text is `lane-ok`. Inspect returned model metadata when available: the `fable` alias currently reports `claude-fable-5-1`, not the literal string `fable`. Stop if it identifies a different model or version; the text alone proves responsiveness, not exact model identity. If the CLI omits model metadata, report identity as unverified rather than asserting the exact version.
 
 Without `lane-ok`, stop and name the cause: `claude` missing from the path, credentials absent or expired, or the alias no longer resolving to Fable. Substituting Opus, Sonnet or a different provider's model is a failed run, because the point of the lane is which model answered.
 
 **Do not substitute the Claude Code subagent.** In Claude Code a fable subagent is reachable through the Agent tool, and it inherits this session's context and instructions. That makes it useful for delegated work and useless as an independent read, since it has already been told what you think. The subprocess starts clean, which is the whole value.
 
-Plan mode and denied edit tools reduce write access, but a successful refusal probe is not proof that every write route is blocked. Keep the written read-only boundary in the brief. When source reading is sufficient, restrict built-in tools to `Read,Glob,Grep`; otherwise remember that shell access can still mutate state and use the host's execution controls.
+Plan mode and denied edit tools reduce write access, but a successful refusal probe is not proof that every write route is blocked. Keep the written read-only boundary in the brief. When source reading is sufficient, restrict built-in tools with `--tools "Read,Glob,Grep"` (`--allowedTools` only preapproves tools; it does not remove other tools) and use `--strict-mcp-config --mcp-config '{"mcpServers":{}}'` to avoid initializing unrelated integrations; otherwise remember that shell access can still mutate state and use the host's execution controls.
 
-`--effort high` is the default for this skill. Raise it to `xhigh` or `max` for a question where the reasoning is the deliverable.
+`--effort medium` is the default for this skill. Use a different effort only when the user explicitly requests it.
 
 ## Build a bounded brief
 
@@ -60,9 +62,9 @@ A brief that names no decision gets an essay. "Review this architecture" fails t
 
 ## Wait for it
 
-A single-file judgement call returns in under a minute at high effort. A brief spanning several files and a real decision takes longer.
+Even a single-file judgement call can take several minutes at medium effort. A brief spanning several files and a real decision may take longer.
 
-Give the run ten minutes. A review still silent past that is a hang: kill it, say so, and stop. Output that arrives empty or cut off mid-argument is a failed run, reported as one rather than salvaged into a partial verdict.
+Enforce a ten-minute wall-clock limit on the subprocess, including its children. Use the host’s process timeout if it supports that duration and process-tree cleanup; otherwise launch through a runner such as Python `subprocess.Popen(start_new_session=True)`, capture stdout/stderr, call `communicate(timeout=600)`, and terminate the process group on `TimeoutExpired`. A short tool yield is fine if it returns a live session; it must not kill the review at that point. Do not assume GNU `timeout` is installed on macOS. A review still silent past that is a hang: kill it, say so, and stop. Output that arrives empty or cut off mid-argument is a failed run, reported as one rather than salvaged into a partial verdict.
 
 Retry once on a transport or internal-server failure. Report an authentication, quota, or billing rejection and stop without retrying, because those repeat.
 

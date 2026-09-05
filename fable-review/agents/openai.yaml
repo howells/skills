@@ -1,4 +1,4 @@
 interface:
   display_name: "Fable Review"
   short_description: "Independent Claude Fable 5.1 judgement call"
-  default_prompt: "Use $fable-review to get an independent Claude Fable 5.1 read on this decision, then verify its reasoning before acting."
+  default_prompt: "Use $fable-review to get an independent Claude Fable 5.1 read at medium effort on this decision, then verify its reasoning before acting."

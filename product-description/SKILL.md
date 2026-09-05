@@ -94,7 +94,7 @@ Drafting reads the code; verification watches the product. From `verification-te
 - `verification/README.md`: how to bring up the surface, confirm the commit, run a pass, record results, file failures, and when a document moves from `drafted` to `verified`.
 - One checklist file per cluster of documents, one table per document, one row per observable claim: stable ID (`AREA-NN`), priority (P1 established fact or suspected bug, P2 ordinary claim, P3 a number, color, or timing), what it needs (device, role, network condition), the claim with a link to the section, setup, numbered steps, expected result, Result column (`—` until run). Claims that cannot be checked by hand go under "Not checkable by hand".
 
-If you can drive the product (browser tools, a console handle on the app, a shell for a CLI, a test harness), run a first pass yourself on what can be observed that way, record the results in the Result columns, and say plainly in `verification/README.md` what that pass did and did not cover (for example: a scripted pass checks output, exit codes, and stored state but not what was shown on screen or how long it took to appear). Do not mark a document `verified` on the strength of an automated pass alone. A failed item is not automatically a product bug; sometimes the document is wrong, and the Status line says which.
+If you can drive the product (browser tools, a console handle on the app, a shell for a CLI, a test harness), run a first pass yourself on what can be observed that way, record the results in the Result columns, and say plainly in `verification/README.md` what that pass did and did not cover (for example: a scripted pass checks output, exit codes, and stored state but not what was shown on screen or how long it took to appear). Mark a document `verified` only when the pass directly exercised and observed every required P1/P2 claim, or recorded a reproduced failure in triage. A real CLI invocation can verify output, exit codes and persisted state; code inspection or mocked assertions cannot. Visual claims require rendered inspection. Record the method and remaining coverage gaps. A failed item is not automatically a product bug; sometimes the document is wrong, and the Status line says which.
 
 ## Phase 6: bug triage
 
@@ -121,7 +121,7 @@ A later session, or a request to add a feature that was out of scope, starts her
 - Variants and interrupts go in tables, split by phase ("at the start" / "during"). Every cell filled, even with "no effect".
 - Cross-reference with relative links instead of repeating. The foundation documents own thresholds and definitions.
 - One Mermaid `stateDiagram-v2` per interaction, limited to the states the user passes through.
-- Footer: `## Open questions and verification`, a bullet list, then `Verified against {repo} commit \`{sha}\``.
+- Footer: `## Open questions and verification`, a bullet list, then `Source inspected: {repo} commit \`{sha}\`.` and `Runtime verification: {not run, or environment/date and linked checklist results}.`
 - Commits: `docs: add {path}` / `docs: revise {path}`. Follow whatever the user's repo does about AI attribution in commit messages.
 - Never modify the source repo. It is read-only reference material.
 - When a behavior cannot be determined from code and tests, write what can be determined, put the rest in "Open questions", move on. Do not guess, do not block.

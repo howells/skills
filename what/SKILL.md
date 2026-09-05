@@ -11,7 +11,7 @@ Scope is the last message and the few actions behind it - not the session, not t
 
 **Short is the product.** They are asking because they were handed a wall of text. Another wall, in friendlier words, fails. Aim for a tenth of what you are explaining: forty lines become four. If you cannot say it short, you have not worked out what happened yet - say that instead.
 
-**Re-explain, never re-answer.** No new work, no new information, no tools beyond looking at what you already did. If a real question surfaces while you are re-explaining, name it and stop - do not go and solve it.
+**Re-explain, never re-answer.** No new work or new information. Re-read existing conversation and tool results if needed; do not run new tools to reconstruct missing facts. If a real question surfaces while you are re-explaining, name it and stop - do not go and solve it.
 
 ## Short and translated, both
 
@@ -30,7 +30,7 @@ If that is what happened, that is the answer: say which part you are actually un
 
 ## Output contract
 
-Three headings, one short line under each. Not three paragraphs, and not three lines each carrying a subordinate clause. No preamble, no restating the question.
+Three labelled lines, matching the example below. Not three paragraphs, and not three lines each carrying a subordinate clause. No preamble, no restating the question.
 
 ```
 What:  <what actually happened>
@@ -44,4 +44,4 @@ Next:  <what happens now, or what they need to decide>
 
 If something genuinely will not compress, give the one-line version and offer the detail rather than delivering it unasked.
 
-House voice: plain, direct, no filler and no persona. Use plain, direct prose; `deslop` is optional when installed and useful.
+Use plain, direct prose with no filler or persona; `deslop` is optional when installed and useful.

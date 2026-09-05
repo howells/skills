@@ -5,6 +5,7 @@ Run from any directory: python3 scripts/test-skill-helpers.py.
 Fixtures are temporary; no provider, account or production repository is used.
 """
 import json
+import os
 from pathlib import Path
 import runpy
 import subprocess
@@ -38,6 +39,33 @@ class ScannerCoverage(unittest.TestCase):
             self.assertEqual(component.returncode, 0, component.stderr)
             self.assertEqual(json.loads(component.stdout)["scannedFileCount"], 1)
 
+    def test_partial_scan_preserves_findings_without_a_clean_exit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            Path(directory, "config.ts").write_text('const key = process.env.KEY || "fallback";')
+            Path(directory, "binary.js").write_bytes(b"\0")
+            result = cli("fail-fast/scripts/scan-fallbacks.py", directory, "--json")
+            self.assertEqual(result.returncode, 2)
+            self.assertTrue(any(item["rule"] == "env-default" for item in json.loads(result.stdout)))
+            self.assertIn("incomplete", result.stderr)
+
+    def test_unreadable_subdirectory_never_reports_clean(self):
+        with tempfile.TemporaryDirectory() as directory:
+            Path(directory, "readable.ts").write_text('const text = "text-sm";')
+            Path(directory, "README.md").write_text('# Readable\n')
+            locked = Path(directory, "locked")
+            locked.mkdir()
+            Path(locked, "hidden.ts").write_text('const key = process.env.KEY || "default";')
+            Path(locked, "hidden.md").write_text('[broken](missing.md)')
+            locked.chmod(0)
+            try:
+                if os.access(locked, os.R_OK):
+                    self.skipTest("Process can read mode-000 directories")
+                for script in ["componentize/scripts/find-god-files.py", "fail-fast/scripts/scan-fallbacks.py", "typecase/scripts/census-typography.py", "product-description/references/check-links.py"]:
+                    with self.subTest(script=script):
+                        self.assertNotEqual(cli(script, directory).returncode, 0)
+            finally:
+                locked.chmod(0o700)
+
 
 class Typography(unittest.TestCase):
     def test_migration_inventory_retains_variants_leading_and_locations(self):
@@ -63,6 +91,17 @@ class Typography(unittest.TestCase):
             Path(directory, "screen.tsx").write_text('<p className="text-sm" />')
             result = cli("typecase/scripts/census-typography.py", directory, "--roots", ".", "missing", "--json")
             self.assertNotEqual(result.returncode, 0)
+
+
+class DocumentationLinks(unittest.TestCase):
+    def test_empty_coverage_and_valid_code_heading(self):
+        script = "product-description/references/check-links.py"
+        with tempfile.TemporaryDirectory() as directory:
+            self.assertNotEqual(cli(script, directory).returncode, 0)
+            self.assertNotEqual(cli(script, Path(directory, "missing")).returncode, 0)
+            Path(directory, "README.md").write_text("# The `dry_run` flag\n[Flag](#the-dry_run-flag)\n")
+            result = cli(script, directory)
+            self.assertEqual(result.returncode, 0, result.stdout)
 
 
 class GraphQLOutcomes(unittest.TestCase):

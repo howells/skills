@@ -23,12 +23,12 @@ Priorities: **P1** is an established fact, a claim many documents depend on, or 
 ## How to run a pass
 
 1. {Bring up the surface: the command, the URL, how to get a clean state for the pass and clean up afterward.}
-2. Confirm the commit. Every document says `Verified against {repo} commit {sha}`. Run `git rev-parse --short HEAD` in {the source repo}; if it differs, the documents describe a different build and some failures will be drift, not defects.
+2. Confirm the commit. Every document records `Source inspected: {repo} commit {sha}` separately from `Runtime verification`. Confirm the running build identity as well as the source checkout. Run `git rev-parse --short HEAD` in {the source repo}; if it differs, the documents describe a different build and some failures will be drift, not defects.
 3. Keep the documents open beside the {product}. Read the linked section before each item; the item is a summary, the section is the claim.
 4. Work through P1 first across all files, then P2, then P3.
 5. Record `pass`, `fail`, or `blocked` in the Result column, with a note for anything other than a clean pass. A fail is something the document says that the product does not do; a blocked item could not be run (no device, no second user, a prior failure in the way).
 6. File every fail in [`bug-triage.md`](../bug-triage.md): if the entry exists, add a Status line quoting the item ID; if not, add an entry with the item ID under "Raised by". A fail is not automatically a product bug; sometimes the document is wrong, and the fix is to the document. Say which in the Status line.
-7. When every P1 and P2 item for a document has passed or been filed, change its row in the [coverage table](../README.md#coverage) from `drafted` to `verified`.
+7. When every P1 and P2 item was directly exercised and observed, and has passed or has a reproduced failure recorded in triage, change its row in the [coverage table](../README.md#coverage) from `drafted` to `verified`.
 
 ## Devices and conditions
 

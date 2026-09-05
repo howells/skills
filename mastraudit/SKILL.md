@@ -1,6 +1,6 @@
 ---
 name: mastraudit
-description: "Audit a Mastra codebase against execution failures first: workflow step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, and visible tool keys. Use for pre-ship review or an existing Mastra implementation. For building Mastra features use `$mastra`."
+description: "Audit a Mastra codebase against execution failures first: workflow step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, and visible tool keys. Use for pre-ship review or an existing Mastra implementation. Not for building features; use version-matched Mastra docs."
 ---
 
 # Mastraudit
@@ -35,7 +35,7 @@ When there is no time for the full audit, these catch the most:
 
 Several of these checks are deterministic and already implemented. Where `@howells/mastra` is installed, `@howells/mastra/boundary` exports scanners that each return sorted `path: reason` findings - as of 0.2.1: `findDirectMastraImports`, `findToolIdFilenameMismatches`, `findToolsMissingAnnotations`, `findBarrelFiles`, `findFlatGenerateSettings`, `findShorthandToolKeys`, `findUnkeyedMcpClients`. Check the installed version's exports rather than trusting this list.
 
-Run them first and spend your own attention on the judgement calls. Manual search is the fallback for codebases without the package, not the default. A hand-rolled regex that disagrees with a shipped scanner is wrong until proven otherwise - the scanner encodes calibration you cannot see.
+Inspect the installed scanner signatures and bundled usage examples, then call the applicable exports against the scoped implementation root. Do not invent arguments from the export names. If the package or runnable interface is unavailable, use manual search and state the coverage gap. Scanner output is a lead: verify it against the implementation and supported contracts.
 
 ## The check catalogue
 
@@ -45,7 +45,9 @@ Run them first and spend your own attention on the judgement calls. Manual searc
 
 ## Steps
 
-Copy these steps into your todolist verbatim before you start. A step you skip stays in the list with a one-line `skip: <reason>`.
+Use these steps to organize the audit; keep any task list brief and report skipped coverage without copying the workflow verbatim.
+
+Default to source and existing evidence. Audit-only scope does not authorize workflow runs, model calls, storage writes or deployment changes. Local scanner execution is allowed after inspecting it for side effects. Apply house architecture and naming conventions only when the target codebase adopts them; otherwise present them as optional recommendations, not correctness findings.
 
 1. **Scope it and say it back.** Which package owns Mastra, and which surfaces are in range. Trace runtime owners and import roles; zero or several dependency declarations are discovery signals, not findings. Several independently deployed Mastra apps can be legitimate. Audit clearly identified implementations separately and ask only if unresolved ownership changes the scope.
 
