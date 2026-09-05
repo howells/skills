@@ -11,6 +11,8 @@ Agent-written code carries a signature. Not bugs - it typechecks, the tests pass
 
 **The rule that decides every call: nothing here changes behaviour.** Remove a tell and the tests still pass unchanged. If a cleanup would alter what the program does, it is not this skill's - a fallback that hides a failure belongs to `fail-fast`, a file too big to hold in your head belongs to `componentize`. Say so and move on rather than smuggling a behaviour change into a tidy-up.
 
+Read the surrounding code before calling something a tell. Local conventions and the purpose of an abstraction matter: a one-caller wrapper can still name a meaningful operation or preserve a useful boundary. The catalogue gives you patterns to investigate, not automatic deletions. Prefer the smallest edit that removes confirmed noise; do not rewrite neighbouring code to match your taste.
+
 ## The tells
 
 Cite by number in findings, so a reviewer can see the pattern rather than the instance.
@@ -32,8 +34,8 @@ Cite by number in findings, so a reviewer can see the pattern rather than the in
 
 **Defensive noise**
 
-10. **Guards against states the types forbid.** A null check on a non-nullable, `?.` on a value that cannot be absent, a runtime `typeof` after the compiler already narrowed. Guards belong at the boundary where untrusted data arrives, not sprinkled inland.
-11. **Redundant assertions.** `as unknown as T`, a non-null `!` where narrowing would do the job honestly. If the type is wrong, fix the type.
+10. **Redundant defensive handling.** A null check on a value that cannot be absent, a runtime `typeof` after the compiler already narrowed, or a `try/catch` that only rethrows the same error. Establish that the path is trusted; a type annotation alone does not validate runtime input. Keep boundary validation and catches that add meaningful context or cleanup. Catches that swallow errors or supply fallbacks belong to `fail-fast` when removing them would change behaviour.
+11. **Redundant assertions.** `as any` used only to silence a type error, `as unknown as T`, a non-null `!` where narrowing would do the job honestly. Use the correct type or narrowing rather than another assertion. If fixing the mismatch requires a runtime change, report it instead.
 12. **Re-implemented standard library.** A hand-rolled `groupBy`, `chunk`, `debounce`, or date formatter beside one that already ships.
 13. **Ceremonial async.** `async` on a function that never awaits, `await` on a plain value, a promise wrapper around synchronous work.
 
@@ -45,16 +47,20 @@ Cite by number in findings, so a reviewer can see the pattern rather than the in
 17. **Dead scaffolding.** `TODO` placeholders nobody owns, example blocks, and any mock, stub or fixture that leaked into a production path.
 18. **Tests asserting the mock.** A test that checks a spy was called, rather than that the behaviour happened. It passes forever and proves nothing.
 
+**Control flow**
+
+19. **Unnecessary nesting.** Newly introduced layers of `if/else` that an early return would make easier to follow. Flatten only when execution order, side effects, cleanup and return values stay the same. Leave nesting alone when it expresses the logic clearly or fits the surrounding code.
+
 ## Steps
 
 Copy these steps into your todolist verbatim before you start. A step you skip stays in the list with a one-line `skip: <reason>`.
 
 1. **Fix the scope.** Default to the diff - the branch against its merge base, or the working tree. A whole-repo sweep is a different job and needs saying out loud, because it will touch code nobody asked you to touch.
 2. **Read the gate first.** Run the typecheck, lint and tests before you edit anything, so you know what green looked like. If it was not green, that is the finding; stop and say so.
-3. **Pass over the diff against the catalogue.** One finding per instance, each carrying the tell number and a `file:line`. Do not rewrite as you read - a pass that edits while it scans loses the thread and starts improving things.
+3. **Pass over the diff against the catalogue.** Read nearby code to establish local conventions, then record one finding per confirmed instance, each carrying the tell number and a `file:line`. Do not rewrite as you read - a pass that edits while it scans loses the thread and starts improving things.
 4. **Sort the findings into remove and refer.** Remove is anything behaviour-preserving. Refer is anything that would change what the program does, named with the skill that owns it. Never do a refer inline.
 5. **Apply the removals, then run the same gate again.** Identical results, or you changed behaviour and have to back it out. Without that comparison this is an unreviewed refactor.
-6. **Report.** Counts by tell number, the refer list, and the gate result before and after.
+6. **Report.** For a small cleanup, use one to three sentences: what changed, anything referred elsewhere, and the gate result before and after. Include tell numbers and file locations when needed to explain a finding; reserve counts by tell for a requested audit or a larger diff that benefits from them.
 
 ## What this is not
 
