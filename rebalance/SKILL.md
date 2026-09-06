@@ -31,6 +31,16 @@ Check whether apparently open work is already delivered using its acceptance cri
 
 When useful, delegate independent read-only groups of items to native parallel agents: Luna for bounded status checks, Terra for code and dependency tracing, Sol for scope or conflicting evidence, or the host's equivalents. Use only supported models and tools. Keep tracker writes with one coordinator to avoid overlapping edits. For a small backlog, work directly. Apply `plimsoll` when available: bounded investigation, no repeated audit or polling loop.
 
+## Flag missing or underspecified work
+
+Before changing priorities, check whether the goal has any relevant tickets and whether those tickets contain enough detail for a fresh agent to implement them. Use the complete backlog and relevant descriptions, comments and linked specs, not title matching alone. Missing access or incomplete pagination is an access or coverage problem, not evidence that no related tickets exist.
+
+- **No related tickets:** say plainly, “I couldn't find any tickets covering this goal,” and briefly state what was searched. Invite `grilling` if the intended behaviour still needs decisions, or `to-spec` followed by `to-tickets` if the goal is already clear. Stop without reprioritizing unrelated work or inventing a delivery backlog. An explicit request to also specify or create that backlog can authorize continuing.
+- **Related tickets are too thin:** link them, say they are not yet specific enough to implement, and name the missing decisions or acceptance criteria. A useful ticket establishes the problem, intended user behaviour, testable completion criteria and known dependencies; use linked specs when they provide that detail. Invite `grilling` for unresolved choices, `to-spec` to capture settled requirements, or `to-tickets` to break an existing spec into deliverable increments. Do not silently invent requirements or mark these items ready for `next`.
+- **Some work is ready:** rebalance the well-specified items and explicitly report which part of the goal still needs specification. Thin but essential items may be urgent and marked with the project's information-needed role; urgency does not make them actionable. If none is actionable, say so and finish with the appropriate invitation instead of handing an arbitrary ticket to `next`.
+
+Make the invitation one short, concrete question explaining what the proposed skill would resolve. Do not automatically start an interview or the whole Ask Matt flow. Where that skill is unavailable, offer the same clarification or specification work in ordinary language. Routine factual improvements and small missing prerequisites below remain allowed when existing evidence is sufficient; they must not conceal missing product decisions or substitute for this notice.
+
 ## Establish what the goal actually requires
 
 Trace the smallest complete user journey that demonstrates the goal and map its acceptance to existing items. Include implementation, integration, deployment, data and verification prerequisites when they are actually required. Similar titles or shared components do not prove a dependency. Read the owning code or delivery evidence when necessary to establish the relationship.
@@ -60,6 +70,6 @@ Verify the written priorities, statuses and dependency links from tracker respon
 
 Order the required work blockers-first; do not nominate a dependent item as ready while a necessary prerequisite remains unresolved or unverified. Preserve independently urgent incidents in that ordering.
 
-Give a short plain-language report: the goal, how many items changed, the linked urgent delivery order, and any blocked or unverified part of it. Name the first actionable item for `next`, or explain why none is ready. Link changed items compactly rather than dumping the backlog. Use `deslop` when available to tighten the message.
+Give a short plain-language report: the goal, how many items changed, the linked urgent delivery order, and any blocked or unverified part of it. Name the first actionable item for `next`, or explain why none is ready. Always include any missing-ticket or specification gap and the appropriate invitation described above. Link changed items compactly rather than dumping the backlog. Use `deslop` when available to tighten the message.
 
 Stop after the rebalance. The new priorities stand until the user changes them again; no automatic restoration and no implementation in this invocation.
