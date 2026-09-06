@@ -1,6 +1,6 @@
 ---
 name: componentize
-description: "Consolidate code around a clear ownership boundary: deduplicate shared UI, split a confirmed multi-responsibility file, or extract a coherent package. Use when the outcome asked for is reuse, decomposition or a package boundary. Not for visual redesign (`chiaroscuro`), typography rules (`typecase`), or behaviour-preserving cleanup (`unslop`)."
+description: "Consolidate shared UI, split multi-responsibility files or extract packages. Not for redesign (`chiaroscuro`), typography (`typecase`) or behaviour-preserving cleanup (`unslop`)."
 ---
 
 # Componentize

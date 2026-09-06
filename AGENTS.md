@@ -19,6 +19,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `mastraudit` - audit a Mastra codebase against what actually breaks it, execution semantics before structure.
 - `memento` - report what you are working on right now, from current state, in one screen.
 - `muster` - roll-call of work in flight: transcripts, live git state, peer sessions, tracker.
+- `next` - select and deliver one actionable tracker item with Plimsoll discipline, then stop.
 - `nomen` - generate and validate names, with availability and conflict checks.
 - `paste-up` - design in Paper: build a file from a spec, or audit and repair an existing one from its URL.
 - `plimsoll` - cut process weight when gates, polling and re-planning have displaced shipping.

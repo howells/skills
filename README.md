@@ -50,7 +50,7 @@ npx skills@latest add howells/skills --skill chiaroscuro --agent codex --global
 
 ### `componentize`
 
-Consolidate code around a clear ownership boundary: deduplicate shared UI, split a confirmed multi-responsibility file, or extract a coherent package. Use when the outcome asked for is reuse, decomposition or a package boundary. Not for visual redesign (`chiaroscuro`), typography rules (`typecase`), or behaviour-preserving cleanup (`unslop`).
+Consolidate shared UI, split multi-responsibility files or extract packages. Not for redesign (`chiaroscuro`), typography (`typecase`) or behaviour-preserving cleanup (`unslop`).
 
 Install globally for Codex:
 
@@ -177,6 +177,18 @@ Install globally for Codex:
 ```bash
 npx skills@latest add howells/skills --skill muster --agent codex --global
 ```
+
+### `next`
+
+Deliver the next actionable tracker item with Plimsoll, then stop. Not for codebase audits (`survey`) or session recovery (`muster`).
+
+Invoke `next` using the harness's skill invocation syntax in a fresh project task (`$next` in Codex). It selects the item, checks that the work is still needed, uses parallel agents with a suitable mix of available models, implements and verifies it, completes authorized release steps, and stops after that item. It adapts to Codex, Claude Code, OpenCode, Cursor and other compatible harnesses; Sol, Terra and Luna are preferences where available.
+
+Previously named `next-issue`; remove that installed copy when installing `next`.
+
+Before editing, it checks the live tracker status and independently verifies whether the work is already delivered. An open but completed item gets evidence and the appropriate status correction; partially delivered work is limited to the remaining acceptance criteria.
+
+Every selected item is introduced with a clickable ticket identifier and one short sentence explaining the outcome in everyday words, before implementation or a status correction.
 
 ### `nomen`
 
