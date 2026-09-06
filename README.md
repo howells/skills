@@ -80,7 +80,7 @@ npx skills@latest add howells/skills --skill fail-fast --agent codex --global
 
 ### `fable-review`
 
-Get an independent review from Claude Fable 5.1 through the Claude CLI, then verify its claims before acting. Use for a hard judgement call: a design or architecture decision, a taste question, a plan worth arguing with. Not for a cheap conformance check (`glm-review`), a codebase grade (`survey`), or a routine diff.
+Get an independent review from Claude Fable 5.1 through the Claude CLI, then verify its claims before acting. Use for a hard judgement call: a design or architecture decision, a taste question, a plan worth arguing with. Not for a cheap conformance check (`glm-review`), a codebase grade (`simplify`), or a routine diff.
 
 Install globally for Codex:
 
@@ -120,7 +120,7 @@ npx skills@latest add howells/skills --skill gog --agent codex --global
 
 ### `glm-review`
 
-Get an independent read-only review from GLM 5.3 Flash on the Z.AI Coding Plan via OpenCode, then verify its claims before acting. Use when the user names GLM, or for a cheap bounded check: conformance to stated criteria, a contract, UI copy. Not for a hard judgement call (`fable-review`) or a codebase grade (`survey`).
+Get an independent read-only review from GLM 5.3 Flash on the Z.AI Coding Plan via OpenCode, then verify its claims before acting. Use when the user names GLM, or for a cheap bounded check: conformance to stated criteria, a contract, UI copy. Not for a hard judgement call (`fable-review`) or a codebase grade (`simplify`).
 
 Install globally for Codex:
 
@@ -180,7 +180,7 @@ npx skills@latest add howells/skills --skill muster --agent codex --global
 
 ### `next`
 
-Deliver the next item with Plimsoll. Not audits (`survey`) or recovery (`muster`).
+Deliver the next item with Plimsoll. Not audits (`simplify`) or recovery (`muster`).
 
 Invoke `next` using the harness's skill invocation syntax in a fresh project task (`$next` in Codex). It selects the item, checks that the work is still needed, uses parallel agents with a suitable mix of available models, implements and verifies it, then pushes a reviewable PR. It follows configured auto-merge through completion; otherwise it leaves the PR open and waits for review. It adapts to Codex, Claude Code, OpenCode, Cursor and other compatible harnesses; Sol, Terra and Luna are preferences where available.
 
@@ -218,7 +218,7 @@ npx skills@latest add howells/skills --skill paste-up --agent codex --global
 
 ### `plimsoll`
 
-Cut process weight when gate ladders, CI/build watch loops, remote Vercel builds or re-planning displace shipping. Keeps Vercel builds on the user's machine. Use near a deadline or after nothing user-visible has landed. Not `survey`.
+Cut process weight when gate ladders, CI/build watch loops, remote Vercel builds or re-planning displace shipping. Keeps Vercel builds on the user's machine. Use near a deadline or after nothing user-visible has landed. Not `simplify`.
 
 Install globally for Codex:
 
@@ -270,15 +270,15 @@ npx skills@latest add howells/skills --skill signage --agent codex --global
 
 ### `simplify`
 
-Strict simplification review of changes or a whole codebase. Not routine cleanup (`unslop`) or scored health audits (`survey`).
+Review a diff or whole codebase for structural simplification and relevant health risks, with source-confirmed findings and optional scores. Not routine cleanup (`unslop`) or browser QA (`fieldtest`).
 
-Cursor's Thermo-Nuclear Code Quality Review under a shorter name, with the upstream rubric and approval bar preserved. Reviews structural simplification, abstraction quality, file growth, branching, type contracts, canonical ownership and orchestration. Uses the active harness's tools and respects existing authorization. The original MIT notice and pinned upstream attribution are included.
+Combines Cursor's strict structural review with stage-aware risk assessment, source vetting, grouped fixes and honest coverage. Reviews relevant security, performance and reliability concerns alongside opportunities to remove complexity. Cursor's upstream rubric and MIT attribution are preserved.
 
 ```bash
 npx skills@latest add howells/skills --skill simplify --agent codex --global
 ```
 
-Use `simplify` for selected changes, `simplify whole codebase` for the repository, or `simplify whole codebase in <path>` for one area. Both modes report findings; code edits and tracker items require an explicit request. Whole-codebase reviews state their coverage and preserve the same structural standards.
+Use `simplify` for selected changes or `simplify whole codebase` for the repository; add `in <path>` to narrow either scope. Add `with scores` only when you want a scorecard. Both scopes report findings; add `apply the fixes` or `create Linear items` to request action.
 
 In Claude Code, this personal skill takes precedence over the bundled skill with the same name.
 
@@ -290,16 +290,6 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill starling --agent codex --global
-```
-
-### `survey`
-
-Grade an entire codebase with a stage-calibrated verdict, clustered findings, and comparable scores. Use for repository health audits where mechanical checks, source-confirmed findings, lifecycle stage, and multiple review lenses matter. For a diff or PR use code review; for Mastra use `mastraudit`.
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill survey --agent codex --global
 ```
 
 ### `typecase`
@@ -366,3 +356,9 @@ Removed on 2026-09-02. Not one had been invoked, in either Claude Code or Codex,
 | `foundry` | 2026-05-21 | Nothing; its shared references live on in `chiaroscuro` |
 | `polyplugin` | 2026-05-22 | Nothing |
 | `inquest` | 2026-08-20 | Nothing; `muster` covers rebuilding context |
+
+Merged on 2026-09-06:
+
+| Skill | Where its work went |
+| --- | --- |
+| `survey` | `simplify`, for diff or whole-codebase reviews with optional scoring. Update Simplify, then run `npx skills@latest remove survey --global --yes`. Also remove project-local copies where present. |

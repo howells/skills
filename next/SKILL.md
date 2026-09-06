@@ -1,6 +1,6 @@
 ---
 name: next
-description: "Deliver the next item with Plimsoll. Not audits (`survey`) or recovery (`muster`)."
+description: "Deliver the next item with Plimsoll. Not audits (`simplify`) or recovery (`muster`)."
 ---
 
 # Next

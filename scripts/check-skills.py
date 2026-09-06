@@ -470,6 +470,7 @@ REMOVED_SKILLS = (
     "heathen",
     "inquest",
     "polyplugin",
+    "survey",
 )
 
 

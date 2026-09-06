@@ -1,6 +1,6 @@
 ---
 name: plimsoll
-description: "Cut process weight when gate ladders, CI/build watch loops, remote Vercel builds or re-planning displace shipping. Keeps Vercel builds on the user's machine. Use near a deadline or after nothing user-visible has landed. Not `survey`."
+description: "Cut process weight when gate ladders, CI/build watch loops, remote Vercel builds or re-planning displace shipping. Keeps Vercel builds on the user's machine. Use near a deadline or after nothing user-visible has landed. Not `simplify`."
 ---
 
 # Plimsoll
@@ -122,6 +122,6 @@ Explicitly requested `foreman` governs implementation ownership; Plimsoll govern
 
 - Not permission to ship broken work, or to claim something works without opening it.
 - Not an argument against tests. It argues against tests aimed at the workspace while the payload sits unopened.
-- Not a codebase audit. Grading a repository's health is `survey`.
+- Not a codebase audit. Grading a repository's health is `simplify`.
 - Not a QA pass. Exercising a running app in a browser is `fieldtest`.
 - Not a delegation strategy. Routing substantial implementation to subagents is `foreman`; this skill has final say over the process weight around that routing when both apply.

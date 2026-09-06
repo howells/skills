@@ -1,31 +1,52 @@
 ---
 name: simplify
-description: "Strict simplification review of changes or a whole codebase. Not routine cleanup (`unslop`) or scored health audits (`survey`)."
+description: "Review a diff or whole codebase for structural simplification and relevant health risks, with source-confirmed findings and optional scores. Not routine cleanup (`unslop`) or browser QA (`fieldtest`)."
 disable-model-invocation: true
 ---
 
 # Simplify
 
-Adapted from Cursor's [Thermo-Nuclear Code Quality Review](https://github.com/cursor/plugins/blob/93b00b89ef425a9c1bac0d0b317dfc49c930ac99/cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md). The upstream review rubric below is preserved unchanged. See the included [MIT licence](LICENSE).
+One review skill for selected changes or an existing codebase. Cursor's [Thermo-Nuclear Code Quality Review](https://github.com/cursor/plugins/blob/93b00b89ef425a9c1bac0d0b317dfc49c930ac99/cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md) supplies the structural standards; its rubric below is preserved unchanged. See the included [MIT licence](LICENSE).
 
-Use the active harness's review tools and the scope the user selected. Repository instructions and existing authorization still apply; a request to review does not itself authorize edits, commits or publication. This skill supplies the review rubric without requiring Cursor-specific subagent names.
+## Scope and actions
 
-## Review scope
+- `simplify` reviews the selected diff, branch or PR. State the comparison base and include relevant surrounding code, dependencies and callers. If no scope is selected, use current uncommitted changes, otherwise branch changes against the repository's default branch. If there are no changes, say so; do not silently review the entire repository.
+- `simplify whole codebase` reviews the current repository, including unchanged code. A path narrows either scope: `simplify in <path>` or `simplify whole codebase in <path>`.
+- A focus such as `security` or `performance` directs attention within that scope. Explicit restrictions win. `with scores` adds scoring; without it, return findings without a scorecard. These are natural-language arguments, not harness-specific flags.
 
-- `simplify` reviews the selected diff, branch or PR, reading surrounding code and callers as needed. State the comparison base. If there are no changes and no selected scope, say so; do not silently switch to the whole repository.
-- `simplify whole codebase` reviews the current repository, including unchanged code. `simplify whole codebase in <path>` narrows it to that package or directory while following its dependencies and consumers where needed. These are natural-language arguments, not harness-specific flags.
+Both scopes report findings in conversation by default. A review does not authorize code edits, tracker writes, commits or publication. `Apply the fixes` authorizes implementation within the selected scope; `create Linear items` authorizes tracker work. Honor existing authorization without asking again. Do not write review artifacts into the repository unless requested.
 
-Both modes return findings in conversation. Neither changes code nor creates tracker items unless the user requests that action. Keep the same structural standards in both modes; broad, scored repository health audits belong to `survey`.
+Use the active harness's tools. No specific harness, integration or model is required. Repository instructions and explicit user constraints govern the review.
 
-### Whole-codebase mode
+## Review the code
 
-State the repository, revision and working-tree state being reviewed. Map the authored source roots and ownership boundaries, excluding dependencies, generated output and vendored code. Examine each in-scope area, then follow shared contracts, callers and data flow across boundaries; do not confine the review to recent changes or only the largest files. Use existing scanners as leads, then confirm findings in source.
+State the repository, revision, working-tree state and scope. Establish the project's stage using [stage guidance](references/stage.md); describe an inference as such. Stage affects impact and production-hardening expectations, but never suppresses structural simplification or weakens Cursor's approval bar.
 
-Use independent read-only agents for distinct areas when the harness supports them and the scope benefits. Choose available models by difficulty: stronger reasoning for cross-package design, lighter models for bounded source inspection. The coordinator checks shared boundaries and consolidates findings. Continue sequentially when delegation is unavailable; no particular harness or model is required.
+For a whole codebase, map authored source roots and ownership boundaries, excluding dependencies, generated output and vendored code. Examine each in-scope area and trace contracts and data flow between them. For a diff, trace affected paths beyond the changed lines and distinguish new regressions from existing defects relevant to the change. Never present an unrelated pre-existing defect as introduced by the diff.
 
-The unchanged upstream rubric follows. In this mode, interpret its wording about a diff, PR or new growth as questions about the current implementation. Assess existing complexity without claiming it was newly introduced. An existing file over 1,000 lines warrants investigation; it does not prove a threshold-crossing regression. Apply the approval bar as a structural verdict on the reviewed code, not a PR approval action.
+Apply the upstream structural rubric in both scopes. In whole-codebase scope, interpret its wording about a diff, PR or new growth as questions about the current implementation. An existing file over 1,000 lines warrants investigation; it does not prove a threshold-crossing regression. The approval bar is a verdict on reviewed code, not authorization to submit a PR review.
 
-For each finding, cite source locations, explain the complexity cost, propose the simpler structure and identify the behavior or contract that must survive. Consolidate observations with the same cause. Preserve the rubric's finding order and favor consequential opportunities over cosmetic notes. End with a coverage map naming areas examined and anything skipped or only sampled; incomplete coverage must never be presented as a completed whole-codebase review. Run a focused check only when needed to establish a finding, without automatically starting every build or test suite.
+Use [review lenses](references/lenses.md) for relevant security, performance, reliability, data, test, operational and accessibility concerns. Whole-codebase reviews consider which lenses apply across the repository; diff reviews choose them from the affected behavior and contracts. Do not create a fixed panel or demand production infrastructure for an experiment. For specialist runtime questions, use an available domain skill such as `mastraudit`; rendered browser QA belongs to `fieldtest`.
+
+Use independent read-only agents for distinct areas when the scope benefits and the harness supports them. Match available models to the work: stronger reasoning for design across packages, capable implementation models for tracing behavior, lighter models for bounded inspection. Prefer Sol, Terra and Luna where available; use equivalent models elsewhere. Give each agent its scope, repository decisions, stage, relevant rubric, existing evidence and expected findings. The coordinator checks shared boundaries and consolidates findings. Continue sequentially if delegation is unavailable.
+
+Use existing scanners as leads, then confirm them in source. Inspect scripts before execution and run the narrowest checks needed to establish a finding or validate an authorized fix. No automatic build, typecheck, lint and full-suite ladder. A missing prerequisite or timed-out check is unavailable evidence, not a pass or a source defect; investigate the cause before retrying. Do not install tools or run commands with unrelated external side effects merely to complete a review.
+
+## Verify and group findings
+
+Every reported finding needs source locations and evidence. Read the cited code and relevant callers, establish what it costs, propose the simpler or safer structure, and identify the behavior or contract that must survive. Recheck delegated claims against the actual source before accepting them; unconfirmed leads stay explicitly separate from findings.
+
+Respect deliberate repository conventions and recorded tradeoffs; flag additional risk or implementation drift with evidence. Check whether findings are already tracked when tracker access is available. Retain unresolved known defects with their existing links; dismiss resolved, disproven or explicitly accepted-by-design claims with a short reason. A connected tracker alone does not authorize writes.
+
+Group related findings by the change that would fix them together, rather than by which agent found them. Keep Cursor's structural finding order within that review; put any confirmed immediate security or data-loss danger first. Severity describes demonstrated impact at this project's stage. A structural approval blocker and an urgent production incident are different judgments; label them accurately.
+
+## Report and follow through
+
+Lead with a plain verdict, then scope and stage. Present the strongest clusters with source citations, impact, a concrete remedy and the behavior to preserve. Keep minor nits out when consequential findings exist. End with a coverage map: areas and lenses examined, checks actually run, skipped or sampled areas and unconfirmed leads. A partial review must never be presented as a completed whole-codebase review.
+
+Only when scoring is requested, load [the scorecard](references/scorecard.md). Mark unreviewed or inapplicable axes `--`, adjust the denominator, and record scope, revision and criteria. A diff score describes only the reviewed changes and affected paths; it is never a repository health score.
+
+When tracker work is requested, reuse existing items and create one actionable item per cluster, with source evidence, acceptance criteria and priority justified by actual impact and dependencies. When fixes are requested, implement the accepted scope, preserve behavior, and verify it through the affected consumer or focused tests. Use available specialist skills when useful, without requiring a separate task or automatic handoff. Commit, PR and delivery behavior follows the user's authorization and repository policy.
 
 ## Upstream review rubric
 

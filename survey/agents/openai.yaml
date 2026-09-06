@@ -1,4 +1,0 @@
-interface:
-  display_name: "Survey"
-  short_description: "Stage-calibrated whole-codebase health audit"
-  default_prompt: "Use $survey to grade this codebase with stage-calibrated, source-confirmed findings and comparable scores."
