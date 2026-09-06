@@ -1,6 +1,6 @@
 ---
 name: simplify
-description: "Strict structural review of abstractions, file growth and branching. Not routine cleanup (`unslop`) or a codebase audit (`survey`)."
+description: "Strict simplification review of changes or a whole codebase. Not routine cleanup (`unslop`) or scored health audits (`survey`)."
 disable-model-invocation: true
 ---
 
@@ -9,6 +9,25 @@ disable-model-invocation: true
 Adapted from Cursor's [Thermo-Nuclear Code Quality Review](https://github.com/cursor/plugins/blob/93b00b89ef425a9c1bac0d0b317dfc49c930ac99/cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md). The upstream review rubric below is preserved unchanged. See the included [MIT licence](LICENSE).
 
 Use the active harness's review tools and the scope the user selected. Repository instructions and existing authorization still apply; a request to review does not itself authorize edits, commits or publication. This skill supplies the review rubric without requiring Cursor-specific subagent names.
+
+## Review scope
+
+- `simplify` reviews the selected diff, branch or PR, reading surrounding code and callers as needed. State the comparison base. If there are no changes and no selected scope, say so; do not silently switch to the whole repository.
+- `simplify whole codebase` reviews the current repository, including unchanged code. `simplify whole codebase in <path>` narrows it to that package or directory while following its dependencies and consumers where needed. These are natural-language arguments, not harness-specific flags.
+
+Both modes return findings in conversation. Neither changes code nor creates tracker items unless the user requests that action. Keep the same structural standards in both modes; broad, scored repository health audits belong to `survey`.
+
+### Whole-codebase mode
+
+State the repository, revision and working-tree state being reviewed. Map the authored source roots and ownership boundaries, excluding dependencies, generated output and vendored code. Examine each in-scope area, then follow shared contracts, callers and data flow across boundaries; do not confine the review to recent changes or only the largest files. Use existing scanners as leads, then confirm findings in source.
+
+Use independent read-only agents for distinct areas when the harness supports them and the scope benefits. Choose available models by difficulty: stronger reasoning for cross-package design, lighter models for bounded source inspection. The coordinator checks shared boundaries and consolidates findings. Continue sequentially when delegation is unavailable; no particular harness or model is required.
+
+The unchanged upstream rubric follows. In this mode, interpret its wording about a diff, PR or new growth as questions about the current implementation. Assess existing complexity without claiming it was newly introduced. An existing file over 1,000 lines warrants investigation; it does not prove a threshold-crossing regression. Apply the approval bar as a structural verdict on the reviewed code, not a PR approval action.
+
+For each finding, cite source locations, explain the complexity cost, propose the simpler structure and identify the behavior or contract that must survive. Consolidate observations with the same cause. Preserve the rubric's finding order and favor consequential opportunities over cosmetic notes. End with a coverage map naming areas examined and anything skipped or only sampled; incomplete coverage must never be presented as a completed whole-codebase review. Run a focused check only when needed to establish a finding, without automatically starting every build or test suite.
+
+## Upstream review rubric
 
 Use this skill for an unusually strict review focused on implementation quality, maintainability, abstraction quality, and codebase health.
 
