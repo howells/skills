@@ -242,7 +242,7 @@ npx skills@latest add howells/skills --skill product-description --agent codex -
 
 Reprioritize a project's backlog for a goal. Not implementation (`next`).
 
-Give it a project, a concrete goal and an optional deadline. It checks the whole open backlog, reconciles evidenced stale statuses, makes essential unfinished work urgent, and prepares dependencies for `next`. The new priorities stand; there is no saved priority snapshot or restoration mechanism. It uses relevant `ask-matt` flows when available and stops before implementation.
+Give it a project, a concrete goal and an optional deadline. It checks the whole open backlog, reconciles evidenced stale statuses, makes essential unfinished work urgent, and prepares dependencies for `next`. The new priorities stand; there is no saved priority snapshot or restoration mechanism. It uses relevant `ask-matt` flows when available and stops before implementation. If no related tickets exist or the tickets are too thin to implement, it explains the gap and invites `grilling`, `to-spec` or `to-tickets` as appropriate.
 
 ```bash
 npx skills@latest add howells/skills --skill rebalance --agent codex --global
