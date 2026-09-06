@@ -190,7 +190,7 @@ Before editing, it checks the live tracker status and independently verifies whe
 
 Every selected item is introduced with a clickable ticket identifier and one short sentence explaining the outcome in everyday words, before implementation or a status correction.
 
-It works to the selected item's spec, records necessary clarifications there, and files unrelated findings as separate, deduplicated tracker items with acceptance criteria and an evidence-based priority. Those follow-ups stay outside the current implementation.
+It works to the selected item's spec, records necessary clarifications there, and files unrelated findings as separate, deduplicated tracker items with acceptance criteria and an evidence-based priority. Those follow-ups stay outside the current implementation. Genuine blockers are documented and resolved in the same task before returning to the original item; the stopping boundary is the selected outcome, including its necessary prerequisites.
 
 ### `nomen`
 
