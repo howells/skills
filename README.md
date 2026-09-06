@@ -340,3 +340,7 @@ Removed on 2026-09-02. Not one had been invoked, in either Claude Code or Codex,
 | `foundry` | 2026-05-21 | Nothing; its shared references live on in `chiaroscuro` |
 | `polyplugin` | 2026-05-22 | Nothing |
 | `inquest` | 2026-08-20 | Nothing; `muster` covers rebuilding context |
+
+## Pull requests
+
+Ready pull requests targeting the default branch merge automatically when the repository's required checks and reviews are satisfied. Draft pull requests remain open.
