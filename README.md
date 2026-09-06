@@ -270,13 +270,15 @@ npx skills@latest add howells/skills --skill signage --agent codex --global
 
 ### `simplify`
 
-Strict structural review of abstractions, file growth and branching. Not routine cleanup (`unslop`) or a codebase audit (`survey`).
+Strict simplification review of changes or a whole codebase. Not routine cleanup (`unslop`) or scored health audits (`survey`).
 
 Cursor's Thermo-Nuclear Code Quality Review under a shorter name, with the upstream rubric and approval bar preserved. Reviews structural simplification, abstraction quality, file growth, branching, type contracts, canonical ownership and orchestration. Uses the active harness's tools and respects existing authorization. The original MIT notice and pinned upstream attribution are included.
 
 ```bash
 npx skills@latest add howells/skills --skill simplify --agent codex --global
 ```
+
+Use `simplify` for selected changes, `simplify whole codebase` for the repository, or `simplify whole codebase in <path>` for one area. Both modes report findings; code edits and tracker items require an explicit request. Whole-codebase reviews state their coverage and preserve the same structural standards.
 
 In Claude Code, this personal skill takes precedence over the bundled skill with the same name.
 
