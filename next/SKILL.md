@@ -106,4 +106,12 @@ After the forge confirms the PR merged and required delivery work is complete, c
 4. Remove the eligible worktree through Git, then delete its verified merged local branch and any remaining remote topic branch. Re-check the remote branch tip before deletion so a reused branch is preserved. Never delete a default or shared branch, force removal of a dirty worktree, or sweep other tasks' branches and stashes. Preserve branches where merge evidence is insufficient for safe deletion under repository policy.
 5. Confirm the owned worktree and branches are gone, and report what was removed or deliberately retained with its reason. No repeated cleanup audit and no unrelated repository housekeeping.
 
-Return the item and outcome, the PR and relevant commit/release/evidence links, any filed follow-ups with their priorities, the cleanup result, and the exact current state: awaiting review, awaiting auto-merge, merged, or verified delivery. Claim only what was verified. After the handoff or completed delivery, do not continue the queue. Each subsequent independent item belongs in a fresh task; do not automatically create another task or clear context.
+## Close in plain language
+
+Finish with one to three short, plain-language sentences: the linked item and what changed for the person using the product, the PR link and verified delivery state, and anything still pending. Say explicitly when review, merge, deployment or verification remains outstanding. Avoid jargon, a chronological recap, praise and claims unsupported by evidence.
+
+Use the installed `deslop` skill to tighten this summary when available; `unslop` is for code cleanup, not prose. If `deslop` is unavailable, apply the plain-language rules above directly. Keep this an editing pass on the closing message, not another review or execution gate.
+
+Keep detailed acceptance evidence and commit/release links on the item or PR. Add a compact line for filed follow-ups with priorities and the cleanup result when applicable; state why anything was retained. Preserve any evidence or reporting explicitly required by the project or user.
+
+After the handoff or completed delivery, do not continue the queue. Each subsequent independent item belongs in a fresh task; do not automatically create another task or clear context.
