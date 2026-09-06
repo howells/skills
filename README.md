@@ -268,6 +268,18 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill signage --agent codex --global
 ```
 
+### `simplify`
+
+Strict structural review of abstractions, file growth and branching. Not routine cleanup (`unslop`) or a codebase audit (`survey`).
+
+Cursor's Thermo-Nuclear Code Quality Review under a shorter name, with the upstream rubric and approval bar preserved. Reviews structural simplification, abstraction quality, file growth, branching, type contracts, canonical ownership and orchestration. Uses the active harness's tools and respects existing authorization. The original MIT notice and pinned upstream attribution are included.
+
+```bash
+npx skills@latest add howells/skills --skill simplify --agent codex --global
+```
+
+In Claude Code, this personal skill takes precedence over the bundled skill with the same name.
+
 ### `starling`
 
 Query configured Starling Bank balances and transactions. Not for Xero (`xero`).
@@ -310,7 +322,7 @@ npx skills@latest add howells/skills --skill unslop --agent codex --global
 
 ### `what`
 
-Rewrite only the previous agent reply into three short, plain-language lines: what happened, where things stand, and what comes next. Use when the last message was dense, jargon-heavy, or unclear. It re-explains existing content and gathers no new facts. Not for whole-task status (`memento`) or cross-session context (`muster`).
+Re-explain only the previous reply in three plain lines: what happened, current state, next step. No new facts. Not task status (`memento`) or session recovery (`muster`).
 
 Install globally for Codex:
 
