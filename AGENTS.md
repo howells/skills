@@ -27,9 +27,8 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `rebalance` - reprioritize the project backlog around a goal and prepare unfinished work for next.
 - `salvage` - rescue work that exists in only one place, then clear away branches, worktrees and stashes that are provably redundant.
 - `signage` - replace invented interface vocabulary with the words the audience already uses.
-- `simplify` - review structural complexity in changes or a whole codebase; apply fixes when authorized.
+- `simplify` - review changes or a whole codebase for simplification and health risks, with optional scoring.
 - `starling` - query configured Starling Bank accounts through an existing authenticated integration.
-- `survey` - grade a whole codebase and return a stage-calibrated verdict with a comparable score, clustered by what you would fix in one sitting.
 - `typecase` - constrain text styling to a few named type roles and enforce it with a scanner.
 - `unslop` - strip machine-written tells out of a diff without changing behaviour.
 - `what` - cut the last message down to what happened, short and in plain language.

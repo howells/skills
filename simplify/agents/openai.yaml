@@ -1,6 +1,6 @@
 interface:
   display_name: "Simplify"
-  short_description: "Strict review of changes or a whole codebase"
-  default_prompt: "Use $simplify to apply Cursor's Thermo-Nuclear Code Quality Review rubric to the selected changes, or the whole codebase when explicitly requested, preserving its structural standards, ambitious simplification goals and approval bar. Respect the repository's instructions and existing authorization."
+  short_description: "Review changes or codebase health and complexity"
+  default_prompt: "Use $simplify to review the selected changes, or the whole codebase when requested, using Cursor's strict structural standards and stage-aware health checks. Verify findings in source, group related fixes, state coverage, and score only if asked. Report findings unless edits or tracker updates are authorized."
 policy:
   allow_implicit_invocation: false
