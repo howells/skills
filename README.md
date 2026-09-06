@@ -180,7 +180,7 @@ npx skills@latest add howells/skills --skill muster --agent codex --global
 
 ### `next`
 
-Deliver the next actionable tracker item with Plimsoll, then stop. Not for codebase audits (`survey`) or session recovery (`muster`).
+Deliver the next item with Plimsoll. Not audits (`survey`) or recovery (`muster`).
 
 Invoke `next` using the harness's skill invocation syntax in a fresh project task (`$next` in Codex). It selects the item, checks that the work is still needed, uses parallel agents with a suitable mix of available models, implements and verifies it, then pushes a reviewable PR. It follows configured auto-merge through completion; otherwise it leaves the PR open and waits for review. It adapts to Codex, Claude Code, OpenCode, Cursor and other compatible harnesses; Sol, Terra and Luna are preferences where available.
 
@@ -234,6 +234,16 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill product-description --agent codex --global
+```
+
+### `rebalance`
+
+Reprioritize a project's backlog for a goal. Not implementation (`next`).
+
+Give it a project, a concrete goal and an optional deadline. It checks the whole open backlog, reconciles evidenced stale statuses, makes essential unfinished work urgent, and prepares dependencies for `next`. The new priorities stand; there is no saved priority snapshot or restoration mechanism. It uses relevant `ask-matt` flows when available and stops before implementation.
+
+```bash
+npx skills@latest add howells/skills --skill rebalance --agent codex --global
 ```
 
 ### `salvage`

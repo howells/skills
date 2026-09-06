@@ -1,6 +1,6 @@
 ---
 name: next
-description: "Deliver the next actionable tracker item with Plimsoll, then stop. Not for codebase audits (`survey`) or session recovery (`muster`)."
+description: "Deliver the next item with Plimsoll. Not audits (`survey`) or recovery (`muster`)."
 ---
 
 # Next

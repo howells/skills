@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rebalance"
+  short_description: "Align project priorities with the current goal"
+  default_prompt: "Use $rebalance to reassess this project's backlog against my goal and deadline, verify unfinished work, update priorities and blocking relationships, and identify the first actionable item for next without implementing it."
