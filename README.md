@@ -190,6 +190,8 @@ Before editing, it checks the live tracker status and independently verifies whe
 
 Every selected item is introduced with a clickable ticket identifier and one short sentence explaining the outcome in everyday words, before implementation or a status correction.
 
+It works to the selected item's spec, records necessary clarifications there, and files unrelated findings as separate, deduplicated tracker items with acceptance criteria and an evidence-based priority. Those follow-ups stay outside the current implementation.
+
 ### `nomen`
 
 Generate, critique, and validate names for products, projects, packages, CLIs, apps, brands, or features, with domain, package, GitHub, App Store and web conflict checks. Use for naming and renaming decisions. Not for interface labels (`signage`), body prose (`deslop`), or legal clearance.

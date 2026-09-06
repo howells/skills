@@ -29,7 +29,7 @@ Every time an item is selected, announce it before implementation or a tracker s
 
 ## Deliver within one scope
 
-Implement the existing acceptance criteria without reopening settled design. Define missing details only where they affect the result. Use the project's established implementation and release workflow; an installed `implement` skill can supply that workflow, with Plimsoll governing optional process weight. Keep shared APIs generalizable to their domain rather than naming them for the requesting consumer.
+Work to the selected item's spec and acceptance criteria without reopening settled design. Write necessary clarifications, agreed decisions and acceptance changes back to that item before implementing them; preserve existing requirements and distinguish unresolved questions from decisions. Do not create a separate repository spec document or add unrelated requirements. Use the project's established implementation and release workflow; an installed `implement` skill can supply that workflow, with Plimsoll governing optional process weight. Keep shared APIs generalizable to their domain rather than naming them for the requesting consumer.
 
 Use multiple parallel agents with a deliberate variety of models whenever the item has useful independent work. This skill explicitly requests delegation; the user does not need to repeat that instruction. Split bounded subtasks with distinct ownership and run them concurrently while the coordinator advances integration or another independent part of the item.
 
@@ -45,6 +45,23 @@ Preserve authorization already given. Do not repeat an approval request merely b
 
 Follow repository worktree and branch ownership rules. Keep durable decisions and evidence on the owning tracker item where project policy requires it. Record only what another session needs: scope, current commit/worktree, completed verification and the exact remaining action. Do not merge unrelated branches or start another item as part of cleanup.
 
+## Capture unrelated work without taking it on
+
+When implementation reveals an unrelated defect or improvement, record it in Linear when Linear owns the project, otherwise in the configured tracker. This workflow includes creating those follow-up items and updating the selected item's spec and evidence; do not ask for repeated permission for these routine tracker writes. Respect account access and project policy. If tracker access is unavailable, include a concise draft in the final response and state that it was not filed.
+
+Search for an existing item describing the same behaviour before creating one. Add new evidence to the matching item instead of duplicating it. Keep each new item self-contained: a plain title, observed behaviour and evidence, who is affected, the desired outcome, testable acceptance criteria, and a link to the item that exposed it. Mark uncertain findings as needing investigation rather than asserting an unverified defect. Keep this capture brief, then return to the selected item; do not start an audit or investigate every possible improvement.
+
+Set priority using the project's policy and the finding's measured impact on the current work. If no policy is defined, use these meanings and map them to the tracker's native values:
+
+- **Urgent:** an active severe incident or an evidenced blocker of an explicitly urgent delivery with no viable workaround.
+- **High:** blocks the selected item's acceptance or a near-term committed outcome, without meeting the urgent threshold.
+- **Normal:** meaningful independent work that does not prevent the selected delivery.
+- **Low:** optional polish or minor inconvenience with a practical workaround.
+
+Include one sentence explaining the priority. A finding does not inherit Urgent merely because it was discovered during an urgent item. For an existing item, change priority only when new evidence warrants it and explain the change without overwriting a concurrent decision.
+
+If the finding genuinely prevents acceptance, record a blocking dependency and the exact missing prerequisite. Complete independent work on the selected item, then report the blocker; do not silently expand the assignment to implement the dependency. Otherwise link it as related and continue the original work. Include the filed follow-up links in the final response. Creating follow-ups does not change the one-item implementation limit.
+
 ## Plimsoll during execution
 
 - Name the payload: the page, query or other consumer behaviour that will demonstrate acceptance. Verify that directly. Passing tests alone does not establish delivery.
@@ -59,4 +76,4 @@ Follow repository worktree and branch ownership rules. Keep durable decisions an
 
 Complete the authorized commit, merge and release steps and attach acceptance evidence to the tracker item. Respect the project's completion rules: merged, deployed and verified are separate states. Evidence-only work remains open until its required evidence exists; another code change cannot substitute for an observation period.
 
-Return the item and outcome, the relevant commit/release/evidence links, and any remaining blocker. Claim completion only for what was verified. Then stop. Each subsequent item belongs in a fresh task; do not automatically create another task, clear context or continue the queue unless the user explicitly requests that behaviour.
+Return the item and outcome, the relevant commit/release/evidence links, any filed follow-ups with their priorities, and any remaining blocker. Claim completion only for what was verified. Then stop. Each subsequent item belongs in a fresh task; do not automatically create another task, clear context or continue the queue unless the user explicitly requests that behaviour.
