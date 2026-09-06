@@ -192,6 +192,8 @@ Every selected item is introduced with a clickable ticket identifier and one sho
 
 It works to the selected item's spec, records necessary clarifications there, and files unrelated findings as separate, deduplicated tracker items with acceptance criteria and an evidence-based priority. Those follow-ups stay outside the current implementation. Genuine blockers are documented and resolved in the same task before returning to the original item; the stopping boundary is the selected outcome, including its necessary prerequisites.
 
+After confirmed merge and required delivery checks, it removes its own safely merged branches and unused, clean worktree. It preserves active work, unique artifacts and anything with uncertain ownership, and reports any cleanup still pending.
+
 ### `nomen`
 
 Generate, critique, and validate names for products, projects, packages, CLIs, apps, brands, or features, with domain, package, GitHub, App Store and web conflict checks. Use for naming and renaming decisions. Not for interface labels (`signage`), body prose (`deslop`), or legal clearance.
