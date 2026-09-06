@@ -180,9 +180,9 @@ npx skills@latest add howells/skills --skill muster --agent codex --global
 
 ### `next`
 
-Deliver the next item with Plimsoll. Not audits (`simplify`) or recovery (`muster`).
+Claim and deliver the next item with Plimsoll; name the thread for it. Not audits (`simplify`) or recovery (`muster`).
 
-Invoke `next` using the harness's skill invocation syntax in a fresh project task (`$next` in Codex). It selects the item, checks that the work is still needed, uses parallel agents with a suitable mix of available models, implements and verifies it, then pushes a reviewable PR. It follows configured auto-merge through completion; otherwise it leaves the PR open and waits for review. It adapts to Codex, Claude Code, OpenCode, Cursor and other compatible harnesses; Sol, Terra and Luna are preferences where available.
+Invoke `next` using the harness's skill invocation syntax in a fresh project task (`$next` in Codex). It skips started items, immediately claims the selected item as In Progress with session ownership, names the current thread for it where supported, checks that the work is still needed, uses parallel agents with a suitable mix of available models, implements and verifies it, then pushes a reviewable PR. It follows configured auto-merge through completion; otherwise it leaves the PR open and waits for review. It adapts to Codex, Claude Code, OpenCode, Cursor and other compatible harnesses; Sol, Terra and Luna are preferences where available.
 
 Previously named `next-issue`; remove that installed copy when installing `next`.
 
