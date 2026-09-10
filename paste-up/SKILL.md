@@ -39,6 +39,8 @@ Use the Paper MCP connection supplied by the host. If its guide or file tools ar
 
 **Then draw.** One visual group per `write_html`, screenshot after each one, `finish_working_on_nodes` when a set is done. Screenshotting only at the end means finding six problems at once, all of them compounded.
 
+Once the first complete view exists, zoom out and inspect its hierarchy, then read the next state beside it. Keep the user's action and its visible consequence connected before repeating the pattern across more boards.
+
 ## Repair lane
 
 Order matters here, because a token fix touches every node and a layout fix moves them.
@@ -46,7 +48,7 @@ Order matters here, because a token fix touches every node and a layout fix move
 1. **Inventory.** `get_tree_summary`, then list the in-scope artboards: name, size, position and purpose. Inspect neighbours only as needed to understand context.
 2. **Tokens.** Inspect hard-coded values within scope and their intended roles. Equal values can have different semantic roles; merge only confirmed duplication. Before `create_tokens` / `set_tokens`, check all consumers affected by a definition change. Use `update_styles` only on in-scope nodes.
 3. **Fonts.** Confirm installed families and correct departures from the agreed type roles. Preserve deliberate display/body/mono distinctions and existing typography outside scope.
-4. **Layout.** Correct unintended overlap or spacing within scope while preserving the file's organization. Do not rearrange unrelated artboards.
+4. **Layout.** Correct unintended overlap or spacing within scope. For a flow, make its start, reading order, branches and return paths clear. Preserve useful existing organization; repair organization that obscures the journey when the task includes it. Do not rearrange unrelated artboards.
 5. **Names.** `rename_nodes` so each artboard says what it shows.
 6. **Dead work.** Old experiments and superseded versions. Ask before deleting anything you did not make.
 7. **The checklist below**, artboard by artboard.
@@ -75,6 +77,7 @@ Every line here is a correction that has had to be given more than once.
 - Review the in-scope artboards for clarity and task completion. An independent review is optional when a material uncertainty warrants it.
 - Recheck in-scope comments and report their actual resolution.
 - Screenshot the changed artboards and inspect them in context. A view that reads well alone can be wrong beside its neighbours.
+- Walk the in-scope sequence as someone opening the file for a presentation: can they find the start, follow each action to its next state, and distinguish the current design from alternatives? Keep working notes and superseded work clearly separate from that sequence, without deleting others' work or hiding necessary illustrative-data disclosures. For one-board edits, check its immediate context and report wider organization problems without expanding scope.
 - `export_combined_pdf` when it has to leave Paper, since a file link cannot always be shared.
 
 ## Gotchas, all of them measured

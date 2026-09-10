@@ -59,6 +59,8 @@ Read project instructions, product and brand documents, the relevant route and c
 
 Do not begin by inventing a visual theme in isolation. Inspection is complete when you can describe the user's task, the product constraints, and the interface boundary in a few concrete sentences.
 
+For a flow, walk one concrete scenario before drawing its screens: what the person supplies, what must stay unchanged, what they choose, and what result they leave with. Keep inputs with different meanings distinct. Establish the useful end state, then work through the transitions that reach it. For a contained edit, check its place in the existing path; do not reopen the whole product.
+
 ### 2. Load Only the Relevant References
 
 Read [`references/interface/index.md`](references/interface/index.md) and open only the branch needed for this task.
@@ -67,12 +69,15 @@ Read [`references/interface/index.md`](references/interface/index.md) and open o
 - Read [`references/tailwind-v4.md`](references/tailwind-v4.md) only for an authorized or already-configured migration.
 - For design-only work, load the wireframe or design-spec references only when that artifact was requested.
 - For motion, begin with [`references/interface/animation.md`](references/interface/animation.md). If installed, use `animate` for specialist implementation craft and `motion` for current library or API facts.
+- When writing or changing UI copy, use `signage` if installed, before the words shape the layout. Otherwise apply its core test here: would you say this to someone in the audience and be understood without explaining it? Keep labels concrete and remove prose that substitutes for a control.
 
 The reference files are a router, not a checklist. Never load every rule file by default.
 
 ### 3. Set the Direction
 
 For direct implementation, state the chosen direction briefly: hierarchy, typography, color behavior, density, and interaction temperament. A direction should be specific enough to constrain implementation, not a mood-board slogan.
+
+Carry the few defining decisions from the supplied design or accepted review into implementation: what leads, what stays quiet, what remains visible, and how actions relate to supporting information. Component defaults must preserve these decisions; a convenient variant is not a reason to change the composition.
 
 For page directions:
 
@@ -99,7 +104,7 @@ Build stable states, not just a stable initial frame. Dynamic geometry must not 
 
 ### 5. Exercise and Refine the Rendered Experience
 
-Run the real app and complete the core user path. Verify, as relevant:
+Confirm the exact route, tab, viewport and state being judged. Run the real app and complete the core user path. Verify, as relevant:
 
 - desktop and mobile layouts;
 - keyboard and pointer operation;
@@ -109,6 +114,10 @@ Run the real app and complete the core user path. Verify, as relevant:
 - persistence and the downstream effect of the user's action;
 - motion interruption and reduced-motion behavior;
 - contrast and real raster assets in dark mode.
+
+**Zoom out and reflect.** After the first complete composition and after material changes, inspect the whole viewport and successive states together. What draws the eye first? Is that the user's subject or the controls around it? Is the next action apparent? Does the result still express the agreed direction? If local fixes have left the whole incoherent, recompose before polishing more details. This is a brief part of the design work, not another report or approval round. Passing technical checks does not answer these questions.
+
+Inspect every use of mono, small caps, uppercase transforms and wide tracking in the changed UI, including inherited component styles. Replace decorative uses introduced by the work or covered by the requested scope, preserving established display/body roles and the exceptions below. Check other consumers before editing a shared style; report out-of-scope uses instead of restyling them. Check the rendered result, not just the classes you added.
 
 Use `fieldtest` for a deeper browser-QA pass when it is installed and the risk warrants it. Tests support this pass; they do not replace it. Refine until the complete path is coherent, responsive, accessible, and visually resolved.
 
@@ -120,7 +129,7 @@ Report the direction, what changed, verification performed, and any honest limit
 
 Before reporting completion, confirm that:
 
-- every label, heading, button, status line, and empty state uses familiar audience vocabulary and states its purpose or outcome plainly; use `signage` for deeper review when installed and useful;
+- every label, heading, button, status line, and empty state passes the audience-language test in step 2;
 - the primary task is apparent without explanatory scaffolding;
 - real content and adverse states do not break the hierarchy;
 - keyboard, pointer, and touch behavior agree where they should;
@@ -130,7 +139,7 @@ Before reporting completion, confirm that:
 ## Taste and Craft Guardrails
 
 - Use authentic product content. Placeholder slogans and generic dashboard data conceal design problems.
-- Keep hierarchy compact. A small, named type system is stronger than ad hoc sizes; sentence case is the default. Reserve monospace or all-caps treatment for genuinely technical or compact numeric content.
+- Keep hierarchy compact with a small, named type system. Preserve the product's established display/body roles and use sentence case for ordinary UI text. Do not introduce decorative mono, small caps or tracked uppercase eyebrows. Mono is for literal code or identifiers whose characters need inspection; aligned figures normally need tabular numerals in the body font. Preserve proper acronyms, explicitly supplied brand treatments and treatments in a user-selected direction, only in their intended roles. A technical product or an existing mono token is not permission to spread that treatment across its UI.
 - Use one coherent icon family. Icons need accessible names or adjacent labels when their meaning is not obvious.
 - Make touch targets at least 44 by 44 CSS pixels, including invisible padding, without making every visual control bulky.
 - Align optical shapes by eye where mathematical centering looks wrong. Nested rounded shapes should use concentric radii, not repeated arbitrary values.
@@ -145,7 +154,7 @@ Chiaroscuro remains usable on its own. Delegate only when a specialist skill is 
 - `typecase` for the type ramp and its scanner;
 - `componentize` for a reuse and duplication audit;
 - `animate`, `motion`, `review-animations`, `improve-animations`, or `find-animation-opportunities` for focused motion work;
-- `signage` for the words on the interface, whenever the copy was written by an agent;
+- `signage` when writing or changing UI copy, as directed in step 2;
 - `fieldtest` for evidence-heavy browser QA;
 - `apple-design` for Apple-platform craft;
 - `dark-mode-image`, `canonicalize-tailwind`, `markup-from-image`, `prototype`, or `pick-ui-library` for their narrow utilities.

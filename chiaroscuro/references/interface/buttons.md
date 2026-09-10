@@ -21,7 +21,7 @@ Buttons define action hierarchy. Treat them as deliberate system primitives, not
 ## Typography
 
 - MUST: Use `font-medium` or `font-semibold`; avoid `font-bold`.
-- MUST NOT: Apply mono small-caps or uppercase tracking to button labels. Mono small-caps are reserved for numeric content and short data-adjacent labels only.
+- MUST NOT: Apply decorative mono, small caps or uppercase tracking to button labels. Use the established body font and sentence case, preserving proper acronyms, explicitly supplied brand treatments and treatments in a user-selected direction, only in their intended roles.
 - SHOULD: Keep labels short and action-oriented.
 - MUST: Use `tabular-nums` when labels contain counts or changing numbers.
 

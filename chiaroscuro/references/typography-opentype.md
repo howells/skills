@@ -147,23 +147,19 @@ code, pre {
 
 ### Small Caps
 
+Do not introduce decorative small caps into UI labels, dates, prices, headings or status text. Preserve a small-caps treatment only where an explicitly supplied brand treatment or a user-selected direction calls for it. Proper acronyms do not require small-cap styling. For those established exceptions, use designed glyphs:
+
 ```css
 /* True small caps (not fake scaled-down capitals) */
 .small-caps {
   font-variant-caps: small-caps;
 }
 
-/* Appropriate: numeric content, abbreviations, dates, short data labels */
-<span class="small-caps">NASA</span>
-<time class="small-caps">3:45 PM</time>
-<span class="small-caps">v2.4.1</span>
 ```
 
 Only use if the font has designed small cap glyphs. Faked small caps (scaled capitals) look bad.
 
-**Restraint is critical.** Small caps (especially mono small caps) are a high-signal typographic treatment for numeric content, abbreviations, and short data-adjacent labels. They are not a default style for every label, eyebrow, tag, or metadata field. When small caps appear on more than a few elements per screen, the treatment loses its signal and becomes decorative noise. Before applying, ask: would sentence-case in the body font at a lighter weight work just as well? If yes, use that instead.
-
-In identity work the count is per lockup or per layout rather than per screen, and a small-caps subhead under a wordmark can carry the whole system - but the same test applies: one deliberate use, not a house style applied to every line of supporting text.
+Keep each exception in its intended role. A small-caps wordmark does not authorize small-caps navigation, captions or buttons. Ordinary UI uses the established type roles and sentence case; aligned figures use tabular numerals in the body font.
 
 ### Character Variants & Stylistic Sets (Inter / InterVariable)
 
@@ -219,9 +215,9 @@ body {
 | Body text (14-18px) | Default (0) | Designed for this range |
 | Small text (<12px) | Looser (`0.01em` to `0.02em`) | Improves legibility at small sizes |
 | All caps | Looser (`0.05em` to `0.1em`) | Caps need more breathing room |
-| Short caps runs - buttons, labels, eyebrows | Looser (`0.02em` to `0.05em`) | Improves readability at label sizes |
+| Short caps runs in an established brand treatment or user-selected direction | Looser (`0.02em` to `0.05em`) | Improves readability at small sizes |
 
-How readily you reach for uppercase depends on what you're setting. In interface work it is not a default - a caps eyebrow or caps button label needs a reason, and sentence case usually reads better. In identity work uppercase is a staple: wordmarks, lockups, section rules and print-facing type carry caps well. Either way, the tracking above is what makes the caps legible once you've decided to use them.
+These tracking values describe how to render an established treatment; they do not authorize decorative uppercase in UI. Preserve proper acronyms, explicitly supplied brand treatments and treatments in a user-selected direction, only in their intended roles. Use sentence case for ordinary interface text.
 
 ```css
 /* Headline */
