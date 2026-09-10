@@ -1,7 +1,6 @@
 ---
 name: foreman
 description: "Run an explicitly requested delegation mode for substantial changes: the main agent decides and inspects while subagents write code. Use only when the user asks for Foreman or delegated execution. Delegation alone never requires new tests. Not for ordinary implementation, tiny fixes, or docs-only work; `plimsoll` governs process weight."
-disable-model-invocation: true
 ---
 
 # Foreman
