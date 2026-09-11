@@ -5,7 +5,11 @@ Whether the implementation can be trusted to tell you when it is wrong. A codeba
 ## What counts as verified
 
 - **Every novel API usage was checked against installed types or version-matched docs**, not recalled. This is the check that gates all the others: an audit built on a remembered signature is confidently wrong.
-- **The installed version is noted**, and any disagreement between docs and installed code was resolved in favour of what is installed.
+- **The installed version is noted**, and disagreements are resolved by kind: the documentation says what a feature means, the installed code says what its defaults are and whether it exists at all in this version.
+- **Where the installed packages are absent, that is a stated coverage gap.** An audit of a checkout with no installed types is an audit against convention, and saying so is the whole of its value.
+- **Every Mastra package, its engine adapter and its CLI resolve to one version each.** Duplicates split types and produce two half-configured runtimes, and a CLI expecting a newer companion package than the workspace pins breaks the build on a method that is simply not there.
+- **Every patched dependency is pinned by a test that fails when the patch stops applying.** A rebuilt distribution moves the lines a patch targeted, and a version bump can withdraw behaviour the code depends on - context propagated across a resume, or a claim protocol a test double still imitates from the previous version.
+- **A type error that appears on a version bump is investigated as a version change.** Overload resolution can collapse on a combination of options that compiled cleanly before, which looks like the code broke and is not.
 - **Model ids were verified against a provider registry**, not recalled.
 - **Where subagents wrote any of the code, their briefs carried the same mandate.** A delegated hallucination is still a hallucination.
 
@@ -29,7 +33,8 @@ Whether the implementation can be trusted to tell you when it is wrong. A codeba
 - **Round-trip tests exist for anything written durably and read back later**, including the refused-write and oversized-payload cases.
 - **Negative tests neutralise every source the code reads.** Neutralising the first environment variable name found, when the code reads several, produces a test that passes by accident.
 - **At least one bounded smoke test covers the critical path** against the real singleton.
-- **Registration changes verify affected manifests and capability contracts.** Use the required repository gate or the focused checks that cover those outputs; registration alone does not require the full suite.
+- **Registration changes verify affected manifests and capability contracts.** Generated manifests, capability schemas and count pins are what a targeted run misses, so use the repository's own gate over those outputs rather than the package's tests alone.
+- **Any change to what the Mastra package imports or depends on is verified by building it and starting its studio.** The bundler decides what stays external and what is bundled, and neither decision is visible to the application build, the typecheck or the tests.
 
 ## Evidence of implementation completion
 

@@ -19,7 +19,7 @@ Mastra moves fast enough that recalled API shapes are wrong more often than righ
 2. **The documentation for that version.** A local mirror if one exists, the published docs otherwise.
 3. **Nothing else.** Never model memory for constructor signatures, model routing, storage, memory, workflow, or tool APIs.
 
-Note the installed version and resolve any disagreement in favour of what is installed. Where a codebase ships its own Mastra conventions - a house package, an architecture document, a failure log - read it first; it outranks generic guidance about that codebase.
+Note the installed version. Resolve disagreements by kind: documentation for what a feature means, installed code for its defaults and for whether it exists in this version at all. Where a codebase ships its own Mastra conventions - a house package, an architecture document, a failure log - read it first; it outranks generic guidance about that codebase.
 
 ## The five-minute pass
 
