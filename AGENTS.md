@@ -62,6 +62,7 @@ them in step by hand is the thing going wrong.
 ## Editing skills
 
 - Keep installed skill payloads portable: no personal names, account inventories, private repository dependencies, machine-specific home paths or secret-store identifiers. Use configured tooling and generic examples. Public tool documentation and distribution URLs may name their actual owners.
+- Name no model in a portable payload. Route by model role (frontier, workhorse, cheap) and let the host resolve it; a codename or product name written into a skill constrains every model that later runs it, and goes stale the release after it was written. The only exceptions are skills whose purpose is one specific model (`fable-review`, `glm-review`); the consistency gate errors on any other. Same reasoning for behaviour: describe the failure mode you are guarding against, never the brand you saw it in. See `docs/adr/0005`.
 - Keep each `SKILL.md` self-contained enough for a fresh agent to use, with no hidden dependency on a local file that the body doesn't link.
 - Don't broaden a skill unless its trigger and output stay clear, and keep repo-specific product assumptions out of reusable skills.
 - Search related skills before broadening scope. The overlap hotspots are chiaroscuro/componentize/typecase (UI design, componentization and decomposition, the type ramp); also check fieldtest and mastraudit. what/memento/muster overlap on reporting state - what decodes the last message and actions, memento is this session's task now, muster sweeps many sessions.

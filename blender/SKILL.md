@@ -366,4 +366,4 @@ blender -b scene.blend --factory-startup --python script.py -- --arg value
 
 A subagent driving Blender needs, in its brief: which file is the source of truth, whether the user is editing it right now, that it must open every render it makes, that it must page MCP responses, and which paths it owns. Without the "open the render" instruction it will report coordinates and be wrong.
 
-Escalate to a Fable subagent for genuine judgement calls — composition, whether a scene reads as designed rather than assembled, whether a measured difference matters. Not for mechanics.
+Escalate to a frontier-tier subagent for genuine judgement calls — composition, whether a scene reads as designed rather than assembled, whether a measured difference matters. Not for mechanics.

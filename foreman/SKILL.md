@@ -49,7 +49,7 @@ Route by role, not by product name. **Frontier** is the most capable model on of
 
 **If you are running below it, the frontier model is a scalpel, never a teammate.** Spin one up only for a narrow, genuinely hard problem - a bug that survived two fix rounds, a subtle invariant or concurrency or type puzzle, a kernel your own tier already failed at. One at a time, whole context in the brief, one focused answer back, closed immediately. "This task is big" does not qualify. Say in the dispatch summary that you did it and why.
 
-Mapping, as of mid-2026: in Claude Code, frontier is Fable, workhorse is Opus, cheap is Sonnet or Haiku. In Codex, frontier is the flagship at high or xhigh effort, workhorse is the same flagship at default effort, and the mid tier below it holds capable working models rather than toys - use them wherever this reads "cheap". Names drift faster than the roles do; if the mapping looks stale, re-derive it from what the host offers.
+Derive the mapping from what the host offers at the time: its most capable model or highest effort setting is frontier, its default working model is workhorse, and the tier below that is cheap. On a host that exposes one model at several effort levels, the levels are the tiers. This skill names no model, because names drift faster than roles do.
 
 ### Brief economy
 
@@ -154,7 +154,7 @@ For a substantial implementation where Foreman applies, use these steps to organ
    - explicit non-goals - what a diligent agent might helpfully add, and must not
    - the report format, per brief economy above
 
-   Write for the failure mode of the models you're dispatching to: Codex models fail by literalism, transcribing a brief into a corner, so gaps hurt most; Claude models fail by initiative, improving things you didn't ask for, so vague non-goals hurt most. Done when the brief answers every question you'd expect the agent to ask.
+   Write for all three ways a delegate fails, because which one you get changes with the model and the release: literalism, transcribing a brief into a corner, so a gap hurts; initiative, improving things you didn't ask for, so a vague non-goal hurts; and early return, stopping at the first checkpoint that looks like done, so an undefined finish hurts. Pin the gaps, the non-goals and the definition of done. Done when the brief answers every question you'd expect the agent to ask.
 
 3. **Dispatch.** Use the fewest subagents that give the work clear ownership or useful parallelism; combine adjacent small tasks. Give each file footprint one owner. Tasks with overlapping files run in sequence (or with worktree isolation), never in parallel. Record every dispatch's agent ID - you will need it for fixes.
 

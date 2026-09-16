@@ -98,6 +98,10 @@ _Avoid_: task spec, delegate spec, prompt
 Which class of subagent a task is routed to - taste for judgement-heavy work, heavy for interlocking work a brief can pin down, grunt for mechanical work.
 _Avoid_: level, class, model tier
 
+**Model role**:
+How a skill asks for a model without naming one: frontier is the most capable on offer, workhorse the default working model, cheap the tier below that. The host resolves the role to whatever it runs today; a skill never writes the name.
+_Avoid_: model name, codename, Sol, Opus, or any product name standing in for the role
+
 ### Judging a codebase
 
 **Stage**:

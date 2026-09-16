@@ -29,7 +29,7 @@ Fetch every page of open items for the selected project, including backlog, in-p
 
 Check whether apparently open work is already delivered using its acceptance criteria and the relevant code, release, query or running product. Concentrate deeper checks on the goal-critical path and status corrections; this is not a whole-codebase audit. Record evidence and reconcile stale status under the project's rules. A merged PR alone does not establish deployment or completed operational evidence. Keep unresolved acceptance criteria open, and do not promote already delivered work merely because its ticket is stale. An unverifiable item remains explicitly unverified.
 
-When useful, delegate independent read-only groups of items to native parallel agents: Luna for bounded status checks, Terra for code and dependency tracing, Sol for scope or conflicting evidence, or the host's equivalents. Use only supported models and tools. Keep tracker writes with one coordinator to avoid overlapping edits. For a small backlog, work directly. Apply `plimsoll` when available: bounded investigation, no repeated audit or polling loop.
+When useful, delegate independent read-only groups of items to native parallel agents: the cheap tier for bounded status checks, the workhorse for code and dependency tracing, the frontier tier for scope or conflicting evidence. Use only models and tools the host supports. Keep tracker writes with one coordinator to avoid overlapping edits. For a small backlog, work directly. Apply `plimsoll` when available: bounded investigation, no repeated audit or polling loop.
 
 ## Flag missing or underspecified work
 

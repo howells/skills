@@ -60,11 +60,11 @@ Use multiple parallel agents with a deliberate variety of models whenever the it
 
 Choose model roles first, then resolve them to models actually available in the active harness:
 
-- **Reasoning:** demanding diagnosis, architecture and interlocking reasoning. Prefer Sol when available.
-- **Implementation:** bounded implementation and integration work. Prefer Terra when available.
-- **Focused work:** mechanical edits, narrow investigation and acceptance checks. Prefer Luna when available.
+- **Reasoning:** demanding diagnosis, architecture and interlocking reasoning. The host's frontier tier when the item warrants it, otherwise its workhorse.
+- **Implementation:** bounded implementation and integration work. The workhorse tier.
+- **Focused work:** mechanical edits, narrow investigation and acceptance checks. The cheap tier.
 
-Sol, Terra and Luna are preferences, not dependencies. In Claude Code, OpenCode, Cursor or any other host, map these roles to its configured models and supported delegation controls; never pass an unrecognized alias or assume the host exposes every model its provider offers. Use a mix when the subtasks warrant it; do not select the same model for every agent by default or force all three into every item. State the selected roles and models briefly when delegating. Give agents only the context and files they need. The coordinator integrates and inspects their changes; extra reviewers need a specific unresolved risk. Keep a truly tiny or inseparable change local rather than inventing work to occupy agents.
+Roles are preferences, not dependencies, and this skill names no model. Resolve each role to what the active host actually offers and to its supported delegation controls; never pass an unrecognized alias or assume the host exposes every model its provider offers. Use a mix when the subtasks warrant it; do not select the same model for every agent by default or force all three into every item. State the selected roles and models briefly when delegating. Give agents only the context and files they need. The coordinator integrates and inspects their changes; extra reviewers need a specific unresolved risk. Keep a truly tiny or inseparable change local rather than inventing work to occupy agents.
 
 Preserve authorization already given. Do not repeat an approval request merely because the workflow reached another step. Invocation authorizes selecting and implementing the item, its child hierarchy and its necessary, documented prerequisites, committing and pushing that work, and opening or updating its PR; it does not independently authorize destructive operations, external messages or release actions outside the user's existing scope. Complete the reviewable work before requesting any genuinely missing authorization.
 

@@ -490,6 +490,29 @@ def check_cross_pointers() -> None:
                 err(f"{rel}:{i}: points at `{m.group(1)}`, removed from the collection")
 
 
+MODEL_NAME_SKILLS = {"fable-review", "glm-review"}
+MODEL_NAME_RE = re.compile(
+    r"\b(Sol|Terra|Luna|Astra|Opus|Sonnet|Haiku|Fable|GPT-?\d|Gemini|Codex models|Claude models)\b"
+)
+
+
+def check_model_names() -> None:
+    """A portable skill routes by model role, never by model name. See docs/adr/0005."""
+    for skill in skill_dirs():
+        if skill.name in MODEL_NAME_SKILLS:
+            continue
+        files = [skill / "SKILL.md", skill / "agents" / "openai.yaml"]
+        files += sorted((skill / "references").glob("*.md")) if (skill / "references").is_dir() else []
+        for path in files:
+            if not path.is_file():
+                continue
+            for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+                m = MODEL_NAME_RE.search(line)
+                if m:
+                    rel = path.relative_to(REPO_ROOT)
+                    err(f"{rel}:{i}: names a model (`{m.group(1)}`); route by model role instead")
+
+
 def main() -> int:
     check_surfaces()
     check_yaml_strictness()
@@ -497,6 +520,7 @@ def main() -> int:
     check_budget_and_overlap()
     check_links()
     check_cross_pointers()
+    check_model_names()
 
     for w in warnings:
         print(f"WARN  {w}")
