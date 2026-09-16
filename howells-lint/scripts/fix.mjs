@@ -34,7 +34,9 @@ const rootHasLint = (() => { const pj = JSON.parse(readFileSync(join(repo, "pack
 for (const d of pkgDirs) {
   const pj = JSON.parse(readFileSync(join(d, "package.json"), "utf8")); const deps = { ...pj.dependencies, ...pj.devDependencies };
   const preset = "next" in deps ? "next" : "react" in deps ? "react" : "core";
-  const names = readdirSync(d).filter(n => /^oxlint\.config\.|^\.oxlintrc/.test(n));
+  // Only the spellings that act as this package's own config. A named rc such as
+  // `.oxlintrc.barrels.json` belongs to a script that loads it by path; leave it.
+  const names = readdirSync(d).filter(n => /^oxlint\.config\.|^\.oxlintrc\.jsonc?$/.test(n));
   const ts = names.find(n => /^oxlint\.config\.(ts|mts)$/.test(n));
   const bad = names.filter(n => !/^oxlint\.config\.(ts|mts)$/.test(n));
   if (ts) { const src = readFileSync(join(d, ts), "utf8"); if (!/@howells\/lint/.test(src)) console.log(`REVIEW ${rel(d)}/${ts}: does not import @howells/lint`); }

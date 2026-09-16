@@ -17,6 +17,8 @@ Oxlint discovers only `oxlint.config.ts` and `oxlint.config.mts`. A config named
 
 ## Setup, in order
 
+Before renaming or deleting any lint or format config, search the repo for its filename. Package scripts, `knip.json` and custom runners name config files by path and break silently on a rename. A `biome.json` or `.oxlintrc.<name>.json` may also be a published package export or a file a script reads as data, and must stay.
+
 1. Node 24.15.0 or later, pinned in `.node-version`; pnpm named in `packageManager`.
 2. `@howells/lint` is the only direct lint dependency, at the latest published version. Never add `oxlint`, `oxfmt`, `ultracite`, `oxlint-tsgolint` or `oxlint-plugin-react-doctor` directly. Never alias an old version under another name (`"@x/lint-policy": "npm:@howells/lint@0.5.0"`); that is a rule disposal by another route.
 3. One `oxlint.config.ts` per package that lints, extending the closest preset:
