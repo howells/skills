@@ -14,6 +14,7 @@ The independent collection of `skills.sh`-compatible agent skills. Each skill li
 - `foreman` - foreman-mode implementation: the main loop plans and reviews, subagents write the code.
 - `gog` - use the authenticated GOG CLI for configured Google accounts instead of generic connectors.
 - `glm-review` - request a read-only GLM 5.3 Flash review on the Z.AI Coding Plan, then verify its findings.
+- `howells-lint` - set up, audit or migrate a repo onto `@howells/lint` so the preset actually loads.
 - `linear` - select the configured Linear account that owns the target and use its GraphQL API directly.
 - `marginalia` - JSDoc for public APIs and exported symbols.
 - `mastraudit` - audit a Mastra codebase against what actually breaks it, execution semantics before structure.

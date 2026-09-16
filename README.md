@@ -128,6 +128,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill glm-review --agent codex --global
 ```
 
+### `howells-lint`
+
+Put a repo on @howells/lint so the preset actually loads, and add a ratchet when a backlog appears. Use for lint setup or a config named .mjs/.json. Not for prose (`deslop`), diff tells (`unslop`) or codebase review (`simplify`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill howells-lint --agent codex --global
+```
+
 ### `linear`
 
 Use configured Linear accounts via GraphQL; choose the account that owns the target. Not for transcripts (`muster`).
