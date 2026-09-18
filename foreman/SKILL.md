@@ -32,6 +32,10 @@ Delegation does not earn extra ceremony. Start with the payload and a named fail
 - **Do not multiply gates by delegating.** The delegate runs the closest useful check. The foreman reads the diff and accepts that result unless code changed afterwards, the environment differs, or the claim is not trustworthy. Do not rerun the same green command as ritual.
 - **No automatic full suite.** Run a full gate only when the repository requires it for merge or a production risk such as auth, money, data loss, or migration earns it. Otherwise run the narrowest check that could plausibly fail, once, and verify the payload.
 - **No extra reviewer by default.** The foreman's own inspection closes the ownership loop. Spawn another reviewer only for a named hard judgement or risk that the foreman cannot responsibly settle.
+- **Fan-out limits.**
+  - Cap concurrent subagents at five unless the brief says otherwise. More is a queue, not a team.
+  - Mechanical fan-out (lint sweeps, codemods, a census of files) runs on the cheap tier, never the workhorse or frontier.
+  - A quota or usage-limit message is a wall, not an auth failure. Never answer it with /login. Stop spawning, say what was in flight, and either wait for the window or cut the fan-out.
 
 ## Dispatch
 
@@ -152,6 +156,8 @@ For a substantial implementation where Foreman applies, use these steps to organ
    - the project constraints that apply (conventions, anti-patterns, lint rules)
    - the named failure risk and the closest verification action; explicitly say `no new automated test` when payload exercise is better evidence
    - explicit non-goals - what a diligent agent might helpfully add, and must not
+   - if the brief names a Paper file or board, the first task is `paste-up` reading the boards and listing what they show, before any code
+   - if the brief produces UI, it isn't done until `fieldtest` has run against the rendered page and `signage` has run over its copy; the report names both results
    - the report format, per brief economy above
 
    Write for all three ways a delegate fails, because which one you get changes with the model and the release: literalism, transcribing a brief into a corner, so a gap hurts; initiative, improving things you didn't ask for, so a vague non-goal hurts; and early return, stopping at the first checkpoint that looks like done, so an undefined finish hurts. Pin the gaps, the non-goals and the definition of done. Done when the brief answers every question you'd expect the agent to ask.

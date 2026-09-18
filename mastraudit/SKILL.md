@@ -1,6 +1,6 @@
 ---
 name: mastraudit
-description: "Audit a Mastra codebase against execution failures first: workflow step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, and visible tool keys. Use for pre-ship review or an existing Mastra implementation. Not for building features; use version-matched Mastra docs."
+description: "Run before writing any Mastra code and again before calling the change done. Pre-flight: the version-matched local docs, the installed version, small payloads, constituent tools. Then audit execution failures first: workflow step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, and visible tool keys. Use for any Mastra work, new or existing."
 ---
 
 # Mastraudit
@@ -10,6 +10,16 @@ Audit a Mastra implementation in the order things actually go wrong.
 That ordering is the whole point, and it is a correction. An audit that leads with architecture catches a stray `@mastra/*` import instantly and misses the incident that costs the most hours. Package boundaries are cheap to fix and rarely fatal. Execution semantics - what a step does, how fan-out results are keyed, whether a load-bearing write throws - are where runs die, and they are invisible to a structural pass.
 
 So: **execution first, structure second.** If you run out of time, you will have spent it on the half that matters.
+
+## Before you write
+
+Do this before any Mastra code, and run the five-minute pass below before calling the change done.
+
+1. Read the matching page in `~/Sites/mastra-docs` first. `git log -1` there shows it is current. It outranks memory and the web.
+2. Check `ls node_modules/@mastra/` for the installed version and read the docs for that version.
+3. Keep tool and agent payloads small. Pass references (ids, paths, keys), never blobs. Payload size was the recurring defect in every Mastra job last week.
+4. Give an agent its constituent tools, never a whole workflow wrapped as one tool.
+5. Every Mastra bug found last week sat in glue code between two pieces the agent wrote itself, and all of it passed typecheck, lint and build. Audit the glue, not the framework.
 
 ## Source of truth
 

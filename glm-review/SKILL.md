@@ -43,6 +43,7 @@ The brief is done when someone with no access to this session could act on it al
 Run from the repository under review. Set `REPO` to its absolute path, `SCOPE` to a short label and `PROMPT` to the complete brief before using the example. Confirm the installed CLI supports the flags with `opencode run --help`.
 
 ```bash
+OPENCODE_PERMISSION='{"*":"deny","read":"allow","glob":"allow","grep":"allow","list":"allow"}' \
 opencode run \
   --pure \
   --dir "$REPO" \
@@ -50,18 +51,38 @@ opencode run \
   --model zai-coding-plan/glm-5.3-flash \
   --title "GLM review: $SCOPE" \
   --format default \
-  -- "$PROMPT"
+  -- "$PROMPT" < /dev/null
 ```
+
+Run it through the Python wrapper below rather than this shell form when you need the timeout: the redirect matters either way.
 
 Leave `--auto` off. Plan mode and `--pure` do not by themselves isolate MCP integrations or prove read-only access.
 
-Before invoking the model, inspect the resolved configuration locally (`opencode debug config` and `opencode debug agent plan`); do not print credentials or unrelated configuration into the conversation. Apply a run-scoped configuration that denies every tool except `read`, `glob` and `grep`, denies shell/edit/subagent access, and disables each inherited MCP server by name. In V1, permissions use `permission` and MCP entries accept `enabled: false`; V2 uses a different permission schema. Use the installed version's schema and verify the resolved agent's effective permissions before running. Configuration files merge: an empty `mcp` object or a minimal `OPENCODE_CONFIG` file does not erase inherited servers or specific allow rules. Do not change the user's persistent configuration.
+Restrict the run with the `OPENCODE_PERMISSION` environment variable, as a JSON **object**, set on the invocation:
 
-If the host cannot establish those restrictions, pass the relevant source and diff as the brief in a verified isolated environment, or report that the read-only lane is unavailable. A prose refusal probe is not a substitute for inspecting permissions. Current primary documentation: [configuration](https://opencode.ai/docs/config/), [permissions](https://opencode.ai/docs/permissions/) and [MCP servers](https://opencode.ai/docs/mcp-servers/).
+```
+OPENCODE_PERMISSION='{"*":"deny","read":"allow","glob":"allow","grep":"allow","list":"allow"}'
+```
+
+Measured on opencode 1.18.31, and each of these cost a wasted run:
+
+- The object form is enforced. The **array** form (`[{permission,action,pattern}]`) is accepted and silently ignored, even though opencode's own session log prints permissions in that shape. Do not copy the log's format.
+- A run-scoped `OPENCODE_CONFIG` file does **not** restrict `opencode run`. Its `permission` and `tools` blocks show up in `opencode debug config` and never reach the session: the session is created with only the `question`, `plan_enter` and `plan_exit` denies. A config file alone leaves bash enabled.
+- `--pure` and plan mode do not restrict tools either. Plan's resolved permission set is `* allow`.
+
+Verify rather than assume: after a run, `opencode.log` records one `message=evaluated permission=<tool>` line per tool call with the rule that matched. `action.permission=*` on a tool you meant to deny means the restriction did not apply. If you cannot establish the restriction, say the read-only lane is unavailable rather than claiming a sandbox you did not get. Do not change the user's persistent configuration. Current primary documentation: [configuration](https://opencode.ai/docs/config/), [permissions](https://opencode.ai/docs/permissions/) and [MCP servers](https://opencode.ai/docs/mcp-servers/).
 
 Retry once on a transport or internal-server failure. Report an authentication, quota, or billing rejection and stop without retrying: those repeat.
 
-Wait for actual output. A started process or a created session is not a review. Enforce a ten-minute wall-clock limit with the host’s process-tree timeout, or a runner using Python `subprocess.Popen(start_new_session=True)` and `communicate(timeout=600)` that terminates the process group on timeout. Short tool yields must preserve the running session. Do not assume GNU `timeout` exists on macOS. At the limit, terminate the run, say so, and stop. Output that arrives empty or cut off mid-findings is a failed run too, and is reported as one rather than salvaged into a partial verdict.
+Wait for actual output. A started process or a created session is not a review.
+
+**Close stdin.** `opencode run` blocks indefinitely on an open stdin pipe: it never starts the session, never writes to the database, and returns zero bytes, so the failure leaves no trace to diagnose afterwards. Pass `stdin=subprocess.DEVNULL`. This is the single most common way a run returns nothing.
+
+Run it with Python `subprocess.Popen(start_new_session=True, stdin=DEVNULL)` and `communicate(timeout=...)`, terminating the process group on timeout. Do not assume GNU `timeout` exists on macOS. Write the captured output to a file as well as reading it, so a killed run still leaves whatever arrived.
+
+**Budget 1800 seconds, not 600.** Measured over 236 runs: the median review takes about 300s, ten exceeded 600s and the longest ran 1262s. Duration tracks the input the model reads, so the largest briefs are the ones a tight limit kills, and a review killed at 600s typically had minutes of work left. Point a brief at a minified bundle or a large dist file and it will need every second of the budget; scope reads to source where you can.
+
+At the limit, terminate the run, say so, and stop. Output that arrives empty or cut off mid-findings is a failed run, and is reported as one rather than salvaged into a partial verdict.
 
 ## Verify, then report
 

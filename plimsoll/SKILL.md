@@ -5,6 +5,8 @@ description: "Cut process weight when gate ladders, CI/build watch loops, remote
 
 # Plimsoll
 
+Fire this yourself, without being asked, the moment any of these is true: three consecutive tool calls that check, poll or re-read settled ground with no edit landing between them; a second poll of something you can't influence; a deadline named and what you're doing right now won't be visible before it; an hour gone with no user-visible change; you've been told once already to cut the checking and are reaching for another check. Recognise the state, name the payload, and cut to it.
+
 A ship carries a load line painted on its hull. Loaded past it, the vessel sits too low to make way. This skill finds the line for a piece of work and puts the excess overboard.
 
 **Payload** - the thing the person waiting will look at. A page they open, a query that returns the right answer, a video that plays, a deploy they can click. If nobody outside this session can see it, it is not payload.
