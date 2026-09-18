@@ -1,6 +1,6 @@
 ---
 name: mastraudit
-description: "Run before writing any Mastra code and again before calling the change done. Pre-flight: the version-matched local docs, the installed version, small payloads, constituent tools. Then audit execution failures first: workflow step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, and visible tool keys. Use for any Mastra work, new or existing."
+description: "Run before writing Mastra code and before calling it done. Pre-flight: local docs, installed version, small payloads, constituent tools. Then audit execution failures first: step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, tool keys."
 ---
 
 # Mastraudit

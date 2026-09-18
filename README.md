@@ -160,7 +160,7 @@ npx skills@latest add howells/skills --skill marginalia --agent codex --global
 
 ### `mastraudit`
 
-Audit a Mastra codebase against execution failures first: workflow step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, and visible tool keys. Use for pre-ship review or an existing Mastra implementation. Not for building features; use version-matched Mastra docs.
+Run before writing Mastra code and before calling it done. Pre-flight: local docs, installed version, small payloads, constituent tools. Then audit execution failures first: step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, tool keys.
 
 Install globally for Codex:
 
