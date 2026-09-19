@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, existsSync, statSync } from "node:fs";
 import { join } from "node:path";
-const root = process.argv[2] ?? `${process.env.HOME}/Sites`;
+const root = process.argv[2] ?? process.cwd();
 const skip = new Set(["node_modules", ".git", ".next", "dist", ".turbo", ".worktrees", "build", "coverage"]);
 const pkgs = [];
 const walk = (d, depth) => {

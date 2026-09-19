@@ -17,6 +17,8 @@ State at the start that you are using the `deslop` skill.
 - Do not rely on detector tools alone; they are fooled by light edits and unseen models.
 - Prefer clusters of indicators over isolated phrases.
 - Do not flatten strong human prose just because it is polished.
+- Before editing, note what belongs to the writer: vocabulary, bluntness, humour, hedges that express real doubt, digressions, level of polish. Keep those. Cut in proportion to the tells present, and leave a sentence that works alone.
+- Do not invent a fact, figure, example, quotation or source to make a sentence specific. Use what the draft or its sources contain; where they contain nothing, cut the sentence or list the gap under `Residual risk`.
 - Preserve meaning, but do not preserve synthetic cadence.
 - Preserve text presented as a verbatim quotation. Flag concerns or offer a separately labelled paraphrase; do not silently alter a source's words.
 - Weigh counter-signals before concluding: text predating broad LLM use (ChatGPT
@@ -39,10 +41,13 @@ State at the start that you are using the `deslop` skill.
 
 1. Read once for overall effect.
 2. Mark the highest-signal clusters before editing.
-3. Use `references/signs-of-ai-writing.md` when you need the full tell taxonomy (the crutch-phrase list lives in this file, below).
+3. Use the two catalogues when you need the full taxonomy: `references/signs-of-ai-writing.md` for encyclopaedic, reference and report prose, and `references/rhetorical-tells.md` for essays, newsletters, posts and announcements. The crutch-phrase list lives in this file, below.
 4. Explain the issue in editorial terms, not detector jargon.
 5. Rewrite toward specificity, directness, and verifiable claims.
 6. Check citations, links, and markup separately when they look generated or broken.
+7. Re-read the rewrite against the same tells before returning it. Removing one pattern often produces another: a deleted contrast comes back as a colon reveal, a cut recap as a quotable closing line.
+
+When asked only to check, audit or flag, do not rewrite. For each pattern give its name, the quoted line and the edit in a few words. Give no score and no verdict on who wrote the text.
 
 ## Highest-Signal Tells
 
@@ -53,6 +58,12 @@ Look first for clusters of:
 - vague attribution such as "experts say" or "observers note",
 - negative parallelisms such as "not just X, but Y",
 - mannered metaphor standing in for a direct statement, such as "a dial worth turning" for "a parameter worth varying",
+- openers that announce a point or claim a lone insight: "Here's the thing", "What most people get wrong",
+- staged delivery: a colon reveal ("The surprising part: nobody measured it"), several denials before the claim, stacked fragments,
+- an abstraction doing what a person did ("the decision emerged", "the data tells us"), hiding the actor,
+- sentences that state importance and withhold the content: "The implications are significant",
+- commentary on the prose itself: "Let that sink in", "The key point is", "As we'll see",
+- a closing line that restates the point as an aphorism,
 - outline-style "Despite its X, faces challenges" endings and bolt-on "Future Prospects" sections,
 - assistant-style formatting: Markdown leakage, bold sprawl, title case drift, curly quotes where the house style uses straight quotes, ornamental lists,
 - a pronounced style or register shift between sections (pasted-in passage),
@@ -69,6 +80,11 @@ Look first for clusters of:
 - Rewrite fake contrasts as direct statements.
 - Replace mannered metaphor with the literal phrase, per the section below.
 - Remove conclusion-style recaps unless the genre needs them.
+- Delete a quotable closing line and end on the last concrete sentence. Do not write a better aphorism in its place.
+- Name the actor. "The decision emerged" becomes "the board decided", when the draft says who decided.
+- Cut commentary that calls a point important, surprising or subtle. Supply the reason as a fact from the draft, or let the point stand.
+- Apply the portability test: a sentence that would fit unchanged in a piece about a different subject says nothing about this one. Cut it or make it specific.
+- Prefer the verb to the verb phrase: "decided" for "made a decision", "can" for "has the ability to".
 - Cut the crutch phrases below on sight.
 
 ## Mannered Prose
@@ -98,6 +114,10 @@ These assert rigour or candour instead of demonstrating it. They are filler: del
 - **"load-bearing"** (load-bearing assumption / definition / detail / word / line). Say what the thing does or why it matters, not that it is structurally important.
 - **The honesty family** - "keep (it / the model / us) honest", "the honest part", "to be honest", "honestly", "honest about its gaps / limits", "the honest answer". State the limitation or fact directly; announcing honesty adds nothing.
 - **Related self-framing** - "to its credit", "the hard truth", "let's be real", "the uncomfortable truth", "make no mistake". Cut the preamble, keep the claim.
+
+- **Announcements** - "here's the thing", "here's why", "it turns out", "let me be clear", "the real issue is". Start at the point.
+- **Emphasis instructions** - "let that sink in", "full stop", "read that again", "this matters because", "the key point is". If the sentence needs the help, make it more specific.
+- **Filler** - "it's worth noting", "at its core", "at the end of the day", "when it comes to", "in today's world", "in order to", and intensifiers such as "truly", "fundamentally" or "genuinely" where the sentence means the same without them.
 
 These rarely carry meaning the surrounding sentence does not already hold. Treat them as deletions, not rewrites.
 

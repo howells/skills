@@ -478,7 +478,7 @@ def check_cross_pointers() -> None:
     """Flag a backticked reference to a skill the collection no longer has."""
     pattern = re.compile(r"`(" + "|".join(REMOVED_SKILLS) + r")`")
     readme = REPO_ROOT / "README.md"
-    docs = iter_reference_files() + [readme, REPO_ROOT / "CLAUDE.md", REPO_ROOT / "AGENTS.md"]
+    docs = iter_reference_files() + [readme, REPO_ROOT / "AGENTS.md"]
     for path in docs:
         for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
             # The README's removal table is the one place the names belong.

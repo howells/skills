@@ -22,7 +22,7 @@ Cite by number in findings, so a reviewer can see the pattern rather than the in
 1. **Narrating comments.** `// loop over the users`, `// Phase 1: build the cards`. The code says it already. The assertion string or the log line is the only documentation a step needs.
 2. **Doc comments that restate the signature.** "@param userId - the user id". If the doc adds nothing the type doesn't, delete it. If the symbol is exported and deserves real hover help, that is `marginalia`, not a deletion.
 3. **Commented-out alternatives.** The other approach, kept "just in case". Git has it.
-4. **Over-explicit names.** `userDataObject`, `handleClickEventHandler`, `configurationOptionsMap`. Say the noun.
+4. **Over-explicit names.** `userDataObject`, `handleClickEventHandler`, `configurationOptionsMap`, or the kind of thing restated in a type name: `UserShape`, `UserInterface`. Say the noun.
 
 **Ceremony**
 
@@ -35,7 +35,7 @@ Cite by number in findings, so a reviewer can see the pattern rather than the in
 **Defensive noise**
 
 10. **Redundant defensive handling.** A null check on a value that cannot be absent, a runtime `typeof` after the compiler already narrowed, or a `try/catch` that only rethrows the same error. Establish that the path is trusted; a type annotation alone does not validate runtime input. Keep boundary validation and catches that add meaningful context or cleanup. Catches that swallow errors or supply fallbacks belong to `fail-fast` when removing them would change behaviour.
-11. **Redundant assertions.** `as any` used only to silence a type error, `as unknown as T`, a non-null `!` where narrowing would do the job honestly. Use the correct type or narrowing rather than another assertion. If fixing the mismatch requires a runtime change, report it instead.
+11. **Redundant assertions.** `as any` used only to silence a type error, `as unknown as T`, a non-null `!` where narrowing would do the job honestly, a known value assigned to `unknown` or a broad record and then asserted back to the type it already had. Use the correct type or narrowing rather than another assertion. If fixing the mismatch requires a runtime change, report it instead.
 12. **Re-implemented standard library.** A hand-rolled `groupBy`, `chunk`, `debounce`, or date formatter beside one that already ships. Replace it only after confirming equivalent semantics for its callers, including timing, defaults, errors, locale and edge cases; otherwise refer.
 13. **Redundant async plumbing.** Remove async syntax only after tracing callers and preserving Promise returns, rejection behaviour and scheduling. An `async` function without `await` still returns a Promise and converts throws to rejections; awaiting a plain value still suspends continuation. Neither is redundant merely because the syntax looks unnecessary. Refer uncertain changes instead of guessing.
 
@@ -69,4 +69,5 @@ Scale the workflow to the diff. For a small cleanup, keep the scope, reasoning a
 - Not a style pass. Formatting follows the repository’s formatter.
 - Not a refactor. Moving logic between modules or extracting a package is `componentize`.
 - Not a hardening pass. Deleting a fallback so it fails loudly is `fail-fast`, and that one changes behaviour on purpose.
+- Not a linter. Rules a machine can check on every file - a type assertion with no stated reason, `unknown` in parameters and returns, module mocking, `Reflect` property access - belong in the repository's lint configuration; `howells-lint` sets up `@howells/lint`, which carries them. If the lint does not load them, refer that rather than policing each site by hand.
 - Not a review. Correctness bugs are a different job; if you find one, report it and leave it.

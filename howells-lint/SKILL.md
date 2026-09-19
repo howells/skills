@@ -58,7 +58,7 @@ Expect tens of thousands of findings in a repo that has never had the preset. Do
 
 ## Scripts
 
-- `scripts/sweep.mjs` walks every package under a directory (default `~/Sites`, or pass a path) and reports configs that never load, packages that depend on `@howells/lint` with no config, missing preset imports, and `--config` in lint scripts. Read-only. Run it before trusting any repo's lint status.
+- `scripts/sweep.mjs` walks every package under a directory (default the current directory, or pass a path) and reports configs that never load, packages that depend on `@howells/lint` with no config, missing preset imports, and `--config` in lint scripts. Read-only. Run it before trusting any repo's lint status.
 - `scripts/fix.mjs <repo>` applies the setup to one repo: bumps the dependency, replaces policy aliases, renames or creates configs by dependency, pins `.node-version`. It runs no install and no git. Review its output, run `pnpm install`, verify with `pnpm lint`, commit explicit paths.
 
 Both are plain Node with no dependencies.
