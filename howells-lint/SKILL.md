@@ -11,7 +11,7 @@ State at the start that you are using the `howells-lint` skill.
 
 ## The trap this exists for
 
-Oxlint discovers only `oxlint.config.ts` and `oxlint.config.mts`. A config named `oxlint.config.mjs`, `.js`, `.cjs` or `oxlint.config.json` is never read, the run is quiet, and it exits 0. MaterialGraph linted on Oxlint's defaults for months with 27 such files; five sibling repos had the same. A repo that depends on `@howells/lint` with no config at all is in the same state and looks identical from outside.
+Oxlint discovers only `oxlint.config.ts` and `oxlint.config.mts`. A config named `oxlint.config.mjs`, `.js`, `.cjs` or `oxlint.config.json` is never read, the run is quiet, and it exits 0. One large repo linted on Oxlint's defaults for months with 27 such files; five sibling repos had the same. A repo that depends on `@howells/lint` with no config at all is in the same state and looks identical from outside.
 
 `@howells/lint` 3.3.x passes an ignored spelling with `--config` and prints a warning, which loads the preset but pins one config for the whole run and defeats nested per-package discovery. The rename is still the fix.
 
@@ -58,7 +58,7 @@ Expect tens of thousands of findings in a repo that has never had the preset. Do
 
 ## Scripts
 
-- `scripts/sweep.mjs` walks every package under a directory (default `~/Sites`) and reports configs that never load, packages that depend on `@howells/lint` with no config, missing preset imports, and `--config` in lint scripts. Read-only. Run it before trusting any repo's lint status.
+- `scripts/sweep.mjs` walks every package under a directory (default `~/Sites`, or pass a path) and reports configs that never load, packages that depend on `@howells/lint` with no config, missing preset imports, and `--config` in lint scripts. Read-only. Run it before trusting any repo's lint status.
 - `scripts/fix.mjs <repo>` applies the setup to one repo: bumps the dependency, replaces policy aliases, renames or creates configs by dependency, pins `.node-version`. It runs no install and no git. Review its output, run `pnpm install`, verify with `pnpm lint`, commit explicit paths.
 
 Both are plain Node with no dependencies.

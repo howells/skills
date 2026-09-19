@@ -15,11 +15,11 @@ So: **execution first, structure second.** If you run out of time, you will have
 
 Do this before any Mastra code, and run the five-minute pass below before calling the change done.
 
-1. Read the matching page in `~/Sites/mastra-docs` first. `git log -1` there shows it is current. It outranks memory and the web.
+1. Read the matching docs page first. Use a local version-matched mirror when the environment names one (check its last commit is recent), otherwise the published docs for the installed version. Either outranks memory and the web.
 2. Check `ls node_modules/@mastra/` for the installed version and read the docs for that version.
-3. Keep tool and agent payloads small. Pass references (ids, paths, keys), never blobs. Payload size was the recurring defect in every Mastra job last week.
+3. Keep tool and agent payloads small. Pass references (ids, paths, keys), never blobs. Payload size is the most common defect in Mastra glue code.
 4. Give an agent its constituent tools, never a whole workflow wrapped as one tool.
-5. Every Mastra bug found last week sat in glue code between two pieces the agent wrote itself, and all of it passed typecheck, lint and build. Audit the glue, not the framework.
+5. Mastra bugs almost always sit in glue code between two pieces the agent wrote itself, and that glue passes typecheck, lint and build. Audit the glue, not the framework.
 
 ## Source of truth
 
