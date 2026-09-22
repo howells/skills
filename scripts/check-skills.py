@@ -27,6 +27,8 @@ Checks:
     field at the wrong depth fails instead of being silently ignored by Codex.
   - removed skills: no document points at a skill the collection no longer has, which
     the three-surface check cannot see because the surviving copies still agree.
+  - Claude Code plugin: `.claude-plugin/plugin.json` lists exactly the skill
+    directories, and `.claude-plugin/marketplace.json` names that plugin at `./`.
 
 Exit codes: 0 = clean (warnings allowed), 1 = one or more errors.
 Run from the repo root: `python3 scripts/check-skills.py`.
@@ -34,6 +36,7 @@ Run from the repo root: `python3 scripts/check-skills.py`.
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -513,8 +516,34 @@ def check_model_names() -> None:
                     err(f"{rel}:{i}: names a model (`{m.group(1)}`); route by model role instead")
 
 
+def check_plugin_manifest() -> None:
+    plugin_dir = REPO_ROOT / ".claude-plugin"
+    try:
+        plugin = json.loads((plugin_dir / "plugin.json").read_text(encoding="utf-8"))
+        marketplace = json.loads((plugin_dir / "marketplace.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as e:
+        err(f".claude-plugin: {e}")
+        return
+
+    listed = plugin.get("skills", [])
+    expected = [f"./{d.name}" for d in skill_dirs()]
+    for path in sorted(set(expected) - set(listed)):
+        err(f".claude-plugin/plugin.json: skills does not list {path}")
+    for path in sorted(set(listed) - set(expected)):
+        err(f".claude-plugin/plugin.json: skills lists {path}, which is not a skill directory")
+    if len(listed) != len(set(listed)):
+        err(".claude-plugin/plugin.json: skills lists a directory more than once")
+
+    entries = [p for p in marketplace.get("plugins", []) if p.get("name") == plugin.get("name")]
+    if len(entries) != 1 or entries[0].get("source") != "./":
+        err(f".claude-plugin/marketplace.json: needs one `{plugin.get('name')}` entry with source `./`")
+    elif entries[0].get("description") != plugin.get("description"):
+        err(".claude-plugin/marketplace.json: plugin description does not match plugin.json")
+
+
 def main() -> int:
     check_surfaces()
+    check_plugin_manifest()
     check_yaml_strictness()
     check_drift()
     check_budget_and_overlap()

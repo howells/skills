@@ -13,7 +13,7 @@ A collection of `skills.sh`-compatible agent skills. Each skill lives in its own
 
 There is no build. Two Python gates are the repository-wide checks.
 
-- `python3 scripts/check-skills.py` - the consistency gate. Run it before committing any skill change. It checks the three sync surfaces, invocation-policy parity, host UI metadata bounds, portable names, intra-skill `.md` links, per-skill and collection description budgets, trigger-clause overlap, `agents/openai.yaml` section structure, and pointers to removed skills.
+- `python3 scripts/check-skills.py` - the consistency gate. Run it before committing any skill change. It checks the three sync surfaces, invocation-policy parity, host UI metadata bounds, portable names, intra-skill `.md` links, per-skill and collection description budgets, trigger-clause overlap, `agents/openai.yaml` section structure, pointers to removed skills, and that the Claude Code plugin in `.claude-plugin/` lists every skill.
 - `python3 scripts/check-vocabulary.py` - flags prose that contradicts `CONTEXT.md`. Several governed words are also ordinary verbs, so the rules match the noun uses and exempt the verb ones. A flagged line that is genuinely right is fixed by adding it to `ALLOW` with a reason, never by loosening the rule.
 - `python3 scripts/test-skill-helpers.py` for scanner or API-helper changes. Its temporary fixtures exercise coverage, typography evidence and GraphQL outcomes without external accounts.
 - `npx skills@latest add howells/skills --list` lists installable skills.

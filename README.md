@@ -24,6 +24,20 @@ npx skills@latest add howells/skills --skill '*' --agent codex --global
 
 Use `--copy` if you want independent files rather than symlinks. Restart your agent after installing new skills.
 
+### Claude Code plugin
+
+This repo is also a Claude Code plugin marketplace. Add it, then install every skill as one plugin:
+
+```bash
+claude plugin marketplace add howells/skills
+```
+
+```bash
+claude plugin install howells-skills@howells
+```
+
+The marketplace also carries the `arc` and `fiction` plugins. Don't install the plugin alongside a `skills.sh` install of the same skills, or each skill loads twice.
+
 ## Skills
 
 The integration skills (`gog`, `linear`, `starling`, `xero` and `web-research`) use tools, accounts and credentials configured by the installing user. They include no account inventory or private repository dependency. Installing a skill does not provision access. The other skills may require their named applications or CLIs, as documented inside each skill.

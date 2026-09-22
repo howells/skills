@@ -1,0 +1,42 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "howells",
+  "owner": {
+    "name": "Daniel Howells",
+    "url": "https://github.com/howells"
+  },
+  "description": "Claude Code plugins by Daniel Howells: the agent skills collection, plus development and fiction-writing plugins.",
+  "plugins": [
+    {
+      "name": "howells-skills",
+      "source": "./",
+      "description": "Daniel Howells' agent skills: UI design and browser QA, prose and code clean-up, delegation, task recovery, and integrations for Linear, Google Workspace, Xero and Starling.",
+      "category": "development",
+      "keywords": [
+        "skills",
+        "ui",
+        "qa",
+        "writing",
+        "code-review",
+        "delegation",
+        "linear"
+      ]
+    },
+    {
+      "name": "arc",
+      "description": "The full arc from idea to shipped code. Design, planning, TDD execution, expert review, and knowledge capture.",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/howells/arc.git"
+      }
+    },
+    {
+      "name": "fiction",
+      "description": "Write complete novels with Claude. Literary prose, iterative review, and craft-aware feedback.",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/howells/fiction.git"
+      }
+    }
+  ]
+}
