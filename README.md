@@ -36,7 +36,7 @@ claude plugin marketplace add howells/skills
 claude plugin install howells-skills@howells
 ```
 
-The marketplace also carries the `arc` and `fiction` plugins. Don't install the plugin alongside a `skills.sh` install of the same skills, or each skill loads twice.
+The marketplace also carries the `fiction` plugin. Don't install the plugin alongside a `skills.sh` install of the same skills, or each skill loads twice.
 
 ## Skills
 
