@@ -17,6 +17,7 @@
     "linear"
   ],
   "skills": [
+    "./armature",
     "./blender",
     "./chiaroscuro",
     "./componentize",
@@ -29,6 +30,7 @@
     "./gog",
     "./howells-lint",
     "./linear",
+    "./maquette",
     "./marginalia",
     "./mastraudit",
     "./memento",
@@ -39,6 +41,7 @@
     "./plimsoll",
     "./product-description",
     "./rebalance",
+    "./reflow",
     "./salvage",
     "./signage",
     "./simplify",

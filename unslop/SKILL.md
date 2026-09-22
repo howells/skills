@@ -1,6 +1,6 @@
 ---
 name: unslop
-description: "Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. Use before commit or review. For behavior-changing fallback cleanup use `fail-fast`; for prose use `deslop`."
+description: "Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. For behavior-changing fallback cleanup use `fail-fast`; for prose use `deslop`."
 ---
 
 # Unslop

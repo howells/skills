@@ -1,6 +1,6 @@
 ---
 name: product-description
-description: "Document user-visible product behaviour from code, tests and the running product, then consolidate defects into triage. Use for complete experience documentation. Not for marketing copy, READMEs, single-feature specs, or browser QA alone (`fieldtest`)."
+description: "Document user-visible product behaviour from code, tests and the running product, then consolidate defects into triage. Not for marketing copy, READMEs, single-feature specs, or browser QA alone (`fieldtest`)."
 ---
 
 # Product description repo

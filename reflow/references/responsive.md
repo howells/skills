@@ -1,4 +1,4 @@
-# Interface: Responsive Design
+# Responsive Reference
 
 ## Mobile-First
 
@@ -107,13 +107,13 @@ When you need different crops/compositions (not just resolutions):
 
 ### Navigation
 
-Desktop nav (header or sidebar) is hidden below `lg`; a hamburger reveals a dialog/disclosure mobile menu. The canonical breakpoint and class hints live in the Tactical Rules → Navigation section below and in [navigation](./data-components.md#navigation). A tablet middle stage (compact icons + labels) is optional, not required.
+Desktop nav (header or sidebar) is often hidden below `lg`, with a disclosure or dialog menu in its place. Test the content before assuming that breakpoint; see Tactical Rules → Navigation below. A tablet middle stage (compact icons + labels) is optional, not required.
 
 ### Tables
 
 Two valid strategies - choose by data density:
 
-- **Dense/wide tables**: keep one table and let it scroll horizontally (the two-div wrapper). This is the default. See [tables](./data-components.md#tables).
+- **Dense/wide tables**: keep one table and let it scroll horizontally with the two-div wrapper below. This is the default.
 - **Sparse tables (2–4 columns)**: transform to a card stack on mobile when a scroll feels heavier than the data warrants.
 
 ```html
@@ -132,6 +132,25 @@ Use `<details>/<summary>` for content that can collapse on mobile:
   <div><!-- Filter content --></div>
 </details>
 ```
+
+---
+
+## Touch Targets
+
+- MUST: On coarse pointers, interactive targets are at least 44×44 CSS pixels, including invisible hit padding. A smaller visual control is fine when its full interactive area meets the minimum.
+- MUST: When the visual element is smaller than 44px, keep it small and expand the hit area without overlapping neighbouring targets:
+
+```jsx
+<button className="relative">
+  <span
+    className="absolute top-1/2 left-1/2 size-[max(100%,2.75rem)] -translate-1/2 pointer-fine:hidden"
+    aria-hidden="true"
+  />
+  <Icon className="size-4" />
+</button>
+```
+
+`2.75rem` is 44px. `pointer-fine:hidden` drops the extra area for a fine pointer when neighbouring controls need the space.
 
 ---
 
@@ -154,19 +173,19 @@ Concrete breakpoint rules. Audit order: page shell → navigation → text/forms
 
 - MUST: Body copy and controls remain comfortably readable and operable on mobile. `16px` is a strong baseline for body text and text inputs; dense metadata may be smaller when contrast, typeface, and context keep it legible.
 - MUST: If a text input's font size is below `16px`, add `max-sm:text-base/{lh}` to prevent iOS zoom.
-- MUST: Small/icon buttons meet the touch-target minimum on coarse pointers - see [interactions.md](./interactions.md) → Touch Targets for the canonical size and hit-area pattern.
-- MUST NOT: Fix cramped heading groups by constraining the wrapper with `max-w-*`; constrain each text element directly with `max-w-[*ch]`. See [heading groups](./marketing-components.md#heading-groups).
+- MUST: Small/icon buttons meet the touch-target minimum on coarse pointers - see Touch Targets below.
+- MUST NOT: Fix cramped heading groups by constraining the wrapper with `max-w-*`; constrain each text element directly with `max-w-[*ch]`.
 
 ### Overflow And Flexible Sizing
 
-- MUST: Add `min-w-0` to flex children that must shrink and `shrink-0` to those that must not. See [layout.md](./layout.md) → Flex Sizing.
-- MUST: Make tables horizontally scroll when columns won't fit, using the two-div wrapper. See [tables](./data-components.md#tables).
+- MUST: Add `min-w-0` to flex children that must shrink below their content size; flex items default to `min-width: auto`. Add `shrink-0` to icons, images, avatars and fixed-size controls that distort when squeezed.
+- MUST: Make tables horizontally scroll when columns won't fit, using a two-div wrapper: the outer `overflow-x-auto whitespace-nowrap` with negative margins that cancel the page padding (`-mx-4 sm:-mx-6 lg:-mx-8 -my-2`), the inner `inline-block min-w-full align-middle` with matching padding (`px-4 sm:px-6 lg:px-8 py-2`).
 
 ### Component Patterns
 
 - SHOULD: Use container queries when a reusable component's layout genuinely depends on its allocated width rather than the viewport. Place the query container close enough to express that boundary without creating unnecessary containment.
 - SHOULD: Reconfigure divider-separated grids at each breakpoint where columns change - reset first/last padding, drop vertical dividers when collapsing to one column, add horizontal dividers between rows.
-- SHOULD: Keep wrapped logo clouds balanced on every breakpoint (avoid `5+1`). See [logo clouds](./marketing-components.md#logo-clouds).
+- SHOULD: Keep wrapped logo rows and tile grids balanced at every breakpoint (3+3, not 5+1).
 - SHOULD: Use `min()` with viewport units for image/screenshot border radii instead of fixed `rounded-*` - e.g. `rounded-[min(1vw,12px)]`.
 
 ## Testing

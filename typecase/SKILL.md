@@ -52,6 +52,10 @@ In order of preference:
 
 A role's own definition is the exception: `.type-small { @apply text-[0.8125rem] … }` is naming the value, which is the whole job.
 
+### Choosing the faces
+
+When the case needs a family chosen or changed, read [`references/font-recommendations.md`](references/font-recommendations.md) for curated faces and pairings. For OpenType features, optical sizing and per-size tracking inside a role, read [`references/typography-opentype.md`](references/typography-opentype.md).
+
 ### Where the case lives
 
 Two shapes, both fine, and both defined once in the file that imports Tailwind:

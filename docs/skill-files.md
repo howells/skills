@@ -11,7 +11,7 @@ A file two skills need is copied into both, and the duplication is deliberate. T
 - No personal names, account inventories, private repository dependencies, machine-specific home paths or secret-store identifiers. Use configured tooling and generic examples. Public tool documentation and distribution URLs may name their actual owners.
 - Each `SKILL.md` must be usable by a fresh agent, with no hidden dependency on a local file the body doesn't link.
 - Don't broaden a skill unless its trigger and output stay clear, and keep repo-specific product assumptions out.
-- Search related skills before broadening scope. The overlap hotspots are `chiaroscuro`, `componentize` and `typecase` (UI design, componentisation, the type ramp); also check `fieldtest` and `mastraudit`. `what`, `memento` and `muster` all report state: `what` decodes the last message and actions, `memento` is this session's task now, `muster` sweeps many sessions.
+- Search related skills before broadening scope. The overlap hotspots are `chiaroscuro`, `maquette`, `armature`, `reflow`, `componentize` and `typecase` (UI design, page directions, app shells, screen sizes, componentisation, the type ramp); also check `fieldtest` and `mastraudit`. `what`, `memento` and `muster` all report state: `what` decodes the last message and actions, `memento` is this session's task now, `muster` sweeps many sessions.
 - Search the target skill directory before editing shared README text, and verify current installer CLI examples before changing install docs.
 - Don't copy these skills into product repos; install or invoke them from the agent environment.
 

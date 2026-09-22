@@ -1,6 +1,6 @@
 ---
 name: signage
-description: "Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states and generated text. Use when reviewing UI copy for comprehension. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`)."
+description: "Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states and generated text. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`)."
 ---
 
 # Signage

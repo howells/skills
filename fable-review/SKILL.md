@@ -1,6 +1,6 @@
 ---
 name: fable-review
-description: "Get an independent review from Claude Fable 5.1 through the Claude CLI, then verify its claims before acting. Use for a hard judgement call: a design or architecture decision, a taste question, a plan worth arguing with. Not for a cheap conformance check (`glm-review`), a codebase grade (`simplify`), or a routine diff."
+description: "Get an independent review from Claude Fable 5.1, then verify its claims before acting. Use for a hard judgement call: a design or architecture decision, a taste question, a plan worth arguing with. Not for a cheap conformance check (`glm-review`), a codebase grade (`simplify`), or a routine diff."
 ---
 
 # Fable review

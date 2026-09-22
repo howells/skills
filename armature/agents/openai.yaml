@@ -1,0 +1,4 @@
+interface:
+  display_name: "Armature"
+  short_description: "Turn a scrolling-document web app into an app shell"
+  default_prompt: "Use $armature to turn this app from whole-page scrolling into a fixed frame with chrome that stays put and panes that scroll on their own, then measure every route in a browser."

@@ -18,7 +18,7 @@
 html { -webkit-text-size-adjust: 100%; }
 ```
 
-For the full rendering stack - DPI, optical sizing, per-size tracking, hanging punctuation - see `../typography-opentype.md` § The Rendering Stack.
+For the full rendering stack - DPI, optical sizing, per-size tracking, hanging punctuation - use `typecase`, which carries the OpenType reference.
 
 ## Font Weight
 
@@ -101,7 +101,7 @@ NEVER pair fonts that are similar but not identical (e.g., two geometric sans-se
 
 ### Better Google Fonts Alternatives
 
-For the full curated font list - including commercial foundries, Google Fonts picks, proven pairings, and pairing research guidance - see `references/font-recommendations.md`.
+For the full curated font list - commercial foundries, Google Fonts picks, proven pairings and pairing research - use `typecase`, which carries the font recommendations.
 
 ## Font Loading
 
