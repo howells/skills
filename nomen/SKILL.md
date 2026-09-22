@@ -1,6 +1,6 @@
 ---
 name: nomen
-description: "Generate, critique, and validate names for products, projects, packages, CLIs, apps, brands, or features, with domain, package, GitHub, App Store and web conflict checks. Use for naming and renaming decisions. Not for interface labels (`signage`), body prose (`deslop`), or legal clearance."
+description: "Generate, critique, and validate names for products, packages, CLIs, apps or features, with domain, package, GitHub, App Store and web conflict checks. Use for naming and renaming decisions. Not for interface labels (`signage`), body prose (`deslop`), or legal clearance."
 ---
 
 # Nomen

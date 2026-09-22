@@ -19,7 +19,7 @@ Common miss: Designing hover without focus, or vice versa. Keyboard users never 
 
 ## Touch Targets
 
-Canonical touch-target spec for the whole skill - `responsive.md` defers here.
+Canonical touch-target spec for this skill.
 
 - MUST: On coarse pointers (touch), interactive targets are at least 44×44 CSS pixels, inclusive of invisible hit padding. A smaller visual control is fine when its full interactive area meets the minimum.
 - MUST: When the visual element is smaller than 44px, keep it visually small but expand the hit area without overlapping neighboring targets:

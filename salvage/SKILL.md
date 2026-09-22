@@ -1,6 +1,6 @@
 ---
 name: salvage
-description: "Rescue work that exists in only one place - detached HEADs, worktrees, unpushed branches, or stashes - then remove only what is proven merged and pushed. Use for repository cleanup where ambiguous work must be preserved and each surviving thread named. For status reconstruction without cleanup use `muster`."
+description: "Rescue work that exists in only one place - detached HEADs, worktrees, unpushed branches, or stashes - then remove only what is proven merged and pushed. Use for repository cleanup that must preserve ambiguous work. For status reconstruction without cleanup use `muster`."
 ---
 
 # Salvage

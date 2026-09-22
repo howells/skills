@@ -1,49 +1,22 @@
 ---
 name: chiaroscuro
-description: "Design polished responsive web UI with Tailwind v4. Not for browser QA (`fieldtest`), reuse (`componentize`), copy (`signage`) or typography (`typecase`)."
+description: "Design and build polished web UI in Tailwind v4. Not for page directions (`maquette`), app shells (`armature`), screen sizes (`reflow`) or QA (`fieldtest`)."
 ---
 
 # Chiaroscuro
 
 Take a user-facing web interface from request to finished, browser-verified implementation. Work in the product's language, use its real content and behavior, and give the result a specific visual point of view without adding furniture or exposing the system underneath.
 
-State at the start that you are using the `chiaroscuro` skill and name the operating mode.
+State at the start that you are using the `chiaroscuro` skill and whether you are building new UI or refining an existing one.
 
-## The Standard
+Use it to build a component, region or page in a supplied or evident direction, or to raise an existing interface's hierarchy, finish and polish. It produces one finished direction. Other jobs have their own skills:
 
-**Everything earns its place.** Every panel, label, divider, shadow, control, and typographic treatment must improve clarity, utility, hierarchy, affordance, state, navigation, or domain meaning. Remove what does not.
+- five rendered directions to choose between: `maquette`;
+- a scrolling-document app turned into a fixed app shell: `armature`;
+- a responsive pass across small laptops, tablets and phones: `reflow`;
+- a mockup in Paper before any code: `paste-up`.
 
-**Design the user's task.** Build the shortest legible path through the real job. Hide schemas, prompts, agent mechanics, API names, and implementation state behind user-centered nouns, verbs, and progressive disclosure.
-
-**Build an interface, not an explanation.** Prefer controls, comparisons, tables, diagrams, and direct manipulation to paragraphs that describe what the interface should do. Use copy for orientation and consequence, not as a substitute for design.
-
-**Make one system.** Reuse the product's shell, grid, components, tokens, content model, and interaction conventions. The result should belong to the product while still having a deliberate direction.
-
-**Finish the path.** Empty, loading, failure, success, overflow, persistence, keyboard, mobile, and downstream states are part of the interface. A polished screenshot with an unfinished path is unfinished work.
-
-## Choose the Operating Mode
-
-Choose the smallest mode that covers the request:
-
-- **Direct implementation** - a component, contained region, or work with a supplied direction. Produce one finished direction and implementation.
-- **Page directions** - a new or redesigned complete route, page, or full-screen workflow without a settled direction. Render the current page as a baseline plus five new directions, then pause once for selection.
-- **Design-only** - the user asks for direction, a wireframe, or a design spec without implementation. Produce only the requested artifact.
-- **Structural polish** - an existing interface needs hierarchy, responsive behavior, accessibility, dark mode, or finish without a new visual concept. Preserve and refine the existing direction as one finished implementation across the complete path.
-
-Do not enter page-directions mode when the user supplied a direction, asked to match or extend an existing design, requested one implementation, or scoped the work to a component or contained region.
-
-### Mode Completion
-
-Direct implementation and structural polish each produce one finished direction. They are complete when the requested UI works in context and the affected user path has been exercised.
-
-Page directions proceed in two phases:
-
-1. Exploration is complete when the baseline and five new directions are rendered, reviewed, and ready for one informed selection.
-2. Delivery is complete only after selection, cleanup, production hardening, and final browser verification.
-
-Design-only work is complete when the requested artifact makes hierarchy, behavior, responsive change, states, and Tailwind v4 expression unambiguous. Do not save a design spec unless the user requested a file or the project requires one.
-
-For structural polish, the original behavior must remain intact and the targeted hierarchy, accessibility, responsive, dark-mode, or finish problem must be resolved across the full affected path.
+The work is complete when the requested UI works in context, the affected user path has been exercised in a browser, and any existing behaviour is intact.
 
 ## Work End to End
 
@@ -65,9 +38,6 @@ For a flow, walk one concrete scenario before drawing its screens: what the pers
 
 Read [`references/interface/index.md`](references/interface/index.md) and open only the branch needed for this task.
 
-- For page directions, read [`references/interface/ui-picker.md`](references/interface/ui-picker.md).
-- Read [`references/tailwind-v4.md`](references/tailwind-v4.md) only for an authorized or already-configured migration.
-- For design-only work, load the wireframe or design-spec references only when that artifact was requested.
 - For motion, begin with [`references/interface/animation.md`](references/interface/animation.md). If installed, use `animate` for specialist implementation craft and `motion` for current library or API facts.
 - When writing or changing UI copy, use `signage` if installed, before the words shape the layout. Otherwise apply its core test here: would you say this to someone in the audience and be understood without explaining it? Keep labels concrete and remove prose that substitutes for a control.
 
@@ -75,19 +45,9 @@ The reference files are a router, not a checklist. Never load every rule file by
 
 ### 3. Set the Direction
 
-For direct implementation, state the chosen direction briefly: hierarchy, typography, color behavior, density, and interaction temperament. A direction should be specific enough to constrain implementation, not a mood-board slogan.
+State the chosen direction briefly: hierarchy, typography, color behavior, density, and interaction temperament. A direction should be specific enough to constrain implementation, not a mood-board slogan.
 
 Carry the few defining decisions from the supplied design or accepted review into implementation: what leads, what stays quiet, what remains visible, and how actions relate to supporting information. Component defaults must preserve these decisions; a convenient variant is not a reason to change the composition.
-
-For page directions:
-
-1. Preserve the current page as the baseline. For a new route with no prior page, create `Current` as a conservative baseline using the product's existing shell, components, tokens, and conventions.
-2. Create five genuinely different rendered directions.
-3. Keep content, data, state, and behavioral code shared. Vary presentation structure, hierarchy, typography, color, density, and interaction treatment.
-4. Make every direction communicate the complete page hierarchy and core path. Production hardening follows selection.
-5. Review the picker in the browser, then present one structured selection to choose the direction.
-
-If the app cannot run, still produce the coded directions and present screenshots when possible. If neither preview nor screenshots are possible, present concise descriptions in a structured selection instead of stalling.
 
 ### 4. Implement in Tailwind v4
 
@@ -119,11 +79,11 @@ Confirm the exact route, tab, viewport and state being judged. Run the real app 
 
 Inspect every use of mono, small caps, uppercase transforms and wide tracking in the changed UI, including inherited component styles. Replace decorative uses introduced by the work or covered by the requested scope, preserving established display/body roles and the exceptions below. Check other consumers before editing a shared style; report out-of-scope uses instead of restyling them. Check the rendered result, not just the classes you added.
 
-Use `fieldtest` for a deeper browser-QA pass when it is installed and the risk warrants it. Tests support this pass; they do not replace it. Refine until the complete path is coherent, responsive, accessible, and visually resolved.
+Use `fieldtest` for a deeper browser-QA pass and `reflow` for a full pass across screen sizes, when installed and the risk warrants it. Tests support this pass; they do not replace it. Refine until the complete path is coherent, responsive, accessible, and visually resolved.
 
 ### 6. Clean Up and Report
 
-After a page direction is selected, remove every rejected direction and all local picker components, presentation switches, temporary parameters, wrappers, hidden branches, suppressions, and unused imports. Re-run the relevant checks and the complete user path.
+Remove temporary wrappers, hidden branches, suppressions and unused imports introduced by the work. Re-run the relevant checks and the complete user path.
 
 Report the direction, what changed, verification performed, and any honest limitation. Do not claim browser verification when only static checks ran.
 
@@ -133,7 +93,7 @@ Before reporting completion, confirm that:
 - the primary task is apparent without explanatory scaffolding;
 - real content and adverse states do not break the hierarchy;
 - keyboard, pointer, and touch behavior agree where they should;
-- temporary direction or migration scaffolding is gone;
+- temporary scaffolding is gone;
 - the implementation still follows the project's architecture and vocabulary.
 
 ## Taste and Craft Guardrails
@@ -156,7 +116,10 @@ Chiaroscuro remains usable on its own. Delegate only when a specialist skill is 
 - `animate`, `motion`, `review-animations`, `improve-animations`, or `find-animation-opportunities` for focused motion work;
 - `signage` when writing or changing UI copy, as directed in step 2;
 - `fieldtest` for evidence-heavy browser QA;
+- `reflow` for a responsive pass across every view;
+- `armature` when the app needs a fixed shell with panes before it needs polish;
+- `maquette` when the user wants several page directions to choose between;
 - `apple-design` for Apple-platform craft;
 - `dark-mode-image`, `canonicalize-tailwind`, `markup-from-image`, `prototype`, or `pick-ui-library` for their narrow utilities.
 
-Do ordinary end-to-end interface work here. Do not force a specialist dependency, a saved design spec, a wireframe, or an approval pause unless the selected mode or the user requires it.
+Do ordinary end-to-end interface work here. Do not force a specialist dependency, a saved design spec, a wireframe, or an approval pause unless the user asks for one.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reflow"
+  short_description: "Make every view work on small laptops, tablets and phones"
+  default_prompt: "Use $reflow to make every view of this app work at small-laptop, tablet and phone widths, measuring each view at each size in a browser before and after."

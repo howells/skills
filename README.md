@@ -42,6 +42,16 @@ The marketplace also carries the `fiction` plugin. Don't install the plugin alon
 
 The integration skills (`gog`, `linear`, `starling`, `xero` and `web-research`) use tools, accounts and credentials configured by the installing user. They include no account inventory or private repository dependency. Installing a skill does not provision access. The other skills may require their named applications or CLIs, as documented inside each skill.
 
+### `armature`
+
+Turn a web app that scrolls like a document into an app shell with fixed chrome and panes that scroll on their own. Not for visual polish (`chiaroscuro`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill armature --agent codex --global
+```
+
 ### `blender`
 
 Inspect, measure and render Blender scenes through MCP or headless CLI. Use for Blender scene, render-pipeline or MCP work. Not for 2D design files (`paste-up`).
@@ -54,7 +64,7 @@ npx skills@latest add howells/skills --skill blender --agent codex --global
 
 ### `chiaroscuro`
 
-Design polished responsive web UI with Tailwind v4. Not for browser QA (`fieldtest`), reuse (`componentize`), copy (`signage`) or typography (`typecase`).
+Design and build polished web UI in Tailwind v4. Not for page directions (`maquette`), app shells (`armature`), screen sizes (`reflow`) or QA (`fieldtest`).
 
 Install globally for Codex:
 
@@ -74,7 +84,7 @@ npx skills@latest add howells/skills --skill componentize --agent codex --global
 
 ### `deslop`
 
-Rewrite prose that sounds synthetic, inflated, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts, or copy that should sound grounded and human. Applies to prose; for interface labels use `signage`; for machine-written code tells use `unslop`.
+Rewrite prose that sounds synthetic, inflated, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts. Applies to prose; for interface labels use `signage`; for machine-written code tells use `unslop`.
 
 Install globally for Codex:
 
@@ -94,7 +104,7 @@ npx skills@latest add howells/skills --skill fail-fast --agent codex --global
 
 ### `fable-review`
 
-Get an independent review from Claude Fable 5.1 through the Claude CLI, then verify its claims before acting. Use for a hard judgement call: a design or architecture decision, a taste question, a plan worth arguing with. Not for a cheap conformance check (`glm-review`), a codebase grade (`simplify`), or a routine diff.
+Get an independent review from Claude Fable 5.1, then verify its claims before acting. Use for a hard judgement call: a design or architecture decision, a taste question, a plan worth arguing with. Not for a cheap conformance check (`glm-review`), a codebase grade (`simplify`), or a routine diff.
 
 Install globally for Codex:
 
@@ -114,7 +124,7 @@ npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 
 ### `foreman`
 
-Run an explicitly requested delegation mode for substantial changes: the main agent decides and inspects while subagents write code. Use only when the user asks for Foreman or delegated execution. Delegation alone never requires new tests. Not for ordinary implementation, tiny fixes, or docs-only work; `plimsoll` governs process weight.
+Run an explicitly requested delegation mode for substantial changes: the main agent decides and inspects while subagents write code. Use only when the user asks for Foreman or delegated execution. Not for ordinary implementation, tiny fixes, or docs-only work; `plimsoll` governs process weight.
 
 Install globally for Codex:
 
@@ -134,7 +144,7 @@ npx skills@latest add howells/skills --skill gog --agent codex --global
 
 ### `glm-review`
 
-Get an independent read-only review from GLM 5.3 Flash on the Z.AI Coding Plan via OpenCode, then verify its claims before acting. Use when the user names GLM, or for a cheap bounded check: conformance to stated criteria, a contract, UI copy. Not for a hard judgement call (`fable-review`) or a codebase grade (`simplify`).
+Get an independent read-only review from GLM 5.3 Flash via OpenCode, then verify its claims before acting. Use when the user names GLM, or for a cheap bounded check: conformance to stated criteria, a contract, UI copy. Not for a hard judgement call (`fable-review`) or a codebase grade (`simplify`).
 
 Install globally for Codex:
 
@@ -162,9 +172,19 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill linear --agent codex --global
 ```
 
+### `maquette`
+
+Render five page directions beside the current page, then build the chosen one. Not for a single direction (`chiaroscuro`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill maquette --agent codex --global
+```
+
 ### `marginalia`
 
-Add concise, useful JSDoc where IDE hover help or a generated API reference needs a non-obvious contract. Use for exported JavaScript or TypeScript APIs, components, hooks, classes, complex types, or package publishing. Not for self-explanatory internal code, narrating comments, prose docs, or anything that changes behavior.
+Add concise, useful JSDoc where IDE hover help or a generated API reference needs a non-obvious contract. Use for exported JavaScript or TypeScript APIs, components, hooks, classes, complex types, or package publishing. Not for internal code, narrating comments, prose docs or behaviour changes.
 
 Install globally for Codex:
 
@@ -184,7 +204,7 @@ npx skills@latest add howells/skills --skill mastraudit --agent codex --global
 
 ### `memento`
 
-Report what this task is doing now from live state: original ask, completed work, remaining work, branch, uncommitted files, and drift. Use when returning to a long session or checking whether an agent is still on track. For a roll-call across tasks use `muster`; for rewriting only the last reply use `what`.
+Report what this task is doing now from live state: original ask, completed work, remaining work, branch, uncommitted files, and drift. Use when returning to a long session. For a roll-call across tasks use `muster`; for rewriting only the last reply use `what`.
 
 Install globally for Codex:
 
@@ -222,7 +242,7 @@ After confirmed merge and required delivery checks, it removes its own safely me
 
 ### `nomen`
 
-Generate, critique, and validate names for products, projects, packages, CLIs, apps, brands, or features, with domain, package, GitHub, App Store and web conflict checks. Use for naming and renaming decisions. Not for interface labels (`signage`), body prose (`deslop`), or legal clearance.
+Generate, critique, and validate names for products, packages, CLIs, apps or features, with domain, package, GitHub, App Store and web conflict checks. Use for naming and renaming decisions. Not for interface labels (`signage`), body prose (`deslop`), or legal clearance.
 
 Install globally for Codex:
 
@@ -252,7 +272,7 @@ npx skills@latest add howells/skills --skill plimsoll --agent codex --global
 
 ### `product-description`
 
-Document user-visible product behaviour from code, tests and the running product, then consolidate defects into triage. Use for complete experience documentation. Not for marketing copy, READMEs, single-feature specs, or browser QA alone (`fieldtest`).
+Document user-visible product behaviour from code, tests and the running product, then consolidate defects into triage. Not for marketing copy, READMEs, single-feature specs, or browser QA alone (`fieldtest`).
 
 Imported from [Steve Ruiz's original `product-description` gist](https://gist.github.com/steveruizok/83ae5c53f2784ebf8f5fe0a3fb94480f).
 
@@ -272,9 +292,19 @@ Give it a project, a concrete goal and an optional deadline. It checks the whole
 npx skills@latest add howells/skills --skill rebalance --agent codex --global
 ```
 
+### `reflow`
+
+Make every view of a web app work on small laptops, tablets and phones, checked in a browser. Not for QA reports (`fieldtest`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill reflow --agent codex --global
+```
+
 ### `salvage`
 
-Rescue work that exists in only one place - detached HEADs, worktrees, unpushed branches, or stashes - then remove only what is proven merged and pushed. Use for repository cleanup where ambiguous work must be preserved and each surviving thread named. For status reconstruction without cleanup use `muster`.
+Rescue work that exists in only one place - detached HEADs, worktrees, unpushed branches, or stashes - then remove only what is proven merged and pushed. Use for repository cleanup that must preserve ambiguous work. For status reconstruction without cleanup use `muster`.
 
 Install globally for Codex:
 
@@ -284,7 +314,7 @@ npx skills@latest add howells/skills --skill salvage --agent codex --global
 
 ### `signage`
 
-Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states and generated text. Use when reviewing UI copy for comprehension. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`).
+Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states and generated text. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`).
 
 Install globally for Codex:
 
@@ -328,7 +358,7 @@ npx skills@latest add howells/skills --skill typecase --agent codex --global
 
 ### `unslop`
 
-Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. Use before commit or review. For behavior-changing fallback cleanup use `fail-fast`; for prose use `deslop`.
+Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. For behavior-changing fallback cleanup use `fail-fast`; for prose use `deslop`.
 
 Install globally for Codex:
 
