@@ -37,6 +37,7 @@ Route: `rebalance` → `next`, repeated. `plimsoll` whenever delivery stalls.
 - **Raw font utilities have multiplied** → `typecase`.
 - **Labels, buttons, headings or empty states read badly** → `signage`.
 - **Duplicated components, or a file doing too many jobs** → `componentize`.
+- **Motion: should it animate, build it, review it, or find where it should move** → `zoetrope`.
 - **See it running and find what's wrong** → `fieldtest`. Reports only unless asked to fix.
 - **The design lives in a Paper file** → `paste-up`.
 
@@ -82,6 +83,7 @@ Route: `simplify` → the skill each finding points at.
 | --- | --- |
 | `maquette` / `chiaroscuro` | Is the direction for a whole page still open? Yes: `maquette`. |
 | `chiaroscuro` / `armature` | Is the problem how it looks, or what scrolls? Scrolling: `armature`. |
+| `chiaroscuro` / `zoetrope` | Is the question how it looks still, or how it moves? Moves: `zoetrope`. |
 | `reflow` / `fieldtest` | Do you want it fixed at every size, or a report of what's wrong? Fixed: `reflow`. |
 | `unslop` / `fail-fast` | Should behaviour stay exactly the same? Yes: `unslop`. |
 | `unslop` / `simplify` | Cleaning a diff, or judging its structure? Judging: `simplify`. |

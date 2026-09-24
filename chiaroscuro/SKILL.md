@@ -38,7 +38,7 @@ For a flow, walk one concrete scenario before drawing its screens: what the pers
 
 Read [`references/interface/index.md`](references/interface/index.md) and open only the branch needed for this task.
 
-- For motion, begin with [`references/interface/animation.md`](references/interface/animation.md). If installed, use `animate` for specialist implementation craft and `motion` for current library or API facts.
+- For motion, begin with [`references/interface/animation.md`](references/interface/animation.md). If installed, use `zoetrope` for specialist motion craft, and the library's own documentation for current API facts.
 - When writing or changing UI copy, use `signage` if installed, before the words shape the layout. Otherwise apply its core test here: would you say this to someone in the audience and be understood without explaining it? Keep labels concrete and remove prose that substitutes for a control.
 
 The reference files are a router, not a checklist. Never load every rule file by default.
@@ -113,13 +113,12 @@ Chiaroscuro remains usable on its own. Delegate only when a specialist skill is 
 
 - `typecase` for the type ramp and its scanner;
 - `componentize` for a reuse and duplication audit;
-- `animate`, `motion`, `review-animations`, `improve-animations`, or `find-animation-opportunities` for focused motion work;
+- `zoetrope` for building, reviewing or finding motion, including gestures;
 - `signage` when writing or changing UI copy, as directed in step 2;
 - `fieldtest` for evidence-heavy browser QA;
 - `reflow` for a responsive pass across every view;
 - `armature` when the app needs a fixed shell with panes before it needs polish;
 - `maquette` when the user wants several page directions to choose between;
-- `apple-design` for Apple-platform craft;
 - `dark-mode-image`, `canonicalize-tailwind`, `markup-from-image`, `prototype`, or `pick-ui-library` for their narrow utilities.
 
 Do ordinary end-to-end interface work here. Do not force a specialist dependency, a saved design spec, a wireframe, or an approval pause unless the user asks for one.

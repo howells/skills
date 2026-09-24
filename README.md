@@ -396,6 +396,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill xero --agent codex --global
 ```
 
+### `zoetrope`
+
+Build, review or find web animation: whether to animate at all, then curve, duration, springs, gestures, interruption and reduced motion. Not for static visual polish (`chiaroscuro`) or browser QA (`fieldtest`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill zoetrope --agent codex --global
+```
+
 ## Removed
 
 `npx skills` copies files and does not track deletions, so a skill removed here stays on disk wherever it was installed. Uninstall the stale copy by hand: `rm -rf ~/.agents/skills/<name> ~/.claude/skills/<name> ~/.codex/skills/<name>`.

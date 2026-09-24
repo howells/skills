@@ -50,6 +50,7 @@
     "./unslop",
     "./web-research",
     "./what",
-    "./xero"
+    "./xero",
+    "./zoetrope"
   ]
 }

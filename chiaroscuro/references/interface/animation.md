@@ -71,4 +71,4 @@ Exercise motion with pointer, keyboard, touch when available, rapid repeated inp
 - no sustained CPU, paint, or memory cost disproportionate to the effect;
 - the user can still understand the state change with motion reduced.
 
-If installed, use `animate` for specialist implementation craft, `motion` for current library/API facts, and the animation review skills for focused audits. This contract remains sufficient when they are absent.
+If installed, use `zoetrope` for specialist motion craft and focused motion reviews, and the library's own documentation for current API facts. This contract remains sufficient when they are absent.
