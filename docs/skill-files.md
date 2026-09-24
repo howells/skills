@@ -4,8 +4,6 @@ The installer copies one skill at a time, so an installed skill has to stand alo
 
 A file two skills need is copied into both, and the duplication is deliberate. There is no shared source layer: one existed while five design references served two skills, and it was removed once `chiaroscuro` became their only consumer. See `adr/0004`. Reintroduce a source layer only when the copies are numerous enough that keeping them in step by hand is the thing going wrong.
 
-`linear/scripts/read-credential.py` and `web-research/scripts/read-credential.py` are deliberate identical copies so each skill installs alone. Keep them in step; `scripts/test-skill-helpers.py` checks parity.
-
 ## Keeping a skill portable
 
 - No personal names, account inventories, private repository dependencies, machine-specific home paths or secret-store identifiers. Use configured tooling and generic examples. Public tool documentation and distribution URLs may name their actual owners.

@@ -40,7 +40,7 @@ The marketplace also carries the `fiction` plugin. Don't install the plugin alon
 
 ## Skills
 
-The integration skills (`gog`, `linear`, `starling`, `xero` and `web-research`) use tools, accounts and credentials configured by the installing user. They include no account inventory or private repository dependency. Installing a skill does not provision access. The other skills may require their named applications or CLIs, as documented inside each skill.
+The integration skills (`gog` and `web-research`) use tools, accounts and credentials configured by the installing user. They include no account inventory or private repository dependency. Installing a skill does not provision access. The other skills may require their named applications or CLIs, as documented inside each skill.
 
 ### `armature`
 
@@ -160,16 +160,6 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill glm-review --agent codex --global
-```
-
-### `linear`
-
-Use configured Linear accounts via GraphQL; choose the account that owns the target. Not for transcripts (`muster`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill linear --agent codex --global
 ```
 
 ### `maquette`
@@ -336,16 +326,6 @@ Use `simplify` for selected changes or `simplify whole codebase` for the reposit
 
 In Claude Code, this personal skill takes precedence over the bundled skill with the same name.
 
-### `starling`
-
-Query configured Starling Bank balances and transactions. Not for Xero (`xero`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill starling --agent codex --global
-```
-
 ### `typecase`
 
 Design and enforce named typography roles across a UI codebase. Use when raw font utilities have multiplied or a type ramp needs consolidating. Not for visual direction (`chiaroscuro`), interface wording (`signage`), or one-off type polish.
@@ -386,16 +366,6 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill web-research --agent codex --global
 ```
 
-### `xero`
-
-Query Xero accounting data through a configured integration. Not for Starling (`starling`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill xero --agent codex --global
-```
-
 ### `zoetrope`
 
 Build, review or find web animation: whether to animate at all, then curve, duration, springs, gestures, interruption and reduced motion. Not for static visual polish (`chiaroscuro`) or browser QA (`fieldtest`).
@@ -427,8 +397,11 @@ Merged on 2026-09-06:
 | --- | --- |
 | `survey` | `simplify`, for diff or whole-codebase reviews with optional scoring. Update Simplify, then run `npx skills@latest remove survey --global --yes`. Also remove project-local copies where present. |
 
-Moved on 2026-09-24:
+Moved or removed on 2026-09-24:
 
 | Skill | New home |
 | --- | --- |
 | `howells-lint` | The `howells/lint` repo, versioned with the preset it sets up. Install with `npx skills@latest add howells/lint --skill howells-lint --global`, then remove the old copy as above. |
+| `linear` | The `howells/linearcli` repo, beside the CLI it now prefers for everyday issue work. Install with `npx skills@latest add howells/linearcli --skill linear --global`. |
+| `starling` | The `howells/starlingcli` repo, rewritten to drive `starlingcli`. Install with `npx skills@latest add howells/starlingcli --skill starling --global`. |
+| `xero` | Removed. It named no real tool; recreate it beside a Xero CLI if one is built. |

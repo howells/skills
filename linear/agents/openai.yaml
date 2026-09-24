@@ -1,5 +1,0 @@
-interface:
-  display_name: "Linear"
-  short_description: "Select the configured Linear account"
-  default_prompt: "Use $linear to select the account that owns the requested team or issue and query it through GraphQL."
-

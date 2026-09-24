@@ -9,9 +9,9 @@ Use Exa and Tavily as complementary research providers, then write one synthesis
 
 ## Authentication
 
-Inject `EXA_API_KEY` and `TAVILY_API_KEY` from the user's configured secret manager or environment into the request subprocess. Only the selected provider's key is required for a call. This skill contains no account inventory, vault names or credential-file paths.
+`EXA_API_KEY` and `TAVILY_API_KEY` are read from the environment, or failing that from `.env` at the root of the current repository. Only the selected provider's key is required for a call. If neither place has it, say which variable is missing and stop.
 
-Use [scripts/request](scripts/request) to call either API without exposing a key in diagnostics or command arguments. Never copy keys into a project `.env` or substitute another search provider because authentication failed. Report which provider is unavailable and any resulting coverage gap. Credential loading must be non-interactive and bounded by the host's timeout; do not initiate login as a repair step.
+Use [scripts/request](scripts/request) to call either API without exposing a key in diagnostics or command arguments. Never write keys into any file, print them, or substitute another search provider because authentication failed. Report which provider is unavailable and any resulting coverage gap. Credential loading must be non-interactive and bounded by the host's timeout; do not initiate login as a repair step.
 
 Pass a complete JSON request body on standard input:
 

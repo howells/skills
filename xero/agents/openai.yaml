@@ -1,4 +1,0 @@
-interface:
-  display_name: "Xero"
-  short_description: "Query a configured Xero integration"
-  default_prompt: "Use $xero to query Xero accounting data through the configured integration."

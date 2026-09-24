@@ -104,40 +104,16 @@ class DocumentationLinks(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stdout)
 
 
-class GraphQLOutcomes(unittest.TestCase):
-    def test_partial_errors_and_mutation_failure_are_failures(self):
-        for data in [{"data": {"viewer": None}, "errors": [{"message": "denied"}]}, {"data": {"issueCreate": {"success": False}}}, {"data": None}, []]:
-            with self.subTest(data=data):
-                body = json.dumps(data)
-                result = cli("linear/scripts/check-response.py", body=body)
-                self.assertNotEqual(result.returncode, 0)
-                self.assertEqual(result.stdout, body)
-
-    def test_success_body_is_preserved(self):
-        body = json.dumps({"data": {"issues": {"nodes": []}}})
-        result = cli("linear/scripts/check-response.py", body=body)
-        self.assertEqual(result.returncode, 0)
-        self.assertEqual(result.stdout, body)
-
-    def test_non_json_is_failure(self):
-        result = cli("linear/scripts/check-response.py", body="proxy unavailable")
-        self.assertNotEqual(result.returncode, 0)
-        self.assertEqual(result.stdout, "proxy unavailable")
-
-    def test_standalone_credential_helpers_agree(self):
-        self.assertEqual((ROOT / "linear/scripts/read-credential.py").read_bytes(),
-                         (ROOT / "web-research/scripts/read-credential.py").read_bytes())
-
-
 class ConfiguredCredentials(unittest.TestCase):
     def test_environment_credential_validation(self):
         for value in [None, "", " ", "fixture\nInjected: header", "fixture\rvalue", "fixture\tvalue", "fixture-token"]:
             env = {"PATH": os.environ["PATH"]}
             if value is not None:
                 env["TEST_API_KEY"] = value
-            result = subprocess.run(
-                [sys.executable, str(ROOT / "linear/scripts/read-credential.py"), "TEST_API_KEY"],
-                env=env, capture_output=True, text=True, timeout=10)
+            with tempfile.TemporaryDirectory() as directory:
+                result = subprocess.run(
+                    [sys.executable, str(ROOT / "web-research/scripts/read-credential.py"), "TEST_API_KEY"],
+                    env=env, cwd=directory, capture_output=True, text=True, timeout=10)
             if value == "fixture-token":
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertEqual(result.stdout, value)
@@ -146,15 +122,36 @@ class ConfiguredCredentials(unittest.TestCase):
                 self.assertEqual(result.stdout, "")
                 self.assertNotIn("fixture", result.stderr)
 
+    def test_repository_root_env_file_is_the_fallback(self):
+        script = str(ROOT / "web-research/scripts/read-credential.py")
+        with tempfile.TemporaryDirectory() as directory:
+            subprocess.run(["git", "init", "-q", directory], check=True)
+            Path(directory, ".env").write_text('# keys\nOTHER=1\nexport TEST_API_KEY="from-file" \nPLAIN_KEY=plain # note\n')
+            nested = Path(directory, "apps", "web")
+            nested.mkdir(parents=True)
+            env = {"PATH": os.environ["PATH"]}
+            for name, expected in [("TEST_API_KEY", "from-file"), ("PLAIN_KEY", "plain")]:
+                result = subprocess.run([sys.executable, script, name], env=env, cwd=nested,
+                    capture_output=True, text=True, timeout=10)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout, expected)
+            result = subprocess.run([sys.executable, script, "TEST_API_KEY"], env={**env, "TEST_API_KEY": "from-env"},
+                cwd=nested, capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.stdout, "from-env")
+            result = subprocess.run([sys.executable, script, "ABSENT_KEY"], env=env, cwd=nested,
+                capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 78)
+            self.assertEqual(result.stdout, "")
+
     def test_wrappers_stop_before_transport_without_credentials(self):
         with tempfile.TemporaryDirectory() as directory:
             marker = Path(directory, "called")
             transport = Path(directory, "curl")
             transport.write_text(f"#!{sys.executable}\nfrom pathlib import Path\nPath({str(marker)!r}).touch()\n")
             transport.chmod(0o700)
-            for script, args in [("linear/scripts/graphql", []), ("web-research/scripts/request", ["exa", "search"]), ("web-research/scripts/request", ["tavily", "search"])]:
+            for script, args in [("web-research/scripts/request", ["exa", "search"]), ("web-research/scripts/request", ["tavily", "search"])]:
                 result = subprocess.run(["/bin/sh", str(ROOT / script), *args],
-                    input='{"query":"fixture"}', capture_output=True, text=True, timeout=10,
+                    input='{"query":"fixture"}', capture_output=True, text=True, timeout=10, cwd=directory,
                     env={"PATH": directory + os.pathsep + os.environ["PATH"]})
                 self.assertEqual(result.returncode, 78, result.stderr)
                 self.assertFalse(marker.exists())
@@ -172,7 +169,6 @@ print(json.dumps({'data': {'header': sys.stdin.read(), 'body': body, 'args': arg
 """)
             transport.chmod(0o700)
             cases = [
-                ("linear/scripts/graphql", [], "LINEAR_API_KEY", "", "https://api.linear.app/graphql"),
                 ("web-research/scripts/request", ["exa", "search"], "EXA_API_KEY", "Bearer ", "https://api.exa.ai/search"),
                 ("web-research/scripts/request", ["tavily", "search"], "TAVILY_API_KEY", "Bearer ", "https://api.tavily.com/search"),
                 ("web-research/scripts/request", ["tavily", "research-status", "request-123"], "TAVILY_API_KEY", "Bearer ", "https://api.tavily.com/research/request-123"),

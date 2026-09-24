@@ -1,6 +1,6 @@
 {
   "name": "howells-skills",
-  "description": "Daniel Howells' agent skills: UI design and browser QA, prose and code clean-up, delegation, task recovery, and integrations for Linear, Google Workspace, Xero and Starling.",
+  "description": "Daniel Howells' agent skills for design and development: UI design, motion and browser QA, code review and clean-up, prose and naming, delegation and task recovery.",
   "author": {
     "name": "Daniel Howells",
     "url": "https://github.com/howells"
@@ -14,7 +14,7 @@
     "writing",
     "code-review",
     "delegation",
-    "linear"
+    "motion"
   ],
   "skills": [
     "./armature",
@@ -29,7 +29,6 @@
     "./foreman",
     "./glm-review",
     "./gog",
-    "./linear",
     "./maquette",
     "./marginalia",
     "./mastraudit",
@@ -45,12 +44,10 @@
     "./salvage",
     "./signage",
     "./simplify",
-    "./starling",
     "./typecase",
     "./unslop",
     "./web-research",
     "./what",
-    "./xero",
     "./zoetrope"
   ]
 }
