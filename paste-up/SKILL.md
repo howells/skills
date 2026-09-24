@@ -1,6 +1,6 @@
 ---
 name: paste-up
-description: "Build a Paper mockup from a written specification, or audit and repair an existing Paper file: tokens, fonts, artboard layout, crops, labels. Use only for work in app.paper.design. Not for coded UI implementation (`chiaroscuro`), browser QA (`fieldtest`), or design critique with no Paper file involved."
+description: "Build a Paper mockup from a spec, or audit and repair a Paper file: tokens, fonts, artboards, crops, labels. Only for app.paper.design. Not for coded UI (`chiaroscuro`) or browser QA (`fieldtest`)."
 ---
 
 # Paste-up

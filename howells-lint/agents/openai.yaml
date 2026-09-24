@@ -1,4 +1,0 @@
-interface:
-  display_name: "Howells lint"
-  short_description: "Set up or repair a repo's @howells/lint configuration"
-  default_prompt: "Use $howells-lint to put this repo on @howells/lint so the preset actually loads: check the config spelling and preset, the dependency version, the scripts, and add a ratchet if a backlog surfaces. For prose use $deslop; for diff tells use $unslop."

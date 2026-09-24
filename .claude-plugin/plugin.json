@@ -18,6 +18,7 @@
   ],
   "skills": [
     "./armature",
+    "./ask-howells",
     "./blender",
     "./chiaroscuro",
     "./componentize",
@@ -28,7 +29,6 @@
     "./foreman",
     "./glm-review",
     "./gog",
-    "./howells-lint",
     "./linear",
     "./maquette",
     "./marginalia",

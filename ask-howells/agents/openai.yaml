@@ -1,0 +1,6 @@
+interface:
+  display_name: "Ask Howells"
+  short_description: "Find the right skill or sequence for a situation"
+  default_prompt: "Use $ask-howells to tell me which skill or sequence of skills fits my situation, and the exact invocation to type next."
+policy:
+  allow_implicit_invocation: false

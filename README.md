@@ -52,6 +52,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill armature --agent codex --global
 ```
 
+### `ask-howells`
+
+Route a situation to the skills in this collection and the command to type. Not for doing the work.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill ask-howells --agent codex --global
+```
+
 ### `blender`
 
 Inspect, measure and render Blender scenes through MCP or headless CLI. Use for Blender scene, render-pipeline or MCP work. Not for 2D design files (`paste-up`).
@@ -152,16 +162,6 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill glm-review --agent codex --global
 ```
 
-### `howells-lint`
-
-Put a repo on @howells/lint so the preset actually loads, and add a ratchet when a backlog appears. Use for lint setup or a config named .mjs/.json. Not for prose (`deslop`), diff tells (`unslop`) or codebase review (`simplify`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill howells-lint --agent codex --global
-```
-
 ### `linear`
 
 Use configured Linear accounts via GraphQL; choose the account that owns the target. Not for transcripts (`muster`).
@@ -252,7 +252,7 @@ npx skills@latest add howells/skills --skill nomen --agent codex --global
 
 ### `paste-up`
 
-Build a Paper mockup from a written specification, or audit and repair an existing Paper file: tokens, fonts, artboard layout, crops, labels. Use only for work in app.paper.design. Not for coded UI implementation (`chiaroscuro`), browser QA (`fieldtest`), or design critique with no Paper file involved.
+Build a Paper mockup from a spec, or audit and repair a Paper file: tokens, fonts, artboards, crops, labels. Only for app.paper.design. Not for coded UI (`chiaroscuro`) or browser QA (`fieldtest`).
 
 Install globally for Codex:
 
@@ -416,3 +416,9 @@ Merged on 2026-09-06:
 | Skill | Where its work went |
 | --- | --- |
 | `survey` | `simplify`, for diff or whole-codebase reviews with optional scoring. Update Simplify, then run `npx skills@latest remove survey --global --yes`. Also remove project-local copies where present. |
+
+Moved on 2026-09-24:
+
+| Skill | New home |
+| --- | --- |
+| `howells-lint` | The `howells/lint` repo, versioned with the preset it sets up. Install with `npx skills@latest add howells/lint --skill howells-lint --global`, then remove the old copy as above. |
