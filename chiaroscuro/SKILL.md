@@ -18,6 +18,20 @@ Use it to build a component, region or page in a supplied or evident direction, 
 
 The work is complete when the requested UI works in context, the affected user path has been exercised in a browser, and any existing behaviour is intact.
 
+## Hard Rules
+
+These hold wherever the work happens: in code, in a Paper file and in any brief handed to a helper. Styling the product already has is not an exception; fix it inside the scope and report it outside. Only an explicit instruction from the user overrides a rule.
+
+1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting, never for labels or headings. Proper acronyms keep their capitals.
+2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. Keep only consent, constraints and error recovery.
+3. **Four to six type styles.** Use the product's named roles. A new size or weight needs a job no existing role does.
+4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user has pointed to, and use it. A second version of an existing control is a defect.
+5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
+6. **Touch targets at least 44 by 44 CSS pixels.**
+7. **Verified means used and looked at.** "Works" means you completed the path in a browser, or walked a mockup's boards in order. "Looks right" means you then viewed each whole screen as the user sees it. Report the two separately, and never claim either from static checks.
+
+Paste this block, word for word, into any brief that hands part of the work to another agent, reviewer or art director, and check what comes back against it before accepting it.
+
 ## Work End to End
 
 ### 1. Inspect the Product and Task
@@ -77,7 +91,13 @@ Confirm the exact route, tab, viewport and state being judged. Run the real app 
 
 **Zoom out and reflect.** After the first complete composition and after material changes, inspect the whole viewport and successive states together. What draws the eye first? Is that the user's subject or the controls around it? Is the next action apparent? Does the result still express the agreed direction? If local fixes have left the whole incoherent, recompose before polishing more details. This is a brief part of the design work, not another report or approval round. Passing technical checks does not answer these questions.
 
-Inspect every use of mono, small caps, uppercase transforms and wide tracking in the changed UI, including inherited component styles. Replace decorative uses introduced by the work or covered by the requested scope, preserving established display/body roles and the exceptions below. Check other consumers before editing a shared style; report out-of-scope uses instead of restyling them. Check the rendered result, not just the classes you added.
+Sweep the whole changed surface for Hard Rule 1, not only the part you were shown. In code, search the changed files and the shared components they render:
+
+```sh
+rg -n 'uppercase|small-caps|font-variant-caps|font-mono|tracking-wid|tracking-\[|letter-spacing' <changed paths>
+```
+
+Then confirm in the browser, since a shared component can reintroduce the treatment without a class in your files. In Paper, read the computed styles of the in-scope text nodes for transform, caps, letter spacing and mono families. Every hit is removed or kept as literal code, a value or an acronym. Check other consumers before editing a shared style.
 
 Use `fieldtest` for a deeper browser-QA pass and `reflow` for a full pass across screen sizes, when installed and the risk warrants it. Tests support this pass; they do not replace it. Refine until the complete path is coherent, responsive, accessible, and visually resolved.
 
@@ -89,6 +109,8 @@ Report the direction, what changed, verification performed, and any honest limit
 
 Before reporting completion, confirm that:
 
+- each Hard Rule holds across the changed surface, and the report gives the Rule 1 sweep's count of hits removed and kept;
+- every component you created is listed with the existing one you checked first;
 - every label, heading, button, status line, and empty state passes the audience-language test in step 2;
 - the primary task is apparent without explanatory scaffolding;
 - real content and adverse states do not break the hierarchy;
@@ -99,17 +121,17 @@ Before reporting completion, confirm that:
 ## Taste and Craft Guardrails
 
 - Use authentic product content. Placeholder slogans and generic dashboard data conceal design problems.
-- Keep hierarchy compact with a small, named type system. Preserve the product's established display/body roles and use sentence case for ordinary UI text. Do not introduce decorative mono, small caps or tracked uppercase eyebrows. Mono is for literal code or identifiers whose characters need inspection; aligned figures normally need tabular numerals in the body font. Preserve proper acronyms, explicitly supplied brand treatments and treatments in a user-selected direction, only in their intended roles. A technical product or an existing mono token is not permission to spread that treatment across its UI.
-- Use one coherent icon family. Icons need accessible names or adjacent labels when their meaning is not obvious.
-- Make touch targets at least 44 by 44 CSS pixels, including invisible padding, without making every visual control bulky.
-- Align optical shapes by eye where mathematical centering looks wrong. Nested rounded shapes should use concentric radii, not repeated arbitrary values.
+- Use sentence case for ordinary UI text. Aligned figures need tabular numerals in the body font, not mono.
+- Icons need accessible names or adjacent labels when their meaning is not obvious.
+- Reach touch targets with invisible padding rather than making every visual control bulky.
+- Align optical shapes by eye where mathematical centering looks wrong.
 - Avoid generic AI defaults: stacked rounded cards, gratuitous gradients, glowing borders, ornamental pills, oversized hero copy, and decorative status chrome.
 - In dark mode, rebuild contrast relationships rather than invert colors. Use dark-mode variants for raster assets when the light asset does not hold up.
 - Motion needs a purpose, an origin, an interruption behavior, a frequency budget, and a reduced-motion treatment. Fast feedback and perceived speed matter more than spectacle.
 
 ## Specialist Boundaries
 
-Chiaroscuro remains usable on its own. Delegate only when a specialist skill is installed and the task benefits from depth:
+Chiaroscuro remains usable on its own. A specialist adds depth but never carries the Hard Rules for you: apply them here whether or not it runs. Delegate only when a specialist skill is installed and the task benefits from depth:
 
 - `typecase` for the type ramp and its scanner;
 - `componentize` for a reuse and duplication audit;

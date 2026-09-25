@@ -9,6 +9,20 @@ Paper is where the design happens before any code, and the specification everyth
 
 Pixel parity with Paper is never the goal downstream. What Paper governs is the information architecture, the step and state model, the hierarchy, the copy intent, the density and the operational behaviour.
 
+## Hard Rules
+
+These hold wherever the work happens: in code, in a Paper file and in any brief handed to a helper. Styling the product already has is not an exception; fix it inside the scope and report it outside. Only an explicit instruction from the user overrides a rule.
+
+1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting, never for labels or headings. Proper acronyms keep their capitals.
+2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. Keep only consent, constraints and error recovery.
+3. **Four to six type styles.** Use the product's named roles. A new size or weight needs a job no existing role does.
+4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user has pointed to, and use it. A second version of an existing control is a defect.
+5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
+6. **Touch targets at least 44 by 44 CSS pixels.**
+7. **Verified means used and looked at.** "Works" means you completed the path in a browser, or walked a mockup's boards in order. "Looks right" means you then viewed each whole screen as the user sees it. Report the two separately, and never claim either from static checks.
+
+These are the same rules `chiaroscuro` applies to code, copied here so a mockup never has to be corrected for them later. Paste the block word for word into any drawing or art-direction brief you delegate.
+
 ## Invoking it
 
 A Paper URL is `https://app.paper.design/file/<fileId>/<page>/<nodeId>` - for example `01M1AMPBSYGK8DPDW1G5824M7K/1-0/FIE-0`. The ULID is the `fileId`; pass it on every file-scoped call that accepts it, rather than relying on whichever file was most recently opened. `1-0` is the page. A trailing node id means the request is scoped to that one artboard; without it, the whole page is in scope.
@@ -29,7 +43,7 @@ Use the Paper MCP connection supplied by the host. If its guide or file tools ar
 
 ## Build lane
 
-**Establish direction before drawing.** Define each view's purpose, audience, content and states from the supplied specification. The current agent can direct and draw sequentially. Delegate only when available and useful; use installed specialist skills or models as optional aids, not prerequisites. A delegated drawing brief must preserve the agreed direction.
+**Establish direction before drawing.** Define each view's purpose, audience, content and states from the supplied specification. The current agent can direct and draw sequentially. Delegate only when available and useful; use installed specialist skills or models as optional aids, not prerequisites. A delegated drawing brief must preserve the agreed direction and carry the Hard Rules.
 
 **Set the file up once, before any view exists.**
 
@@ -47,7 +61,7 @@ Order matters here, because a token fix touches every node and a layout fix move
 
 1. **Inventory.** `get_tree_summary`, then list the in-scope artboards: name, size, position and purpose. Inspect neighbours only as needed to understand context.
 2. **Tokens.** Inspect hard-coded values within scope and their intended roles. Equal values can have different semantic roles; merge only confirmed duplication. Before `create_tokens` / `set_tokens`, check all consumers affected by a definition change. Use `update_styles` only on in-scope nodes.
-3. **Fonts.** Confirm installed families and correct departures from the agreed type roles. Preserve deliberate display/body/mono distinctions and existing typography outside scope.
+3. **Fonts.** Confirm installed families and correct departures from the agreed type roles and the Hard Rules. Mono stays only on literal codes and values. Leave typography outside scope alone and report it.
 4. **Layout.** Correct unintended overlap or spacing within scope. For a flow, make its start, reading order, branches and return paths clear. Preserve useful existing organization; repair organization that obscures the journey when the task includes it. Do not rearrange unrelated artboards.
 5. **Names.** `rename_nodes` so each artboard says what it shows.
 6. **Dead work.** Old experiments and superseded versions. Ask before deleting anything you did not make.
@@ -74,6 +88,7 @@ Every line here is a correction that has had to be given more than once.
 
 ## Before calling it done
 
+- Check every Hard Rule across the in-scope artboards, reading computed styles for caps, letter spacing and mono rather than trusting the screenshot.
 - Review the in-scope artboards for clarity and task completion. An independent review is optional when a material uncertainty warrants it.
 - Recheck in-scope comments and report their actual resolution.
 - Screenshot the changed artboards and inspect them in context. A view that reads well alone can be wrong beside its neighbours.

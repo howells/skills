@@ -35,7 +35,7 @@ Add a role only when a real, nameable job has no home. A products-and-editorial 
 
 Letter-spaced uppercase micro-labels are the single most over-reached style in agent-written UI. It looks designed, so the model reaches for it on every heading, eyebrow, chip, table header and empty state, and the interface fills with shouting at 10px.
 
-- **At most one small-caps role in the case**, and it earns its place by being sparse - roughly one per screen region, never one per card.
+- **No small-caps role by default.** Add one only when the user explicitly asks for it or supplies a brand treatment that uses it, and then keep it sparse - roughly one per screen region, never one per card. An existing small-caps habit in the codebase is a finding to migrate, not a role to keep.
 - **Uppercase mono is the sharpest version of the same fault.** Mono already reads as machine output; tracking it out and shouting it turns a label into a system log. Keep uppercase and mono apart unless the thing genuinely is a code.
 - The role owns its tracking. Uppercase without positive tracking is unreadable, and inline `tracking-*` beside it means someone is tuning the role from the outside.
 - Whatever `uppercase` sits in is a role, never a modifier. Where `uppercase` appears in class attributes, the codebase has a habit rather than a role.

@@ -12,6 +12,20 @@ State at the start that you are using the `maquette` skill.
 
 Use it for a complete route, page or full-screen workflow whose direction is not settled. When the user supplied a direction, asked to match or extend an existing design, or scoped the work to a component or region, build one direction with `chiaroscuro` instead.
 
+## Hard Rules
+
+These hold wherever the work happens: in code, in a Paper file and in any brief handed to a helper. Styling the product already has is not an exception; fix it inside the scope and report it outside. Only an explicit instruction from the user overrides a rule.
+
+1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting, never for labels or headings. Proper acronyms keep their capitals.
+2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. Keep only consent, constraints and error recovery.
+3. **Four to six type styles.** Use the product's named roles. A new size or weight needs a job no existing role does.
+4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user has pointed to, and use it. A second version of an existing control is a defect.
+5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
+6. **Touch targets at least 44 by 44 CSS pixels.**
+7. **Verified means used and looked at.** "Works" means you completed the path in a browser, or walked a mockup's boards in order. "Looks right" means you then viewed each whole screen as the user sees it. Report the two separately, and never claim either from static checks.
+
+These are the same rules `chiaroscuro` applies, copied here so no direction depends on breaking them. Directions differ within them, never by breaking them.
+
 ## 1. Inspect before drawing
 
 Read the project instructions, the route and its components, the shell, the tokens and the real content. Write down in a few sentences who uses this page, what they are there to do, and what must stay unchanged. Every direction answers the same task with the same content; only presentation varies.
@@ -78,7 +92,8 @@ Exercise every direction in the running app:
 - content and behaviour match the baseline;
 - desktop and mobile are legible;
 - no direction introduces overflow, duplicate IDs, broken semantics, console errors or failed requests;
-- each label describes what is actually rendered.
+- each label describes what is actually rendered;
+- every direction keeps the Hard Rules.
 
 This is exploration. Do enough to make the choice real and comparable, and no more.
 

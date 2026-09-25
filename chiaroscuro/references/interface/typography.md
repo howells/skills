@@ -62,6 +62,7 @@ p { font-size: clamp(1rem, 2.5vw, 1.25rem); }
 - SHOULD: Keep a display headline compact enough to read as one idea. Two or three lines is a useful warning threshold, not a universal cap for narrow screens, long languages, or editorial composition.
 - SHOULD: Fix awkward wrapping compositionally: reconsider copy, container measure, fluid sizing, and breaks together rather than only shrinking the font.
 - SHOULD: Verify the rendered line count at mobile and desktop widths before shipping.
+- MUST: Check italic display words for clipped descenders (`g j p q y`). Tight display leading cuts them off; give the line enough height or bottom padding to clear them.
 
 ## OpenType Features
 
@@ -167,8 +168,8 @@ Tools like [Fontaine](https://github.com/unjs/fontaine) or Next.js `next/font` c
 - MUST NOT: Add explicit `leading-*` modifiers to headings unless a layout edge case truly requires it. Tailwind's default heading rhythm is the baseline.
 - MUST: Use `text-balance` on headings and `text-pretty` on paragraph text.
 - MUST: Use `tracking-tight` on headings larger than `text-xl` unless the chosen font is already condensed.
-- MUST NOT: Introduce decorative mono, small caps or tracked uppercase eyebrows. Preserve the product's established display/body roles and use sentence case for ordinary UI text. Omit kickers that repeat the heading.
-- MUST: Limit mono to literal code or identifiers whose characters need inspection. Use tabular numerals in the body font for prices, counts and comparisons. Preserve proper acronyms, explicitly supplied brand treatments and treatments in a user-selected direction, only in their intended roles; neither a technical subject nor an available mono token justifies decorating ordinary labels.
+- MUST NOT: Use small caps, tracked uppercase or decorative mono (Hard Rule 1 in `SKILL.md`). Existing styling in the product, a technical subject or an available mono token is not an exception; only an explicit instruction from the user is. Use sentence case for ordinary UI text.
+- MUST: Limit mono to literal code, identifiers and values whose characters need inspection. Use tabular numerals in the body font for prices, counts and comparisons.
 - MUST: Inspect inherited styles as well as new classes in the changed UI. A shared component can reintroduce mono, caps or tracking even when the caller contains none.
 - SHOULD: Constrain long-form text with `max-w-[*ch]` or equivalent directly on the text element.
 

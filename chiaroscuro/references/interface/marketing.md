@@ -36,7 +36,24 @@ Marketing pages are narratives. Each section advances the story.
 - SHOULD: Edit the page to the fewest sections that tell the complete story. A long page is justified only when each section advances the decision.
 - NEVER: Decorative filler - gradient blobs, floating shapes, ornamental dividers, accent badges, or background effects that exist to fill space rather than communicate meaning
 
-**Section rhythm matters more than individual section design.** A page with 5 well-paced sections beats a page with 10 beautifully designed sections that feel relentless.
+- NEVER: A bento grid with an empty or filler cell. The grid has exactly as many cells as there are items; reshape it rather than pad it.
+
+**Section rhythm matters more than individual section design.**
+
+## Machine-Made Furniture
+
+Generated marketing pages reach for the same props to look designed. Each is banned unless the brief genuinely calls for it.
+
+- NEVER: A fake product preview built from styled divs - a mock task list, dashboard or terminal. Use a real screenshot, a real working component, or no preview.
+- NEVER: Numbered section labels (`01 / Capabilities`, `002 · Work`) or image pagination (`01 / 4`). Name the section plainly or not at all.
+- NEVER: Scroll prompts (`Scroll to explore`, an animated mouse wheel).
+- NEVER: Coloured dots before labels, nav items or list rows. A dot is for real live state, such as service status.
+- NEVER: City, local-time or weather strips, unless the business is genuinely about place or time zones.
+- NEVER: Version stamps, build numbers or `last sync` lines on a marketing page or inside its screenshots.
+- NEVER: Tags laid over photos, or invented photo credits and plate numbers as captions. Credit a real photographer or write a plain caption.
+- NEVER: `Step 1 / Step 2` or `Phase 01` as the label. The step's own verb is the label.
+- NEVER: Hairlines, crosshairs or grid lines drawn only for atmosphere. Rules separate real content.
+- NEVER: A filler sentence under every section heading explaining the section. A page with 5 well-paced sections beats a page with 10 beautifully designed sections that feel relentless.
 
 ## Social Proof
 

@@ -40,9 +40,13 @@ Cite by number in findings, so a reviewer sees the pattern rather than the insta
 
 **Typographic tells that read as machine-made**
 
-15. **Small caps and letter-spaced micro-headings.** They add emphasis the content does not support.
+15. **Small caps and letter-spaced micro-headings.** They add emphasis the content does not support. A house style that already uses them is not an exception; only an explicit instruction from the user is.
 16. **Title Case Drift** across labels that should be sentence case, and sentence case where the product's convention is title case. Pick one and hold it.
 17. **Emoji, status theatre, and box-drawing** in any user-facing surface.
+
+**Labels that disagree**
+
+18. **Several labels for one action.** `Get in touch`, `Let's talk` and `Contact us` on one page, or `Try free` beside `Get started`. The reader wonders whether they lead to different places. One action gets one label everywhere it appears.
 
 ## Substitutions
 
