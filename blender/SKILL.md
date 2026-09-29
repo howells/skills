@@ -13,6 +13,13 @@ Two ways in, and they are not interchangeable.
 
 The rule that decides which: *does this touch state the user is looking at?* Use the live MCP for inspection and user-authorized edits to the open scene. Use headless Blender on an explicit copy for long renders or batch processing; never replace the user's open file with a headless result without reconciling live edits. Choose the route by the owned document and task, not merely by whether it writes a file.
 
+For longer film work, load the relevant reference file before changing the assembly or render plan:
+
+- [Film production and delivery](references/film-production.md): integrating scene candidates, story and behaviour clocks, camera movement, lighting, sourced assets, sound continuity, frozen inputs, resumable jobs and complete-film review.
+- [Render performance](references/render-performance.md): separating elapsed time from rendering work, controlled resolution/cache tests, device verification, preview settings, motion quality and measured estimates.
+
+Give one lead ownership of the assembled scene, route and timing contract, and one process ownership of the GPU. Prove the smallest unresolved action from the actual film camera, then review the complete encoded journey. Keep a requested sequencing/sound approval before the expensive final render. A Blender film does not imply permission to build a game-engine version.
+
 ---
 
 ## 1. The single rule that outranks everything
@@ -238,8 +245,8 @@ The user is looking at this. Treat their viewport as their document.
 - **Never reload the file to make a change.** `bpy.ops.wm.open_mainfile` resets their view. Edit the live session through the MCP instead. If you genuinely must reload, capture and restore `view_perspective`, `view_distance`, `view_location`, `view_rotation`, `lens` and `shading` from `screen.areas` → `VIEW_3D` → `region_3d`.
 - **Check `bpy.data.is_dirty` and live ownership.** A dirty scene can contain user edits or this task's own authorized work. Continue inspection and scoped authorized edits without discarding either. Do not reload, overwrite or save unrelated edits merely to clear the flag; pause if another person is actively editing or ownership is unclear.
 - **Say which paths you own** before writing, and get off the connection entirely when the user says they are editing. Idle, the setup touches nothing; every risk needs a deliberate call.
-- **One source of truth, one file.** A capture/replay layer that records and reapplies arrangements will destroy hand placement — it did, repeatedly. Anchors get captured while child transforms do not; a name-match breaks when a fresh append drops its `.001` suffix; asset wrappers get deleted and orphan every child. Delete the layer. The `.blend` is the truth.
-- **Guard against stray scene files.** Copies accumulate (`.blend1` backups, rescue copies) and each is a file someone can open by mistake and arrange for an hour. Keep exactly one `.blend` in the working directory; put snapshots in a separate `locked/` directory.
+- **One authoritative scene per role.** Don't let an unowned capture/replay layer overwrite live hand placement. Inspect child transforms, stable object identity and asset wrappers before replaying changes. Preserve an explicitly authorised deterministic film assembly or timeline; its versioned manifest determines the source scenes and code used for the film.
+- **Separate sources, candidates and rendered evidence.** Keep distinct vignette sources where the project requires them. Identify the authoritative file for each role, and keep snapshots, candidate revisions and rendered evidence clearly separated so a stray `.blend1` or rescue copy cannot be mistaken for the current scene.
 
 ### Asset structure
 
@@ -351,10 +358,10 @@ Gzip the raw `.f16` and decompress with `DecompressionStream("gzip")`.
 ## 11. Headless
 
 ```bash
-blender -b scene.blend --factory-startup --python script.py -- --arg value
+blender --factory-startup -b scene.blend --python script.py -- --arg value
 ```
 
-- `--factory-startup` keeps user add-ons and preferences out of it. Reproducible.
+- `--factory-startup` selects factory startup settings. Set render and device preferences explicitly in the script instead of relying on the user's saved configuration.
 - Everything after the bare `--` is yours: `sys.argv[sys.argv.index("--") + 1:]`.
 - Run it as a properly detached background task. `nohup … &` inside a wrapper that then exits will have its child killed — a render can die after "Read blend" with an exit code of 0 and no output at all. Check for output files, not the exit code.
 - `bpy.ops.render.render(write_still=True)` after setting `scene.render.filepath`.
