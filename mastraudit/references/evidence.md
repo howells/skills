@@ -1,14 +1,14 @@
 # Evidence
 
-Whether the implementation can be trusted to tell you when it is wrong. A codebase can pass every check in `structure.md` and still be unobservable and untested.
+Read this before tests, evaluations and completion claims. Choose evidence for the changed behaviour, with side effects and acceptance scope made explicit.
 
 ## What counts as verified
 
 - **Every novel API usage was checked against installed types or version-matched docs**, not recalled. This is the check that gates all the others: an audit built on a remembered signature is confidently wrong.
 - **The installed version is noted**, and disagreements are resolved by kind: the documentation says what a feature means, the installed code says what its defaults are and whether it exists at all in this version.
 - **Where the installed packages are absent, that is a stated coverage gap.** An audit of a checkout with no installed types is an audit against convention, and saying so is the whole of its value.
-- **Every Mastra package, its engine adapter and its CLI resolve to one version each.** Duplicates split types and produce two half-configured runtimes, and a CLI expecting a newer companion package than the workspace pins breaks the build on a method that is simply not there.
-- **Every patched dependency is pinned by a test that fails when the patch stops applying.** A rebuilt distribution moves the lines a patch targeted, and a version bump can withdraw behaviour the code depends on - context propagated across a resume, or a claim protocol a test double still imitates from the previous version.
+- **Resolve the relevant packages from each actual caller.** Duplicate framework or driver copies can split types, runtime identity and test guard coverage. Several applications can legitimately use different versions; investigate the coupled runtime, CLI and adapter compatibility rather than demanding one version across every project.
+- **A permitted dependency patch has a regression case.** Verify the published/generated/served artefact as well as the patch source. A dependency bump can withdraw behaviour a test double still imitates. Don't add or restore a patch outside the task's scope; an explicitly removed patch remains removed.
 - **A type error that appears on a version bump is investigated as a version change.** Overload resolution can collapse on a combination of options that compiled cleanly before, which looks like the code broke and is not.
 - **Model ids were verified against a provider registry**, not recalled.
 - **Where subagents wrote any of the code, their briefs carried the same mandate.** A delegated hallucination is still a hallucination.
@@ -27,21 +27,50 @@ Whether the implementation can be trusted to tell you when it is wrong. A codeba
 
 ## Testing
 
-- **Domain behaviour is tested in the domain package against the real dependency at least once.** A suite that only asserts the shape of generated output can be entirely green over a broken path.
-- **Wrapper tests cover ids, descriptions, schemas, annotations, registration and delegation.**
-- **Boundary tests guard against product logic reappearing in wrappers** - direct fetches, filesystem access, nested tool imports, one tool invoking another's execute.
-- **Round-trip tests exist for anything written durably and read back later**, including the refused-write and oversized-payload cases.
-- **Negative tests neutralise every source the code reads.** Neutralising the first environment variable name found, when the code reads several, produces a test that passes by accident.
+- **Test the named failure risk at its real boundary.** A suite that only asserts generated shapes can be green over a broken path. Reuse applicable wrapper and containment checks; don't write a new test for every bullet or add a broad gate after each green check.
+- **Durable changes have round-trip evidence**, including refused writes or oversized payloads where those are the changed risks. Drive new storage effects only within the task's authorisation.
+- **An offline test blocks effects, not merely credentials.** Read the full import graph and env-loader precedence. A root env file can override refused URLs, alternate key names can survive clearing one variable, and singleton construction can discover vector indexes or initialise storage before a test body runs. See the guard procedure below.
 - **At least one bounded smoke test covers the critical path** against the real singleton.
 - **Registration changes verify affected manifests and capability contracts.** Generated manifests, capability schemas and count pins are what a targeted run misses, so use the repository's own gate over those outputs rather than the package's tests alone.
-- **Any change to what the Mastra package imports or depends on is verified by building it and starting its studio.** The bundler decides what stays external and what is bundled, and neither decision is visible to the application build, the typecheck or the tests.
+- **A runtime import/dependency change gets evidence from the affected bundle.** Where bundling, module-load effects or Studio discovery can fail, build and boot that owner when authorised. A product typecheck doesn't exercise Mastra's bundler. Coordinate an existing Studio process rather than starting or stopping a peer's runtime independently.
+
+## Offline checks cannot reach a live store
+
+Before invoking an unfamiliar test or scanner, inspect both its code and what it imports. Test filenames, mocks of one service and assertions about in-memory data do not establish isolation.
+
+For a database-free check, install the guard before loading the real registry or adapters. Refuse the driver/network seam actually used and record attempts independently. Cover promise and callback connections, pools, startup discovery and each resolved driver copy. Fail the test in a teardown hook even when the application catches the refusal. A thrown connection error alone can be swallowed and leave a misleading green check.
+
+Demonstrate that the guard catches a direct attempt and a deliberately swallowed attempt, without opening a socket. Report the guard's scope and observed attempt count. A global-fetch guard doesn't cover another HTTP client, a subprocess or another driver instance; don't claim isolation beyond what was blocked.
+
+Use lazy initialisation or injected test dependencies where imports perform unnecessary storage work. Fix the common owning boundary rather than setting more refused env URLs or excluding the one test that exposed it. Keep integration checks in a separately selected configuration with explicit store and effect permissions; a suffix does not authorise them. Never run a dangerous test just to measure how dangerous it is.
+
+## Evaluations that can change a decision
+
+Scorers judge completed behaviour; processors can affect it during execution. A scorer file, registered scorer or green score doesn't establish that a hard requirement was enforced. Follow the actual hook, input, output and stored result.
+
+- Define expectations independently of the current answer. Include different briefs and at least the disputed adverse case: a missing required use, absent fact, duplicate identity, sparse filter, later-page exhaustion or a near match that fails a hard threshold.
+- Keep factual checks deterministic where possible: retrieved identifiers, distinct producers, category/use, counts, numeric limits, exclusions, duplicates, page cursors and stopping reasons. Use model/classifier judgement only for bounded interpretation; don't replace checkable facts with another model's approval.
+- Preserve required conditions from the original request through extraction, retrieval, selection and final prose. A count/performance score can pass an answer that omits the requested use. Unknown evidence remains unknown, not verified suitability.
+- Distinguish aesthetic judgement, provenance and factual accuracy. A source label records origin; it isn't an accuracy score. A sampling/sales channel isn't necessarily the manufacturer.
+- Count unique tool calls using trace/call identity. Cumulative snapshots can repeat the same call; duplicated telemetry isn't repeated execution. Inspect genuine repeated requests, empty pages, failed-call guards, final-step behaviour and answers cut off by step limits.
+- Represent unscorable, failed, aborted and substituted results explicitly. Keep those counts alongside valid scores rather than converting them into normal success or allowing a strong average to hide a hard failure.
+- Persist datasets, experiments and scorer records to the intended store when durability is required. Inspect their identifiers, case outputs and associations in Studio or the API, then establish that the same records are readable after a controlled reconnect/restart. In-memory wiring isn't durable evaluation acceptance.
+- Read existing traces and experiment records before buying a new baseline. If new model/evaluation runs are authorised, bound cases, calls, cost and elapsed time, use a stable source/runtime, and compare the same independent expectations before and after the change. Don't loop on new prompts until a result looks good.
+
+Public source: [Mastra evaluation guide](https://mastra.ai/docs/evals/overview). Check the installed storage and evaluation APIs before creating a dataset or experiment.
 
 ## Evidence of implementation completion
 
 Check existing logs, tests and records for these claims. Run the system only when the audit brief authorizes its effects; otherwise record missing runtime evidence as not checked.
 
-- **A real run was driven end to end by API**, not clicked through a UI.
+- **Exercise the actual consumer journey.** API evidence establishes the API path; an interactive feature also needs the intended browser/host journey. Inspect fresh execution separately from saved rendering. See [Studio and MCP](studio-and-mcp.md).
 - **The run's own output was inspected** - the ledger, the persisted document - not just its terminal status.
 - **The dev-server log was read for framework error ids even on a passing run.**
-- **Any new failure mode is written down**, with the wrong turn that produced it, wherever the codebase keeps that record.
-- **If the work made an environment variable required, every hand-built environment was updated**: test fixtures, the shared harness, each CI job, the task runner's passthrough list, and every deployment environment. A task runner that strips anything absent from its passthrough list will silently drop a variable set only on the CI job, and nothing warns you.
+- **Record the measured failure and the effective fix** on the owning tracker item or the codebase's designated record. Add the reusable prevention to the guide, with its version/adapter applicability; don't turn an incident's incidental numbers or old workaround into a universal rule.
+- **Required secrets reach the actual runtime.** Check test fixtures, task-runner passthrough and deployment environment under the project's policies. A task runner can drop an otherwise supplied secret. Don't add hosted checks or deployments merely to verify a guide.
+
+## Keep delivery claims separate
+
+State the exact source revision and installed packages checked. Then state independently whether the change was committed, pushed, built, served, executed, persisted and interacted with. A commit, command exit, installation, terminal run status or screenshot is evidence for its own claim only.
+
+For an upgrade or release, check the built/packed artefact and a real selected consumer. For a deployed fix, read the endpoint's version and exercise the relevant route. Source-level tests don't establish repaired stored data. Missing runtime, model, native-host or recovery evidence stays open without inflating a bounded pass into whole-system acceptance.

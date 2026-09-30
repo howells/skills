@@ -184,7 +184,7 @@ npx skills@latest add howells/skills --skill marginalia --agent codex --global
 
 ### `mastraudit`
 
-Run before writing Mastra code and before calling it done. Pre-flight: local docs, installed version, small payloads, constituent tools. Then audit execution failures first: step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, tool keys.
+Prevent recurring Mastra failures while building agents, tools, workflows and MCP Apps. Use before changes, during debugging and for focused acceptance. Not for general UI review (`fieldtest`).
 
 Install globally for Codex:
 

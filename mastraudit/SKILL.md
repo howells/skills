@@ -1,93 +1,48 @@
 ---
 name: mastraudit
-description: "Run before writing Mastra code and before calling it done. Pre-flight: local docs, installed version, small payloads, constituent tools. Then audit execution failures first: step size, fan-out keying, suspend and resume payloads, load-bearing writes, model settings, tool keys."
+description: "Prevent recurring Mastra failures while building agents, tools, workflows and MCP Apps. Use before changes, during debugging and for focused acceptance. Not for general UI review (`fieldtest`)."
 ---
 
 # Mastraudit
 
-Audit a Mastra implementation in the order things actually go wrong.
+Use this as a building guide throughout Mastra work. Prevent the expensive mistakes at the point the implementation makes them. The existing name also supports an explicitly requested audit.
 
-That ordering is the whole point, and it is a correction. An audit that leads with architecture catches a stray `@mastra/*` import instantly and misses the incident that costs the most hours. Package boundaries are cheap to fix and rarely fatal. Execution semantics - what a step does, how fan-out results are keyed, whether a load-bearing write throws - are where runs die, and they are invisible to a structural pass.
+## Before changing code
 
-So: **execution first, structure second.** If you run out of time, you will have spent it on the half that matters.
+1. **Find the runtime owner and the actual version.** Resolve packages from the package that calls them, including the CLI, storage and engine adapters. A manifest range, catalog entry or directory listing isn't an installed version. Read that version's embedded docs and types, plus the matching page in a configured local vendor mirror. A recent mirror can still describe a newer release. Use published documentation when local evidence is missing; state the gap.
+2. **Read the working precedent.** Follow the existing public bridge, storage provider, model policy and domain operation. Identify the execution lane: plain agent, durable workflow, Studio chat, HTTP or stdio MCP. Trace what constructs it and what registration makes public. Read [structure](references/structure.md) for ownership and import changes.
+3. **Choose the contract and the bound.** Specify the useful output, explicit failure and completion states, references that cross each step, and limits on output, steps, elapsed time and retries. Give an agent the operations it needs to decide; wrapping the whole deterministic workflow can make an agent comparison circular. Read [contracts](references/contracts.md) for tools or structured output, and [execution](references/execution.md) for stateful work.
+4. **Choose the acceptance path before running it.** Name the one changed journey and its observable outcome. Check test/import side effects first. Audit-only scope permits source inspection and safe local checks, not model calls, workflow admissions, storage writes or deployments. Read [evidence](references/evidence.md) before tests, evaluations or completion claims.
 
-## Before you write
+This is a short implementation decision, not a new planning document. Keep evidence on the owning tracker item when the project uses one.
 
-Do this before any Mastra code, and run the five-minute pass below before calling the change done.
+Reuse an established pre-flight for the same source, installed versions and runtime. Revisit the relevant contract when dependencies, imports, settings or the execution lane change; don't reread settled documentation or rerun a green gate after every save.
 
-1. Read the matching docs page first. Use a local version-matched mirror when the environment names one (check its last commit is recent), otherwise the published docs for the installed version. Either outranks memory and the web.
-2. Check `ls node_modules/@mastra/` for the installed version and read the docs for that version.
-3. Keep tool and agent payloads small. Pass references (ids, paths, keys), never blobs. Payload size is the most common defect in Mastra glue code.
-4. Give an agent its constituent tools, never a whole workflow wrapped as one tool.
-5. Mastra bugs almost always sit in glue code between two pieces the agent wrote itself, and that glue passes typecheck, lint and build. Audit the glue, not the framework.
+## While building
 
-## Source of truth
+- Keep domain behaviour and canonical schemas at their source; Mastra wires them together. Inspect the glue that typecheck cannot validate: registration keys, generated schemas, output projection, callback delivery, storage injection, resume forwarding and model settings.
+- Reuse applicable installed scanners. Read their signatures and coverage before invoking them. Scanner output is a lead until checked against the actual caller and supported contract. No scanner available means a stated coverage gap, not an invented package export.
+- Establish a minimal reproduction before changing a dependency, adding a fallback or blaming a provider. Start with request size, effective settings, identity, source version and persisted state. Change one cause at a time.
+- For Studio, coordinate a stable runtime window with its owner before a timed run. Read [Studio and MCP](references/studio-and-mcp.md) for origins, hot reload, stale bundles, local stdio and inline apps.
+- Turn a demonstrated silent failure into the smallest useful guard at its shared boundary. Make it fail on the original adverse case before trusting it. Avoid a broad suite merely because a focused check passed.
 
-Mastra moves fast enough that recalled API shapes are wrong more often than right. In priority order:
+## When something fails
 
-1. **The installed packages.** `node_modules/@mastra/*` types and embedded docs. This is what will actually run.
-2. **The documentation for that version.** A local mirror if one exists, the published docs otherwise.
-3. **Nothing else.** Never model memory for constructor signatures, model routing, storage, memory, workflow, or tool APIs.
+| Symptom | First investigation |
+| --- | --- |
+| Empty object, ignored tools, rejected schema | Native result, generated provider schema and tools/structured-output compatibility in [contracts](references/contracts.md). |
+| Slow steps, repeated searches, missing earlier facts | Measured prompt/result/snapshot size and processor retention in [execution](references/execution.md). |
+| Lost progress, duplicate writes, stuck resume | Checkpoint, identity, idempotency and durable state in [execution](references/execution.md). |
+| Unit tests connect or write unexpectedly | Import-time initialisation, environment precedence and driver guard in [evidence](references/evidence.md). |
+| Studio fails to load, hangs bundling or loses a run | Process, origin, dependency graph and reload window in [Studio and MCP](references/studio-and-mcp.md). |
+| Fix works over HTTP but fails in an existing MCP session | Transport identity and process start time in [Studio and MCP](references/studio-and-mcp.md). |
+| Inline HTML works but agent UI does not | Tool metadata, resource, result envelope and guest-host handshake in [Studio and MCP](references/studio-and-mcp.md). |
+| Scores pass but the answer breaks the brief | Independent expectations, hard requirements and persisted experiment evidence in [evidence](references/evidence.md). |
 
-Note the installed version. Resolve disagreements by kind: documentation for what a feature means, installed code for its defaults and for whether it exists in this version at all. Where a codebase ships its own Mastra conventions - a house package, an architecture document, a failure log - read it first; it outranks generic guidance about that codebase.
+## Before calling it done
 
-## The five-minute pass
+Exercise the changed path with the closest permitted evidence. A visible feature needs interaction in its intended host; a durable feature needs its stored output and recovery boundary inspected. When those effects aren't authorised, state the missing acceptance evidence.
 
-When there is no time for the full audit, these catch the most:
+Return a short verdict, what changed, the installed versions and exact source/runtime tested, focused evidence, and remaining gaps. Keep source checks, runtime execution, persistence, host interaction, publication and deployment as separate claims. An explicit audit ranks confirmed findings by failure cost: blocking, should fix, noted; each carries `file:line`, consequence and fix. Include a coverage map for skipped checks.
 
-1. **`modelSettings`** - is every token cap nested under it, never flat at the top level?
-2. **Step size** - does any workflow step do more than one discrete thing?
-3. **Fan-out** - do arms return receipts rather than bulk, and does the collector key on identity rather than array position?
-4. **Load-bearing writes** - does a write a later step depends on throw on failure?
-5. **Tool keys** - does the model see `verb_noun`, or a leaked camelCase shorthand?
-
-## Use the scanners before you grep
-
-Some projects already provide deterministic checks for import boundaries, tool IDs and annotations, barrel files, model-setting nesting, tool keys or MCP client identity. Discover applicable scanners in the project's installed packages and scripts. Verify their documented coverage instead of assuming a particular package or export exists.
-
-Inspect the installed scanner signatures and bundled usage examples, then call the applicable exports against the scoped implementation root. Do not invent arguments from the export names. If a suitable scanner is unavailable, use manual search and state the coverage gap. Scanner output is a lead: verify it against the implementation and supported contracts.
-
-## The check catalogue
-
-- [Execution semantics](references/execution.md) - workflows, fan-out, concurrency, retries, suspend and resume, state and storage, long agent loops. Where the fatal failures live.
-- [Structure](references/structure.md) - containment, orchestrator discipline, agents and models, tools.
-- [Evidence](references/evidence.md) - observability, testing, and what counts as having verified something.
-
-## Steps
-
-Use these steps to organize the audit; keep any task list brief and report skipped coverage without copying the workflow verbatim.
-
-Default to source and existing evidence. Audit-only scope does not authorize workflow runs, model calls, storage writes or deployment changes. Local scanner execution is allowed after inspecting it for side effects. Apply house architecture and naming conventions only when the target codebase adopts them; otherwise present them as optional recommendations, not correctness findings.
-
-1. **Scope it and say it back.** Which package owns Mastra, and which surfaces are in range. Trace runtime owners and import roles; zero or several dependency declarations are discovery signals, not findings. Several independently deployed Mastra apps can be legitimate. Audit clearly identified implementations separately and ask only if unresolved ownership changes the scope.
-
-2. **Establish the source of truth.** Note installed versions. Find any codebase-local conventions document. Say which you are auditing against.
-
-3. **Run the scanners** if they are available, and record what each returned including the empty ones. An unrun scanner is not a pass.
-
-4. **Audit execution semantics** against `references/execution.md`. This is the longest step and it comes first on purpose.
-
-5. **Audit structure** against `references/structure.md`.
-
-6. **Audit evidence** against `references/evidence.md`.
-
-7. **Report to the contract below.**
-
-## Output contract
-
-Findings ranked by what a failure costs, not by section order.
-
-Each finding carries: `file:line`, the failure it invites in one sentence, and the fix. Where a finding matches a known incident class in the codebase's own failure log, cite it - a named prior incident is far more persuasive than a rule.
-
-- **Blocking.** Would lose a run, corrupt state, or silently produce wrong output.
-- **Should fix.** Real, not yet fatal.
-- **Noted.** Judgement calls the codebase may have made deliberately. Ask rather than assert.
-- **Not checked.** Anything skipped, and why. A short audit honestly scoped beats a long one implying coverage it did not have.
-
-## Failure modes
-
-- **Leading with architecture.** Containment findings are easy to produce and rarely the expensive problem. They go second.
-- **Asserting an API shape from memory.** Read the installed types. This is the single most common way an audit is confidently wrong.
-- **Over-strict containment.** Blanket "no `@mastra/*` outside the owner" flags legitimate infra clients. See `references/structure.md`.
-- **Flagging a pattern whose exception is documented.** `onStepFinish` with `structuredOutput` is only a bug without `structuredOutput.model`. Check the narrow form before flagging.
-- **Reporting a clean pass on checks you did not run.** Say what you did not check.
+Stop when the stated acceptance condition is met. A new unrelated finding goes on the tracker, not into an open-ended round of extra checks.
