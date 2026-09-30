@@ -62,6 +62,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill ask-howells --agent codex --global
 ```
 
+### `astra-review`
+
+Get an independent review from GPT-6 Astra via Codex, then verify its claims before acting. Use when the code can settle the question - does a diff hold, what changed when - or the user asks for Astra or a Codex review. Not for judgement calls (`fable-review`), criteria checks (`glm-review`) or codebase grades (`simplify`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill astra-review --agent codex --global
+```
+
 ### `blender`
 
 Inspect, measure and render Blender scenes through MCP or headless CLI. Use for Blender scene, render-pipeline or MCP work. Not for 2D design files (`paste-up`).
@@ -114,7 +124,7 @@ npx skills@latest add howells/skills --skill fail-fast --agent codex --global
 
 ### `fable-review`
 
-Get an independent review from Claude Fable 5.1, then verify its claims before acting. Use for a hard judgement call: a design or architecture decision, a taste question, a plan worth arguing with. Not for a cheap conformance check (`glm-review`), a codebase grade (`simplify`), or a routine diff.
+Get an independent review from Claude Fable 5.1, then verify its claims before acting. Use for a hard judgement call: a design or architecture decision, a taste question, a plan worth arguing with. Not for code questions (`astra-review`), bounded checks (`glm-review`) or a codebase grade (`simplify`).
 
 Install globally for Codex:
 
@@ -154,7 +164,7 @@ npx skills@latest add howells/skills --skill gog --agent codex --global
 
 ### `glm-review`
 
-Get an independent read-only review from GLM 5.3 Flash via OpenCode, then verify its claims before acting. Use when the user names GLM, or for a cheap bounded check: conformance to stated criteria, a contract, UI copy. Not for a hard judgement call (`fable-review`) or a codebase grade (`simplify`).
+Get an independent read-only review from GLM 5.3 Flash via OpenCode, then verify its claims before acting. Use when the user names GLM, or for a cheap bounded check: conformance to stated criteria, a contract, UI copy. Not for judgement calls (`fable-review`), deep code reads (`astra-review`) or a codebase grade (`simplify`).
 
 Install globally for Codex:
 

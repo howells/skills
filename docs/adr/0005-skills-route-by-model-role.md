@@ -22,3 +22,7 @@ Two skills are exempt because a specific model is their purpose: `fable-review` 
 `next`, `rebalance`, `simplify`, `foreman` and `blender` now describe roles. A maintainer who wants a skill to prefer a particular model can no longer write it into the skill; that preference belongs in the host's own configuration, where it applies to the person who set it.
 
 The gate is a word list, and it will need a new entry when a new codename appears. Adding one is a one-line change. A false positive on an ordinary English word is fixed by narrowing the pattern, never by exempting the skill.
+
+## Amendment, 2026-09-30
+
+`astra-review` joins the exemption for the same reason: its purpose is a read from one specific model, reached through the Codex CLI. The three review skills are the only exempt skills.

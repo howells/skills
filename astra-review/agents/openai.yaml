@@ -1,0 +1,4 @@
+interface:
+  display_name: "Astra Review"
+  short_description: "Independent GPT-6 Astra read through Codex"
+  default_prompt: "Use $astra-review to get an independent GPT-6 Astra read at high effort through the Codex CLI, then verify its findings before acting. For a codebase health review, use $simplify instead."

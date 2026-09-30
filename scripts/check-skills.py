@@ -493,7 +493,7 @@ def check_cross_pointers() -> None:
                 err(f"{rel}:{i}: points at `{m.group(1)}`, removed from the collection")
 
 
-MODEL_NAME_SKILLS = {"fable-review", "glm-review"}
+MODEL_NAME_SKILLS = {"astra-review", "fable-review", "glm-review"}
 MODEL_NAME_RE = re.compile(
     r"\b(Sol|Terra|Luna|Astra|Opus|Sonnet|Haiku|Fable|GPT-?\d|Gemini|Codex models|Claude models)\b"
 )

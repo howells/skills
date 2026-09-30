@@ -57,6 +57,7 @@ Route: `simplify` → the skill each finding points at.
 ### A second opinion
 
 - **A hard judgement call** - architecture, taste, a plan worth arguing with → `fable-review`.
+- **The code can settle it** - what changed when, whether a diff does what it claims → `astra-review`.
 - **A cheap bounded check** against stated criteria → `glm-review`.
 
 ### Lost the thread
@@ -88,7 +89,7 @@ Route: `simplify` → the skill each finding points at.
 | `unslop` / `fail-fast` | Should behaviour stay exactly the same? Yes: `unslop`. |
 | `unslop` / `simplify` | Cleaning a diff, or judging its structure? Judging: `simplify`. |
 | `deslop` / `signage` | Paragraphs, or words on a control? Controls: `signage`. |
-| `fable-review` / `glm-review` | Is there a right answer to check against? Yes: `glm-review`. |
+| `fable-review` / `astra-review` / `glm-review` | Is there a right answer to check against? Yes: `glm-review`. If not, can the code settle it? Yes: `astra-review`. Otherwise `fable-review`. |
 | `what` / `memento` / `muster` | The last reply, this task, or many tasks. |
 | `rebalance` / `next` | Deciding the order, or doing the work? Doing: `next`. |
 

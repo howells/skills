@@ -102,6 +102,10 @@ _Avoid_: level, class, model tier
 How a skill asks for a model without naming one: frontier is the most capable on offer, workhorse the default working model, cheap the tier below that. The host resolves the role to whatever it runs today; a skill never writes the name.
 _Avoid_: model name, codename, Sol, Opus, or any product name standing in for the role
 
+**Review lane**:
+One of the three skills that send a brief to one named outside model for an independent read - `glm-review`, `astra-review` and `fable-review` - chosen by the kind of question rather than its importance. The exception to model roles, because which model answered is the point.
+_Avoid_: reviewer, second-opinion skill
+
 ### Judging a codebase
 
 **Stage**:

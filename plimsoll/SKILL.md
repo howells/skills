@@ -44,7 +44,7 @@ Cite by number so the pattern is visible rather than the instance.
 13. **Tests without a named risk.** "Code changed" is not a risk. Do not send a test-writer to manufacture unit tests because a diff exists or a workflow expects a test step.
 14. **Tests written against mocks.** They assert the spy was called and pass forever. They prove nothing and cost the same as a real one. Stripping them out of an existing diff is `unslop`.
 15. **Tests for paths the payload never takes.** Exhaustive coverage of a code path nobody will exercise between now and the deadline.
-16. **Trial and error at length.** After three failed attempts at the same thing, a fourth will not fix it. Stop and get an outside read - `fable-review` for a judgement call, `glm-review` for a bounded conformance check.
+16. **Trial and error at length.** After three failed attempts at the same thing, a fourth will not fix it. Stop and get an outside read - `fable-review` for a judgement call, `astra-review` when the code can settle it, `glm-review` for a bounded conformance check.
 
 ## Stop conditions
 
