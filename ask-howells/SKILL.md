@@ -23,7 +23,6 @@ Nobody remembers thirty-odd skills. Describe where you are, and this names what 
 - **The backlog is out of order for a goal or deadline** → `rebalance`. It reprioritises and stops before any code.
 - **Deliver the next item** → `next`, one fresh task per item. It claims the item, builds it and opens a PR.
 - **Reading or writing tracker items directly** → `linear`, which ships with the `howells/linearcli` repo rather than this collection.
-- **You want subagents to write the code while the main agent decides and inspects** → `foreman`. Only when asked for by name.
 - **Checks, polls or re-planning are crowding out anything visible** → `plimsoll`. It applies inside every route here.
 
 Route: `rebalance` → `next`, repeated. `plimsoll` whenever delivery stalls.

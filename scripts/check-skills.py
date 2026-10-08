@@ -469,6 +469,7 @@ def check_links() -> None:
 REMOVED_SKILLS = (
     "aperture",
     "fenceline",
+    "foreman",
     "foundry",
     "heathen",
     "inquest",

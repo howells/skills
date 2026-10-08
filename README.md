@@ -142,16 +142,6 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 ```
 
-### `foreman`
-
-Run an explicitly requested delegation mode for substantial changes: the main agent decides and inspects while subagents write code. Use only when the user asks for Foreman or delegated execution. Not for ordinary implementation, tiny fixes, or docs-only work; `plimsoll` governs process weight.
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill foreman --agent codex --global
-```
-
 ### `gog`
 
 Use gogcli for configured Google accounts instead of Google connectors. Not for web research (`web-research`).
@@ -406,6 +396,12 @@ Merged on 2026-09-06:
 | Skill | Where its work went |
 | --- | --- |
 | `survey` | `simplify`, for diff or whole-codebase reviews with optional scoring. Update Simplify, then run `npx skills@latest remove survey --global --yes`. Also remove project-local copies where present. |
+
+Removed on 2026-10-08:
+
+| Skill | Where its work went |
+| --- | --- |
+| `foreman` | Nothing. It existed to keep the expensive model planning while cheaper subagents wrote the code; that cost pressure has gone. `plimsoll` still governs process weight. |
 
 Moved or removed on 2026-09-24:
 

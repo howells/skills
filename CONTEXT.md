@@ -91,7 +91,7 @@ A tracker item stating the problem, the solution, user stories and the decisions
 _Avoid_: plan, PRD, requirements doc
 
 **Brief**:
-What a foreman sends a subagent: a spec-complete instruction naming files, interfaces and the report format. If it names files, it is a brief, not a spec.
+What a delegating agent sends a subagent: a spec-complete instruction naming files, interfaces and the report format. If it names files, it is a brief, not a spec.
 _Avoid_: task spec, delegate spec, prompt
 
 **Tier**:

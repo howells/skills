@@ -116,9 +116,9 @@ Deleting data, rotating credentials and touching production sit outside this cal
 
 Before writing a new automated test, finish this sentence: "The likely silent failure is ___, and this test catches it by ___." If you cannot, do not write the test. Prefer using the real payload when that exposes the failure more directly. Existing repository-required checks can still run at the final merge gate; they do not justify adding a new test to every change.
 
-## When Foreman also applies
+## When subagents write the code
 
-Explicitly requested `foreman` governs implementation ownership; Plimsoll governs the weight around it. Never invoke Foreman merely because work is substantial. Keep one main-agent inspection of delegated code because that is ownership, not an extra review round. Cut additional reviewer agents, duplicate verification, generated tests without a named risk, repeated fix rounds for optional polish, and any full gate the risk or merge contract does not earn. If the brief and dispatch cost more than the job, Foreman no longer applies: finish the small change directly and verify the payload.
+Keep one main-agent inspection of delegated code; that is ownership, not an extra review round. Cut additional reviewer agents, duplicate verification, generated tests without a named risk, repeated fix rounds for optional polish, and any full gate the risk or merge contract does not earn. If the brief and dispatch cost more than the job, don't delegate: finish the small change directly and verify the payload.
 
 ## What this is not
 
@@ -126,4 +126,4 @@ Explicitly requested `foreman` governs implementation ownership; Plimsoll govern
 - Not an argument against tests. It argues against tests aimed at the workspace while the payload sits unopened.
 - Not a codebase audit. Grading a repository's health is `simplify`.
 - Not a QA pass. Exercising a running app in a browser is `fieldtest`.
-- Not a delegation strategy. Routing substantial implementation to subagents is `foreman`; this skill has final say over the process weight around that routing when both apply.
+- Not a delegation strategy. It decides how much process delegated work can carry, not who writes the code.

@@ -53,14 +53,6 @@ RULES: list[tuple[str, str, str]] = [
         'bare "reference" — say "reference file", or "cross-pointer" if it points at another skill',
     ),
     (
-        # Scoped to foreman: that is where the decision bites. Elsewhere "the
-        # spec" is anaphora after "design spec" is established, which is
-        # ordinary English and needs no repair.
-        "foreman-spec",
-        r"\b(?:the|a|its)\s+spec\b",
-        'bare "spec" means a tracker item that names no file paths; an agent instruction is a "brief"',
-    ),
-    (
         # Inverted from the obvious form on purpose. The lifecycle sense is
         # correct and common; only the migration sense is wrong, so the rule
         # requires migration context on the same line rather than flagging
@@ -81,7 +73,6 @@ RULES: list[tuple[str, str, str]] = [
 # each entry is a substring that must appear in the offending line.
 ALLOW: dict[str, list[str]] = {
     "bare-surface": [
-        "the surface is the product",  # foreman: idiomatic, means the visible product
     ],
     "bare-surface-plural": [
         "surfaces deepening",  # verb
@@ -93,10 +84,6 @@ ALLOW: dict[str, list[str]] = {
     "bare-reference": [
         "the reference has",
         "the reference set",
-    ],
-    "foreman-spec": [
-        "spec-complete",  # established adjective: fully pinned down
-        "the spec source",  # code-review's own term for an upstream document
     ],
     "staged-migration": [
         "a staged migration",
@@ -128,9 +115,7 @@ SUBJECT_TREES: dict[str, tuple[str, ...]] = {
 }
 
 # Rules that apply only within certain paths.
-SCOPED: dict[str, str] = {
-    "foreman-spec": "foreman/",
-}
+SCOPED: dict[str, str] = {}
 
 
 def governed_files() -> list[Path]:

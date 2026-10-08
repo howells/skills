@@ -17,7 +17,7 @@ Scope is the last message and the few actions behind it - not the session, not t
 
 Length and jargon are two failures and fixing one does not fix the other. Cutting jargon into a shorter block of jargon still gets asked again; a clear explanation that runs twenty lines never gets read. Do both, every time.
 
-- **Never let a tool name stand in for what happened.** Not "ran Edit on `foreman/SKILL.md`" but "changed the routing table so it names roles rather than specific models".
+- **Never let a tool name stand in for what happened.** Not "ran Edit on `next/SKILL.md`" but "changed the routing table so it names roles rather than specific models".
 - **Drop internal nouns.** Say it the way you would to someone who does not know this codebase.
 - **Facts survive exactly.** Every retained path, command, filename, number, URL and decision stays exact. Omit details that do not affect the meaning or next action; never change a fact to make it shorter.
 - **Flatten the structure.** Drop headings and ceremony. A table becomes sentences. Keep a list only where the thing genuinely had parts.
