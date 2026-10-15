@@ -1,0 +1,4 @@
+interface:
+  display_name: "Computer Use"
+  short_description: "Operate Mac apps through Codex CLI computer use"
+  default_prompt: "Use $computer-use to operate the requested Mac app through Codex CLI and verify the result."

@@ -102,6 +102,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill componentize --agent codex --global
 ```
 
+### `computer-use`
+
+Operate macOS apps through Codex CLI computer use, including signed-in Chrome, from T3 Code or other coding agents. Not for browser-only QA (`fieldtest`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill computer-use --agent codex --global
+```
+
 ### `deslop`
 
 Rewrite prose that sounds synthetic, inflated, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts. Applies to prose; for interface labels use `signage`; for machine-written code tells use `unslop`.
