@@ -497,7 +497,9 @@ def check_cross_pointers() -> None:
                 err(f"{rel}:{i}: points at `{m.group(1)}`, removed from the collection")
 
 
-MODEL_NAME_SKILLS = {"review"}
+# `review` routes to a named model. `deslop` names models only as the provenance of
+# a writing tell (era vocabulary, leaked markup), never to route work.
+MODEL_NAME_SKILLS = {"review", "deslop"}
 MODEL_NAME_RE = re.compile(
     r"\b(Sol|Terra|Luna|Astra|Opus|Sonnet|Haiku|Fable|Muse|Wonder|GPT-?\d|Gemini|Codex models|Claude models)\b"
 )

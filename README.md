@@ -104,7 +104,7 @@ npx skills@latest add howells/skills --skill computer-use --agent codex --global
 
 ### `deslop`
 
-Rewrite prose that sounds synthetic, inflated, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artifacts. Applies to prose; for interface labels use `signage`; for machine-written code tells use `unslop`.
+Rewrite prose that sounds synthetic, inflated, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artefacts. Applies to prose; for interface labels use `signage`; for machine-written code tells use `unslop`.
 
 Install globally for Codex:
 
