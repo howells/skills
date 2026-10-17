@@ -54,6 +54,7 @@ Read [`references/interface/index.md`](references/interface/index.md) and open o
 
 - For motion, begin with [`references/interface/animation.md`](references/interface/animation.md). If installed, use `zoetrope` for specialist motion craft, and the library's own documentation for current API facts.
 - When writing or changing UI copy, use `signage` if installed, before the words shape the layout. Otherwise apply its core test here: would you say this to someone in the audience and be understood without explaining it? Keep labels concrete and remove prose that substitutes for a control.
+- For charts or a collection of data visualisations, load [references/interface/charts.md](references/interface/charts.md).
 
 The reference files are a router, not a checklist. Never load every rule file by default.
 
@@ -62,6 +63,8 @@ The reference files are a router, not a checklist. Never load every rule file by
 State the chosen direction briefly: hierarchy, typography, color behavior, density, and interaction temperament. A direction should be specific enough to constrain implementation, not a mood-board slogan.
 
 Carry the few defining decisions from the supplied design or accepted review into implementation: what leads, what stays quiet, what remains visible, and how actions relate to supporting information. Component defaults must preserve these decisions; a convenient variant is not a reason to change the composition.
+
+When borrowing another interface's aesthetic, name the features being borrowed, such as typography, texture, density or control treatment. Keep the target product's tasks, objects and state transitions intact. Walk the target scenario after applying that treatment; visual resemblance doesn't establish that the original app still works.
 
 ### 4. Implement in Tailwind v4
 

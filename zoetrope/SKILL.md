@@ -1,6 +1,6 @@
 ---
 name: zoetrope
-description: "Build, review or find web animation: whether to animate at all, then curve, duration, springs, gestures, interruption and reduced motion. Not for static visual polish (`chiaroscuro`) or browser QA (`fieldtest`)."
+description: "Build, review or find web animation, and diagnose dropped frames: purpose, timing, springs, gestures, interruption and reduced motion. Not for static visual polish (`chiaroscuro`) or browser QA (`fieldtest`)."
 ---
 
 # Zoetrope
@@ -15,6 +15,8 @@ Pick the job from the request: "animate", "add a transition", "make this feel al
 
 Load [references/values.md](references/values.md) for every job: it holds the curves, durations, springs and rules to cite. Load [references/recipes.md](references/recipes.md) when building a common component. Load [references/gestures.md](references/gestures.md) for anything the user drags, flicks, swipes or can grab mid-flight.
 
+For jank, stutter or performance choices, load [references/performance.md](references/performance.md). It follows Emil Kowalski's newer diagnostic guidance where older performance advice differs. His animation philosophy remains the basis of this skill; [references/source.md](references/source.md) records the upstream revision and licence.
+
 ## The gate
 
 Every animation, existing or proposed, answers these in order. The first failure ends it.
@@ -23,12 +25,15 @@ Every animation, existing or proposed, answers these in order. The first failure
 2. **What is it for?** Name one: feedback that input landed, where something came from or went, a state change made legible, bridging content that would otherwise jump, explaining how something works (onboarding and marketing only), or delight (rare moments only). "It looks nice" on something seen daily is a fail.
 3. **Does it help here?** Numbers someone is reading, a table they are scanning, a form they are filling in: these stay still. Decoration belongs where nothing is being worked on.
 
+An expanding model or diagram can make spatial relationships and state changes legible. Preserve the requested transformation and its object identity; judge its frequency and purpose through the same gate. Use the continuity recipe before replacing it with a crossfade.
+
 An answer of "don't animate this" is a full, correct result. Say so, give the non-motion alternative (an instant state change, a static affordance), and stop.
 
 ## Rules for every job
 
 - **Extend the project's tokens.** If easing or duration tokens exist, use and add to them. A second, parallel set is a defect.
 - **Cheapest tool that does the job.** A CSS transition before a library. A library only for springs, gestures, layout continuity or exit animations the platform can't do.
+- **Animate an accessible primitive.** Reuse the project's dialog, menu, drawer or tooltip before writing motion. If none exists, choose a suitable component library (use `pick-ui-library` when available); preserve its focus, keyboard and dismissal contracts.
 - **Reduced motion and hover gating ship with the animation**, never as a follow-up.
 - **No invented values.** Curves, durations and springs come from `values.md` or the project's own tokens. Don't write a cubic-bezier from memory because it looks familiar.
 - **Feel is checked by watching, not reading.** When the result depends on feel (a spring's settle, two things crossfading, opacity against height in a list), say so and give the check: slow the animation to 10-25% in the browser's animation panel, step it frame by frame, try gestures on a real touch device, and look again later with fresh eyes.
@@ -57,7 +62,7 @@ Useful searches: `transition`, `animation`, `@keyframes`, `motion.`, `animate=`,
 
 **Confirm before reporting.** A search hit is a lead. Re-read every lead at its source and drop anything deliberate, exempt or already right: a centred dialog scaling from the centre is correct; a long reveal on a marketing page can be fine; a documented trade-off is respected, not re-argued.
 
-**Fix in this order of preference.** Delete the animation; reduce it; fix the curve; fix the origin; make it interruptible; move it to cheaper properties; make the timing asymmetric; polish; then reduced motion and consistency.
+**Fix in this order of preference.** Delete high-frequency, purposeless or keyboard-triggered animation; otherwise reduce excess motion, fix the curve, fix the origin, make it interruptible, move it to cheaper properties, make the timing asymmetric, then polish. Include reduced motion and consistency in every repair. Preserve purposeful motion the user requested.
 
 Output, highest severity first. Omit empty groups.
 

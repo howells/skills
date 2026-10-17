@@ -32,6 +32,7 @@ Open only the file containing a component present in the work.
 | Buttons and action hierarchy | [buttons.md](buttons.md) |
 | Forms and validation | [forms.md](forms.md) |
 | Tables, dashboards, navigation, pagination, description lists | [data-components.md](data-components.md) |
+| Charts, truthful encodings and visualisation collections | [charts.md](charts.md) |
 | Headers, footers, heading groups, features, testimonials, teams, logos, login | [marketing-components.md](marketing-components.md) |
 | Pricing tiers | [pricing-cards.md](pricing-cards.md) |
 | Badges, avatars, icons, images, SVG, radii | [primitives.md](primitives.md) |

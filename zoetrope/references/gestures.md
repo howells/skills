@@ -6,6 +6,7 @@ For anything a finger or pointer moves directly: drags, swipes, sheets, carousel
 
 - Show feedback on pointer-down. Waiting for `click` or pointer-up makes the control feel dead.
 - Commit on pointer-up, and let moving off the target cancel it; moving back on re-arms it. Native `:active` plus `click` already behave this way; custom pointer handlers must reproduce it.
+- For custom tap recognition, allow roughly 10px of hysteresis or hit padding around the pressed target so slight movement doesn't cancel the press. This tolerance is distinct from the drag-direction threshold below.
 - Remove waits on the input path: debounces, artificial delays, a transition that must finish before input is accepted. Only pay the double-tap delay where double-tap exists.
 - Feedback is continuous. A slider, drawer or drag updates every frame of the gesture, not once at the end.
 

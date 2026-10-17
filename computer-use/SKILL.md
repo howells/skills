@@ -50,6 +50,8 @@ The child follows its live Computer Use instructions, inspects the current scree
 
 Keep these failure paths distinct:
 
+- **Machine, desktop and window:** verify which Mac runs the controller, whether its user session is unlocked, and whether the requested app has an available window. A `cgWindowNotFound` error alone doesn't identify an authentication or app-approval failure. Preserve the raw error and inspect the actual desktop state before retrying; unlocking must happen on the controlling Mac.
+- **Competing controller:** a changed-app or interrupted-control error can indicate another task or human moving the desktop. Check ownership and the current screen; coordinate before resuming from the observed state. Don't launch another controller or repeat actions whose effects already landed.
 - **Native app allowance:** ChatGPT desktop → Settings → Computer use → **Always-allowed apps**. The **Any App** toggle and Chrome's **Manage**/extension settings do not establish this saved allowance. Use the interactive approval procedure above when it is missing.
 - **macOS permissions:** Screen Recording and Accessibility for **Codex Computer Use** let the helper see and operate apps. These are separate from saved app allowances.
 - **Browser extension authentication:** errors such as **“unsupported Codex auth method: apikey”** belong to that backend. They do not prove that native Computer Use is unavailable. Preserve the user's requested native route and configured authentication.

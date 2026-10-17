@@ -1,4 +1,4 @@
 interface:
   display_name: "Zoetrope"
-  short_description: "Build, review or find web animation"
-  default_prompt: "Use $zoetrope to decide whether this should animate at all, then build it with the right curve, duration or spring, interruption behaviour and reduced-motion handling."
+  short_description: "Build, review and diagnose web animation"
+  default_prompt: "Use $zoetrope to build, review or find purposeful web motion, or diagnose dropped frames, preserving interruption behaviour and reduced-motion handling."

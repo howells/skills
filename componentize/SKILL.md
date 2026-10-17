@@ -293,6 +293,8 @@ Define the public component API before moving files:
 
 Extract one coherent group at a time. Update imports and call sites immediately so the repo does not keep two canonical versions.
 
+For a collection with many examples or consumers, load [references/collection-migration.md](references/collection-migration.md) for stable comparisons, family migrations and coverage.
+
 Load `chiaroscuro` only when the request needs visual direction and polish; load `typecase` when the duplicated styling is typographic. Deduplication and shared-component decisions stay in this skill, and its componentization workflow is the controlling scope.
 
 ### 5. Validate

@@ -1,6 +1,6 @@
 ---
 name: muster
-description: "Rebuild context across concurrent or older tasks from transcripts, git, peer sessions and the tracker. Use for catch-ups and in-flight inventories. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`)."
+description: "Recover project purpose, decisions and live state across transcripts, git, peers and the tracker; produce catch-ups or handoffs. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`)."
 ---
 
 # Muster
@@ -8,6 +8,8 @@ description: "Rebuild context across concurrent or older tasks from transcripts,
 A muster is a roll-call: every hand named, present or absent. That is the job here. It lists what is in flight right now, the state each thread is actually in, and what to do next. It is not a summary of what you did.
 
 Use it for "catch me up", "where did I leave off", "what is running", or before picking up work you started somewhere else.
+
+For a forgotten project, recover its purpose, audience and intended outcome before listing implementation activity. For a requested handoff, use the handoff contract below. In T3 Code, load [references/t3-history.md](references/t3-history.md) for coverage and attribution.
 
 The reason this earns a skill is concurrency. When several sessions run against the same repos, the expensive mistake is two agents standing on the same branch, or resuming a thread another session already merged, reverted or abandoned. Forgetting what you did is cheap next to that.
 
@@ -30,7 +32,7 @@ Use these steps to organize the roll-call. Keep any task list brief and record c
 
 2. **Take the roll of live sessions first.** Discover the current harness and its session/task APIs. In Codex, use the available task-list/read tools for user tasks and agent-list tools for this task's subagents; neither is automatically a census of the other. Use Claude's session tools when available. Record which harnesses are covered and which are unavailable. A busy peer's ownership changes what you may touch; an absent API is not evidence that nobody is working.
 
-3. **Read the available history.** Prefer the harness's task-history APIs, including archived tasks when in scope. For Claude filesystem history, discover the matching directory under `~/.claude/projects/`; a path such as `/Users/example/projects/app` commonly maps to `-Users-example-projects-app`, including the leading hyphen. Verify the directory instead of relying on an encoding guess. For Codex, prefer task-history tools; if unavailable, inspect scoped session metadata under its configured home in `sessions/` and `archived_sessions/` and match the recorded workspace before reading content. Order candidates by activity timestamps or modification time, not filename. Search the topic first and read matching regions; skip subagent and eval history unless requested. For many candidates, delegate bounded independent slices when useful; for one or two, read directly. Return goal, decisions, corrections, unfinished work and artefacts with task/session identifiers. Report empty and unavailable sources separately.
+3. **Read the available history.** Prefer the harness's task-history APIs, including archived tasks when in scope. For Claude filesystem history, discover the matching directory under `~/.claude/projects/`; a path such as `/Users/example/projects/app` commonly maps to `-Users-example-projects-app`, including the leading hyphen. Verify the directory instead of relying on an encoding guess. For Codex, prefer task-history tools; if unavailable, inspect scoped session metadata under its configured home in `sessions/` and `archived_sessions/` and match the recorded workspace before reading content. Order candidates by activity timestamps or modification time, not filename. Search the topic first and read matching regions; skip subagent and eval history unless requested. A request for all project transcripts includes children; don't silently apply the default exclusion. For many candidates, delegate bounded independent slices when useful; for one or two, read directly. Return goal, decisions, corrections, unfinished work and artefacts with task/session identifiers. Report empty and unavailable sources separately.
 
 4. **Verify every claim against live state.** Take each branch, PR and ticket the mining surfaced and check it: `git log`, `git status`, `gh pr view`. For ordinary merges, ancestry can prove integration. A negative ancestry or patch-id result cannot disprove a squash merge. Use the merged PR’s recorded head and destination, compare that head with the current branch tip, and inspect later commits separately. PR state alone does not prove post-merge branch work landed; an empty three-dot diff is not a substitute for this check. A pushed branch is an off-machine copy, but does not prove integration or completion, and a ticket marked done proves only that someone said so.
 
@@ -48,6 +50,10 @@ Lead with where things stand, then the roll, then what is going wrong, then the 
 - **Next move.** One concrete action. Not a menu.
 
 Cite transcript findings by UUID and everything else by its artefact - PR number, ticket ID, branch, permalink. Write plainly and remove filler; use `deslop` for a deeper wording pass when available and useful.
+
+### Requested handoff
+
+Give the next agent a usable brief in chat when that is the requested destination. Include purpose and requested outcome, settled decisions and rejected approaches, live code/tracker state, current writer and checkout ownership, authorised side effects and limits, evidence and coverage gaps, then the next concrete action. Distinguish proposals from decisions and completed work from intended work. Link the owning tracker item for durable context; don't create a local handoff file by default or reopen decisions the user already settled.
 
 ## Failure modes
 

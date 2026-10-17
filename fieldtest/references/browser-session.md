@@ -8,6 +8,7 @@ Honour the browser or tab the user specifies. Otherwise pick the browser with th
 
 | Environment | Preferred browser path | Notes |
 | --- | --- | --- |
+| T3 Code with collaborative preview tools | T3 preview | Inspect status and open an automation-capable preview when needed; follow the host's ownership and retry rules. |
 | Codex desktop or Codex with Browser plugin | Browser plugin / Codex in-app browser | Preferred for local targets, localhost apps, file URLs, screenshots, and current-tab testing. |
 | Claude desktop with in-app browser | Claude desktop in-app browser | Use when it supports navigation, interaction, inspection, and screenshots. |
 | Claude Code CLI with Chrome MCP | Chrome MCP | Strong default for CLI sessions with a real Chrome connection. |
@@ -30,6 +31,8 @@ Read the root `package.json`. If `scripts.dev` delegates to a workspace, follow 
 Check only URL/port-related keys in `.env`, `.env.local`, `.env.development`, framework config, and the leaf dev script. Never quote secrets or include unrelated environment values in reports.
 
 Before starting a dev command, verify that it is local and non-mutating. Ask before running broad scripts such as `dev:all`, scripts that start multiple services, or scripts that appear to target production-backed services.
+
+Identify the checkout, server owner, process/session and actual port before starting or reusing a server. A listening port may belong to a peer or another checkout. Reuse only a confirmed matching app; choose a free port for your own server rather than stopping somebody else's. Starting local rendering and authorising a test write are separate decisions: resolve effective backing targets before the latter, even when the server was already running.
 
 Prefer the actual startup URL over an inferred default, since the configured port may be occupied or overridden. Confirm the loaded app is the target. Common patterns:
 
@@ -61,6 +64,8 @@ For a broad app field test:
 9. Recheck at desktop width around `1440px`.
 
 For a focused regression, test only the affected route and one adjacent state.
+
+For async views, observe intermediate loading and error states as well as settled output. Exercise rapid A-to-B changes and late responses. For host-delivered apps, test the real host's delivery events, resize and interactions where accessible. Report standalone and native-host coverage separately when only one is available.
 
 ## Persona Checks
 

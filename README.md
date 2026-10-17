@@ -184,7 +184,7 @@ npx skills@latest add howells/skills --skill memento --agent codex --global
 
 ### `muster`
 
-Rebuild context across concurrent or older tasks from transcripts, git, peer sessions and the tracker. Use for catch-ups and in-flight inventories. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`).
+Recover project purpose, decisions and live state across transcripts, git, peers and the tracker; produce catch-ups or handoffs. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`).
 
 Install globally for Codex:
 
@@ -360,7 +360,7 @@ npx skills@latest add howells/skills --skill web-research --agent codex --global
 
 ### `zoetrope`
 
-Build, review or find web animation: whether to animate at all, then curve, duration, springs, gestures, interruption and reduced motion. Not for static visual polish (`chiaroscuro`) or browser QA (`fieldtest`).
+Build, review or find web animation, and diagnose dropped frames: purpose, timing, springs, gestures, interruption and reduced motion. Not for static visual polish (`chiaroscuro`) or browser QA (`fieldtest`).
 
 Install globally for Codex:
 

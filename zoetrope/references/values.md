@@ -11,16 +11,16 @@ Walk down the list and stop at the first that fits.
 | A state you toggle with a class or attribute: hover, press, open, selected | CSS `transition` |
 | An entrance when an element first renders | CSS `@starting-style` (Tailwind v4: the `starting:` variant) |
 | An exit to `display: none`, or a dialog or popover leaving the top layer | `transition-behavior: allow-discrete` on `display` and `overlay`, or a library's presence handling |
-| Fixed choreography that must stay smooth while the page is busy | CSS `@keyframes`, which runs off the main thread |
+| Fixed choreography that must stay smooth while the page is busy | CSS `@keyframes` on properties the browser can composite |
 | Scripted control without a dependency | Web Animations API, `element.animate()` |
 | Springs, gestures, shared-layout moves, exits after unmount | A motion library |
 | A whole-page or route change | The View Transitions API, where supported |
 
-JavaScript driven by `requestAnimationFrame` drops frames while the browser is parsing, running scripts or painting. Use CSS or the Web Animations API for motion that is decided in advance; use a library for motion that reacts to input.
+JavaScript driven by `requestAnimationFrame` competes with the page's other main-thread work. CSS and the Web Animations API can hand suitable motion to the compositor; a library remains appropriate for springs, shared layout and gestures. For a diagnosis, use [performance.md](performance.md).
 
 ## Properties
 
-- Prefer `transform` and `opacity`. They avoid layout and paint and can run on the compositor.
+- Prefer `transform` and `opacity`. They avoid relayout and can run on the compositor; acceleration still depends on the browser and element.
 - `clip-path`, `filter` and colour are fine when they produce the effect; measure them on a real device rather than assuming they're free. Keep an animated `blur()` under about 20px, as larger radii get expensive, especially in Safari.
 - `width`, `height`, `margin`, `padding`, `top` and `left` relayout on every frame. The accepted exception is a collapse, where there's no transform equivalent; keep it short.
 - **Never grow from `scale(0)`.** Start at `scale(0.94)`-`scale(0.97)` with `opacity: 0`. Nothing real appears from a point.
@@ -31,7 +31,7 @@ JavaScript driven by `requestAnimationFrame` drops frames while the browser is p
 
 ### In Motion
 
-Animating the full `transform` string (`animate={{ transform: "translateX(120px)" }}`) runs through the Web Animations API and is hardware accelerated. The independent shorthands `x`, `y`, `scale` and `rotate` are computed on the main thread each frame. Prefer the full string; use the shorthands when transforms compose with different timings (an `x` slide plus a `whileHover` scale), when a value is a motion value, or when it's set through `style`. With shorthands or a CSS transition, a narrow `will-change: transform` for the duration helps; with `@keyframes` or the full string it isn't needed. Import from `motion` (`motion/react`), not the old `framer-motion` package.
+Keep readable `x`, `y`, `scale` and `rotate` shorthands by default. When motion must survive a busy main thread, a full `transform` string (`animate={{ transform: "translateX(120px)" }}`) can use WAAPI's accelerated path. Preserve independently timed transforms and motion values where needed. Don't add `will-change` without an observed shift or measured dropped frames; see [performance.md](performance.md). Import from `motion` (`motion/react`), not the old `framer-motion` package.
 
 ## Easing
 
@@ -56,6 +56,8 @@ The built-in `ease-out` is weak for deliberate motion. Standard stronger curves,
 ```
 
 In Tailwind v4 each `--ease-*` token becomes an `ease-*` utility (`ease-out-quint`). Outside Tailwind, put the same custom properties on `:root`.
+
+If a needed curve isn't here or in the project, take a named curve from [easing.dev](https://easing.dev/) or [easings.co](https://easings.co/) and add it to the project's tokens. Don't hand-roll one.
 
 A reversible transition can mirror its curve so the way back retraces the way out.
 
@@ -91,6 +93,8 @@ For hand-written CSS a spring can be sampled into a `linear()` easing, but that 
 
 For a value that follows the pointer decoratively, smooth it with a spring (`useSpring`) rather than binding it straight to the pointer position.
 
+Where the library needs physical parameters, upstream's example is `{ type: "spring", mass: 1, stiffness: 100, damping: 10 }`. Those parameters control mass, restoring force and resistance; they aren't interchangeable with the duration/bounce API. Apply the same restraint on visible bounce and check the actual settle.
+
 ## Interruption and timing
 
 - **Anything triggered twice quickly uses a transition or a spring.** A transition retargets from the current value; `@keyframes` restarts from its first frame and jumps. This covers notices stacking, toggles, expanding rows, anything a user can double-click.
@@ -124,6 +128,7 @@ Each is a finding in review and a self-check before finishing a build.
 | `ease-in` on interface motion | ease-out, or `--ease-out-quint` |
 | Weak built-in easing on a deliberate animation | A strong token curve |
 | Growing from `scale(0)` | `scale(0.95)` with `opacity: 0` |
+| Pure-fade component entrance with no initial transform | Pair opacity with a small scale or travel from the recipe; keep opacity-only reduced-motion variants |
 | Anchored popover scaling from the centre | The library's transform-origin variable |
 | `transition: all` or `transition-all` | The named properties |
 | Keyframes on something triggered repeatedly | A transition, or a spring |

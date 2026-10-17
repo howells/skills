@@ -127,6 +127,8 @@ Notices arrive in bursts, so they use transitions, which retarget, never keyfram
 
 Without `@starting-style`, render with a `data-mounted="false"` attribute and flip it to `true` in an effect after the first paint. When notices stack and the list closes up, opacity and height compete; there's no formula for that pair, so tune it by eye in slow motion.
 
+Keep notice timers paused while the tab is hidden. Fill hover gaps between stacked notices with pseudo-elements when needed so the expanded stack doesn't collapse as the pointer crosses a gap.
+
 ## Collapse
 
 The one sanctioned layout animation. Keep it short.
@@ -181,7 +183,7 @@ For a destructive action where one click is too easy.
 }
 ```
 
-Fire the action on `transitionend` of the fill, not on a timer that can drift from what's on screen.
+Commit only when the fill's forward transition finishes while the hold is still active. Check the event target and property, cancel on release or pointer cancellation, and never commit from the reverse transition's `transitionend`.
 
 ## Moving selection indicator
 
@@ -215,6 +217,12 @@ When two states visibly overlap and no curve or duration fixes it, blur the seam
 
 A counter or price that updates in place uses tabular figures (`font-variant-numeric: tabular-nums`, Tailwind `tabular-nums`) so the digits don't jitter sideways. Animate the number only when the change itself is the news.
 
+## Depth and image comparison
+
+For an earned flip or orbit, `rotateX()`/`rotateY()` with `transform-style: preserve-3d` can provide depth without a JS animation loop. Keep the same frequency and reduced-motion rules.
+
+For a comparison slider, overlay the two images and clip the top one with `clip-path: inset(0 50% 0 0)`. Drive the inset from the pointer position so both images stay registered. Use the gesture rules for pointer capture and continuous tracking; profile the clip in the target browser rather than assuming acceleration.
+
 ## Scripted, without a library
 
 ```js
@@ -224,7 +232,7 @@ panel.animate(
 );
 ```
 
-The Web Animations API runs with CSS-grade performance, can be paused, reversed and cancelled, and costs no bundle.
+The Web Animations API can use the same accelerated path as CSS, can be paused, reversed and cancelled, and costs no bundle. The property and browser determine acceleration; see [performance.md](performance.md).
 
 ## Reveal on scroll
 
@@ -241,3 +249,23 @@ Marketing and editorial pages only; never on a screen someone works in daily.
 ```
 
 Set `data-seen` once from an `IntersectionObserver` with a negative bottom margin, or Motion's `useInView` with `{ once: true }`. Revealing again on every pass makes the page fight its reader.
+
+## Expand an object into its detail
+
+Use this when the transformation explains a spatial relationship or state change. Before changing code, identify the selected object, its parent, its children and the frame that keeps the viewer oriented.
+
+- Keep stable IDs so the selected object visibly becomes the detail. Preserve its material, proportions and relationship to neighbouring parts.
+- Keep the camera or viewport frame stable through one transformation. Choose framing that can hold the expanded state; don't simultaneously recentre, zoom and explode unless each change is needed to explain the relationship.
+- Retain enough parent and sibling context to show where the detail belongs. Expand from the selected object and return along the same path.
+- Handle nested expansion, sibling selection and contraction through one state model. Retarget from the visible intermediate state when interrupted; don't remount an unrelated scene or lock input until completion.
+- Watch those paths at normal speed, then at midpoints. The viewer should be able to follow the same object throughout. A crossfade can hide the continuity failure without fixing it.
+
+Choose on-screen movement curves or springs from `values.md`. Keep the frequency gate and reduced-motion treatment: a gentler state change still preserves selection and context.
+
+## Layout projection without stretched text
+
+A shared-layout card can expand smoothly while its labels visibly stretch. Check content during the transition, not only at the two resting states.
+
+With Motion, try `layout="position"` on the content that should move without resizing, inside the expanding surface. Keep its typography at the destination's real size. If the parent still projects scale onto its children, separate the animated surface from the content layer, or use the library's documented scale-correction pattern for that version.
+
+Record and step through opening, reversing halfway, switching selection and closing. Inspect text, icons, borders and corners at intermediate frames. Read computed transforms or sampled bounds when useful; a static screenshot or passing typecheck cannot establish that distortion is gone.

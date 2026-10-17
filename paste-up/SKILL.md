@@ -45,6 +45,8 @@ Use the Paper MCP connection supplied by the host. If its guide or file tools ar
 
 **Establish direction before drawing.** Define each view's purpose, audience, content and states from the supplied specification. The current agent can direct and draw sequentially. Delegate only when available and useful; use installed specialist skills or models as optional aids, not prerequisites. A delegated drawing brief must preserve the agreed direction and carry the Hard Rules.
 
+When borrowing another interface's aesthetic, name the features to borrow and preserve the target product's tasks, objects and state model. Walk the target scenario through the boards in order; copying its screens can otherwise replace the very app being designed.
+
 **Set the file up once, before any view exists.**
 
 - Create the tokens: colour names and the type scale. Parallel agents that skip this invent four names for one hex value and the file has to be reconciled by hand afterwards.

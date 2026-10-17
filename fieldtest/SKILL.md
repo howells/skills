@@ -11,6 +11,8 @@ Use this skill to evaluate the app as rendered software, not just as code. The o
 
 Load `references/browser-session.md` when running a full field test, resolving a dev URL, choosing a persona lens, or calibrating report tone and severity.
 
+Load [references/output-quality.md](references/output-quality.md) when judging returned images, search results, generated content or a collection of examples. A working control doesn't establish that its output is useful.
+
 ## Start
 
 When invoked:
@@ -25,6 +27,8 @@ When invoked:
 3. If the user did not specify a URL, detect the dev server from the codebase.
 4. If the app is not running and the correct dev command is clear, start it only after confirming it is local, non-mutating, and not a broad `dev:all` or production-backed command. If multiple apps or commands are plausible, ask one concise question.
 5. Choose the browser tool that best matches the host environment; do not default to a weaker browser path when a first-class local browser is available.
+
+Before actions that write data or trigger external effects, resolve the effective database, storage, account and action destinations from the app's configuration and runtime. `localhost` identifies the frontend, not its backing services. Inspect only the required settings, redact credentials, and use a disposable target where available. An unknown destination remains unverified; authorisation to browse doesn't authorise seeding or remote writes. Apply the host's approval rules to the actual destination.
 
 Default to report-only unless the user explicitly asks you to fix issues.
 
@@ -53,6 +57,7 @@ Summarize this into a short pinned context:
 - likely primary flows
 - stack
 - dev URL
+- backing targets and permitted effects for the tested actions
 - routes in scope
 - persona or testing lens
 
@@ -70,6 +75,8 @@ Work from evidence:
 6. Navigate to nearby or important secondary routes.
 7. Check responsive behavior at mobile and desktop widths when the task is broad or visual.
 8. Check keyboard and accessible-name basics for primary controls.
+
+For asynchronous flows, try A then B before A completes; observe loading, failure and the final state. A late response must not replace B, and an unrelated update must not replay A or clear a current error. When the app is embedded in another product, verify delivery and interaction in that actual host; a standalone browser demo covers only that demo.
 
 For destructive actions, payments, emails, orders, publishing, or production mutations, proceed only when the user has explicitly authorized that action; ask if the required authorization is missing.
 
@@ -169,6 +176,7 @@ Before finishing, verify that:
 - the tested URL and viewport sizes are named
 - console/network issues were checked when tooling allowed
 - findings include reproduction steps or concrete evidence
+- collection coverage names the inspected cases and omissions; loaded or captured cases aren't counted as visually inspected
 - destructive flows were not executed without confirmation
 - fixes, if made, were re-tested in the browser
 - recordings were captured when the tooling supports them, or their absence is stated

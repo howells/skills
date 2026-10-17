@@ -36,8 +36,8 @@ Route: `rebalance` → `next`, repeated. `plimsoll` whenever delivery stalls.
 - **Raw font utilities have multiplied** → `typecase`.
 - **Labels, buttons, headings or empty states read badly** → `signage`.
 - **Duplicated components, or a file doing too many jobs** → `componentize`.
-- **Motion: should it animate, build it, review it, or find where it should move** → `zoetrope`.
-- **See it running and find what's wrong** → `fieldtest`. Reports only unless asked to fix.
+- **Motion: should it animate, build it, review it, find where it should move, or diagnose stutter** → `zoetrope`. Includes preserving identity through expanding models and diagrams.
+- **See it running and find what's wrong, including the usefulness of returned images or results** → `fieldtest`. Reports only unless asked to fix.
 - **The design lives in a Paper file** → `paste-up`.
 
 Route for a new page: `maquette` → `armature` if it's an app shell → `reflow` → `signage` → `fieldtest`.
@@ -61,7 +61,7 @@ Route: `simplify` → the skill each finding points at.
 
 - **The last reply didn't land** → `what`.
 - **Where this task stands** → `memento`.
-- **Several tasks, or older ones** → `muster`.
+- **Several tasks, an older project's purpose, or a cross-session handoff** → `muster`.
 - **Git work stranded in worktrees, stashes or unpushed branches** → `salvage`. Run `muster` first if you don't know what's still live.
 
 ### Writing
