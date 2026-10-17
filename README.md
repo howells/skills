@@ -62,16 +62,6 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill ask-howells --agent codex --global
 ```
 
-### `astra-review`
-
-Get an independent review from GPT-6 Astra via Codex, then verify its claims before acting. Use when the code can settle the question - does a diff hold, what changed when - or the user asks for Astra or a Codex review. Not for judgement calls (`fable-review`), criteria checks (`glm-review`) or codebase grades (`simplify`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill astra-review --agent codex --global
-```
-
 ### `blender`
 
 Inspect, measure and render Blender scenes through MCP or headless CLI. Use for Blender scene, render-pipeline or MCP work. Not for 2D design files (`paste-up`).
@@ -104,7 +94,7 @@ npx skills@latest add howells/skills --skill componentize --agent codex --global
 
 ### `computer-use`
 
-Operate macOS apps through Codex CLI computer use, including signed-in Chrome, from T3 Code or other coding agents. Not for browser-only QA (`fieldtest`).
+Operate macOS apps through native Codex Computer Use, including signed-in Chrome and API-backed setups. Not for browser-only QA (`fieldtest`).
 
 Install globally for Codex:
 
@@ -132,16 +122,6 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill fail-fast --agent codex --global
 ```
 
-### `fable-review`
-
-Get an independent review from Claude Fable 5.1, then verify its claims before acting. Use for a hard judgement call: a design or architecture decision, a taste question, a plan worth arguing with. Not for code questions (`astra-review`), bounded checks (`glm-review`) or a codebase grade (`simplify`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill fable-review --agent codex --global
-```
-
 ### `fieldtest`
 
 Exercise a running web app in a real browser and return evidence-backed QA findings. Use for dogfooding, localhost review, responsive or mobile defects, console and accessibility checks, and persona walkthroughs; fix only when asked. Not for code-only review, or designing and building the UI (`chiaroscuro`).
@@ -160,16 +140,6 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill gog --agent codex --global
-```
-
-### `glm-review`
-
-Get an independent read-only review from GLM 5.3 Flash via OpenCode, then verify its claims before acting. Use when the user names GLM, or for a cheap bounded check: conformance to stated criteria, a contract, UI copy. Not for judgement calls (`fable-review`), deep code reads (`astra-review`) or a codebase grade (`simplify`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill glm-review --agent codex --global
 ```
 
 ### `maquette`
@@ -302,6 +272,18 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill reflow --agent codex --global
 ```
 
+### `review`
+
+Get an independent review with fable, sol, muse (wonder), opus or astra, then verify its claims. Use for a named-model second opinion on code, a decision or stated criteria. Not for a codebase health grade (`simplify`) or browser QA (`fieldtest`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill review --agent codex --global
+```
+
+Invoke with a model argument: `$review fable <question>`, `$review sol <question>`, `$review muse <question>` (or `wonder`), `$review opus <question>`, or `$review astra <question>`. In Claude Code use `/review` with the same arguments.
+
 ### `salvage`
 
 Rescue work that exists in only one place - detached HEADs, worktrees, unpushed branches, or stashes - then remove only what is proven merged and pushed. Use for repository cleanup that must preserve ambiguous work. For status reconstruction without cleanup use `muster`.
@@ -421,3 +403,13 @@ Moved or removed on 2026-09-24:
 | `linear` | The `howells/linearcli` repo, beside the CLI it now prefers for everyday issue work. Install with `npx skills@latest add howells/linearcli --skill linear --global`. |
 | `starling` | The `howells/starlingcli` repo, rewritten to drive `starlingcli`. Install with `npx skills@latest add howells/starlingcli --skill starling --global`. |
 | `xero` | Removed. It named no real tool; recreate it beside a Xero CLI if one is built. |
+
+Consolidated on 2026-10-13:
+
+| Skill | Where its work went |
+| --- | --- |
+| `astra-review` | `review astra`; the unified skill also accepts `sol`. |
+| `fable-review` | `review fable`; the unified skill also accepts `opus` and `muse` (`wonder`). |
+| `glm-review` | Removed; GLM is no longer a review lane. |
+
+Install `review`, then remove the three stale copies from local and global install locations as described above.

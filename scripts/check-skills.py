@@ -468,9 +468,12 @@ def check_links() -> None:
 # it only if the name is ever reused.
 REMOVED_SKILLS = (
     "aperture",
+    "astra-review",
+    "fable-review",
     "fenceline",
     "foreman",
     "foundry",
+    "glm-review",
     "heathen",
     "inquest",
     "polyplugin",
@@ -494,9 +497,9 @@ def check_cross_pointers() -> None:
                 err(f"{rel}:{i}: points at `{m.group(1)}`, removed from the collection")
 
 
-MODEL_NAME_SKILLS = {"astra-review", "fable-review", "glm-review"}
+MODEL_NAME_SKILLS = {"review"}
 MODEL_NAME_RE = re.compile(
-    r"\b(Sol|Terra|Luna|Astra|Opus|Sonnet|Haiku|Fable|GPT-?\d|Gemini|Codex models|Claude models)\b"
+    r"\b(Sol|Terra|Luna|Astra|Opus|Sonnet|Haiku|Fable|Muse|Wonder|GPT-?\d|Gemini|Codex models|Claude models)\b"
 )
 
 
