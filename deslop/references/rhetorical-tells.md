@@ -163,8 +163,9 @@ Cut when they delay the point.
 
 - "it's worth noting", "it's important to note", "at its core",
   "at the end of the day", "when it comes to", "in today's world",
-  "in a world where", "the reality is", "in terms of", "going forward",
-  "in order to".
+  "in a world where", "the reality is", "in terms of", "going forward".
+
+Occasional wordy constructions such as "in order to" are ordinary syntax, not tells. Keep them when they suit the writer's rhythm and meaning.
 
 ### Empty intensifiers
 

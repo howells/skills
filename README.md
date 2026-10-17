@@ -184,7 +184,7 @@ npx skills@latest add howells/skills --skill memento --agent codex --global
 
 ### `muster`
 
-Recover project purpose, decisions and live state across transcripts, git, peers and the tracker; produce catch-ups or handoffs. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`).
+Recover project purpose, decisions and in-flight work across concurrent or older sessions; check transcripts, git, peers and the tracker for catch-ups or handoffs. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`).
 
 Install globally for Codex:
 

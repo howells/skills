@@ -11,7 +11,7 @@ The upstream guidance remains the standard. This collection changes packaging an
 | `animation-performance`, added 11 October 2026 | `performance.md`; its measured, browser-dependent advice updates older categorical acceleration advice in `values.md` |
 | `animation-vocabulary` | Consulted for terminology; its standalone reverse-lookup naming workflow is outside Zoetrope's build/review/find jobs |
 
-Static design, typography, native/Expo implementation, library selection and unrelated skills remain outside Zoetrope. Upstream acknowledgement-only opening messages, repo-local plan files and model-specific delegation are adapted to this collection's operating rules. The standalone values and recipes remain bundled so an installation needs no sibling skills.
+Static design, typography, native/Expo implementation, library selection beyond choosing an accessible primitive, and unrelated skills remain outside Zoetrope. Upstream acknowledgement-only opening messages, repo-local plan files and model-specific delegation are adapted to this collection's operating rules. The standalone values and recipes remain bundled so an installation needs no sibling skills.
 
 Emil also added `break-ui` on 2 October 2026. It is interface stress-testing, outside Zoetrope's motion scope.
 

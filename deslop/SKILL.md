@@ -14,7 +14,7 @@ State at the start that you are using the `deslop` skill.
 ## Two modes
 
 - **Unknown authorship.** Someone wants to know whether, or how much, a text reads as generated. Apply every guardrail below.
-- **Known machine text.** The user says a model wrote the draft and wants it better. Skip the authorship caveats, give no view on origin, and go straight to tells and edits.
+- **Known machine text.** The user says a model wrote the draft and wants it better. Skip authorship assessment, detector warnings and weighing indicators or counter-signals as evidence of origin; go straight to tells and edits. The safeguards for voice, meaning, facts and quotations still apply.
 
 ## Guardrails
 
@@ -57,7 +57,7 @@ When asked only to check, audit or flag, do not rewrite. For each pattern give i
 
 ## What to keep or add
 
-An editor who only cuts turns lively prose into encyclopaedia register, which is the register a model defaults to. Keep these, and add them where the draft has the material:
+An editor who only cuts turns lively prose into encyclopaedia register, which is the register a model defaults to. Keep these, and add them where the draft has the material and the genre allows. Keep encyclopaedic and reference prose factual; add specifics, plain verbs and varied rhythm there, and preserve attributed viewpoints. Don't invent the writer's beliefs or add jokes to a neutral entry.
 
 - a point of view, stated as the writer's own;
 - a sentence saying why something matters, provided it also gives the concrete reason (importance without content is the tell; importance with its reason is often the point of the piece);
@@ -139,9 +139,9 @@ These assert rigour or candour instead of demonstrating it. Delete them.
 - **Related self-framing:** "to its credit", "the hard truth", "let's be real", "the uncomfortable truth", "make no mistake". Cut the preamble, keep the claim.
 - **Announcements:** "here's the thing", "here's why", "it turns out", "let me be clear", "the real issue is". Start at the point.
 - **Emphasis instructions:** "let that sink in", "full stop", "read that again", "this matters because", "the key point is". If the sentence needs the help, make it more specific.
-- **Filler:** "it's worth noting", "at its core", "at the end of the day", "when it comes to", "in today's world", "in order to", and intensifiers such as "truly", "fundamentally" or "genuinely" where the sentence means the same without them.
+- **Filler:** "it's worth noting", "at its core", "at the end of the day", "when it comes to", "in today's world", and intensifiers such as "truly", "fundamentally" or "genuinely" where the sentence means the same without them.
 
-These rarely carry meaning the surrounding sentence does not already hold. Delete them; there is nothing to rewrite. Ordinary qualifiers ("very", "perhaps", "tends to") are not on this list; they are a sign of a human writer, so cut one only when it is empty.
+These rarely carry meaning the surrounding sentence does not already hold. Delete them; there is nothing to rewrite. Ordinary qualifiers ("very", "perhaps", "tends to") and occasional wordy constructions ("in order to", "the fact that") are not on this list. Don't strip them out as tells; shorten only where they obscure meaning or the requested edit calls for concision.
 
 ## Output
 

@@ -61,7 +61,7 @@ Route: `simplify` → the skill each finding points at.
 
 - **The last reply didn't land** → `what`.
 - **Where this task stands** → `memento`.
-- **Several tasks, an older project's purpose, or a cross-session handoff** → `muster`.
+- **Work in flight across concurrent sessions, an older project's purpose, or a cross-session handoff** → `muster`.
 - **Git work stranded in worktrees, stashes or unpushed branches** → `salvage`. Run `muster` first if you don't know what's still live.
 
 ### Writing

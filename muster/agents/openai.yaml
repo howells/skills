@@ -1,4 +1,4 @@
 interface:
   display_name: "Muster"
-  short_description: "Recover project context or prepare a handoff"
-  default_prompt: "Use $muster to recover the project's purpose, decisions and live state, then give me the requested catch-up or handoff."
+  short_description: "Recover project context and work in flight"
+  default_prompt: "Use $muster to recover project purpose, decisions and work in flight across concurrent or older sessions, then give me the requested catch-up or handoff."

@@ -6,7 +6,7 @@ Adapted from Emil Kowalski's `animation-performance`; revision and licence are i
 
 List each affected element, driver, animated properties and concurrent work. Expand `transition: all` and shorthand props into the properties they drive. Name a supported cause before proposing a fix; `will-change` is a late diagnostic option.
 
-The frame budget is about 16.7ms at 60Hz and 8.3ms at 120Hz. A fast laptop can hide work that misses that budget on a phone.
+The frame budget is about 16.7ms at 60Hz and 8.3ms at 120Hz. Design against the smaller budget. A fast laptop can hide work that misses that budget on a phone.
 
 | Symptom | Check first | Repair when confirmed |
 | --- | --- | --- |
@@ -59,8 +59,12 @@ Use it only after an observed layer shift or measured dropped frames, once prope
 
 Apply it to the moving element, for the needed lifetime, and keep the layer small. Remove it when no longer needed. Global promotion and large permanent layers consume GPU memory; browsers already promote many transform/opacity animations.
 
+An expensive paint on a blurred or filtered element can justify testing layer promotion. Keep the layer as small as the effect allows and measure the benefit; this isn't a reason to promote every filtered element.
+
 ## Verify and report
 
 Record dropped frames, long tasks, layout and paint in DevTools Performance. Use the Animations panel for timing inspection. Reproduce on a real mid-range phone using remote debugging when device performance is the claim; desktop CPU throttling doesn't model a weak GPU or limited GPU memory.
 
 For each finding, report the element and source location, supported cause, exact before/after and evidence. Separate **supported by code**, **measured in this browser** and **verified on this device**. If device access is unavailable, name that gap. A smoother-looking laptop preview doesn't establish a device fix.
+
+Order findings by cost: layout before paint, busy-main-thread motion before idle motion. A diagnostic request ends with the report; apply fixes when asked.

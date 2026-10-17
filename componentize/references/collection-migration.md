@@ -24,4 +24,4 @@ Resolve exports, styles and variants in real consumers, not just in an isolated 
 | Shared implementation adopted | Consumer inventory reconciled with actual imports and removed copies |
 | Performance improved | Relevant measured timing or resource use under comparable conditions |
 
-Report the migrated denominator, actual inspected coverage and remaining gaps. Record durable evidence on the owning tracker item; don't add a local migration report unless requested.
+Report the migrated denominator, actual inspected coverage and remaining gaps in chat. Where the project uses a tracker and its instructions or the user authorise updates, record durable evidence on the owning item; don't add a local migration report unless requested.

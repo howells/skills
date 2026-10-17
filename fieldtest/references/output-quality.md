@@ -6,7 +6,7 @@ Use when a page returns materials, images, recommendations, search results or ge
 
 Enumerate the requested cases with stable IDs before claiming coverage. Use the collection's actual membership, including empty and unavailable cases. For an open-ended search, state the bounded query, filters and snapshot rather than inventing a total universe.
 
-Keep a compact working ledger in tool state or temporary scratch storage, outside the repo. Each row records case ID, route/query, relevant state and viewport, evidence, inspection status and finding or gap. Durable findings belong in the tracker, and the report belongs in chat unless another artefact was requested.
+Keep a compact working ledger in tool state or temporary scratch storage, outside the repo. Each row records case ID, route/query, relevant state and viewport, evidence, inspection status and finding or gap. Return findings in chat unless another artefact was requested. Record durable findings in a project tracker only when project instructions or the user authorise those updates; report-only QA doesn't itself authorise tracker writes.
 
 Track what happened precisely:
 
