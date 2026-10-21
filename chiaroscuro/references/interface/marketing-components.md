@@ -47,8 +47,7 @@ A heading group is a headline and subheadline at the top of a marketing or landi
   </div>
   ```
 
-- Always use a left-aligned layout for heading groups when the subheadline exceeds ~120 characters (~3 lines when centered)
-  - **⚠️ ask-user** if a centered layout is requested but the subheadline exceeds ~120 characters - offer a rewritten version that fits; only center if the user accepts the shorter copy
+- Left-align heading groups whose subheadline runs past about three centred lines; centre only short copy
 
 ## Feature Lists
 
@@ -89,7 +88,7 @@ When a logo row loops (marquee), the mechanics that keep it from reading as glit
 - Duplicate the item sequence exactly once and animate the track `translateX(0)` → `translateX(-50%)` with linear easing - the halfway point is identical to the start, so the loop is seamless with no visible reset
 - Keep item widths stable so the -50% midpoint stays exact
 - Fade both ends with an edge mask (`mask-x-from-90%`, see `primitives.md`: Overflow Edges) so logos don't pop in and out at the container boundary
-- Pause on hover only if the logos are links; pause when off-screen always (see `animation.md`)
+- Pause on hover only if the logos are links; pause when off-screen always (`zoetrope` covers how)
 
 ## Login Pages
 

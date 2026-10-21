@@ -26,6 +26,13 @@
 - MUST: Add `min-w-0` to flex children that must shrink below their content size. Flex items default to `min-width: auto` and will not shrink past their content without it - applies from page-level layouts (fluid content area next to a fixed `flex-1` sidebar) down to small pieces (a truncated label in a row, a flexible input beside a fixed button).
 - MUST: Add `shrink-0` to flex children that must never compress - icons, SVGs, images, logos, avatars, and any fixed-size control that distorts when squeezed.
 
+## Long Content
+
+- MUST: Grid tracks that must shrink below their content use `minmax(0,1fr)`, the grid counterpart of `min-w-0`
+- MUST: Wrap emails, URLs and long tokens with `wrap-anywhere` (`overflow-wrap: anywhere`), never `break-all`
+- SHOULD: Truncate filenames, paths, hashes and same-domain emails in the middle, so the distinguishing end survives. Never truncate numbers, amounts or dates
+- SHOULD: Use logical properties (`ms-*`, `me-*`, `ps-*`, `pe-*`, `text-start`, and `inset-s-*`/`inset-e-*`, formerly `start-*`/`end-*`) so the layout mirrors in right-to-left languages
+
 ## Constrained Sections
 
 - MUST: Use a two-element pattern for constrained page sections - the outer element handles background and vertical padding; the inner element handles `max-width`, centering, and horizontal padding. Apply it consistently across a page so content edges align while scrolling.

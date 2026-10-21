@@ -10,6 +10,8 @@ Dark mode is not an inversion. It is a second design that preserves the *contras
 - SHOULD: Default to the OS preference via Tailwind's built-in `dark:` variant (`prefers-color-scheme`). Add a manual toggle only when the user explicitly asks for one.
 - SHOULD: Prefer surface contrast and faint inset rings for routine separation. Remove light-mode shadows that turn muddy or glowing; retain a restrained, re-tuned shadow only when it still explains real overlap or elevation.
 - MUST: On dark-only sites, add `scheme-only-dark` to `<html>` (or the top-level element) so native elements - scrollbars, form controls, `color-scheme` - render dark.
+- SHOULD: One `<meta name="theme-color">` per `prefers-color-scheme`, matching the colour at the top of the page
+- MUST: Give native `<select>` an explicit `background-color` and `color` so its options stay legible in Windows dark mode
 
 ## Surface And Component Rules
 

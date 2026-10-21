@@ -22,6 +22,8 @@ Surface treatment communicates grouping, depth, and pace. The default is content
 Choose elevation from the product's physical metaphor and existing tokens.
 
 - Flat products can use surface contrast and inset rings alone.
+- A hairline edge drawn as a shadow (`ring-1` or `shadow-[0_0_0_1px_…]`) takes no layout space, so it can change with state without shifting anything, and it combines with an elevation shadow in one property. Prefer it to a border on cards, inputs and media frames whose edge responds to hover, focus or selection.
+- Where an edge is a semi-transparent border rather than a shadow, add `bg-clip-padding` so the fill does not show through it.
 - A raised popover, menu, drag object, or modal may need a shadow to clarify overlap.
 - Layered shadows can create natural elevation, but they are a technique, not a universal three-layer recipe.
 - Avoid combining a strong border and a strong shadow unless both communicate different information.
@@ -50,6 +52,8 @@ Translucency is useful when fixed or floating chrome overlaps moving content and
 ```html
 <header class="bg-white/70 backdrop-blur-lg reduced-transparency:bg-white reduced-transparency:backdrop-blur-none">
 ```
+
+Honour `prefers-contrast: more` with the `contrast-more:` variant: make translucent surfaces near-solid and give separations a defined edge.
 
 ## Review
 

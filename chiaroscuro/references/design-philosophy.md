@@ -198,32 +198,9 @@ As OKLCH lightness approaches 0 or 1, high chroma becomes harsh or clips out of 
 
 A mid-lightness blue can carry more chroma than a very pale or very dark blue. Extremes should usually become quieter, not louder.
 
-### Use Perceived Brightness
+### Keep the Hue
 
-Different hues have different perceived brightness in older color models:
-- **Bright hues**: Yellow (60°), Cyan (180°), Magenta (300°)
-- **Dark hues**: Red (0°), Green (120°), Blue (240°)
-
-To create lighter shades, rotate hue toward the nearest bright point. To create darker shades, rotate toward the nearest dark point.
-
-Don't rotate more than 20-30 degrees - you'll shift the color's identity.
-
-### Grays Don't Have to Be Gray
-
-Pure gray (0% saturation) often feels cold or dead. Saturate your grays:
-
-- **Cool grays**: Add blue for professional, tech, modern feel
-- **Warm grays**: Add yellow/orange for friendly, inviting, craft feel
-
-Match gray temperature to your brand. A legal site wants cool; a bakery wants warm.
-
-### Don't Rely on Color Alone
-
-Red/green colorblind users need alternative signals:
-- Icons alongside color (checkmark for success, X for error)
-- Position and grouping
-- Text labels
-- Patterns or textures for data visualization
+Shift lightness and chroma in OKLCH and keep the hue. Hue angles from HSL do not carry over, and rotating hue to fake lightness changes the colour's identity.
 
 ---
 

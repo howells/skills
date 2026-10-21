@@ -7,6 +7,8 @@ Small UI primitives. Load the anchor for the primitive in the work.
 Covers: badges, tags, pills, labels, chips, status indicators, and compact metadata with icons.
 
 - Badges with a leading or trailing icon - never use symmetric `px-*`; use `pl-*`/`pr-*` and set the icon side's padding equal to the vertical padding: `py-1 pr-2 pl-1` (left icon), `py-1 pr-1 pl-2` (right icon)
+- Badges never wrap: `whitespace-nowrap shrink-0`, and decide which sibling yields instead
+- Badges are static information. A chip that selects, filters or removes is a real `<button>` or checkbox with its state exposed
 
 ## Avatars
 
@@ -14,6 +16,7 @@ Covers: profile photos, user thumbnails, testimonial people, comments, team memb
 
 - Use `outline-1 -outline-offset-1 outline-black/5` or `outline-black/10` on light surfaces; use `outline-white/10` on dark surfaces
 - Give stacked/overlapping avatar groups a 2px `ring` that matches the background color (e.g. `ring-2 ring-white`)
+- Fall back to initials when the image fails to load, and use `object-cover` so any source ratio fills the frame. Build initials from the first grapheme of the first and last words (`Intl.Segmenter`), not `[0]`, which breaks on emoji and combining characters; fall back to an icon when there is no name
 
 ## Icons
 
@@ -31,10 +34,12 @@ Covers: SVG icons, Heroicons, inline checkmarks, icon buttons, icon sizing, and 
 
 Covers: photos, thumbnails, screenshots, app mockups, product images, media frames, and image borders/outlines.
 
+- Use the product's own imagery: its objects, its photography, its screenshots. Choose a set that agrees in light, colour temperature, ratio and crop, and look at the set together before using it. Each image shows the object its label names. No image is better than stock filler, a fashionable mood shot or the wrong object.
 - Never use borders on photos or thumbnails - use `outline-1 -outline-offset-1 outline-black/5` or `outline-black/10` if the image needs a visible edge
 - Use `outline-1 -outline-offset-1 outline-black/5` or `outline-black/10` on light surfaces; use `outline-white/10` on dark surfaces for screenshots and app UI mockups
 - Use `alt=""` on images when the subject is identified by adjacent visible text
 - Choose aspect ratio from the source material and layout role. Preserve a stable ratio to prevent layout shift; use consistent square or landscape crops for repeated grids, but do not force every image into one recipe or reject 16:9 when the content is natively widescreen.
+- Pair `object-cover` with an `object-position` chosen for each image, so the crop keeps its subject
 
 ## SVG
 
@@ -42,7 +47,7 @@ Covers: inline SVG, SVG color styling, `fill`, `stroke`, `currentColor`, and SVG
 
 - Omit `xmlns` on inline `<svg>` elements in HTML/JSX - only needed when the SVG is a standalone `.svg` file
 - Style SVG colors with Tailwind classes (`fill-*`, `stroke-*`, `text-*` with `fill="currentColor"`/`stroke="currentColor"`) instead of hardcoded color attributes or inline ternaries - use `data-*`/`aria-*` variants or conditional classes to switch colors
-- Never combine `fill="currentColor"`/`stroke="currentColor"` attributes with `fill-*`/`stroke-*` classes on the same element - the attribute conflicts with the class; use `fill-current`/`stroke-current` to inherit the text color, or drop the attribute entirely when using a specific color class like `fill-zinc-400`
+- A `fill-*` or `stroke-*` class overrides a `fill`/`stroke` presentation attribute on the same element, but not one set on a child path. When a colour will not change, inspect which element actually paints
 
 ## Overflow Edges
 

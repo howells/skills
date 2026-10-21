@@ -241,11 +241,4 @@ NEVER:
 
 ## Responsive Spacing
 
-SHOULD increase spacing on larger screens for breathing room:
-
-```html
-<section class="p-4 md:p-6 lg:p-8">
-<div class="gap-4 md:gap-6">
-```
-
-Headlines and sections need more generous spacing at larger sizes - the proportions matter more than absolute values.
+Larger screens need more absolute space between sections, stepped through the spacing scale rather than scaled proportionally. Breakpoint mechanics belong to `reflow`.

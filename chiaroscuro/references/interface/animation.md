@@ -23,25 +23,9 @@ If purpose is unclear, omit the motion.
 - Use one physical metaphor within a flow. Elements should not feel heavy in one transition and weightless in the next without a reason.
 - Avoid scroll hijacking, gratuitous parallax, ambient loops, and repeated reveal choreography. Scroll-linked motion needs a real explanatory function and a non-motion equivalent.
 
-## Timing and Curves
+## Timing and Implementation
 
-Choose timing from distance, scale, frequency, and consequence. There is no universal duration or curve.
-
-- Simple state feedback should finish quickly enough to feel attached to the action.
-- Entrances commonly decelerate; exits may be brisker; objects moving between visible positions often benefit from easing at both ends.
-- Springs are useful for interruptible, gesture-led, or spatial motion when their settling behavior matches the product. Easing curves are often clearer for deterministic state changes. Neither is categorically superior.
-- Stagger only when sequence carries meaning. Long cascades make content feel slow.
-
-Test perceived completion, not only the declared duration. A spring that micro-settles or an opacity tail that lingers can keep the interface feeling busy after the user considers it done.
-
-## Implementation
-
-- Prefer CSS transitions or keyframes for local, deterministic state changes.
-- Use a motion library when gestures, interruption, orchestration, layout continuity, or exit presence genuinely require it.
-- Animate `transform` and `opacity` when they produce the right effect, but assess paint, memory, layer count, and visual quality in context. Color, shadow, filter, mask, clip, and geometry changes are not forbidden; they require proportionate testing.
-- Do not leave `will-change` applied broadly or permanently. Add it narrowly when measurement shows a benefit.
-- Keep dynamic content stable. Reserve space where possible, avoid late geometry changes, and make number changes optically steady with tabular figures when appropriate.
-- Avoid animating layout as a workaround for an unstable layout. Fix the geometry first.
+Choose timing from distance, scale, frequency and consequence; there is no universal duration or curve. Prefer CSS transitions for local, deterministic state changes and a motion library only when gestures, interruption or layout continuity need it. Fix unstable geometry rather than animating over it. Values, springs, gestures and performance belong to `zoetrope`.
 
 ## Reduced Motion
 
@@ -60,15 +44,8 @@ Honor `prefers-reduced-motion` and any product-level motion setting.
 - Keep optimistic updates reversible and distinguish pending from confirmed state.
 - Motion cannot compensate for avoidable latency, layout shift, or missing progress feedback.
 
-## Verification
+## Checking It
 
-Exercise motion with pointer, keyboard, touch when available, rapid repeated input, reversal, reduced motion, slow hardware, and long content. Check:
+Try motion with rapid repeated input, reversal and reduced motion. Nothing should block interaction, delay focus, leave an exit layer intercepting input, or jump layout before or after the transition.
 
-- no blocked interaction or delayed focus;
-- no accidental scroll or clipping;
-- no stale exit layer intercepting input;
-- no layout jump before or after the transition;
-- no sustained CPU, paint, or memory cost disproportionate to the effect;
-- the user can still understand the state change with motion reduced.
-
-If installed, use `zoetrope` for specialist motion craft and focused motion reviews, and the library's own documentation for current API facts. This contract remains sufficient when they are absent.
+If installed, use `zoetrope` for specialist motion craft and the library's own documentation for current API facts. This contract remains sufficient when they are absent.

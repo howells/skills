@@ -74,7 +74,7 @@ npx skills@latest add howells/skills --skill blender --agent codex --global
 
 ### `chiaroscuro`
 
-Design and build polished web UI in Tailwind v4. Not for page directions (`maquette`), app shells (`armature`), screen sizes (`reflow`) or QA (`fieldtest`).
+Design and build polished web UI in Tailwind v4, or rescue a screen that looks messy, generic or unfinished. Use when an interface should look gorgeous. Not for page directions (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or QA (`fieldtest`).
 
 Install globally for Codex:
 

@@ -350,6 +350,10 @@ body {
 | `optional` | Fallback if not cached, no swap | Performance-critical pages |
 | `block` | Brief invisible period, then swap | Display/brand fonts (short text) |
 
+### Preload and Fallback Metrics
+
+Preload only the one or two faces the first screen needs (`<link rel="preload" as="font" type="font/woff2" crossorigin>`). Match the fallback's metrics with `size-adjust`, `ascent-override`, `descent-override` and `line-gap-override` on a local fallback `@font-face`, so the swap does not reflow text. Fontaine and `next/font` calculate the values.
+
 ### Subsetting
 
 Only load the characters you need:

@@ -10,11 +10,24 @@
 
 - MUST: Correct `type` for keyboard/validation: `email`, `tel`, `url`, `number`, `search`, `password`
 
+## Choosing Controls
+
+- SHOULD: A segmented control or toggle group for 2-7 mutually exclusive options; a radio list or select beyond that
+- MUST: A switch for a setting that applies immediately; a checkbox for a choice submitted with the form
+
+## Settings
+
+- MUST: One save model per settings view: every control saves on change, or the view has an explicit Save. Never a mixture
+- SHOULD: Show a preview beside a setting whose effect is easier to see than describe, such as an email, notification or invoice
+
 ## Input Attributes
 
 - MUST: `autocomplete` + meaningful `name` for login/address forms
 - SHOULD: `spellcheck="false"` for emails, codes, usernames
 - SHOULD: `data-1p-ignore` to suppress password manager icons where unwanted
+- SHOULD: `enterkeyhint` on mobile inputs (`search`, `send`, `next`, `done`) so the keyboard's action key says what happens
+- SHOULD: `autocapitalize="none"` and `autocorrect="off"` for codes, usernames and emails; `autocomplete="one-time-code"` with `inputmode="numeric"` on one-time-code fields
+- SHOULD: A show and hide toggle on password fields
 
 ```html
 <input type="text" spellcheck="false" autocomplete="off" data-1p-ignore />
@@ -110,12 +123,14 @@ To vertically center a checkbox/radio with adjacent text, wrap it in an element 
 - MUST: Make consequential or retryable submissions idempotent at the appropriate system boundary; a disabled button alone is not duplicate-request protection.
 - MUST: Accept free text input; validate after, don't block typing
 - SHOULD: Let submission reveal a complete, actionable validation summary. Early field validation may supplement it without blocking ordinary typing.
+- MUST: When submission fails validation, move focus to the summary and link each item to its field; keep the inline errors too. A network or permission failure needs its own recovery message instead
 - SHOULD: Warn before abandoning meaningful unsaved work; do not interrupt navigation for trivial or recoverable state.
 - MUST: Allow pasting (never block paste)
 - SHOULD: Normalize whitespace only where it is not meaningful. Preserve intentional whitespace in passwords, code, prose, and domain values that allow it.
 - MUST: Hydration-safe inputs - no lost focus or value after hydration
 - MUST: Compatible with password managers and 2FA; allow pasting one-time codes
 - SHOULD: Prefill with user data when available
+- SHOULD: Reuse what the person already entered earlier in the flow; offer it rather than asking again
 - SHOULD: Placeholder ends with ellipsis: `Search…`, `sk-012345…`
 
 ## Buttons
@@ -142,12 +157,17 @@ To vertically center a checkbox/radio with adjacent text, wrap it in an element 
 ## Validation
 
 - MUST: Use `aria-invalid` on invalid inputs
+- MUST: Place each error below its field and connect it with `aria-describedby`
 
 ```jsx
-<input aria-invalid={!!error} className={error ? "border-red-500" : ""} />
-{error && <span className="text-sm text-red-500">{error}</span>}
+<input
+  aria-invalid={!!error}
+  aria-describedby={error ? "email-error" : undefined}
+  className={error ? "border-red-500" : ""}
+/>
+{error && <p id="email-error" className="text-sm text-red-500">{error}</p>}
 ```
 
 ## Destructive Actions
 
-- MUST: Require confirmation (use `AlertDialog`, not `confirm()`)
+- MUST: Offer undo for reversible destructive actions. Require confirmation, through the project's alert dialog and never `confirm()`, only when the consequence is irreversible

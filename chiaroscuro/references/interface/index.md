@@ -18,7 +18,7 @@ Read this after inspecting the product and task. Open only the files in the rele
 | Type hierarchy and readable measure | [typography.md](typography.md) |
 | Design principles and restraint | [design-philosophy.md](../design-philosophy.md) |
 | Spacing rhythm | [spacing.md](spacing.md) |
-| Grids, shells, clipping, and alignment | [layout.md](layout.md) |
+| Grids, shells, clipping, long content and alignment | [layout.md](layout.md) |
 | Surface hierarchy and dividers | [surfaces.md](surfaces.md) |
 | Visual composition and restraint | [design.md](design.md) |
 | Tailwind class authoring | [tailwind-authoring.md](tailwind-authoring.md) |
@@ -30,7 +30,7 @@ Open only the file containing a component present in the work.
 | Components | Read |
 | --- | --- |
 | Buttons and action hierarchy | [buttons.md](buttons.md) |
-| Forms and validation | [forms.md](forms.md) |
+| Forms, control choice, settings and validation | [forms.md](forms.md) |
 | Tables, dashboards, navigation, pagination, description lists | [data-components.md](data-components.md) |
 | Charts, truthful encodings and visualisation collections | [charts.md](charts.md) |
 | Headers, footers, heading groups, features, testimonials, teams, logos, login | [marketing-components.md](marketing-components.md) |
@@ -43,7 +43,7 @@ Open only the file containing a component present in the work.
 
 | Need | Read |
 | --- | --- |
-| Interactive states, focus, and feedback | [interactions.md](interactions.md) |
+| Interactive states, overlays, focus and feedback | [interactions.md](interactions.md) |
 | Motion decisions and implementation contract | [animation.md](animation.md) |
 | Dark-mode surfaces, media, and contrast | [dark-mode.md](dark-mode.md) |
 | Content, semantics, keyboard, and accessibility | [content-accessibility.md](content-accessibility.md) |
@@ -51,7 +51,7 @@ Open only the file containing a component present in the work.
 
 ## Owned Elsewhere
 
-Typeface choice, OpenType features and the type ramp belong to `typecase`. Breakpoints, input modes and safe areas across every view belong to `reflow`; this skill still checks desktop and mobile for the work in hand.
+Typeface choice, OpenType features and the type ramp belong to `typecase`. Breakpoints, input modes and safe areas across every view belong to `reflow`; this skill still designs the phone composition and checks desktop and phone for the work in hand. Mockups in Paper belong to `paste-up`.
 
 ## Baseline Quality
 

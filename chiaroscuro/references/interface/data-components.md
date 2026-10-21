@@ -12,6 +12,11 @@ Covers: data tables, comparison tables, table headings, row dividers, horizontal
 - Only use horizontal lines to divide rows - no vertical lines, no outer borders
 - Always use `w-full` so tables fill their container
 - Hide table headings with `sr-only` when the column content is self-explanatory - typically tables with 2–3 columns where headings add no value
+- Right-align numeric columns and their headings so values and heading share one edge; keep one decimal precision within a column or metric
+- Give the record name the width it needs before secondary columns; truncate secondary columns first
+- Add row checkboxes only when selecting rows enables a bulk action, and make a selected row look different from a hovered or focused one
+- Show a row's status once - one badge or one tag, not both
+- Show a real zero as `0`; mark missing or inapplicable values differently, with a muted mark that has an accessible name such as "No data"
 - Always make tables responsive if all columns won't fit on smaller screens - use a two-div wrapper around the table:
   - Outer div: `overflow-x-auto whitespace-nowrap` with negative horizontal and vertical margins - horizontal margins cancel the page container's padding (e.g. `-mx-4 sm:-mx-6 lg:-mx-8`), vertical margin is always `-my-2`
   - Inner div: `inline-block min-w-full align-middle` with horizontal padding that matches the container's padding (e.g. `px-4 sm:px-6 lg:px-8`) and `py-2`
@@ -40,7 +45,7 @@ Covers: dashboard layouts, stat grids, KPI cards, metric cards, admin panels, an
 
 Covers: sidebar nav, header nav, mobile menus, tabs, tab bars, vertical menus, active states, and current-page indicators.
 
-- Every app must have a mobile navigation menu on small screens, regardless of whether the desktop nav is in a header or sidebar - use a dialog or disclosure panel with a hamburger toggle; hide the desktop nav with `hidden lg:flex` (header) or `hidden lg:block` (sidebar) and show the mobile menu below `lg:`
+- When an app has navigation, every destination stays reachable on small screens. How it adapts (tab bar, sheet, disclosure) is a phone composition decision; `reflow` covers the mechanics. A focused experience with nowhere to go needs no menu
 - Never use a high-contrast or primary-color background for active nav items - use darker text color, a soft/muted background, or both
 - Never change `font-weight` between nav item states (default, hover, active) - use color and background changes only
 - Horizontal menus (tabs, tab bars, pill navs) must never overflow the parent container - use horizontal scrolling when items don't fit

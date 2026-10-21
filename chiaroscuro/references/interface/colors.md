@@ -38,14 +38,9 @@ Lightness 0.92 + chroma 0.16 → harsh or clipped
 Lightness 0.92 + chroma 0.04 → usable tint
 ```
 
-### Hue Rotation
+### Shifting a Colour
 
-| Goal | Rotate Toward |
-|------|---------------|
-| Lighter | Yellow (60°), Cyan (180°), Magenta (300°) |
-| Darker | Red (0°), Green (120°), Blue (240°) |
-
-- SHOULD NOT: Rotate more than 20-30° (preserves identity)
+To make a colour lighter or darker, move OKLCH lightness and adjust chroma so it stays in gamut; keep the hue. Hue angles from HSL do not carry over to OKLCH.
 
 ## Grey Temperature
 
@@ -70,8 +65,8 @@ Lightness 0.92 + chroma 0.04 → usable tint
 
 | Element | Ratio |
 |---------|-------|
-| Normal text (<18px) | 4.5:1 |
-| Large text (≥18px bold, ≥24px) | 3:1 |
+| Normal text | 4.5:1 |
+| Large text (≥ 24px regular, or ≥ 18.67px bold) | 3:1 |
 | UI components | 3:1 |
 
 ### Color Independence
@@ -194,9 +189,9 @@ Note chroma curve: peaks at 500 (0.15), reduces toward both extremes. This keeps
 ## Anti-Patterns
 
 - NEVER: Pure black (#000) for text - too harsh. Use `oklch(0.15 0.01 hue)`
-- NEVER: Pure white (#FFF) for large backgrounds - too stark. Use `oklch(0.98 0.005 hue)`
+- SHOULD: Choose the page ground deliberately. Pure white suits clean product and form surfaces; a faintly tinted ground such as `oklch(0.98 0.005 hue)` softens long reading or dense surfaces
 - NEVER: Define colors in hex without OKLCH equivalent
-- NEVER: Create shades by adjusting only lightness (also adjust chroma and hue)
+- NEVER: Create shades by adjusting only lightness; reduce chroma towards the extremes and keep the hue
 - NEVER: Multiple primary colors (dilutes hierarchy)
 - NEVER: Default to indigo as the brand or accent color unless the project already uses it or the user asked for it
 - NEVER: Invent colors on the fly - use defined palette

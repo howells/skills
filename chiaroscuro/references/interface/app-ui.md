@@ -4,9 +4,9 @@
 
 ## Intent First
 
-An app is a working shell, not a document-shaped landing page. Tools, dashboards, and workflows usually need a persistent frame with purposeful panes, local navigation, and independently managed overflow. A single document flow is still valid when the user's task is genuinely linear; choose from the task rather than defaulting to marketing-page structure.
+Choose the app's shape from the task. A focused, single-purpose experience, such as a picker, a quiz, a checkout or a viewer, puts its subject on screen with no header, navigation or title by default; chrome is added only when the person needs it. Tools, dashboards and workflows where people move between places or work across panes need a persistent frame with purposeful panes, local navigation and independently managed overflow. Neither is a document-shaped landing page.
 
-Before any visual decisions, answer explicitly:
+Before visual decisions, know:
 
 - **Who is this human?** Specific role and context, not "users"
 - **What must they accomplish?** Specific verb - create, monitor, configure, analyze
@@ -19,10 +19,10 @@ If your answer is "it's common" or "it's clean" - you haven't chosen. You've def
 
 Every product exists in a world. Discover it before designing:
 
-- **Domain vocabulary:** 5+ concepts, metaphors, or terms from the product's actual world (not its features)
+- **Domain vocabulary:** concepts, metaphors and terms from the product's actual world, not its features
 - **Color world:** Colors that naturally exist in the physical version of this product space
-- **Signature element:** One visual, structural, or interaction element unique to THIS product
-- **Defaults to avoid:** Name 3 obvious choices for this interface type - to consciously avoid them
+- **Signature element:** a visual, structural or interaction element that belongs to this product, where one emerges
+- **Defaults to avoid:** the obvious choices for this kind of interface, so they are taken deliberately or not at all
 
 **Test:** Remove the product name from the design. Can someone identify what it's for?
 
@@ -70,7 +70,7 @@ Surfaces should be barely different but still distinguishable. Study Vercel, Sup
 
 ## Navigation
 
-Navigation teaches users how to think about the product space. It IS the product, not around it.
+Add navigation only when there is somewhere to go. Navigation teaches users how to think about the product space. It IS the product, not around it.
 
 - MUST: Current location always visible
 - MUST: Consistent placement across all screens
@@ -94,6 +94,8 @@ Navigation teaches users how to think about the product space. It IS the product
 - MUST: Error states with recovery actions (not just "something went wrong")
 - SHOULD: Partial/permission states if applicable
 - SHOULD: Empty states that teach the product, not just fill space
+- SHOULD: During a refresh, keep loaded values on screen and update their freshness; skeletons are for first load
+- SHOULD: Contain a recoverable loading failure within the block that failed, keep its neighbours usable, and show the last successful update where it helps
 
 ## Data Display
 
@@ -101,6 +103,8 @@ Navigation teaches users how to think about the product space. It IS the product
 - SHOULD: Paginate, progressively load, or virtualize when the measured collection and task require it; do not use an arbitrary item count as the only trigger.
 - SHOULD: Filters visible, not buried in menus
 - SHOULD: Numbers with context - what's good, what's bad, what changed
+- SHOULD: Colour a change by whether it is good or bad, not by its sign: rising latency is adverse, rising revenue favourable
+- NEVER: Percentage growth from a zero baseline - show the absolute change and mark it as new
 - NEVER: Truncate data without tooltip or expansion
 - NEVER: Display raw data without considering what action the user takes with it
 

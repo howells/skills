@@ -1,181 +1,43 @@
 # Interface: Typography
 
-## Rendering
+Typeface choice, pairing, the type ramp, tracking, rendering (smoothing, optical sizing) and OpenType features belong to `typecase`, which carries the font recommendations and the OpenType reference. This file keeps the visual rules that apply while building any screen.
 
-- MUST: `antialiased` class on body. Grayscale smoothing renders text thinner and crisper than the browser default, and matches Figma and native macOS UI. If light text on dark backgrounds looks too thin at 1x DPI, bump the weight one step - don't remove `antialiased`.
-- MUST: enable optical sizing when the font has an `opsz` axis (Tailwind has no utility for this - set it once in base):
-
-```css
-@layer base {
-  body { font-optical-sizing: auto; }
-}
-```
-
-- MUST NOT: add `text-rendering: optimizeLegibility`. Kerning and common ligatures are already on by default in modern browsers; the property still costs layout time on long pages (worst on mobile). It fixes nothing and slows things down.
-- MUST: Prevent iOS landscape zoom:
-
-```css
-html { -webkit-text-size-adjust: 100%; }
-```
-
-For the full rendering stack - DPI, optical sizing, per-size tracking, hanging punctuation - use `typecase`, which carries the OpenType reference.
-
-## Font Weight
+## Weight
 
 | Usage | Weight |
 |-------|--------|
 | Body minimum | 400 |
 | Headings | 500–600 |
 
-- MUST: No weight change on hover/selection (prevents layout shift)
-- SHOULD: Define as CSS variables:
+- MUST: No weight change on hover or selection; it shifts layout.
+- MUST NOT: `font-bold` for headings in product UI. Prefer `font-semibold` or `font-medium`.
 
-```css
-:root {
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-}
-```
+## Headings and Wrapping
 
-## Letter Spacing
+- MUST: `text-balance` on short headings and `text-pretty` on paragraphs and long editorial titles. In dense UI, use `truncate` or `line-clamp-*`.
+- MUST NOT: Add `leading-*` to headings unless a layout edge case requires it.
+- SHOULD: Keep a display headline compact enough to read as one idea. Fix awkward wrapping by reconsidering copy, measure and size together rather than only shrinking the font.
+- MUST: Check italic display words for clipped descenders (`g j p q y`); tight leading cuts them off.
 
-Larger text needs tighter spacing; smaller text looser. Font-dependent.
+## Size and Measure
 
-```tsx
-// Handle in Text component
-<Text size="lg">Heading</Text> // Pairs size with optimal letter-spacing
-```
+- MUST NOT: `text-xs` for body copy. Default to at least `text-sm`, and `text-base` on mobile inputs.
+- SHOULD: Constrain long-form text with `max-w-[*ch]` directly on the text element.
 
-## Fluid Sizing
+## Caps, Mono and Figures
 
-- SHOULD: Use `clamp()`:
-
-```css
-h1 { font-size: clamp(2rem, 5vw, 4.5rem); }
-p { font-size: clamp(1rem, 2.5vw, 1.25rem); }
-```
-
-## Headline Wrap Budget
-
-- SHOULD: Keep a display headline compact enough to read as one idea. Two or three lines is a useful warning threshold, not a universal cap for narrow screens, long languages, or editorial composition.
-- SHOULD: Fix awkward wrapping compositionally: reconsider copy, container measure, fluid sizing, and breaks together rather than only shrinking the font.
-- SHOULD: Verify the rendered line count at mobile and desktop widths before shipping.
-- MUST: Check italic display words for clipped descenders (`g j p q y`). Tight display leading cuts them off; give the line enough height or bottom padding to clear them.
-
-## OpenType Features
-
-Use them for polish:
-
-```html
-<!-- Tailwind classes for OpenType features -->
-<table class="tabular-nums">...</table>           <!-- Aligned columns in data -->
-<span class="lining-nums">2024</span>              <!-- Uniform height numbers -->
-<span class="oldstyle-nums">Chapter 3</span>       <!-- Blends with body text -->
-<span class="diagonal-fractions">1/2 cup</span>    <!-- Proper fractions -->
-<span class="ordinal">1st 2nd 3rd</span>           <!-- Superscript ordinals -->
-```
-
-```css
-/* Features without Tailwind classes - use arbitrary values */
-code { font-variant-ligatures: none; }             /* Disable ligatures in code */
-body { font-kerning: normal; }                     /* Enable kerning (be explicit) */
-```
-
-Check what features your font supports at [Wakamai Fondue](https://wakamaifondue.com/).
-
-- MUST: `tabular-nums` for aligned numbers in tables, timers, prices
-- SHOULD: `lining-nums` for numbers in headings, `oldstyle-nums` for numbers in body text
-- SHOULD: Keep numeric comparisons in the established body font with tabular numerals; alignment does not require mono.
-
-## Font Pairing
-
-**You often don't need a second font.** One well-chosen font family in multiple weights creates cleaner hierarchy than two competing typefaces. Only add a second font when you need genuine contrast (e.g., display headlines + body serif).
-
-When pairing, contrast on multiple axes:
-- Serif + Sans (structure contrast)
-- Geometric + Humanist (personality contrast)
-- Condensed display + Wide body (proportion contrast)
-
-NEVER pair fonts that are similar but not identical (e.g., two geometric sans-serifs). They create visual tension without clear hierarchy.
-
-### Better Google Fonts Alternatives
-
-For the full curated font list - commercial foundries, Google Fonts picks, proven pairings and pairing research - use `typecase`, which carries the font recommendations.
+- MUST NOT: Small caps, tracked uppercase or decorative mono (Hard Rule 1 in `SKILL.md`). Existing styling, a technical subject or an available mono token is not an exception. Use sentence case for ordinary UI text.
+- MUST: Mono only for literal code, identifiers and values whose characters need inspection. Aligned figures use `tabular-nums` in the body font.
+- MUST: Inspect inherited styles as well as new classes. A shared component can reintroduce mono, caps or tracking even when the caller contains none.
 
 ## Font Loading
 
-- MUST: `font-display: swap` or `optional` (prevents invisible text)
-- SHOULD: Subset fonts by language
-- SHOULD: Preload critical fonts:
+Text never goes invisible while a font loads, and the swap never reflows the page. `typecase` carries `font-display`, preloading, fallback metrics and subsetting.
 
-```html
-<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-```
+## Dark Mode
 
-### Minimizing Layout Shift
-
-Match fallback font metrics to your web font to prevent text reflow:
-
-```css
-@font-face {
-  font-family: 'CustomFont-Fallback';
-  src: local('Arial');
-  size-adjust: 105%;
-  ascent-override: 90%;
-  descent-override: 20%;
-  line-gap-override: 10%;
-}
-
-body {
-  font-family: 'CustomFont', 'CustomFont-Fallback', sans-serif;
-}
-```
-
-Tools like [Fontaine](https://github.com/unjs/fontaine) or Next.js `next/font` calculate these overrides automatically.
-
-## Dark Mode Typography
-
-- SHOULD: Increase `line-height` by 0.05-0.1 for light text on dark backgrounds (perceived weight is lighter, needs more breathing room)
-- SHOULD: Reduce font weight slightly in dark mode (e.g., 350 instead of 400 for body)
+- SHOULD: Increase `line-height` slightly for light text on dark backgrounds; light text reads thinner and needs more room.
 
 ## Selection
 
-- SHOULD: Style `::selection` for brand:
-
-```css
-::selection {
-  background: hsl(var(--primary) / 0.2);
-  color: inherit;
-}
-```
-
-- MUST: Unset gradients on `::selection` (not supported)
-
-## Text Wrapping
-
-| Element | Class/Property |
-|---------|---------------|
-| Headings | `text-balance` |
-| Body text | `text-pretty` |
-| Dense UI | `truncate` or `line-clamp-*` |
-
-## Tailwind-Specific Defaults
-
-- MUST NOT: Use `text-xs` for body copy. Default to at least `text-sm`, and use `text-base` on mobile inputs and dense interactive text where zoom prevention matters.
-- MUST NOT: Use `font-bold` for headings in product UI. Prefer `font-semibold` or `font-medium`.
-- MUST NOT: Add explicit `leading-*` modifiers to headings unless a layout edge case truly requires it. Tailwind's default heading rhythm is the baseline.
-- MUST: Use `text-balance` on headings and `text-pretty` on paragraph text.
-- MUST: Use `tracking-tight` on headings larger than `text-xl` unless the chosen font is already condensed.
-- MUST NOT: Use small caps, tracked uppercase or decorative mono (Hard Rule 1 in `SKILL.md`). Existing styling in the product, a technical subject or an available mono token is not an exception; only an explicit instruction from the user is. Use sentence case for ordinary UI text.
-- MUST: Limit mono to literal code, identifiers and values whose characters need inspection. Use tabular numerals in the body font for prices, counts and comparisons.
-- MUST: Inspect inherited styles as well as new classes in the changed UI. A shared component can reintroduce mono, caps or tracking even when the caller contains none.
-- SHOULD: Constrain long-form text with `max-w-[*ch]` or equivalent directly on the text element.
-
-## Content Formatting
-
-- MUST: Ellipsis character `…` (not `...`)
-- MUST: Curly quotes `"` `"` and `'` `'` (not straight)
-- MUST: Non-breaking spaces for units: `10\u00A0MB`, `⌘\u00A0K`
-- SHOULD: Avoid widows/orphans in headings
+- SHOULD: Style `::selection` from the accent at low opacity with `color: inherit`. Gradients are not supported on `::selection`.

@@ -126,8 +126,7 @@ Two hold up. A third is a sign the case itself is wrong.
 
 ## Where this fits
 
-- Visual direction, tokens, spacing, dark mode and browser verification: `chiaroscuro`.
+- Visual design, tokens, spacing, dark mode and browser verification: `chiaroscuro`.
 - The words in the labels rather than their size, and over-reached small caps as a copy problem: `signage`.
-- Optical sizing, `opsz`, per-size tracking and the rendering stack: chiaroscuro's typography references.
 - Duplicated components behind the duplicated styling: `componentize`.
 - Removing the raw utilities as machine-written code tells: `unslop`.

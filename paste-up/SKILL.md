@@ -14,14 +14,14 @@ Pixel parity with Paper is never the goal downstream. What Paper governs is the 
 These hold wherever the work happens: in code, in a Paper file and in any brief handed to a helper. Styling the product already has is not an exception; fix it inside the scope and report it outside. Only an explicit instruction from the user overrides a rule.
 
 1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting, never for labels or headings. Proper acronyms keep their capitals.
-2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. Keep only consent, constraints and error recovery.
-3. **Four to six type styles.** Use the product's named roles. A new size or weight needs a job no existing role does.
+2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. In product UI, headings name things; they do not headline them or introduce a section. Keep only consent, constraints and error recovery.
+3. **Four to six type styles, in chosen faces.** Use the product's named roles. A new size or weight needs a job no existing role does. A new face comes from `typecase`'s font recommendations and never from its never-use list; Instrument Serif is the first name on that list.
 4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user has pointed to, and use it. A second version of an existing control is a defect.
 5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
 6. **Touch targets at least 44 by 44 CSS pixels.**
-7. **Verified means used and looked at.** "Works" means you completed the path in a browser, or walked a mockup's boards in order. "Looks right" means you then viewed each whole screen as the user sees it. Report the two separately, and never claim either from static checks.
+7. **Look at it before calling it done.** Use the path in a real browser, or walk a mockup's boards in order, then look at each whole screen on desktop and on a phone as the user would. Static checks show neither that it works nor that it looks right.
 
-These are the same rules `chiaroscuro` applies to code, copied here so a mockup never has to be corrected for them later. Paste the block word for word into any drawing or art-direction brief you delegate.
+These are the same rules `chiaroscuro` applies to code, copied here so a mockup never has to be corrected for them later.
 
 ## Invoking it
 

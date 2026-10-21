@@ -2,11 +2,11 @@
 
 ## HTML Antipatterns (WCAG Quick Reference)
 
-Common patterns that fail accessibility, mapped to WCAG success criteria. Use as a grep-friendly checklist.
+Common patterns that fail accessibility, mapped to WCAG success criteria.
 
 ### Critical (Must Fix)
 
-| Pattern | WCAG | What to grep for |
+| Pattern | WCAG | What it looks like |
 |---------|------|------------------|
 | Images without alt | 1.1.1 | `<img>` missing `alt` attribute |
 | Icon-only buttons | 4.1.2 | `<button>` containing only SVG/icon, no `aria-label` |
@@ -17,17 +17,17 @@ Common patterns that fail accessibility, mapped to WCAG success criteria. Use as
 
 ### Serious (Should Fix)
 
-| Pattern | WCAG | What to grep for |
+| Pattern | WCAG | What it looks like |
 |---------|------|------------------|
 | Focus outline removed | 2.4.7 | `outline-none` or `outline: none` without `focus-visible:ring` replacement |
-| Missing keyboard handlers | 2.1.1 | Interactive elements with `onClick` but no `onKeyDown`/`onKeyUp` |
+| Missing keyboard handlers | 2.1.1 | A custom widget (not a native `<button>`, `<a href>` or form control) with `onClick` but no keyboard operation. Native controls already handle keys; adding handlers can double-fire |
 | Color-only information | 1.4.1 | Status/error indicated by color alone (no icon or text) |
 | Touch target too small | 2.5.5 | Clickable elements below the `interactions.md` guidance (44×44 CSS pixels on coarse pointers) |
 | Heading hierarchy skipped | 1.3.1 | `h1` followed by `h3` (skipping `h2`) |
 
 ### Moderate (Consider Fixing)
 
-| Pattern | WCAG | What to grep for |
+| Pattern | WCAG | What it looks like |
 |---------|------|------------------|
 | Positive tabIndex | 2.4.3 | `tabIndex` > 0 (disrupts natural tab order) |
 | Role without required attrs | 4.1.2 | `role="button"` without `tabIndex="0"` |
@@ -43,7 +43,7 @@ Common patterns that fail accessibility, mapped to WCAG success criteria. Use as
 - MUST: Icon-only buttons have descriptive `aria-label`
 - NEVER: Add tooltips to disabled buttons (inaccessible to keyboard users)
 - MUST: Tooltips shouldn't contain interactive content
-- MUST: HTML illustrations need explicit `aria-label` (raw DOM is announced otherwise)
+- MUST: An HTML illustration that carries meaning gets `role="img"` and an accessible name; a decorative one gets `aria-hidden="true"`. Otherwise its raw DOM is announced
 
 ## Focus
 
@@ -62,7 +62,7 @@ Common patterns that fail accessibility, mapped to WCAG success criteria. Use as
 
 ## UX Copy & Writing Voice
 
-Follow the project's writing conventions. Default to sentence case for interface strings; use the [Chicago Manual of Style](https://www.chicagomanualofstyle.org/) for unresolved prose questions, without overriding the interface casing rule.
+Interface wording, casing and voice belong to `signage`. One rule stays here because it shapes the design itself:
 
 ### No System Leakage
 
@@ -73,18 +73,6 @@ UI copy describes the user's objects, decisions, and next actions. System intern
 - MUST: Put technical diagnostics behind explicit affordances such as "View details", "Copy error", or "Open logs" when they are useful
 - NEVER: Surface chain-of-thought, prompt scaffolding, hidden system instructions, raw orchestration steps, or internal scoring
 - NEVER: Let navigation mirror the implementation architecture unless the target user's mental model genuinely matches it
-
-### Avoid LLM-Sounding Copy
-
-AI-generated text has recognizable patterns that erode trust. Avoid these tells:
-
-- SHOULD: Prefer plain punctuation that fits the project's voice. A punctuation mark alone is not evidence of AI authorship.
-- NEVER: "Delve", "leverage", "streamline", "empower", "elevate", "robust", "seamless", "cutting-edge"
-- NEVER: "In order to" (just use "to")
-- NEVER: Filler hedges like "It's worth noting that", "Interestingly,", "It's important to note"
-- NEVER: Starting with "So," or "Great question!"
-- SHOULD: Prefer short, direct sentences. If it sounds like a press release, rewrite it
-- SHOULD: Read copy aloud. If it sounds unnatural, it reads unnatural
 
 ## Content & Accessibility
 - SHOULD: Inline help first; tooltips last resort
@@ -100,4 +88,8 @@ AI-generated text has recognizable patterns that erode trust. Avoid these tells:
 - MUST: `scroll-margin-top` on headings for anchored links; include a "Skip to content" link; hierarchical `<h1–h6>`
 - MUST: Resilient to user-generated content (short/avg/very long)
 - MUST: Locale-aware dates/times/numbers/currency
+- MUST: Plurals through `Intl.PluralRules`, never "1 members"
+- SHOULD: Relative times ("3 hours ago") switch to absolute dates after about a week
+- SHOULD: `translate="no"` on brand names, code and identifiers so page translation leaves them intact
+- MUST: Announce a changing count with its context ("3 items in cart") in one atomic `role="status"` message, never as a bare number or from competing live regions
 - MUST: Use non-breaking spaces to glue terms: `10\u00A0MB`, `⌘\u00A0+\u00A0K`, `Vercel\u00A0SDK`

@@ -1,4 +1,4 @@
 interface:
   display_name: "Chiaroscuro"
-  short_description: "End-to-end UI design, implementation, and polish"
-  default_prompt: "Use $chiaroscuro to take this interface from request to a distinctive, responsive, accessible, browser-verified Tailwind v4 implementation without UI furniture or system leakage."
+  short_description: "Design, build, polish or rescue web UI"
+  default_prompt: "Use $chiaroscuro to take this interface from request to a distinctive, responsive, accessible, finished Tailwind v4 implementation, free of UI furniture and system leakage, and used and looked at in a browser."
