@@ -51,7 +51,7 @@ Start a fresh context with only this brief. Repository instructions may still lo
 
 ## Send the brief
 
-When app-owned delegation is available, follow [references/delegation.md](references/delegation.md). Otherwise use the selected provider's CLI:
+When the harness can start its own thread or task for a chosen model with a fresh context, run the review there, as T3 Code does with `delegate_task`. The user can watch and open that thread, and the harness reports its completion. Follow [references/delegation.md](references/delegation.md), and check that route before reaching for a CLI. Only when the harness has no such route, or cannot run the selected model, use the provider's CLI:
 
 - Fable or Opus: [references/claude.md](references/claude.md).
 - Sol or Astra: [references/codex.md](references/codex.md).

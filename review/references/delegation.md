@@ -1,4 +1,6 @@
-# App-owned delegation
+# Harness threads
+
+Use this route whenever the harness can start a separate thread or task with a chosen model, such as T3 Code's `delegate_task`. The review becomes a child thread of the current one: visible to the user, tracked by the harness, and independent of this conversation. Do not probe or start a CLI first.
 
 Discover the provider instances and current models from `orchestrator_capabilities`, including configured custom models. Match the argument to the requested family and version, not to whichever model a native tool happens to list. For `muse` or `wonder`, select the standard `muse-wonder-<version>` model, not Spark or the separate full variant unless requested.
 
