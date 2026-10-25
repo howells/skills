@@ -43,7 +43,7 @@ State at the start that you are using the `deslop` skill.
 
 1. Read once for overall effect.
 2. Mark the highest-signal clusters before editing.
-3. Use the two catalogues when you need the full taxonomy: `references/signs-of-ai-writing.md` for encyclopaedic, reference and report prose, and `references/rhetorical-tells.md` for essays, newsletters, posts and announcements. The crutch-phrase list lives in this file, below.
+3. Use the catalogues when you need the full taxonomy: `references/signs-of-ai-writing.md` for encyclopaedic, reference and report prose, and `references/rhetorical-tells.md` for essays, newsletters, posts and announcements. `references/slop-names.md` covers the stock names models give invented people and places, and how well evidenced each one is. The crutch-phrase list lives in this file, below.
 4. Explain the issue in editorial terms, not detector jargon.
 5. Rewrite towards specificity, directness and verifiable claims, keeping what the next section protects.
 6. Check citations, links and markup separately when they look generated or broken.
@@ -87,6 +87,7 @@ Look first for clusters of:
 - outline-style "Despite its X, faces challenges" endings and bolt-on "Future Prospects" sections,
 - even rhythm: most sentences between 8 and 20 words, almost none over 30, and nothing but commas and full stops (`references/signs-of-ai-writing.md` gives the measurable check),
 - assistant-style formatting: Markdown leakage, bold sprawl, title case drift, curly quotes where the house style uses straight quotes, ornamental lists,
+- stock invented names, such as a made-up expert, customer or sales rep with a name from `references/slop-names.md`, or a whole cast of them (one is not a tell),
 - a pronounced style or register shift between sections (pasted-in passage),
 - leaked tool markers such as `oaicite`, `turn0search0`, `[cite: 1]`, `grok_card`, `【29†L582-L589】` or `[web:1]`,
 - broken citations, `utm_source` tracking parameters, suspicious links or placeholder markup.
