@@ -296,7 +296,7 @@ npx skills@latest add howells/skills --skill salvage --agent codex --global
 
 ### `signage`
 
-Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states and generated text. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`).
+Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states, generated text, and the captions in films and decks. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`).
 
 Install globally for Codex:
 

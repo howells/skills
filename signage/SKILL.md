@@ -1,6 +1,6 @@
 ---
 name: signage
-description: "Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states and generated text. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`)."
+description: "Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states, generated text, and the captions in films and decks. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`)."
 ---
 
 # Signage
@@ -9,7 +9,7 @@ The words on an interface are signage. A label's whole job is to let someone act
 
 This is a comprehension pass: the user has to know what the button does.
 
-**The test that decides every word: would you say it out loud to someone who does the audience's job, and be understood?** If you would have to explain it, it is wrong on the screen. Word choice gets the test; the tells below catch the failures the test cannot see.
+**The test that decides every word: would you say it out loud to someone who does the audience's job, and be understood?** If you would have to explain it, it is wrong on the screen. If you would sound like a clerk reading out a record, it is also wrong: say what is true, once, the way you would say it across a table. Word choice gets the test; the tells below catch the failures the test cannot see.
 
 ## The tells
 
@@ -48,6 +48,13 @@ Cite by number in findings, so a reviewer sees the pattern rather than the insta
 
 18. **Several labels for one action.** `Get in touch`, `Let's talk` and `Contact us` on one page, or `Try free` beside `Get started`. The reader wonders whether they lead to different places. One action gets one label everywhere it appears.
 
+**Narrating the machinery, and hedging**
+
+19. **Reporting how the system knows instead of what is true.** Copy written as testimony about the data: a value is `stated by`, a tool `returned`, `the reply names`, a size `was derived from the drawing`, a result `was read as`. The reader wanted the fact. `No size is stated. It was derived from the drawing.` becomes `120 × 60 cm`; `Stated by 412 of 9,870 records` becomes `412 have one`. The mechanism belongs on screen only when the mechanism is the point, and then in one plain clause, not a procedure.
+20. **Clerical and courtroom register.** `States`, `attests`, `cites`, `is recorded as`, `per the source`, `Source ·`, `stored`. It sounds careful and reads as evasive. Use the word a person would use: `has`, `says`, `from`, `is`.
+21. **Hedges and accounting qualifiers.** `Four of the six returned`, `among the first page of 50`, `where available`, `in most cases`, `nothing is guessed silently`, a caveat in every line. Say the thing once, flatly. A qualifier earns its place only when it changes what the reader does next; otherwise it is the writer protecting themselves.
+22. **The line under a heading that repeats the heading.** `Search with a picture` over `Search with the picture.` If the second line adds nothing, cut it or make it say the next thing.
+
 ## Substitutions
 
 The model's word on the left, the audience's word on the right. Direction for the pass rather than a dictionary to apply blind.
@@ -73,6 +80,11 @@ The model's word on the left, the audience's word on the right. Direction for th
 | A dial worth turning / Tune the dial | Name the setting, and the verb for changing it |
 | Earns its keep / Pulls its weight | State the plain fact - in use, kept, still needed |
 | Where the rubber meets the road | Name the step |
+| Stated by / States | Has, says, or just give the value |
+| Returned / The reply / Read as | Delete; give what came back |
+| Measured from / Derived from / Inferred from | The fact itself, not its method |
+| Source · X | From X |
+| N of M returned / First page of N | Delete, unless the count changes what the reader does |
 
 ## Steps
 
