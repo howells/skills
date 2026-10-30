@@ -57,6 +57,16 @@ Merge detection is where confident wrong answers come from.
 - **A pushed branch is an off-machine copy, not integration proof.** It can still be deleted remotely. Verified integration into the pushed default branch is the cleanup bar.
 - **Record every SHA before you delete anything.** Branch tip, worktree HEAD, stash commit. Written down, a deletion is reversible; unwritten, you are relying on someone thinking to check the reflog.
 
+## Operational helpers
+
+Use [scripts/census.py](scripts/census.py) for the read-only census. Pass repository or container paths and `--output` naming a new private JSON file outside every requested root and registered checkout. It writes complete versioned evidence and displays three bounded lines; a failed observation exits non-zero and retains an explicit incomplete result. Ignored entries, exclusions, unknown ownership and missing cross-host knowledge remain protected. This is coverage evidence, not a safe-to-delete verdict or an atomic snapshot.
+
+Optional `--ownership` accepts JSON with `version: 1` and a `claims` list. Each claim names an absolute `path`; retain its owner, scope, permitted actions, authority source and release condition as evidence. Set `exclude: true`, or repeat `--exclude PATH`, to omit an explicitly protected path from inspection. No claim is interpreted as approval.
+
+For separately authorised publication, use [scripts/integrate.py](scripts/integrate.py) with `--repo`, an existing `--remote`, an exact `--commit` and the independently observed `--expected-old` SHA. `--intent integrate` resolves and rechecks the server default, fetches without pruning, requires a fast-forward and uses ordinary push hooks. It never guesses a branch name. `--intent preserve` also requires `--destination-ref` naming an explicit feature or salvage ref; use `--expected-old absent` only for a new ref. Preservation cannot target the server default. An unknown default permits only a named `refs/salvage/` destination.
+
+The publication JSON identifies the remote transport by digest, full destination ref and resulting SHA. It does not certify source checks, custody or deployment permission. A remote change around publication is a conflict; inspect the actual remote state before deciding what to do next, rather than retrying automatically.
+
 ## Steps
 
 Use these steps to organize recovery. Keep a compact census and ownership record rather than copying the workflow verbatim.

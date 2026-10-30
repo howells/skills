@@ -186,5 +186,11 @@ print(json.dumps({'data': {'header': sys.stdin.read(), 'body': body, 'args': arg
                 self.assertNotIn("fixture-token", " ".join(data["args"]))
 
 
+def load_tests(loader, tests, pattern):
+    sys.dont_write_bytecode = True
+    tests.addTests(loader.discover(str(ROOT / "salvage/scripts"), pattern="test_*.py"))
+    return tests
+
+
 if __name__ == "__main__":
     unittest.main()
