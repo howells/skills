@@ -28,6 +28,7 @@ These are the same rules `chiaroscuro` applies to code, copied here so a mockup 
 A Paper URL is `https://app.paper.design/file/<fileId>/<page>/<nodeId>` - for example `01M1AMPBSYGK8DPDW1G5824M7K/1-0/FIE-0`. The ULID is the `fileId`; pass it on every file-scoped call that accepts it, rather than relying on whichever file was most recently opened. `1-0` is the page. A trailing node id means the request is scoped to that one artboard; without it, the whole page is in scope.
 
 - **URL plus a repair ask** ("go through this and make sure shared tokens are used") runs the repair lane. An audit-only request uses its inventory and checklist without edits, deletion or comment resolution.
+- **A whole-app or end-state consolidation** ("one page with the current version of every screen") runs the repair lane under [Whole-app consolidation](#whole-app-consolidation). A request scoped to one artboard stays a one-board repair, however untidy the rest of the file.
 - **No URL** runs the build lane, and the first thing to settle is which file and page to draw in.
 
 Never read node ids back to the person who asked. Name artboards by what they show.
@@ -66,11 +67,20 @@ Order matters here, because a token fix touches every node and a layout fix move
 3. **Fonts.** Confirm installed families and correct departures from the agreed type roles and the Hard Rules. Mono stays only on literal codes and values. Leave typography outside scope alone and report it.
 4. **Layout.** Correct unintended overlap or spacing within scope. For a flow, make its start, reading order, branches and return paths clear. Preserve useful existing organization; repair organization that obscures the journey when the task includes it. Do not rearrange unrelated artboards.
 5. **Names.** `rename_nodes` so each artboard says what it shows.
-6. **Dead work.** Old experiments and superseded versions. Ask before deleting anything you did not make.
+6. **Dead work.** Old experiments and superseded versions. Where the user has explicitly authorised deleting them, delete the in-scope boards that permission covers without asking again. Ask before deleting anything else you did not make. Requested explorations stay, labelled apart from the current design.
 7. **The checklist below**, artboard by artboard.
 8. **Comments.** Read in-scope comment threads. Address requests covered by the user's task; report unrelated requests separately. Resolve only comments whose requested work has actually been completed within the authorized scope.
 
 Report as a table: artboard, what changed, what was left alone and why.
+
+### Whole-app consolidation
+
+Only when the user asks for it. The result is the requested page with every screen as its own top-level artboard, each individually selectable, rather than one giant board or frame enclosing the rest. Follow any organization the user specified; otherwise lay the current sequence out in reading order.
+
+- **One current version per screen.** Name and place it so someone opening the file can tell which board is current without asking.
+- **Explorations stay visible.** Requested alternatives and superseded studies remain reviewable, labelled and set apart from the current sequence. Moving a board aside is not deleting it, and being superseded is not permission to delete.
+- **Reconcile before calling it current.** Compare the boards with the implemented branch or revision established for the task, or the shipped version when that is the task, on what Paper governs: information architecture, state model, hierarchy, copy intent, density and behaviour. If the target is missing, record the gap and ask only when it blocks an in-scope decision. Where they disagree, follow the authority the user or agreed specification names; neither code nor Paper wins by default. Correct boards within scope and record each discrepancy left unresolved, including drift the code has to settle.
+- **Deletion follows Dead work.** Explicit existing permission applies to the in-scope superseded boards within its terms. "End state" or "whole app" on its own grants none.
 
 ## The checklist
 
@@ -94,7 +104,7 @@ Every line here is a correction that has had to be given more than once.
 - Review the in-scope artboards for clarity and task completion. An independent review is optional when a material uncertainty warrants it.
 - Recheck in-scope comments and report their actual resolution.
 - Screenshot the changed artboards and inspect them in context. A view that reads well alone can be wrong beside its neighbours.
-- Walk the in-scope sequence as someone opening the file for a presentation: can they find the start, follow each action to its next state, and distinguish the current design from alternatives? Keep working notes and superseded work clearly separate from that sequence, without deleting others' work or hiding necessary illustrative-data disclosures. For one-board edits, check its immediate context and report wider organization problems without expanding scope.
+- Walk the in-scope sequence as someone opening the file for a presentation: can they find the start, follow each action to its next state, and distinguish the current design from alternatives? Keep working notes, explorations and superseded work clearly separate from that sequence, deleting only what Dead work permits and keeping necessary illustrative-data disclosures visible. For a whole-app consolidation, confirm each screen has one identifiable current top-level artboard on the requested page, and report the reconciliation with the named revision, including unresolved discrepancies. For one-board edits, check its immediate context and report wider organization problems without expanding scope.
 - `export_combined_pdf` when it has to leave Paper, since a file link cannot always be shared.
 
 ## Gotchas, all of them measured
