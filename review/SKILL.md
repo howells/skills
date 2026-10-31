@@ -61,7 +61,7 @@ When the harness can start its own thread or task for a chosen model with a fres
 - Sol or Astra: [references/codex.md](references/codex.md).
 - Muse or Wonder: [references/muse.md](references/muse.md).
 
-For CLI process handling, read [references/process.md](references/process.md). Keep transient briefs and captured replies outside the repository. They support the invocation; the report is a message, and durable decisions belong on the owning tracker item.
+For CLI process handling, read [references/process.md](references/process.md). Keep disposable request and capture files outside the repository. Preserve a durable source or authorised copy of any brief, dataset or captured evidence another invocation or handoff will need, with an exact location and a completeness check. Use private storage for private material. The report is a message; record durable decisions and evidence locations on the owning tracker item when updates are authorised. Carry existing approvals, holds and unanswered-question state with any handoff and recover them before resuming.
 
 A started process or accepted task is not a completed review. Require successful completion and a non-empty final answer, with the selected model's identity established by the route's metadata. If identity cannot be established, label it unverified. Report authentication, quota, billing, rate-limit, unavailable-model or permission failures and stop. Retry once only for a transport or internal-server failure, after establishing that the original invocation has stopped.
 

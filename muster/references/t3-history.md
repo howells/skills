@@ -10,7 +10,7 @@ Use the live T3 tool schemas; names and pagination fields can change. A thread l
 4. Use activity/tool details to verify load-bearing claims, failures and ambiguous outcomes. Reading every message doesn't imply inspecting every tool result, image, video or embedded app. Name the actual coverage.
 5. Keep identifiers and positions alongside evidence so a finding is recoverable. Report the snapshot and counts of projects, top-level threads, child threads, complete reads and gaps. For a moving corpus, don't imply coverage beyond the snapshot.
 
-For broad reviews, keep a compact coverage ledger in tool state or temporary scratch storage and return findings in chat. Where the project uses a tracker and its instructions or the user authorise updates, put durable findings and evidence on the owning item. Don't create repo reports by default.
+For broad reviews, keep a compact coverage ledger in tool state or disposable scratch storage while reading and return findings in chat. Before handing off, preserve any ledger or cited evidence another task needs in a durable source or authorised copy, with exact locations and a completeness check. Where the project uses a tracker and its instructions or the user authorise updates, put durable findings and evidence on the owning item. Don't create repo reports by default.
 
 ## Attribution and current state
 

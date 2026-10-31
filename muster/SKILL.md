@@ -55,6 +55,10 @@ Cite transcript findings by UUID and everything else by its artefact - PR number
 
 Give the next agent a usable brief in chat when that is the requested destination. Include purpose and requested outcome, settled decisions and rejected approaches, live code/tracker state, current writer and checkout ownership, authorised side effects and limits, evidence and coverage gaps, then the next concrete action. Distinguish proposals from decisions and completed work from intended work. Link the owning tracker item for durable context; don't create a local handoff file by default or reopen decisions the user already settled.
 
+Before another task depends on essential briefs, datasets, manifests, recovery journals or cited evidence, give each a durable source and an exact location in the handoff. Pin committed sources by revision; preserve files held only in temporary storage as authorised tracker attachments or in durable task storage outside the repository. Keep private material in private storage. Verify saved copies are complete, recording a suitable size, record count or checksum. Temporary directories are for reproducible, disposable scratch; report missing essential files and the resulting gap.
+
+Carry each unanswered question's exact text, host identifier when available and answer status, plus the scope of existing approvals and holds. On recovery, reconcile the host's current question state with the handoff. Preserve a visible unanswered question; if user input is still needed and the question is missing or expired, raise one question through the supported question tool with a recommendation, then yield until an explicit answer. A restart, timeout, selected default or unrelated message is not an answer. Verify required files and current ownership before resuming the authorised next action; keep completed work idle.
+
 ## Failure modes
 
 - **Trusting the transcript over the repo.** The transcript says it landed; `git log` says whether it did.
