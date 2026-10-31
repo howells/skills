@@ -154,7 +154,7 @@ npx skills@latest add howells/skills --skill maquette --agent codex --global
 
 ### `marginalia`
 
-Add concise, useful JSDoc where IDE hover help or a generated API reference needs a non-obvious contract. Use for exported JavaScript or TypeScript APIs, components, hooks, classes, complex types, or package publishing. Not for internal code, narrating comments, prose docs or behaviour changes.
+Add concise, useful JSDoc where IDE hover help or a generated API reference needs a non-obvious contract. Use for JavaScript or TypeScript APIs, components, hooks, classes, complex types, complex internal code, or package publishing. Not for obvious comments, prose docs or behaviour changes.
 
 Install globally for Codex:
 

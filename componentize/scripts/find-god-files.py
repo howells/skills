@@ -344,7 +344,7 @@ def duplicate_blocks(root: Path, window: int, *, include_tests: bool = False) ->
                 "window": window,
                 "matches": [
                     {"path": path, "start": start, "end": end, "preview": merged["preview"]}
-                    for path, start, end in locations[:8]
+                    for path, start, end in locations
                 ],
             }
         )
@@ -444,13 +444,17 @@ def build_report(
         metric.__dict__
         for metric in sorted(metrics, key=lambda item: item.score, reverse=True)
         if metric.score >= min_score
-    ][:max_files]
-    duplicates = duplicate_blocks(root, duplicate_window, include_tests=include_tests)[:25]
+    ]
+    duplicates = duplicate_blocks(root, duplicate_window, include_tests=include_tests)
     return {
         "root": str(root),
         "scannedFileCount": len(metrics),
         "candidateCount": len(candidates),
         "duplicateGroupCount": len(duplicates),
+        "returnedCandidateCount": len(candidates),
+        "returnedDuplicateGroupCount": len(duplicates),
+        "truncated": False,
+        "displayLimits": {"candidates": max_files, "duplicateGroups": 10, "matchesPerGroup": 4},
         "includeTests": include_tests,
         "candidates": candidates,
         "duplicateBlocks": duplicates,
@@ -461,22 +465,34 @@ def print_report(report: dict[str, Any]) -> None:
     print(f"Repo: {report['root']}")
     print(f"Scanned eligible source files: {report['scannedFileCount']}")
     print(f"Likely god-file candidates: {report['candidateCount']}")
-    for item in report["candidates"]:
+    limit = report["displayLimits"]["candidates"]
+    for item in report["candidates"][:limit]:
         reasons = ", ".join(item["reasons"]) if item["reasons"] else "heuristic match"
         responsibilities = ", ".join(item["responsibilities"]) or "none"
         print(
             f"- score {item['score']:>3} [{item['category']}] {item['path']}: "
             f"{reasons}; responsibilities: {responsibilities}"
         )
+    remaining = report["candidateCount"] - limit
+    if remaining > 0:
+        print(f"  ... and {remaining} more candidates; use --json for the complete inventory")
 
     print(f"\nDuplicate block groups: {report['duplicateGroupCount']}")
-    for group in report["duplicateBlocks"][:10]:
+    group_limit = report["displayLimits"]["duplicateGroups"]
+    match_limit = report["displayLimits"]["matchesPerGroup"]
+    for group in report["duplicateBlocks"][:group_limit]:
         print(
             f"- {group['occurrences']} occurrences across {group['files']} files "
             f"({group['window']}-line window)"
         )
-        for match in group["matches"][:4]:
+        for match in group["matches"][:match_limit]:
             print(f"  - {match['path']}:{match['start']} preview: {match['preview']}")
+        remaining = len(group["matches"]) - match_limit
+        if remaining > 0:
+            print(f"  ... and {remaining} more matches")
+    remaining = report["duplicateGroupCount"] - group_limit
+    if remaining > 0:
+        print(f"  ... and {remaining} more groups; use --json for the complete inventory")
 
 
 def parse_args() -> argparse.Namespace:
@@ -486,7 +502,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("repo", nargs="?", default=".", help="Repository root to scan")
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
     parser.add_argument("--min-score", type=int, default=35, help="Minimum candidate score")
-    parser.add_argument("--max-files", type=int, default=40, help="Maximum candidates to print")
+    parser.add_argument("--max-files", type=int, default=40, help="Maximum candidates in text output; JSON is complete")
     parser.add_argument(
         "--include-tests",
         action="store_true",
@@ -498,7 +514,10 @@ def parse_args() -> argparse.Namespace:
         default=9,
         help="Normalized line window for exact duplicate block detection",
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.max_files < 0:
+        parser.error("--max-files must be non-negative")
+    return args
 
 
 def main() -> int:

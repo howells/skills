@@ -294,9 +294,9 @@ Verify the decomposition before trusting anything built on it: recolour back to 
 | **passes** | 1 | the surface's own reflectance, exactly | light bouncing *off* it onto the room still carries the grey it was traced with, so a bright paint comes out too dark |
 | **basis** | 4 (black + unit R, G, B) | first-order inter-reflection, including the surface lighting itself | second-order bounces |
 
-Light transport is linear in albedo, so
+The basis is an affine approximation with fixed transport, retaining terms up to first order in the recoloured surface's albedo:
 `L(c) = L(0) + c_r(L(R) − L(0)) + c_g(L(G) − L(0)) + c_b(L(B) − L(0))`.
-Same four images on the wire; the shader becomes three multiply-adds.
+Repeated interactions with the recoloured material introduce higher powers of albedo, so the formula is not generally exact for multi-bounce transport. Compare the reconstructed colour against a traced rerender when physical accuracy matters, using the luminance error below. Same four images on the wire; the shader becomes three multiply-adds.
 
 ### Scoring it honestly
 

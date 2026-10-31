@@ -27,7 +27,7 @@ Four to six roles. Every text element in the product picks exactly one.
 
 Add a role only when a real, nameable job has no home. A products-and-editorial site may need more roles than an operations console. Nine is the ceiling, and every role past the fifth needs a sentence saying what it does that its neighbour cannot.
 
-**Two roles that share a size are one role wearing two coats**, and that is how a case grows past the count anyone chose. Collapse them and let weight or family carry the difference.
+**Hierarchy steps need distinct sizes.** Collapse accidental hierarchy roles that share a size. An explicitly named family variant such as `type-data` is the exception: it shares its base role's size and weight and changes only family and the numeric features its job needs. Count it in the declared role total; it does not add another size step.
 
 **Mono is never a new step.** It is the small role in a different family. A mono role that also picks its own size has started a second ladder.
 
@@ -85,13 +85,13 @@ Use these steps at the requested scope. For an audit or proposal, return the cen
    grep -rn 'text-\[11px\]' apps/web --include='*.tsx' | head -5
    ```
 
-3. **Design the case from the jobs, checked against the size ladder.** Take the census's proposal as the starting shape, then decide each band's actual size by hand. Name every role by the job you recorded in step 2. Reject any role that would carry only its own current usages, and any pair sharing a size. State the count and why that count.
+3. **Design the case from the jobs, checked against the size ladder.** Take the census's proposal as the starting shape, then decide each band's actual size by hand. Name every role by the job you recorded in step 2. Reject any role that would carry only its own current usages, and any pair of hierarchy steps sharing a size. An authorised family variant may share its base role's size and weight; name that relationship explicitly. State the total count, including variants, and why that count.
 
 4. **Write the migration mapping.** A table: every combination the census found, and the role it becomes. Where an old value falls between two roles, pick the nearer and say so. This table is the deliverable a reviewer checks the diff against.
 
 5. **Define the case once**, in the file that imports Tailwind, with a comment saying what the case is and that a scanner enforces it. Set leading and tracking inside each role.
 
-6. **Name the sanctioned modifiers.** The short list that may sit beside a role: typically `font-medium` for emphasis, `font-mono` for data, `capitalize` for data casing, `tabular-nums`, and truncation, wrapping, alignment and colour. Every sanctioned modifier must be allowed by the installed scanner; align its namespace with the chosen contract. Everything typographic outside that list belongs to a role.
+6. **Name the sanctioned modifiers.** Record each modifier's permitted dimension: `font-medium` changes emphasis weight, `font-mono` changes family, `capitalize` cases a data value, and `tabular-nums` changes numeric features. None changes size, leading or tracking. Use either a declared family variant or its sanctioned family modifier for the same job, without creating competing size ladders. Truncation, wrapping, alignment and colour stay free. Every sanctioned modifier must be allowed by the installed scanner; align its namespace with the chosen contract. Everything typographic outside that list belongs to a role.
 
 7. **Migrate**, following the mapping. Convert whole files rather than leaving a file half on the case - a stylesheet with some rules converted and some raw is worse than one consistently raw.
 

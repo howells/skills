@@ -31,7 +31,7 @@ if args[:2] == ['plugin', 'list']:
         {'pluginId': name + '@openai-bundled', 'enabled': True}
         for name in ['computer-use', 'unified-computer-use']]}))
 else:
-    with (Path(record['home']) / 't3-computer-use.lock').open('a') as lock:
+    with (folder / 'desktop.lock').open('a') as lock:
         try:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
             record['desktop_locked'] = False
@@ -55,6 +55,7 @@ class LauncherTests(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory(prefix='computer-use-test-')
         self.addCleanup(self.temporary.cleanup)
         self.folder = Path(self.temporary.name).resolve()
+        self.desktop_lock = self.folder / 'desktop.lock'
         self.local = self.folder / 'local-codex'
         self.local.mkdir()
         self.config = self.local / 'config.toml'
@@ -73,7 +74,13 @@ class LauncherTests(unittest.TestCase):
         })
 
     def command(self, *args):
-        return [sys.executable, str(RUNNER), '--codex-home', str(self.local), *args]
+        # Isolate the resource identity, but run the real parser and launcher.
+        loader = ("import importlib.util, pathlib, sys; "
+                  "spec = importlib.util.spec_from_file_location('launcher', sys.argv.pop(1)); "
+                  "module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module); "
+                  "module.DESKTOP_LOCK = pathlib.Path(sys.argv.pop(1)); sys.exit(module.main())")
+        return [sys.executable, '-c', loader, str(RUNNER), str(self.desktop_lock),
+                '--codex-home', str(self.local), *args]
 
     def calls(self):
         path = self.folder / 'calls.jsonl'
@@ -95,8 +102,22 @@ class LauncherTests(unittest.TestCase):
             child.wait(timeout=5)
 
     def assert_unlocked(self):
-        with (self.local / 't3-computer-use.lock').open('a') as lock:
+        with self.desktop_lock.open('a') as lock:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+
+    def wait_started(self, child):
+        deadline = time.monotonic() + 10
+        while not (self.folder / 'started').exists():
+            if child.poll() is not None or time.monotonic() >= deadline:
+                self.fail('Controller did not start')
+            time.sleep(0.02)
+
+    @staticmethod
+    def stop_pid(pid):
+        try:
+            os.kill(pid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
 
     def test_configuration_check_never_starts_a_controller(self):
         result = subprocess.run(self.command('--check'), capture_output=True, text=True,
@@ -132,7 +153,7 @@ class LauncherTests(unittest.TestCase):
         self.assert_unlocked()
 
     def test_another_controller_prevents_interactive_probe(self):
-        with (self.local / 't3-computer-use.lock').open('a') as lock:
+        with self.desktop_lock.open('a') as lock:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
             child = self.interactive('--approve-app', 'com.google.Chrome')
             self.assertEqual(child.wait(timeout=10), 2)
@@ -160,17 +181,65 @@ class LauncherTests(unittest.TestCase):
     def test_terminating_interactive_probe_stops_child_and_releases_desktop(self):
         (self.folder / 'wait-for-signal').touch()
         child = self.interactive('--approve-app', 'Google Chrome')
-        deadline = time.monotonic() + 10
-        while not (self.folder / 'started').exists():
-            if child.poll() is not None or time.monotonic() >= deadline:
-                self.fail('Interactive child did not start')
-            time.sleep(0.02)
+        self.wait_started(child)
         call = self.calls()[-1]
         child.terminate()
         self.assertEqual(child.wait(timeout=5), 128 + signal.SIGTERM)
         with self.assertRaises(ProcessLookupError):
             os.kill(call['pid'], 0)
         self.assert_unlocked()
+
+    def test_launcher_death_keeps_both_homes_locked_until_controller_stops(self):
+        (self.folder / 'wait-for-signal').touch()
+        brief = self.folder / 'brief.txt'
+        brief.write_text('Inspect the requested app.')
+        child = subprocess.Popen(self.command('--brief', str(brief), '--output-dir', str(self.folder / 'first')),
+                                 env=self.environment, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        self.addCleanup(self.stop, child)
+        self.wait_started(child)
+        controller_pid = self.calls()[-1]['pid']
+        self.addCleanup(self.stop_pid, controller_pid)
+        other_home = self.folder / 'other-codex'
+        other_home.mkdir()
+        (other_home / 'config.toml').write_text(self.original_config)
+        child.kill()
+        self.assertEqual(child.wait(timeout=5), -signal.SIGKILL)
+        os.kill(controller_pid, 0)
+        for home in (self.local, other_home):
+            result = subprocess.run(self.command('--codex-home', str(home), '--brief', str(brief),
+                                    '--output-dir', str(self.folder / home.name)),
+                                    env=self.environment, capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 2, result.stderr)
+            self.assertIn('holds the desktop', result.stderr)
+        self.assertEqual(sum(call['args'][0] == 'exec' for call in self.calls()), 1)
+        self.stop_pid(controller_pid)
+        deadline = time.monotonic() + 5
+        while True:
+            try:
+                self.assert_unlocked()
+                break
+            except BlockingIOError:
+                if time.monotonic() >= deadline:
+                    self.fail('Controller exit did not release the desktop')
+                time.sleep(0.02)
+
+    def test_interactive_controller_inherits_lock_after_launcher_death(self):
+        (self.folder / 'wait-for-signal').touch()
+        child = self.interactive('--approve-app', 'Google Chrome')
+        self.wait_started(child)
+        controller_pid = self.calls()[-1]['pid']
+        self.addCleanup(self.stop_pid, controller_pid)
+        child.kill()
+        self.assertEqual(child.wait(timeout=5), -signal.SIGKILL)
+        # A terminal may hang up its foreground process when its leader dies.
+        # If the controller survives, it must still own the desktop.
+        try:
+            os.kill(controller_pid, 0)
+        except ProcessLookupError:
+            self.assert_unlocked()
+        else:
+            with self.assertRaises(BlockingIOError):
+                self.assert_unlocked()
 
 
 if __name__ == '__main__':

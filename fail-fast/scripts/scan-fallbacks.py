@@ -211,20 +211,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def is_test_path(path: Path) -> bool:
-    lowered = str(path).lower()
-    return any(
-        marker in lowered
-        for marker in (
-            ".test.",
-            ".spec.",
-            "__tests__",
-            "/test/",
-            "/tests/",
-            "/fixtures/",
-            "/fixture/",
-            "/mocks/",
-            "/mock/",
-        )
+    directories = {part.lower() for part in path.parts[:-1]}
+    return bool(directories & {"test", "tests", "__tests__", "fixture", "fixtures", "mock", "mocks"}) or any(
+        marker in path.name.lower() for marker in (".test.", ".spec.")
     )
 
 

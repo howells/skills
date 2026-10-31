@@ -7,6 +7,8 @@ description: Operate macOS apps through native Codex Computer Use, including sig
 
 Operate the desktop through the bundled local Codex runner and OpenAI's Computer Use runtime. An explicit request for Computer Use selects native app control, including for Chrome. Ordinary file edits and shell work stay with their own tools. Follow the host's tool-routing instructions.
 
+Invoke this skill from Codex or Claude Code using the same bundled runner. Claude Code still needs the configured local Codex runtime; installing the skill alone does not provide it. Cooperating runners share `~/.cache/computer-use/desktop.lock` across configuration homes and retain it in the controller process if the launcher dies. This is a per-user lock, not coordination with unrelated desktop drivers. Do not delete or replace a held lock file to bypass contention.
+
 ## Launch
 
 1. Write a narrow brief to a file: target app/site and account, requested outcome, permitted changes, and an observable completion check. Carry forward the user's authorization and limits. Say whether the task is inspection, navigation, or editing.

@@ -133,8 +133,9 @@ When renaming an existing project:
 
 Before finishing, verify that:
 
-- Candidates reflect the product and audience.
-- At least three naming strategies were used.
+- Generation: candidates reflect the product and audience, and use at least three naming strategies unless the requested scope is smaller.
+- Validation or critique: every supplied name in scope has an assessment, evidence or explicit evidence gaps, and a recommendation. New candidates or generation strategies are not required.
+- Renaming: identify affected public surfaces and the authorised migration scope; implement identifiers only when requested, preserving external contracts.
 - Validation claims are current and properly caveated.
 - If the thing is or could become an app, the App Store (and Play Store when relevant) was checked, not just npm/domains.
 - Availability claims were cross-checked (not a single RDAP/WHOIS call), especially any "available" verdict.

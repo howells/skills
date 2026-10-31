@@ -138,71 +138,93 @@ def unquote(value: str) -> str:
 
 
 def read_openai_yaml(path: Path, report: bool = False) -> dict[str, str]:
-    """Read `agents/openai.yaml`, validating section structure when `report`.
+    """Read section maps, single-line scalars and the dependencies.tools list.
 
-    Returns the interface and policy fields flattened by name, which is what the
-    surface checks compare against. Structural errors are reported rather than
-    returned, so a malformed file still yields whatever it did define.
+    Validate the supported YAML subset instead of flattening arbitrary nesting.
+    Return interface and policy fields by name for the surface checks.
     """
     fields: dict[str, str] = {}
     if not path.exists():
         return fields
-
     rel = path.relative_to(REPO_ROOT)
     section = ""
-    subkey = ""
-    for lineno, raw in enumerate(path.read_text(encoding="utf-8").split("\n"), 1):
+    sections: set[str] = set()
+    keys: set[str] = set()
+    tools = False
+    tool_keys: set[str] | None = None
+
+    def problem(lineno: int, message: str) -> None:
+        if report:
+            err(f"{rel}:{lineno}: {message}")
+
+    for lineno, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         line = raw.rstrip()
         if not line.strip() or line.lstrip().startswith("#"):
             continue
         indent = len(line) - len(line.lstrip())
         stripped = line.strip()
+        if "\t" in line[:indent]:
+            problem(lineno, "use spaces for YAML indentation")
+            continue
+        kv = re.fullmatch(r"([A-Za-z_][\w-]*):(?:\s+(.*))?", stripped.removeprefix("- "))
+        if not kv:
+            problem(lineno, "unsupported YAML syntax; use section maps and single-line scalar fields")
+            continue
+        key, value = kv.group(1), (kv.group(2) or "").strip()
 
         if indent == 0:
-            section = stripped.split(":", 1)[0].strip()
-            subkey = ""
-            if report and section not in OPENAI_SCHEMA:
-                owner = next((s for s, keys in OPENAI_SCHEMA.items() if section in keys), None)
-                if owner:
-                    err(f"{rel}:{lineno}: `{section}` belongs under `{owner}`, not at top level")
-                else:
-                    err(f"{rel}:{lineno}: unknown top-level section `{section}`")
+            section = key
+            keys = set()
+            tools, tool_keys = False, None
+            if value or stripped.startswith("- "):
+                problem(lineno, f"top-level {section} must be a section map")
+            if section in sections:
+                problem(lineno, f"duplicate section {section}")
+            sections.add(section)
+            if section not in OPENAI_SCHEMA:
+                owner = next((s for s, allowed in OPENAI_SCHEMA.items() if section in allowed), None)
+                problem(lineno, f"{section} belongs under {owner}, not at top level" if owner
+                        else f"unknown top-level section {section}")
             continue
-
-        if stripped.startswith("- ") or stripped == "-":
-            if report and (section, subkey) != ("dependencies", "tools"):
-                err(f"{rel}:{lineno}: list item outside `dependencies.tools`")
-            stripped = stripped[2:].strip()
-            if not stripped:
-                continue
-
-        kv = re.match(r"^([A-Za-z_][\w-]*):\s*(.*)$", stripped)
-        if not kv:
-            continue
-        key, value = kv.group(1), kv.group(2).strip()
 
         if section == "dependencies":
-            if key == "tools" and not value:
-                subkey = "tools"
+            if indent == 2 and key == "tools" and not value and not stripped.startswith("- "):
+                if tools:
+                    problem(lineno, "duplicate dependencies.tools")
+                tools = True
                 continue
-            if subkey == "tools":
-                if report and key not in TOOL_FIELDS:
-                    err(f"{rel}:{lineno}: unknown field `{key}` in a `dependencies.tools` entry")
+            if tools and indent == 4 and stripped.startswith("- "):
+                tool_keys = set()
+            elif not (tools and indent == 6 and tool_keys is not None and not stripped.startswith("- ")):
+                problem(lineno, "invalid indentation or field under dependencies.tools")
                 continue
-
-        if report:
-            allowed = OPENAI_SCHEMA.get(section)
-            if allowed is not None and key not in allowed:
-                owner = next((s for s, keys in OPENAI_SCHEMA.items() if key in keys), None)
-                if owner:
-                    err(f"{rel}:{lineno}: `{key}` belongs under `{owner}`, not `{section}`")
-                else:
-                    err(f"{rel}:{lineno}: unknown field `{key}` under `{section}`")
-            if key == "allow_implicit_invocation" and unquote(value) not in YAML_BOOLEANS:
-                err(f"{rel}:{lineno}: `allow_implicit_invocation` must be true or false")
-
-        if section in ("interface", "policy"):
+            if key not in TOOL_FIELDS:
+                problem(lineno, f"unknown field {key} in a dependencies.tools entry")
+            if key in tool_keys:
+                problem(lineno, f"duplicate tool field {key}")
+            tool_keys.add(key)
+        elif section in ("interface", "policy"):
+            if indent != 2 or stripped.startswith("- "):
+                problem(lineno, f"{section} fields require two-space indentation; scalar fields cannot contain fields")
+                continue
+            if key in keys:
+                problem(lineno, f"duplicate field {key}")
+            keys.add(key)
+            if key not in OPENAI_SCHEMA[section]:
+                owner = next((s for s, allowed in OPENAI_SCHEMA.items() if key in allowed), None)
+                problem(lineno, f"{key} belongs under {owner}, not {section}" if owner
+                        else f"unknown field {key} under {section}")
             fields[key] = unquote(value)
+        else:
+            problem(lineno, "field outside a supported section")
+            continue
+
+        if section == "policy" and key == "allow_implicit_invocation":
+            if value not in YAML_BOOLEANS:
+                problem(lineno, "allow_implicit_invocation must be the Boolean true or false, without quotes")
+        elif (not value or value in {"true", "false", "null", "~", "|", ">", "|-", ">-"}
+              or re.fullmatch(r"[-+]?\d+(?:\.\d+)?", value)):
+            problem(lineno, f"{key} must be a single-line string scalar")
     return fields
 
 
@@ -421,9 +443,10 @@ def check_links() -> None:
 
     Project-file references (docs/, README.md, AGENTS.md) and placeholder paths are
     skipped. A bare shorthand like `footers.md` (meaning references/interface/footers.md)
-    is accepted when that basename exists anywhere in the skill.
+    is accepted when that basename exists anywhere in the skill. Actual Markdown
+    links must resolve at their written path; basename fallback is prose-only.
     """
-    link_re = re.compile(r"\]\(([^)]+)\)")
+    link_re = re.compile(r"\]\((<[^>\n]+>|[^)\s]+)(?:\s+[\"'][^\n]*[\"'])?\)")
     backtick_re = re.compile(r"`([^`]+\.md)`")
     # Build a per-skill basename index, then scan that skill's files.
     for skill in skill_dirs():
@@ -434,12 +457,12 @@ def check_links() -> None:
             files.extend(sorted(refs.rglob("*.md")))
         for file in files:
             text = file.read_text(encoding="utf-8")
-            targets: set[str] = set()
+            targets: set[tuple[str, bool]] = set()
             for m in link_re.finditer(text):
-                targets.add(m.group(1))
+                targets.add((m.group(1).removeprefix("<").removesuffix(">"), True))
             for m in backtick_re.finditer(text):
-                targets.add(m.group(1))
-            for raw in targets:
+                targets.add((m.group(1), False))
+            for raw, markdown_link in targets:
                 target = raw.split("#", 1)[0].strip()
                 if not target or not target.endswith(".md"):
                     continue
@@ -457,7 +480,7 @@ def check_links() -> None:
                     continue
                 if (file.parent / target).resolve().exists():
                     continue
-                if base in basenames:
+                if not markdown_link and base in basenames:
                     continue  # shorthand reference to a file that exists elsewhere in the skill
                 err(f"{file.relative_to(REPO_ROOT)}: broken .md reference '{target}'")
 
@@ -511,7 +534,7 @@ def check_model_names() -> None:
         if skill.name in MODEL_NAME_SKILLS:
             continue
         files = [skill / "SKILL.md", skill / "agents" / "openai.yaml"]
-        files += sorted((skill / "references").glob("*.md")) if (skill / "references").is_dir() else []
+        files += sorted((skill / "references").rglob("*.md")) if (skill / "references").is_dir() else []
         for path in files:
             if not path.is_file():
                 continue

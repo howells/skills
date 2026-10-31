@@ -27,7 +27,17 @@ Every worktree, branch and stash lands in exactly one. Anything you cannot place
 
 **At risk.** Holds content that exists nowhere else. Rescue it, then re-classify.
 
-**Safe.** Provably redundant: every commit reachable from a pushed default branch, working tree clean, nothing running. Only this bucket is eligible for removal.
+**Safe.** Provably redundant: every commit reachable from a pushed default branch, tracked and untracked content preserved, ignored content accounted for as below, nothing running, and ownership released. A clean `git status` alone does not cover ignored files. Only this bucket is eligible for removal.
+
+## Ignored and private content
+
+Inventory ignored files with `git ls-files --others --ignored --exclude-standard` in each checkout before classifying it. Keep private paths and preservation evidence in a suitable private record; never print secret contents or add credentials to a recovery commit.
+
+- **Regenerable:** identify the preserved inputs and known recipe that recreate the output, and establish that it contains no local modifications or unique state. Dependency, build and cache directories such as `node_modules`, `.next`, `dist` and `.turbo` are leads, not deletion permissions based on their names.
+- **Unique/private:** preserve configuration such as `.env.local`, local databases, certificates and hand-authored scratch work in an appropriate private destination. Verify that the preserved copy is complete before removing its only source.
+- **Ambiguous:** retain the checkout and record the unresolved content. Retaining it is a completed cleanup decision, not a reason to keep searching indefinitely.
+
+For example, an ignored `node_modules/` with preserved dependency inputs, a working regeneration recipe and no unique state can be discarded. An ignored `.env.local` still needs private preservation. If either classification lacks evidence, keep the checkout. Ordinary `git worktree remove` can delete ignored files even when status is clean.
 
 ## Judging "in flight" across agent hosts
 
@@ -73,7 +83,7 @@ Use these steps to organize recovery. Keep a compact census and ownership record
 
 1. **Fix the scope and say it back.** One repo by default. A sweep of every repo on the machine is a different job with a much larger blast radius, and it needs saying out loud before it starts.
 
-2. **Do the whole census before touching anything.** Worktrees with branch, detached state, dirty count and age. Branches with upstream, ahead/behind and merge status. Stashes with age and origin branch. Commits in the reflog reachable from no ref. Read-only, no exceptions.
+2. **Do the whole census before touching anything.** Worktrees with branch, detached state, dirty count, ignored/private content and age. Branches with upstream, ahead/behind and merge status. Stashes with age and origin branch. Commits in the reflog reachable from no ref. Read-only, no exceptions.
 
 3. **Take the roll of live sessions and processes.** Your own host's sessions, then the cross-host evidence above. Write down which paths are spoken for before any classification.
 
@@ -81,7 +91,7 @@ Use these steps to organize recovery. Keep a compact census and ownership record
 
 5. **Rescue, additively.** A detached HEAD becomes `git branch salvage/<name> <sha>`. For an at-risk dirty worktree whose ownership is resolved, inspect staged, unstaged and untracked content before selecting files for a WIP commit on a recovery branch. Do not blindly stage credentials or another person’s active work. Push recovered work only when publication is within the user’s request or standing policy; otherwise preserve it locally and request the missing authorization after preparing the recovery. For a stash, first identify its owner, base and full contents, including staged and untracked files. Preserve its commit under a new durable ref, create a new owned clean worktree at the stash base (`git worktree add -b <recovery-branch> <new-owned-path> <saved-sha>^1`), add that worktree to the ownership census, and use `git stash apply --index <saved-sha>` without dropping it. Commit the recovered content, inspect that all stash content was preserved, and push when appropriate. `git stash branch` is not additive: it can drop the stash while leaving changes uncommitted. Nothing is deleted in this step, and no rescue may overwrite an existing ref. Follow the host's branch and worktree policy for names and locations.
 
-6. **Re-verify, then remove only from the safe bucket.** Re-run the check that put each item there against the verified remote target and current item tip, because step 5 changed the repo. Then remove, worktrees before their branches, recording each SHA first.
+6. **Re-verify, then remove only from the safe bucket.** Re-run the check that put each item there against the verified remote target and current item tip, because step 5 changed the repo. Recheck ignored/private content and verified preservation destinations too; a SHA preserves only committed content. Then remove, worktrees before their branches, recording each SHA first.
 
 7. **Report to the contract below.**
 

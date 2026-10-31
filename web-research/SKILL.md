@@ -31,4 +31,4 @@ Read [references/providers.md](references/providers.md) before choosing endpoint
 
 Use deep or agentic research only when ordinary search and extraction cannot answer the question. Provider-generated research reports remain inputs to the synthesis, not the final answer.
 
-The bundled helpers require Python 3. [scripts/read-credential.py](scripts/read-credential.py) requires a nonempty, single-line environment credential before any request. Inject secrets before invoking the helper; it never reads a credential file or initiates authentication.
+The bundled helpers require Python 3. [scripts/read-credential.py](scripts/read-credential.py) checks the selected provider's environment variable first, then the current repository's root `.env`. The credential must be nonempty and single-line. Loading is non-interactive: it never initiates authentication, writes a key or prints it in diagnostics.

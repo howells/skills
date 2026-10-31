@@ -22,7 +22,7 @@ These hold for every part of the work, including anything handed to a helper. St
 
 1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting, never for labels or headings. Proper acronyms keep their capitals.
 2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. In product UI, headings name things; they do not headline them or introduce a section. Keep only consent, constraints and error recovery.
-3. **Four to six type styles, in chosen faces.** Use the product's named roles. A new size or weight needs a job no existing role does. A new face comes from `typecase`'s font recommendations and never from its never-use list; Instrument Serif is the first name on that list.
+3. **Four to six type styles, in chosen faces.** Use the product's named roles. A new size or weight needs a job no existing role does. Before choosing a new face, read the bundled [font guidance](references/font-guidance.md), choose from its recommendations and follow its never-use list; Instrument Serif is the first name on that list.
 4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user has pointed to, and use it. A second version of an existing control is a defect.
 5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
 6. **Touch targets at least 44 by 44 CSS pixels.**

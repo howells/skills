@@ -22,6 +22,49 @@ def cli(path, *args, body=None):
 
 
 class ScannerCoverage(unittest.TestCase):
+    def test_test_directory_policy_is_the_same_at_root_and_nested(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for prefix in (Path(), Path('src')):
+                for name in ('test', 'tests', '__tests__', 'fixture', 'fixtures', 'mock', 'mocks'):
+                    path = root / prefix / name / 'fixture.ts'
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_text('const key = process.env.KEY || "fallback";')
+            (root / 'tests-data').mkdir()
+            (root / 'tests-data/config.ts').write_text('const key = process.env.KEY || "fallback";')
+            (root / 'screen.test.ts').write_text('const key = process.env.KEY || "fallback";')
+            script = 'fail-fast/scripts/scan-fallbacks.py'
+            default = cli(script, root, '--json')
+            included = cli(script, root, '--json', '--include-tests')
+            self.assertEqual(default.returncode, 0, default.stderr)
+            self.assertEqual(included.returncode, 0, included.stderr)
+            self.assertEqual(len({item['file'] for item in json.loads(default.stdout)}), 1)
+            self.assertEqual(len({item['file'] for item in json.loads(included.stdout)}), 16)
+
+    def test_component_json_is_complete_beyond_every_text_limit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for group in range(27):
+                body = '\n'.join(f'const group_{group}_line_{line} = source_{group}({line});' for line in range(9))
+                for copy in range(12 if group == 0 else 2):
+                    (root / f'group_{group}_copy_{copy}.ts').write_text(body)
+            script = 'componentize/scripts/find-god-files.py'
+            result = cli(script, root, '--min-score', 0, '--max-files', 1, '--json')
+            self.assertEqual(result.returncode, 0, result.stderr)
+            data = json.loads(result.stdout)
+            self.assertEqual(data['candidateCount'], 64)
+            self.assertEqual(len(data['candidates']), 64)
+            self.assertEqual(data['returnedCandidateCount'], 64)
+            self.assertEqual(data['duplicateGroupCount'], 27)
+            self.assertEqual(len(data['duplicateBlocks']), 27)
+            self.assertEqual(data['returnedDuplicateGroupCount'], 27)
+            self.assertEqual(max(len(g['matches']) for g in data['duplicateBlocks']), 12)
+            self.assertFalse(data['truncated'])
+            text = cli(script, root, '--min-score', 0, '--max-files', 1)
+            self.assertIn('63 more candidates', text.stdout)
+            self.assertIn('17 more groups', text.stdout)
+            self.assertIn('8 more matches', text.stdout)
+
     def test_regular_file_and_empty_directory_are_not_clean_scans(self):
         for script in ["componentize/scripts/find-god-files.py", "fail-fast/scripts/scan-fallbacks.py", "typecase/scripts/census-typography.py"]:
             with self.subTest(script=script), tempfile.TemporaryDirectory() as directory:
@@ -94,6 +137,45 @@ class Typography(unittest.TestCase):
 
 
 class DocumentationLinks(unittest.TestCase):
+    def test_supported_markdown_forms_and_code_examples(self):
+        cases = [
+            ('[ok](exists.md)', 0),
+            ('[ok](<exists.md>)', 0),
+            ('[ok](<file with spaces.md>)', 0),
+            ('[ok](file%20with%20spaces.md)', 0),
+            ('[ok](exists.md "Title")', 0),
+            ('[ok](exists.md#section)', 0),
+            ('[ok](exists.md#section-1)', 0),
+            ('[broken](exists.md#missing)', 1),
+            ('[ok](file(with).md)', 0),
+            ('[t][r]\n\n[r]: exists.md', 0),
+            ('[t][]\n\n[t]: exists.md', 0),
+            ('[t]\n\n[t]: exists.md', 0),
+            ('[t][r]\n\n[r]: missing.md', 1),
+            ('[broken](<missing file.md>)', 1),
+            ('![image](exists.png)', 0),
+            ('![image](missing.png)', 1),
+            ('[![image](missing.png)](exists.md)', 1),
+            ('[![image][picture]](exists.md)\n\n[picture]: exists.png', 0),
+            ('`[code](missing.md)`', 0),
+            ('``literal `[code](missing.md)` ``', 0),
+            ('````md\n```\n[code](missing.md)\n````', 0),
+            ('- Item\n\n    [missing](missing.md)', 2),
+            ('    [code](missing.md)', 2),
+            ('[undefined][reference]', 2),
+            ('[t][r]\n\n[r]:\n  exists.md', 2),
+            ('<a href="missing.md">HTML</a>', 2),
+        ]
+        for body, expected in cases:
+            with self.subTest(body=body), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                (root / 'README.md').write_text(body)
+                for name in ('exists.md', 'file with spaces.md', 'file(with).md'):
+                    (root / name).write_text('# Section\n# Section\n')
+                (root / 'exists.png').write_bytes(b'fixture')
+                result = cli('product-description/references/check-links.py', root)
+                self.assertEqual(result.returncode, expected, result.stdout + result.stderr)
+
     def test_empty_coverage_and_valid_code_heading(self):
         script = "product-description/references/check-links.py"
         with tempfile.TemporaryDirectory() as directory:
@@ -102,6 +184,63 @@ class DocumentationLinks(unittest.TestCase):
             Path(directory, "README.md").write_text("# The `dry_run` flag\n[Flag](#the-dry_run-flag)\n")
             result = cli(script, directory)
             self.assertEqual(result.returncode, 0, result.stdout)
+
+
+class SkillGateContracts(unittest.TestCase):
+    def setUp(self):
+        self.module = runpy.run_path(str(ROOT / 'scripts/check-skills.py'))
+        self.globals = self.module['read_openai_yaml'].__globals__
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name)
+        self.globals['REPO_ROOT'] = self.root
+        self.skill = self.root / 'fixture'
+        self.skill.mkdir()
+        (self.skill / 'SKILL.md').write_text('# Fixture\n')
+
+    def test_model_names_are_checked_in_nested_references(self):
+        path = self.skill / 'references/interface/guide.md'
+        path.parent.mkdir(parents=True)
+        path.write_text('Use a frontier model.\n')
+        self.module['check_model_names']()
+        self.assertEqual(self.module['errors'], [])
+        path.write_text('Use Opus.\n')
+        self.module['check_model_names']()
+        self.assertTrue(any('references/interface/guide.md:1' in e for e in self.module['errors']))
+
+    def test_markdown_link_cannot_resolve_by_basename_elsewhere(self):
+        path = self.skill / 'references/interface/guide.md'
+        path.parent.mkdir(parents=True)
+        path.write_text('# Guide\n')
+        entry = self.skill / 'SKILL.md'
+        entry.write_text('[Guide](references/guide.md)\n')
+        self.module['check_links']()
+        self.assertTrue(any('broken .md reference' in e for e in self.module['errors']))
+        self.module['errors'].clear()
+        entry.write_text('[Guide](references/interface/guide.md) and prose shorthand `guide.md`\n')
+        self.module['check_links']()
+        self.assertEqual(self.module['errors'], [])
+
+    def test_openai_schema_checks_boolean_types_and_scalar_depth(self):
+        path = self.skill / 'agents/openai.yaml'
+        path.parent.mkdir()
+        valid = 'interface:\n  display_name: "Fixture"\n  short_description: "A useful fixture description"\npolicy:\n  allow_implicit_invocation: false\n'
+        cases = [
+            (valid, None),
+            (valid.replace(': false', ': "false"'), 'Boolean'),
+            (valid.replace('  short_description:', '    short_description:'), 'indentation'),
+            (valid + 'dependencies:\n  tools:\n    - type: "mcp"\n      value: "fixture"\n      description: "Fixture tool"\n', None),
+            (valid + 'dependencies:\n  tools:\n    - type: "mcp"\n        value: "fixture"\n', 'indentation'),
+        ]
+        for body, error in cases:
+            with self.subTest(body=body):
+                self.module['errors'].clear()
+                path.write_text(body)
+                self.module['read_openai_yaml'](path, report=True)
+                if error:
+                    self.assertTrue(any(error in e for e in self.module['errors']), self.module['errors'])
+                else:
+                    self.assertEqual(self.module['errors'], [])
 
 
 class ConfiguredCredentials(unittest.TestCase):

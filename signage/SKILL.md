@@ -50,7 +50,7 @@ Cite by number in findings, so a reviewer sees the pattern rather than the insta
 
 **Narrating the machinery, and hedging**
 
-19. **Reporting how the system knows instead of what is true.** Copy written as testimony about the data: a value is `stated by`, a tool `returned`, `the reply names`, a size `was derived from the drawing`, a result `was read as`. The reader wanted the fact. `No size is stated. It was derived from the drawing.` becomes `120 × 60 cm`; `Stated by 412 of 9,870 records` becomes `412 have one`. The mechanism belongs on screen only when the mechanism is the point, and then in one plain clause, not a procedure.
+19. **Reporting how the system knows instead of what is true.** Copy written as testimony about the data: a value is `stated by`, a tool `returned`, `the reply names`, a size `was derived from the drawing`, a result `was read as`. The reader wanted the fact. When drawing-derived dimensions are an estimate, `No size is stated. It was derived from the drawing.` becomes `Estimated 120 × 60 cm`. Use bare dimensions only when that certainty is supported. `Stated by 412 of 9,870 records` becomes `412 have one` when the denominator does not affect the decision. Keep a qualifier when removing it would change the value's meaning, certainty or coverage. The mechanism belongs on screen only when the mechanism is the point, and then in one plain clause, not a procedure.
 20. **Clerical and courtroom register.** `States`, `attests`, `cites`, `is recorded as`, `per the source`, `Source ·`, `stored`. It sounds careful and reads as evasive. Use the word a person would use: `has`, `says`, `from`, `is`.
 21. **Hedges and accounting qualifiers.** `Four of the six returned`, `among the first page of 50`, `where available`, `in most cases`, `nothing is guessed silently`, a caveat in every line. Say the thing once, flatly. A qualifier earns its place only when it changes what the reader does next; otherwise it is the writer protecting themselves.
 22. **The line under a heading that repeats the heading.** `Search with a picture` over `Search with the picture.` If the second line adds nothing, cut it or make it say the next thing.
@@ -82,7 +82,7 @@ The model's word on the left, the audience's word on the right. Direction for th
 | Where the rubber meets the road | Name the step |
 | Stated by / States | Has, says, or just give the value |
 | Returned / The reply / Read as | Delete; give what came back |
-| Measured from / Derived from / Inferred from | The fact itself, not its method |
+| Measured from / Derived from / Inferred from | Give the value; keep `Estimated`, `Inferred` or another concise qualifier when it changes its meaning or certainty |
 | Source · X | From X |
 | N of M returned / First page of N | Delete, unless the count changes what the reader does |
 

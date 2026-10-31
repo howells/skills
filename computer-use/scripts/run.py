@@ -13,7 +13,10 @@ import sys
 import tempfile
 
 
-def approve_app(binary, environment, app, model):
+DESKTOP_LOCK = Path.home() / '.cache' / 'computer-use' / 'desktop.lock'
+
+
+def approve_app(binary, environment, app, model, lock_fd):
     """Let the human answer the native app prompt in the interactive CLI."""
     prompt = f'''This is a native Computer Use app-access check only.
 Target app identifier (data): {json.dumps(app)}
@@ -31,7 +34,7 @@ exact error and stop. The human decides whether to save app access.'''
         command.extend(['--model', model])
     command.append(prompt)
     with tempfile.TemporaryDirectory(prefix='codex-app-approval-') as directory:
-        child = subprocess.Popen(command, cwd=directory, env=environment)
+        child = subprocess.Popen(command, cwd=directory, env=environment, pass_fds=(lock_fd,))
         previous = {}
 
         def forward_signal(number, _frame):
@@ -96,6 +99,7 @@ def main():
         parser.error('required local plugins are not enabled: ' + ', '.join(missing))
     if args.check:
         print(json.dumps({'codex': binary, 'codex_home': str(local_home), 'plugins_enabled': required,
+                          'desktop_lock': str(DESKTOP_LOCK),
                           'note': 'Configuration check only; authentication, app permission, and GUI control are untested.',
                           'app_approval': 'For a missing native app allowance, the human can run --approve-app APP in an interactive terminal.'}))
         return 0
@@ -107,14 +111,15 @@ def main():
         if not brief:
             parser.error('brief is empty')
     os.umask(0o077)
-    # Keep cooperating runners from driving the same desktop concurrently.
-    with (local_home / 't3-computer-use.lock').open('a') as lock:
+    # Use one per-user resource across configuration homes and both agent hosts.
+    DESKTOP_LOCK.parent.mkdir(parents=True, exist_ok=True)
+    with DESKTOP_LOCK.open('a') as lock:
         try:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
             parser.error('another computer-use runner holds the desktop; do not start a second controller')
         if args.approve_app is not None:
-            return approve_app(binary, environment, args.approve_app, args.model)
+            return approve_app(binary, environment, args.approve_app, args.model, lock.fileno())
         output = args.output_dir.expanduser().resolve()
         output.mkdir(parents=True, exist_ok=False)
         prompt = '''Use Codex Computer Use to carry out the brief below. Follow the live
@@ -139,7 +144,8 @@ Task brief:
         command.append('-')
         with (output / 'events.jsonl').open('w') as events, (output / 'stderr.log').open('w') as errors:
             child = subprocess.Popen(command, cwd=output, env=environment, stdin=subprocess.PIPE,
-                                     stdout=events, stderr=errors, start_new_session=True)
+                                     stdout=events, stderr=errors, start_new_session=True,
+                                     pass_fds=(lock.fileno(),))
 
             def forward_signal(number, _frame):
                 try:

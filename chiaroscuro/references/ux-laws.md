@@ -1,6 +1,6 @@
 # UX Laws Reference
 
-Psychology-based principles for interface design. Use these as review criteria and design constraints.
+Psychology-based heuristics for interface design. Use them in context, not as physical or accessibility guarantees. The current [interaction](interface/interactions.md), [form](interface/forms.md), [motion](interface/animation.md) and [performance](interface/performance.md) contracts govern operability, reversible state and timing when a heuristic below conflicts.
 
 ---
 
@@ -10,19 +10,19 @@ Psychology-based principles for interface design. Use these as review criteria a
 
 - Larger targets are faster to click/tap
 - Closer targets are faster to reach
-- Edge and corner targets are effectively infinite size (screen boundaries act as walls)
+- Screen edges can help pointer targeting when the actual hit area reaches the boundary; a browser viewport, touch screen or inset control may not provide that benefit
 
 **Application:**
 - Primary actions should be large and prominent
-- Destructive actions should be small and distant from primary actions
+- Separate destructive actions from routine primary actions and reduce accidental activation without shrinking their operable hit area
 - Place frequent actions near the user's current focus
 - Use full-width buttons on mobile for easy thumb reach
-- Place navigation at screen edges (infinite target area)
+- Place frequent controls within easy reach; check their actual hit areas for the available input methods
 
 **Common violations:**
 - Tiny icon-only buttons for primary actions
 - Important actions buried in overflow menus
-- Equal-sized buttons for "Save" and "Cancel"
+- Primary and secondary actions with indistinguishable visual emphasis
 
 ---
 
@@ -51,23 +51,23 @@ Psychology-based principles for interface design. Use these as review criteria a
 
 ## Doherty Threshold
 
-**Productivity soars when response time is under 400ms.**
+**Prompt feedback helps people stay with the task.** The thresholds below are rough perception guides; task duration, input method and motion context still matter.
 
 | Latency | Perception |
 |---------|-----------|
-| < 100ms | Instant - no feedback needed |
+| < 100ms | Often feels immediate; still show the resulting state |
 | 100–300ms | Slight delay - show state change immediately |
 | 300–1000ms | Noticeable - show loading indicator |
 | > 1000ms | Disruptive - show progress, allow cancellation |
 
 **Application:**
-- User-initiated animations must complete within 300ms
-- Optimistic UI for mutations (show result before server confirms)
+- Choose animation timing by distance, interaction and frequency using the motion contract
+- Use optimistic UI only for reversible mutations with rollback and visible error recovery; wait for confirmation when success cannot be assumed safely
 - Skeleton loading for content fetches > 300ms
 - Progress bars for operations > 1000ms
 - Never block the UI without feedback
 
-**The 300ms ceiling:** All micro-interactions (button press, toggle, menu open) should complete within 300ms. Beyond this, the user perceives lag.
+**Timing in context:** frequent button, toggle and menu feedback should be immediate and may need no animation. Longer spatial transitions can use different timing; keep interruption, reduced-motion and actual performance requirements from the current motion contract.
 
 ---
 

@@ -17,6 +17,24 @@ The files under `references/`:
 | `verification-template.md`, `bug-triage-template.md` | Skeletons for the checking half. |
 | `check-links.py` | Link and anchor checker for the consistency pass. `python3 check-links.py {repo}`. |
 
+## Destination before scaffolding
+
+Read the consuming project's operating rules before creating a documentation repository. The default below is a standalone repo. When policy requires tracker-owned documentation, use the existing owning issue and linked documents instead, within the user's authorised scope. Do not create local reports, a new repo or extra instruction files to bypass that policy.
+
+Map the logical outputs once:
+
+| Repository output | Tracker-owned destination |
+| --- | --- |
+| README and coverage table | Owning document with scope, structure, conventions and linked feature coverage |
+| Standing drafting instructions in goal.md | Linked instructions document, including established facts and reading order |
+| Glossary | One linked glossary document owned by the coordinator |
+| Feature documents | Linked documents using the same eight-section skeleton and source footer |
+| Verification files | Linked checklist documents with stable IDs, results and evidence |
+| Bug triage | Deduplicated triage section on the owning record; upstream issues remain a separately authorised action |
+| AGENTS.md / CLAUDE.md entry points | A reading-order pointer on the owning record; no new local instruction files |
+
+In tracker mode, the filenames in later phases name these logical outputs. Save and read back records where repository mode says to commit; verify record links and coverage through the configured tracker instead of running the filesystem link checker on remote documents. Give delegates the actual record links. Keep pilot, foundations, glossary ownership, behavioural depth, verification and triage unchanged in either destination. Resume from the owning record and its linked outputs.
+
 ## Outputs
 
 ```
@@ -38,7 +56,7 @@ Settle these before writing a file. Ask only for what you cannot infer from the 
 2. **Source of truth.** The path to the source repo (read-only reference) and the commit. Every document footer cites `git rev-parse --short HEAD` of that repo.
 3. **Where and how to verify.** Record the command and URL, binary or account, environment, owned test data and authorized side effects. A throwaway production account does not isolate payments, invitations, publishing or shared records. Use an isolated setup for mutating flows unless the user already authorized those exact actions. Mark other such checks unverified and continue read-only work; never send messages or make production transactions merely to document behaviour.
 4. **Out of scope.** Name what is excluded and why, so later readers do not think it was forgotten.
-5. **Where the repo goes.** A new directory, `git init`, first commit `Initial commit`.
+5. **Destination.** Select the repository or tracker mapping above. In repository mode, choose the new directory, `git init` and first commit `Initial commit`. In tracker mode, record the existing owning issue and document links without creating a local repo.
 6. **The product's shape.** Read `references/product-kinds.md` and decide, once: the unit of interaction and the names of its five phases; the variant axis (modifiers, flags, roles); the fixed interrupt list; the cross-cutting concerns and their order. These go into the README's "Document template" section and the glossary before the pilot is written, and they do not change afterwards without revisiting every document.
 
 Then do a reconnaissance pass over the source repo to find: where interaction state lives (state machines, reducers, controllers, route handlers, command definitions), where behavior tests are (the ones that read as executable specs of edge cases), where the UI is, and where defaults and thresholds are defined (options, constants, config schemas). These go into the README's "Reference" section and goal.md's reading order.
@@ -80,7 +98,7 @@ Over the whole set:
 
 - Same term for the same thing everywhere; every term of art defined in the glossary; glossary definitions agree with the documents.
 - No two documents describe the same behavior differently. Where two documents touch, one owns the behavior and the other links.
-- Every relative link and heading anchor resolves: `python3 {skill dir}/references/check-links.py {repo}` (exit 1 and a list of `file:line: missing file|anchor` if not).
+- In repository mode, check Markdown inline and reference links, including images, and ATX heading anchors with `python3 {skill dir}/references/check-links.py {repo}`. Exit 1 identifies broken targets; exit 2 means incomplete coverage. Raw HTML destinations, indented link/code blocks, unsupported definition syntax and renderer-specific anchors require a separate check; do not treat those gaps as clean. In tracker mode, read back linked records and verify their destinations and coverage instead.
 - Every document has the footer and an "Open questions and verification" section.
 - The interrupt table has the same rows in the same order in every document; the cross-cutting concerns appear in the same order.
 - The README structure and coverage table match the files on disk exactly.

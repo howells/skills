@@ -20,4 +20,4 @@ For broad reviews, keep a compact coverage ledger in tool state or temporary scr
 - Check live peers before entering a checkout. A transcript status or a list of this thread's children isn't a census of every writer.
 - Verify completion at the relevant source: code integration, actual data, rendered host or delivered artefact. State when that source is unavailable.
 
-Link a thread as `[title](t3-thread://v1/<threadId>)` using its exact ID. Include an item ID or position where useful for a long transcript.
+Use each thread's host-returned link verbatim; do not construct a URI from its ID or hardcode a scheme/version. If no link is supplied, retain the exact ID as evidence and report the missing link. Include an item ID or position where useful for a long transcript.

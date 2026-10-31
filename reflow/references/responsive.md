@@ -124,14 +124,16 @@ Two valid strategies - choose by data density:
 
 ### Progressive Disclosure
 
-Use `<details>/<summary>` for content that can collapse on mobile:
+Use one native disclosure when the same content can collapse at every width. Keep its summary available at every width so resizing preserves both the user's state and a way to reopen it:
 
 ```html
-<details class="md:open" open>
-  <summary class="md:hidden">Show filters</summary>
+<details open>
+  <summary class="min-h-11 cursor-pointer">Filters</summary>
   <div><!-- Filter content --></div>
 </details>
 ```
+
+Close it at a narrow width, widen, reopen with the keyboard, then narrow again. The same summary remains focusable and the content remains reachable. If the desktop design requires content to be permanently expanded, reconcile the actual `open` state with the breakpoint before hiding its control, and restore the user's narrow-screen state deliberately. A class cannot set the HTML `open` attribute.
 
 ---
 

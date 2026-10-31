@@ -7,6 +7,8 @@ description: "Get an independent review with fable, sol, muse (wonder), opus or 
 
 One workflow, with a model argument selecting the review lane. The outside model returns leads; verify them before treating them as findings or acting on them.
 
+Live host instructions for orchestration, failure handling, routing and approvals take precedence over the packaged examples in this skill and its reference files. This applies in Codex and Claude Code, including when either runs inside another host. Use a provider CLI fallback only when those live instructions permit it; a route failure does not authorise switching providers or isolation modes.
+
 ## Invocation
 
 Use `review <model> <question or scope>` in the host's skill syntax:
@@ -20,7 +22,9 @@ $review opus argue against this proposed design
 $review astra find where this diff breaks the retry contract
 ```
 
-In Claude Code, use `/review` with the same arguments. Model arguments are case-insensitive. `wonder` is an alias for `muse`; both select Muse Wonder. Accept only `fable`, `sol`, `muse`, `wonder`, `opus` and `astra`. An unsupported argument stops selection; do not silently reinterpret it as another model.
+In Claude Code, select this installed skill's command with the same arguments. `/review` is also a bundled alias for `/code-review`, so check which source the host selects; plugin installs use their displayed namespaced command. If the host selects the bundled review instead, ask Claude to read this installed skill's `SKILL.md` and follow it with the named model. See [Claude Code's name-resolution rules](https://code.claude.com/docs/en/skills#resolve-skills-that-share-a-name).
+
+Model arguments are case-insensitive. `wonder` is an alias for `muse`; both select Muse Wonder. Accept only `fable`, `sol`, `muse`, `wonder`, `opus` and `astra`. An unsupported argument stops selection; do not silently reinterpret it as another model.
 
 Honour a model the user already named. If no model is named, choose Fable for a judgement call, Astra for a question the repository can settle, or Sol for a bounded check against stated criteria, and announce the choice. Opus and Muse Wonder are available when requested; the model argument does not restrict the kind of question they can review.
 

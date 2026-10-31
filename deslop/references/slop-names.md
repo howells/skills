@@ -47,7 +47,8 @@ A controlled sample, with a figure and a model attached.
 - **Marcus, and Marcus Chen.** Claude. Sonnet 4.5 returned "Marcus Chen" 100 times
   out of 100 for "a name for a software developer in a novel" (Voss, seehuhn.de), and
   "Marcus" for a protagonist's husband in 34 of 100. Across 37,500 draws from five
-  Claude models, "Marcus" was picked 4,367 times (23.6%), and Opus 4.5 returned it
+  Claude models, "Marcus" was picked 4,367 times: 23.6% of the 18,503 male-name
+  draws, or 11.65% of all 37,500 draws. Opus 4.5 returned it
   100 out of 100 on the simple prompt (benjismith/ai-randomness). Marcus is also in
   1,822 of the 20,000 Hamilton and Mimno stories, so it is not only Claude.
 - **Elena Vasquez.** Claude. 66% of single "fictional expert" prompts on
@@ -212,7 +213,9 @@ Measured:
   (85,513x, gemma-3-12b) is its only name statistic. https://arxiv.org/html/2510.15061v1
 - Jochen Voss, "AI Names", seehuhn.de, 18 January 2026. Claude Sonnet 4.5, 100 runs per role.
   https://www.seehuhn.de/blog/ai-names/
-- benjismith, "ai-randomness" (GitHub). Five Claude models, 37,500 draws.
+- benjismith, "ai-randomness" (GitHub). Five Claude models, 37,500 draws, including
+  18,503 male-name draws. The Marcus count and both denominators were checked on
+  30 October 2026 against the [published analysis at commit 6401e8e](https://github.com/benjismith/ai-randomness/blob/6401e8e41e85ac761b3657512122e1c12e2d03f4/output/random-names-analysis.json).
   https://github.com/benjismith/ai-randomness
 
 Informal or anecdotal:
