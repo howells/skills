@@ -4,23 +4,35 @@ Use this reference file when running a rendered app QA session.
 
 ## Browser Tool Selection
 
-Honour the browser or tab the user specifies. Otherwise pick the browser with the strongest fit for the active host:
+Honour the browser or tab the user specifies, and any browser rules the live host sets. Otherwise, when Playwriter is available, use it first; fall back down the table only when it is not:
 
 | Environment | Preferred browser path | Notes |
 | --- | --- | --- |
-| T3 Code with collaborative preview tools | T3 preview | Inspect status and open an automation-capable preview when needed; follow the host's ownership and retry rules. |
+| `playwriter` CLI installed, or a Playwriter skill or MCP exposed | Playwriter | Default whenever available. Drives the user's own Chrome, so signed-in, bot-protected and localhost pages render as the user sees them and the user can watch. See Playwriter Sessions below. |
 | Codex desktop or Codex with Browser plugin | Browser plugin / Codex in-app browser | Preferred for local targets, localhost apps, file URLs, screenshots, and current-tab testing. |
 | Claude desktop with in-app browser | Claude desktop in-app browser | Use when it supports navigation, interaction, inspection, and screenshots. |
 | Claude Code CLI with Chrome MCP | Chrome MCP | Strong default for CLI sessions with a real Chrome connection. |
 | Host with agent-browser installed | agent-browser | Use when it fits the task and the host permits it; inspect current help for recording support. |
-| Any environment with no first-class browser | Playwright from terminal | Use for deterministic scripts, viewport checks, screenshots, console capture, and accessibility snapshots. If Playwright browsers are not provisioned, suggest `npx playwright install chromium`, or fall back to static inspection if installation is not permitted. |
 | No browser-capable option | Static inspection only | Clearly say the result was not browser-verified. |
 
 Use the strongest available browser tool before falling back. A field test should exercise rendered behavior, not just source code.
 
 Recording support varies by tool. Inspect the available browser tool documentation or CLI help; do not assume a recording command exists. Static-only inspection cannot record.
 
-If the host supports lazy tool discovery, search for Browser or browser MCP capabilities before choosing Playwright.
+If the host supports lazy tool discovery, search for Browser or browser MCP capabilities before falling back to static inspection.
+
+## Playwriter Sessions
+
+Check availability with `command -v playwriter`, or a Playwriter skill or MCP the host lists. If none is found, move to the next row; do not install it unasked.
+
+- Before the first command, run `playwriter skill` and read the whole output. It documents the installed version's selectors, timeouts and helpers.
+- Create your own session (`playwriter session new`) and open your own tab with `context.newPage()`. Leave the user's existing tabs alone unless they point you at one.
+- After every navigation or action, print the URL, `snapshot({ page })` and `getLatestLogs({ page, sinceLastCall: true })`. That covers the console check. Take screenshots with absolute paths, and only when layout is the question.
+- Resize the viewport with `page.setViewportSize()` for the mobile and desktop checks, then restore it, because the tab sits in the user's own window.
+- If the CLI reports that the extension is not connected or no tab has Playwriter enabled, ask the user once to click the Playwriter extension icon, then wait for their reply. Do not silently fall back to another browser for signed-in or user-visible pages.
+- For a throwaway run the user does not need to see, `playwriter session new --browser headless` keeps the user's Chrome out of it.
+- Playwriter's recorder captures what the user does, not what you do. Treat recording your own flow as unavailable unless the installed docs say otherwise.
+- Close your tab and delete your session when finished, unless the user wants to inspect the result.
 
 ## Dev URL Detection
 
