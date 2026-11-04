@@ -294,6 +294,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill salvage --agent codex --global
 ```
 
+### `selvedge`
+
+Make the color behind mobile Safari's status bar and toolbar match the page's edges, on every screen and as it scrolls. Use when a band of the wrong color sits around Safari's bars. Not for safe-area layout or screen sizes (`reflow`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill selvedge --agent codex --global
+```
+
 ### `signage`
 
 Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states, generated text, and the captions in films and decks. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`).

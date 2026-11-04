@@ -41,6 +41,7 @@
     "./reflow",
     "./review",
     "./salvage",
+    "./selvedge",
     "./signage",
     "./simplify",
     "./typecase",
