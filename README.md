@@ -64,7 +64,7 @@ npx skills@latest add howells/skills --skill ask-howells --agent codex --global
 
 ### `blender`
 
-Inspect, measure and render Blender scenes through MCP or headless CLI. Use for Blender scene, render-pipeline or MCP work. Not for 2D design files (`paste-up`).
+Inspect, edit and render Blender scenes and films through the Blender MCP or headless CLI. Use for any .blend, render or Blender MCP task. Not for 2D design files (`paste-up`).
 
 Install globally for Codex:
 
@@ -84,7 +84,7 @@ npx skills@latest add howells/skills --skill chiaroscuro --agent codex --global
 
 ### `componentize`
 
-Consolidate shared UI, split multi-responsibility files or extract packages. Not for redesign (`chiaroscuro`), typography (`typecase`) or behaviour-preserving cleanup (`unslop`).
+Consolidate duplicated UI into shared components, split god files or extract packages. Not for redesign (`chiaroscuro`), typography (`typecase`) or behaviour-preserving cleanup (`unslop`).
 
 Install globally for Codex:
 
@@ -114,7 +114,7 @@ npx skills@latest add howells/skills --skill deslop --agent codex --global
 
 ### `failfast`
 
-Remove fallbacks and swallowed errors that hide failures, and test-only code or mocks in production. Use when removing hidden defaults or legacy aliases, tests assert on mocks, or a test needs production hooks. Not for ordinary test-writing or test-first workflow (`tdd`), behaviour-preserving cleanup (`unslop`), or required compatibility.
+Remove fallbacks and swallowed errors that hide failures, and test-only code or mocks in production. Use when a failure is hidden, tests assert on mocks or a test needs production hooks. Not for test-first work (`tdd`), behaviour-preserving cleanup (`unslop`) or required compatibility.
 
 Install globally for Codex:
 
@@ -144,7 +144,7 @@ npx skills@latest add howells/skills --skill gog --agent codex --global
 
 ### `handfeel`
 
-Make a web app feel native on a phone. Use when it works on desktop but feels wrong on a phone, or for PWA behavior, notch or home-indicator overlap, iOS input zoom, sticky hover, tap feedback, overscroll or the color behind Safari's bars. Not for responsive layout (`reflow`), app shells (`armature`) or motion (`zoetrope`).
+Make a web app feel native on a phone: safe areas, viewport units, input zoom, tap and hover on touch, overscroll, the color behind Safari's bars, PWA install. Not for responsive layout (`reflow`), app shells (`armature`) or motion (`zoetrope`).
 
 Install globally for Codex:
 

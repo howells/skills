@@ -1,6 +1,6 @@
 interface:
   display_name: "Blender"
-  short_description: "Drive Blender via MCP or headless CLI"
+  short_description: "Inspect and render Blender scenes and films"
   default_prompt: "Use $blender to inspect this scene, run the render, and open the image before reporting."
 dependencies:
   tools:

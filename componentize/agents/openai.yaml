@@ -1,4 +1,4 @@
 interface:
   display_name: "Componentize"
-  short_description: "Consolidate shared UI, files and packages"
-  default_prompt: "Use $componentize to find duplicated UI and oversized files, choose canonical homes, and migrate the highest-value consolidation."
+  short_description: "Consolidate shared UI, god files and packages"
+  default_prompt: "Use $componentize to find duplicated UI and god files, choose canonical homes, and migrate the highest-value consolidation."

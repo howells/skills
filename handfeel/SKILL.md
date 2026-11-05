@@ -1,6 +1,6 @@
 ---
 name: handfeel
-description: "Make a web app feel native on a phone. Use when it works on desktop but feels wrong on a phone, or for PWA behavior, notch or home-indicator overlap, iOS input zoom, sticky hover, tap feedback, overscroll or the color behind Safari's bars. Not for responsive layout (`reflow`), app shells (`armature`) or motion (`zoetrope`)."
+description: "Make a web app feel native on a phone: safe areas, viewport units, input zoom, tap and hover on touch, overscroll, the color behind Safari's bars, PWA install. Not for responsive layout (`reflow`), app shells (`armature`) or motion (`zoetrope`)."
 ---
 
 # Handfeel

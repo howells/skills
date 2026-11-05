@@ -1,6 +1,6 @@
 ---
 name: failfast
-description: "Remove fallbacks and swallowed errors that hide failures, and test-only code or mocks in production. Use when removing hidden defaults or legacy aliases, tests assert on mocks, or a test needs production hooks. Not for ordinary test-writing or test-first workflow (`tdd`), behaviour-preserving cleanup (`unslop`), or required compatibility."
+description: "Remove fallbacks and swallowed errors that hide failures, and test-only code or mocks in production. Use when a failure is hidden, tests assert on mocks or a test needs production hooks. Not for test-first work (`tdd`), behaviour-preserving cleanup (`unslop`) or required compatibility."
 ---
 
 # Failfast

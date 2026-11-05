@@ -1,125 +1,63 @@
-# Package Extraction Reference
-
-Use this reference file when extracting local code into a reusable package, workspace package, or new repository.
-
-## Extraction Questions
-
-Answer these before editing:
-
-- What is the reusable unit?
-- Who is the consumer?
-- Is the target a new repo, workspace package, or existing package?
-- Should the original app keep using local code, switch to the package, or remain unchanged for now?
-- Is the package intended for npm publishing, private workspace use, or copy-paste reuse?
-
-## Source Inventory
-
-Build a concrete inventory:
-
-- implementation files
-- type files
-- styles and CSS entrypoints
-- assets
-- tests
-- stories, examples, demos, or fixtures
-- all import sites
-- external dependencies
-- app-only dependencies that need to be removed
-
-Useful commands (substitute the actual symbol and file names for the placeholders below):
-
-```bash
-rg -n "ComponentName|useThing|from \".*thing" .
-rg --files | rg "(component-name|thing|feature-name)"
-```
+# Package extraction
 
 ## Public API
 
-Prefer one stable import path:
+One stable import path by default:
 
 ```ts
 import { Thing } from "@scope/thing";
 ```
 
-Use subpath exports only when each represents a deliberate public surface:
+Subpath exports only for deliberate public surfaces:
 
 ```json
 {
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
     "./styles.css": "./dist/styles.css"
   }
 }
 ```
 
-Avoid exporting internals such as `./src/*` unless the package is explicitly a low-level toolkit.
+Don't export `./src/*` unless the package is explicitly a low-level toolkit.
 
 ## Dependencies
 
-Use `peerDependencies` when the consumer must provide a singleton or framework runtime:
+- `peerDependencies`: anything that must be a singleton or match the host: `react`, `react-dom`, `next`, styling runtimes, design-system packages the app controls.
+- `dependencies`: libraries the package owns internally.
+- `devDependencies`: tests, build tools, Storybook, examples, types.
 
-- `react`
-- `react-dom`
-- `next`
-- styling runtimes that must match the host
-- design-system packages controlled by the consuming app
+## React and Tailwind packages
 
-Use regular `dependencies` for libraries the package owns internally.
+- `"use client"` only in files that use browser APIs, state, effects, handlers or client-only libraries.
+- No app router APIs, and no `next/image` or `next/link` unless the package is explicitly Next-only.
+- State the styling contract: bundled CSS, Tailwind classes, CSS variables, style props or unstyled.
+- Tailwind v4: tell consumers to add the package to `@source`. No safelists. Ship CSS variables or a CSS entrypoint when classes alone aren't enough.
 
-Use `devDependencies` for tests, build tools, Storybook, examples, and type packages.
-
-## React And UI Packages
-
-For React component packages:
-
-- preserve `"use client"` only in files that need browser APIs, state, effects, event handlers, or client-only libraries
-- keep server-compatible utilities free of client directives
-- do not import app router APIs from reusable components
-- avoid `next/image`, `next/link`, or framework-specific components unless the package is explicitly Next-only
-- define the styling contract: bundled CSS, Tailwind classes, CSS variables, style props, or unstyled primitives
-
-For Tailwind packages:
-
-- document whether consumers must include source paths in Tailwind v4 `@source`
-- avoid safelists
-- expose CSS variables or a CSS entrypoint when classes alone are not enough
-
-## New Repo Shape
-
-For a small publishable TypeScript package, prefer:
+## New repo shape
 
 ```text
 package-name/
 ├── package.json
 ├── tsconfig.json
-├── src/
-│   └── index.ts
+├── src/index.ts
 ├── tests/
 └── examples/
 ```
 
-Only add Turborepo, Storybook, Changesets, or a docs app when the package clearly needs them.
+Add Turborepo, Storybook, Changesets or a docs app only when the package needs them.
 
-## Validation Checklist
+## Before calling it done
 
-- `package.json` name, version, type, files, exports, scripts
-- type declarations generated or referenced
-- build output excludes tests and examples
-- peer dependencies are not bundled accidentally
-- package can be imported from the intended consumer
-- publishable packages have been packed and smoke-tested when practical, for example with `npm pack --dry-run` plus a consumer import/build check
-- app-specific imports removed
-- tests or examples cover the extracted behavior
-- consuming app still typechecks when imports are migrated
+- `package.json` has name, version, type, `files`, `exports`, scripts; types are emitted or referenced.
+- Build output excludes tests and examples; peers aren't bundled.
+- `npm pack --dry-run`, then import and build it from the intended consumer.
+- No imports left from the original app (`@/lib/*`).
 
-## Common Failure Modes
+## Common failures
 
-- Copying a component but forgetting its CSS variables or global styles.
-- Publishing a package whose `exports` map points to files that are not emitted.
-- Bundling React instead of peering it.
-- Keeping imports from the original app, such as `@/lib/*`.
-- Extracting too much and accidentally creating a second application.
-- Leaving two editable canonical implementations after an in-repo extraction.
+- CSS variables or global styles left behind in the app.
+- An `exports` map pointing at files that aren't emitted.
+- React bundled instead of peered.
+- Extracting so much that the package becomes a second application.
+- Two editable canonical copies left after an in-repo extraction.
