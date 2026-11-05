@@ -1,6 +1,6 @@
 ---
 name: blender
-description: "Inspect, edit and render Blender scenes and films through the Blender MCP or headless CLI. Use for any .blend, render or Blender MCP task. Not for 2D design files (`paste-up`)."
+description: "Inspect, edit and render Blender scenes and films through the Blender MCP or headless CLI. Use for .blend files or any Blender work. Not for Remotion films (`rostrum`) or Paper (`paste-up`)."
 ---
 
 # Blender
@@ -68,7 +68,7 @@ When the render doesn't match the viewport, check:
 
 - Blender 5.x sky is `MULTIPLE_SCATTERING` (was `NISHITA`), with `aerosol_density`.
 - For a real sun position use NOAA, minding the branch: `azimuth = (azimuth + 180.0) if hour_angle > 0.0 else (540.0 - azimuth)`. Check against published sunrise/sunset for the site and date.
-- A crisp sunbeam in every state is impossible with one window: the sun sweeps ~152° of azimuth, a wall accepts ~90°. Say so rather than chase it.
+- One fixed window may not admit direct sun across the whole requested sequence; check the site's sun path against the opening's orientation and say so rather than chase it.
 - Closed curtains cancel a beam; separating the panels took a sunlit fraction from 2.2% to 7.3%.
 
 ## Headless

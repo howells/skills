@@ -65,7 +65,7 @@ An unnamed `salvage/` branch gets deleted next month by whoever tidies up. For e
 ## Proving "safe"
 
 - **Test against the fresh remote, not local `main`.** Fetch without pruning, then `git merge-base --is-ancestor <tip> <remote>/<default>`. If the remote cannot be reached, nothing is removed.
-- **Squash and rebase merges defeat ancestry,** and `git cherry` and patch-ids mislead too. Ask the forge for the merged PR's head and match it to the current branch tip; commits after that head are unmerged. If equivalence cannot be shown, keep the branch.
+- **Squash and rebase merges defeat ancestry,** and `git cherry` and patch-ids mislead too. Ask the forge for the merged PR's head, match it to the current branch tip, and confirm the merge landed on the pushed default branch; commits after that head are unmerged. If equivalence cannot be shown, keep the branch.
 - **A pushed branch is a copy, not integration.** It can be deleted remotely. The bar is the pushed default branch.
 
 ## Scripts

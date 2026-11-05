@@ -42,11 +42,11 @@ export function getUser(id: string): User;
 
 - **Named file or symbol:** that, plus nearby types it depends on.
 - **Nothing named:** the exports added or changed in the current diff.
-- **A package, or "everything":** every symbol reachable from `package.json` `exports` and `types` entrypoints and their barrels. "Everything" means every meaningful export, not exhaustive comments. Track each as add, improve, leave or skip, with a reason.
+- **A package, or "everything":** every symbol reachable from `package.json` `exports` and `types` entrypoints and their barrels. "Everything" means every meaningful export, not exhaustive comments.
 - **Internal code:** only where a maintainer would otherwise misread it: state machines, overloads, lifecycles, tricky types.
 
 ## Check comments survive
 
 When hovers or published docs are the goal, inspect the emitted `.d.ts` or generated docs. `removeComments`, `stripInternal`, declaration rollups, and re-exports through barrels or subpath exports can drop or detach comments. Run the repo's typecheck and existing docs or API-report script for touched packages.
 
-Report files changed, symbols documented or improved, symbols deliberately left with the reason, and what was checked.
+Report the files changed and what was checked.

@@ -52,9 +52,6 @@ Cite by number so a reviewer sees the pattern, not just the instance.
 
 ## Steps
 
-1. Read the diff against the catalogue and record each confirmed instance as tell number plus `file:line`. Don't edit while scanning; editing mid-pass drifts into improving things.
-2. Split the list: remove (behaviour-preserving) and refer (everything else, with its owning skill).
-3. Apply the removals. Run the narrowest existing check that could catch a change, and revert any removal that changes a result.
-4. Report in a few sentences: what went, what was referred and to whom, the check result. Counts by tell only for a large diff.
+Remove confirmed tells without changing behaviour; refer anything that needs a behaviour change to its owning skill. Run the narrowest existing check that could catch a change, then report briefly what went and what was referred.
 
 Rules a linter can enforce on every file (unexplained type assertions, `unknown` in signatures, module mocking, `Reflect` access) belong in `@howells/lint`. If the repo doesn't load them, refer to `howells-lint` rather than fixing each site by hand.

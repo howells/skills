@@ -12,7 +12,7 @@ Test the app as rendered software and report what the browser shows. Report only
 - **Use a real browser.** Source reading and shell checks are not a field test. With no browser available, label the result "not browser-verified".
 - **Don't write to real destinations unasked.** `localhost` is only the frontend; its database, storage, accounts, email and payments may be production. Before submitting, seeding or typing into autosaving fields, check from config where writes land, and prefer a disposable target. Payments, emails, orders, publishing, deletes and production changes need the user's go-ahead for that action.
 - **Findings come from what rendered.** A break predicted from code or a schema is labelled inferred and goes under Residual risk.
-- **Assert the viewport and URL before every measurement.** Read back `innerWidth`, `innerHeight` and `location.href`; a number from the wrong page or size is worse than none.
+- **Measure the intended page and viewport.** Read back `location.href`, `innerWidth` and `innerHeight` after navigating or resizing; a number from the wrong page or size is worse than none.
 - **Use real clicks and wait for the end state.** Programmatic clicks skip hit-testing, pointer-events and overlays. An element appearing, or a fixed sleep, is not the flow finishing.
 - **Aim checks so they could fail.** A boundary between two near-identical tones proves nothing, and checking what a page declares misses what it leaves undeclared.
 

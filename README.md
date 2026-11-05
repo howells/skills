@@ -64,7 +64,7 @@ npx skills@latest add howells/skills --skill ask-howells --agent codex --global
 
 ### `blender`
 
-Inspect, edit and render Blender scenes and films through the Blender MCP or headless CLI. Use for any .blend, render or Blender MCP task. Not for 2D design files (`paste-up`).
+Inspect, edit and render Blender scenes and films through the Blender MCP or headless CLI. Use for .blend files or any Blender work. Not for Remotion films (`rostrum`) or Paper (`paste-up`).
 
 Install globally for Codex:
 

@@ -22,7 +22,7 @@ Check for a Playwriter MCP or skill the host lists, then `command -v playwriter`
 
 - Read the installed docs first (the Playwriter skill, MCP tool descriptions or `playwriter skill`): they define its selectors, timeouts and helpers.
 - Create your own session (`playwriter session new`) and tab (`context.newPage()`). Leave the user's tabs alone unless they point you at one.
-- After each navigation or action, print the URL, `snapshot({ page })` and `getLatestLogs({ page, sinceLastCall: true })`; that is the console check. Screenshot with absolute paths, only when layout is the question.
+- Use `snapshot({ page })` to find controls and `getLatestLogs({ page, sinceLastCall: true })` for console failures. Screenshot with absolute paths, only when layout is the question.
 - Resize with `page.setViewportSize()` and restore it afterwards: the tab sits in the user's own window.
 - If the extension is not connected or no tab has Playwriter enabled, ask the user once to click the Playwriter icon and wait. Don't switch browsers for signed-in or user-visible pages.
 - For a throwaway run the user needn't see, use a headless session where offered (`playwriter session new --browser headless`).

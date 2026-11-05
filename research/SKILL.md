@@ -41,7 +41,7 @@ Take the depth from the request. "Don't dwell on it" means quick; a stated budge
 | Depth | When | Shape | Budget |
 | --- | --- | --- | --- |
 | Quick | One fact, a small comparison, "is X still true" | Answer in chat, links inline, no file | About 10 calls |
-| Standard | "Research X", a ticket question, tool choice before building | Do it yourself, in this thread; one cited Markdown document or one Linear comment | 15–40 calls |
+| Standard | "Research X", a ticket question, tool choice before building | Do it yourself; one cited answer in this thread or at the requested destination | 15–40 calls |
 | Deep | "Deep research", strategy questions, wide freshness audits | Parallel researchers, at most one gap round, one writer | 10–15 calls per researcher |
 
 Run standard work in the foreground. Background it only when asked.
@@ -72,7 +72,7 @@ First match wins:
 1. The destination the brief, ticket or request names.
 2. Material Bank, Sandow or lab strategy: `~/Sites/ground/research/notes/{YYYY-MM-DD-slug}/report.md`, notes beside it. Follow Ground's AGENTS.md: primary material stays verbatim, and a transcript proves someone said something, not that there is demand.
 3. A ticket question: a comment on the owning Linear issue that answers it, with the evidence.
-4. The repo's existing notes convention. If there is none, ask where it should live.
+4. Otherwise, the cited answer in chat.
 
 Never create `reports/` or `research_notes/` in whatever directory happens to be current. Deep-mode researcher notes go beside the report when it is a file, otherwise in a temporary directory.
 
@@ -80,4 +80,6 @@ To extend an earlier report, edit it and add a "What changed" line under the bot
 
 ## Hand back
 
-In chat: the bottom line in three to five sentences, the path or Linear link, and the decision Daniel needs to make. A quick answer is the whole reply.
+For standard or deep work, read [references/report-format.md](references/report-format.md) before drafting.
+
+In chat: the bottom line in three to five sentences, the path or Linear link when there is one, and the decision Daniel needs to make. A quick answer is the whole reply.

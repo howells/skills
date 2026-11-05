@@ -71,7 +71,7 @@ For many charts, cards or examples moving onto one kit, read [references/collect
 
 ## Checking
 
-Typecheck, lint and build what you touched and every consumer of a changed export. When shared UI moved, open the affected pages (or Storybook) and compare against before; exercise keyboard and focus on interactive primitives. Say what you didn't check.
+Check changed exports in their consumers. When shared UI moved, open the affected pages (or Storybook) and compare against before; exercise keyboard and focus on interactive primitives.
 
 Load `chiaroscuro` only for visual direction, `typecase` when the duplication is typographic. Scope stays here.
 
