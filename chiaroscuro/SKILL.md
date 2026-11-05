@@ -1,6 +1,6 @@
 ---
 name: chiaroscuro
-description: "Design and build polished web UI in Tailwind v4, rescue a screen that looks messy, generic or unfinished, or critique one without changing it. Use when an interface should look gorgeous or someone asks what feels off. Not for page directions (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or QA (`fieldtest`)."
+description: "Design and build polished web UI in Tailwind v4, rescue a screen that looks messy, generic or unfinished, or critique one without changing it. Use when an interface should look gorgeous or someone asks what feels off. Not for design options (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or QA (`fieldtest`)."
 ---
 
 # Chiaroscuro
@@ -9,7 +9,7 @@ Take a user-facing web interface from request to finished, working implementatio
 
 Use it to build a component, region or page, or to raise an existing interface's hierarchy, finish and polish. It produces one finished design. When someone asks only for a critique of a screenshot, page, frame or code, follow [critique](references/critique.md) and change nothing until they ask. Other jobs have their own skills:
 
-- several page directions to choose between: `maquette`;
+- several design options to choose between: `maquette`;
 - a scrolling-document app turned into a fixed app shell: `armature`;
 - a responsive pass across small laptops, tablets and phones: `reflow`;
 - a mockup in Paper: `paste-up`.
@@ -116,8 +116,8 @@ Chiaroscuro remains usable on its own. A specialist adds depth but never carries
 - `fieldtest` for evidence-heavy browser QA;
 - `reflow` for a responsive pass across every view;
 - `armature` when the app needs a fixed shell with panes before it needs polish;
-- `maquette` when the user wants several page directions to choose between;
+- `maquette` when the user wants several design options to choose between;
 - `paste-up` for any work in a Paper file;
-- `dark-mode-image`, `canonicalize-tailwind`, `markup-from-image`, `prototype`, or `pick-ui-library` for their narrow utilities.
+- `dark-mode-image`, `canonicalize-tailwind`, `markup-from-image`, or `pick-ui-library` for their narrow utilities.
 
 Do ordinary end-to-end interface work here. Do not force a specialist dependency, a saved design spec, a wireframe, or an approval pause unless the user asks for one.

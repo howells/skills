@@ -74,7 +74,7 @@ npx skills@latest add howells/skills --skill blender --agent codex --global
 
 ### `chiaroscuro`
 
-Design and build polished web UI in Tailwind v4, rescue a screen that looks messy, generic or unfinished, or critique one without changing it. Use when an interface should look gorgeous or someone asks what feels off. Not for page directions (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or QA (`fieldtest`).
+Design and build polished web UI in Tailwind v4, rescue a screen that looks messy, generic or unfinished, or critique one without changing it. Use when an interface should look gorgeous or someone asks what feels off. Not for design options (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or QA (`fieldtest`).
 
 Install globally for Codex:
 
@@ -154,7 +154,7 @@ npx skills@latest add howells/skills --skill handfeel --agent codex --global
 
 ### `maquette`
 
-Render five page directions beside the current page, then build the chosen one. Not for a single direction (`chiaroscuro`).
+Explore design options for a page, component or region as live variants in the running app, switch or compare them, then keep one and delete the rest. Use when asked for options, alternatives or directions. Not for one settled direction (`chiaroscuro`) or Paper (`paste-up`).
 
 Install globally for Codex:
 

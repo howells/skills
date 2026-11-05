@@ -1,120 +1,84 @@
 ---
 name: maquette
-description: "Render five page directions beside the current page, then build the chosen one. Not for a single direction (`chiaroscuro`)."
-disable-model-invocation: true
+description: "Explore design options for a page, component or region as live variants in the running app, switch or compare them, then keep one and delete the rest. Use when asked for options, alternatives or directions. Not for one settled direction (`chiaroscuro`) or Paper (`paste-up`)."
 ---
 
 # Maquette
 
-A maquette is the small model a sculptor makes to choose a form before committing to the full piece. This skill does that for a page: the current page plus five genuinely different directions, rendered in the running app behind a temporary picker, one selection, then the chosen direction built properly and every rejected one removed.
+A maquette is the small model a sculptor makes before committing to the full piece. For UI: the current version plus several genuinely different directions, rendered in the running app behind a temporary picker, one choice, then the chosen direction built properly and every rejected one removed.
 
-State at the start that you are using the `maquette` skill.
-
-Use it for a complete route, page or full-screen workflow whose direction is not settled. When the user supplied a direction, asked to match or extend an existing design, or scoped the work to a component or region, build one direction with `chiaroscuro` instead.
+When the user already gave a direction, or asked to match or extend an existing design, build it with `chiaroscuro` instead.
 
 ## Hard Rules
 
-These hold wherever the work happens: in code, in a Paper file and in any brief handed to a helper. Styling the product already has is not an exception; fix it inside the scope and report it outside. Only an explicit instruction from the user overrides a rule.
+1. **Exploration runs only in development.** Guard the selection, compare mode and picker together, not only the visible picker. Outside development the host renders `Current` and ignores the `maquette` URL key, so production is unchanged until the user chooses.
+2. **Directions differ on a named axis:** structure, density, emphasis, type, voice or interaction model. Two that differ only in accent colour or copy are one direction; replace one.
+3. **One source of truth.** All directions share content, data, state, events and validation. Never fork an API call, loader, mutation or business rule. Vary presentation only.
+4. **Every direction is complete.** Real content at the real item count, the whole piece and its core path working. No fragment, mood board, lorem ipsum or dead button.
+5. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting. Proper acronyms keep their capitals.
+6. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. Keep only consent, constraints and error recovery.
+7. **Four to six type styles, in chosen faces.** Use the product's named roles. Before choosing a new face, read the bundled [font guidance](references/font-guidance.md), choose from it and follow its never-use list; Instrument Serif is the first name on that list.
+8. **Reuse before you build.** Use the existing component, shell, header or control, in this product or any package the user pointed to. A second version of an existing control is a defect.
+9. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density. Touch targets at least 44 by 44 CSS pixels.
 
-1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting, never for labels or headings. Proper acronyms keep their capitals.
-2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. In product UI, headings name things; they do not headline them or introduce a section. Keep only consent, constraints and error recovery.
-3. **Four to six type styles, in chosen faces.** Use the product's named roles. A new size or weight needs a job no existing role does. Before choosing a new face, read the bundled [font guidance](references/font-guidance.md), choose from its recommendations and follow its never-use list; Instrument Serif is the first name on that list.
-4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user has pointed to, and use it. A second version of an existing control is a defect.
-5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
-6. **Touch targets at least 44 by 44 CSS pixels.**
-7. **Look at it before calling it done.** Use the path in a real browser, or walk a mockup's boards in order, then look at each whole screen on desktop and on a phone as the user would. Static checks show neither that it works nor that it looks right.
+Rules 5 to 9 are `chiaroscuro`'s. Directions differ within them, never by breaking them.
 
-These are the same rules `chiaroscuro` applies, copied here so no direction depends on breaking them. Directions differ within them, never by breaking them.
+## Workflow
 
-## 1. Inspect before drawing
+### 1. Scope and inspect
 
-Read the project instructions, the route and its components, the shell, the tokens and the real content. Write down in a few sentences who uses this page, what they are there to do, and what must stay unchanged. Every direction answers the same task with the same content; only presentation varies.
+One piece per run: a page, a component or a region. If the request spans several ("the dashboard"), pick the highest-leverage piece and offer the rest as later runs.
 
-## 2. The set
+Read the piece, its shell, tokens and real content. The product's density and voice bound how far the boldest direction may go. Note any uncommitted work first, so cleanup never sweeps it up.
 
-Six rendered states of the same page:
+### 2. Name the set
 
-1. the current page, labelled `Current`. For a new route with no prior page, build a conservative baseline from the product's existing shell, components and tokens;
-2. five new directions that differ on purpose.
+Before any code, write down `Current` and the new directions, each with a name and an axis position. Three directions for a component or region, five for a page; never more than five unless asked.
 
-All six share content, data, state, events, validation and downstream behaviour. Never fork API calls, loaders, mutations or business logic to make a direction. Vary presentation structure, hierarchy, typography, colour, density and interaction treatment.
+Name each by its visible idea (`Ledger`, `Index`, `Rail`), never `A`, `B` or an abstract adjective. Picker labels, URL keys and the final question use the same names. For a new route, `Current` is a conservative baseline built from the product's shell, components and tokens.
 
-Every direction shows the complete page hierarchy and core path. It may leave production hardening until after selection, but it cannot be a fragment, a mood board or a decorative hero standing in for the page.
+### 3. Build into the real app
 
-Name each direction by its visible idea, never `A`, `B` or an abstract adjective. The labels in the picker match the labels in the selection question.
+Host the directions where the piece really renders: its real route, shell, neighbours and data. No standalone preview app. Only if the app cannot run, build one self-contained HTML file with the same picker.
 
-## 3. Start clean
-
-Before each round:
-
-- use the currently selected page as the baseline;
-- remove stale rejected branches, wrappers, hidden states, scripts, imports and suppressions from any earlier round;
-- confirm the baseline path still works;
-- keep one source for shared content and behaviour.
-
-## 4. Build the directions
-
-Keep direction code inside the existing route and component structure behind a local presentation switch. A standalone fake preview app is not acceptable.
+Each direction lives in its own temporary file. Lift effects, loaders and mutations above the choice; only the host imports a direction:
 
 ```tsx
-const directions = {
-  current: CurrentDirection,
-  ledger: WorkingLedgerDirection,
-  index: MaterialIndexDirection,
-}
-
-const Direction = directions[activeDirection]
+const directions = { current: Current, ledger: Ledger, index: Index }
+const Direction = directions[active]
 return <Direction model={sharedModel} actions={sharedActions} />
 ```
 
-- Mount one direction at a time unless side-by-side review genuinely helps.
-- Keep the presentation key in local development state or a temporary URL parameter so refresh and screenshots stay practical.
-- Lift effects, API calls, loaders and mutations above the presentation choice.
-- Keep direction labels and keys local to the temporary code.
+- Never edit a shared component, token, global stylesheet or layout for a direction; that changes `Current`, the other directions and production at once. Wrap or copy inside the direction's file.
+- Scope styles to the direction: Tailwind classes, a CSS module or a selector under its root. A plain stylesheet import applies to every direction.
+- Never gitignore direction files. Tailwind v4 skips ignored files when scanning for classes, so the direction renders unstyled.
 
-## 5. Mount a local picker
+### 4. Mount the picker
 
-Add a small accessible component named `DirectionPicker` at the route or layout boundary used by the exploration. It:
+Read [references/picker.md](references/picker.md) when building `DirectionPicker`: URL contract, keys, framework gotchas, markup and compare mode. It is review tooling with a fixed look, never styled with the project's tokens, or it becomes part of the design being judged.
 
-- renders only in local development;
-- uses a native `<select>` or ordinary labelled buttons with keyboard support;
-- changes the presentation key without resetting shared state;
-- sits outside the page's layout flow, so it does not alter the direction being judged;
-- identifies itself as temporary review tooling.
+- **Switch** (always): one direction at a time, full size, instant.
+- **Compare** (component or region only): every direction side by side at its real width. A page is judged by switching, never in thumbnails, because spacing and scale are what is being chosen.
 
-Never fetch or inject a remote picker script, and never add a dependency for it. If the app cannot safely mount development tooling, use screenshots or described options rather than loosening its security policy or production boundary.
+### 5. Look, then ask once
 
-## 6. Review before asking
+Flip through every direction in a browser at desktop and phone width and fix what is broken. Without a browser, say so and give the URL.
 
-Exercise every direction in the running app:
+Then ask one question: the picker URL, `Current` and every direction as options, one line each on when it wins and what it costs. Never mark a favourite. Asked directly, answer from how often the piece is seen and the product's personality, not from what was fun to build.
 
-- the core hierarchy and path are visible;
-- content and behaviour match the baseline;
-- desktop and mobile are legible;
-- no direction introduces overflow, duplicate IDs, broken semantics, console errors or failed requests;
-- each label describes what is actually rendered;
-- every direction keeps the Hard Rules.
+If the user wants another round, delete the rejected directions, keep the picker, and build new positions around the one they leaned toward.
 
-This is exploration. Do enough to make the choice real and comparable, and no more.
+### 6. Keep one, delete the rest
 
-## 7. One selection
+1. Move the chosen direction into the project's own file layout and naming.
+2. Delete every other direction (including `Current` unless chosen), `DirectionPicker`, the direction map, the URL key, the development guard, and anything only they used.
+3. Harden the chosen path: empty, loading, failure, keyboard, mobile and dark-mode states. Use `chiaroscuro` when installed.
+4. Search for `DirectionPicker`, `maquette` and every rejected direction name; leftovers hide in imports and styles. The diff from the start holds the chosen direction and nothing else.
 
-Pause exactly once. Present `Current` and all five directions in one structured selection, using the host's structured-question tool when it can hold every option, otherwise one numbered question in chat. Never split the choice across questions or add aesthetic questions before or after it.
+If the user asks to keep the picker, keep it and the directions and say what remains.
 
-If the app cannot run, present screenshots. If neither preview nor screenshots are possible, present short descriptions of all six in the same selection.
+## Gotchas
 
-## 8. Build the chosen direction and remove the rest
-
-1. Keep the selected presentation.
-2. Remove the other five directions.
-3. Remove `DirectionPicker`, the presentation map, the temporary URL parameter and the development guard.
-4. Remove temporary switch state, wrappers, comments and suppressions.
-5. Remove dead styles, components, imports and dependencies.
-6. Harden the selected path to production quality, including empty, loading, failure, keyboard, mobile and dark-mode states. Apply `chiaroscuro` for this when installed.
-7. Verify the complete path again in the browser.
-
-Search for `DirectionPicker`, the presentation key or URL parameter, every direction label and every rejected component name. The final source contains no rejected code and no comparison scaffolding.
-
-## Report
-
-Name the chosen direction, what changed, the verification performed, and any honest limitation. Do not claim browser verification when only static checks ran.
+- Near-identical directions teach nothing. If two converge while building, cut one and say so; two distinct directions beat five padded ones.
+- Vary one primary axis and let the rest follow. A dense direction needing a smaller type step is coherence, not a second axis.
+- Judging on a blank route hides the real neighbours and data.

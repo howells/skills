@@ -12,7 +12,7 @@ Nobody remembers thirty-odd skills. Describe where you are, and this names what 
 
 1. **Recommend, then stop.** Answer with the route and the exact first invocation, in the host's syntax (`/chiaroscuro` in Claude Code, `$chiaroscuro` in Codex). Don't start the work, open the files or fire the skill.
 2. **Open a skill before making a claim about it.** The map below is a summary. Before saying anything load-bearing about what a skill does - that it covers a case, skips a step, or makes another unnecessary - read that skill's `SKILL.md` from where it is installed. Where the map and a `SKILL.md` disagree, the `SKILL.md` is right.
-3. **Explicit-only skills are missing from the list, not from the machine.** `maquette`, `simplify` and this router don't appear in the skill list an agent is given. Check the install directory before reporting any skill as absent.
+3. **Explicit-only skills are missing from the list, not from the machine.** `simplify` and this router don't appear in the skill list an agent is given. Check the install directory before reporting any skill as absent.
 4. **When two skills are close, give the test that separates them** - usually one concrete question - and say why the other one is wrong here.
 5. **When nothing fits, say so.** This map covers this collection only. Don't stretch a skill to cover a situation it wasn't written for.
 
@@ -29,8 +29,8 @@ Route: `rebalance` → `implement`, repeated. `plimsoll` whenever delivery stall
 
 ### Building UI
 
-- **A whole page whose direction isn't settled** → `maquette`: five directions beside the current page, pick one, it builds it.
-- **One direction, a component or a region** → `chiaroscuro`.
+- **Options to choose between, for a page, component or region** → `maquette`: live variants in the app, switch or compare, keep one, delete the rest.
+- **One settled direction, whether a page, component or region** → `chiaroscuro`.
 - **A screenshot, page or frame that feels off, visual critique only** → `chiaroscuro`. It names what's off and asks; it changes nothing until asked.
 - **The app scrolls like a document and should behave like an app** → `armature`.
 - **It breaks on laptops, tablets or phones** → `reflow`.
@@ -81,7 +81,7 @@ Route: `simplify` → the skill each finding points at.
 
 | Pair | The test |
 | --- | --- |
-| `maquette` / `chiaroscuro` | Is the direction for a whole page still open? Yes: `maquette`. |
+| `maquette` / `chiaroscuro` | Is the direction still open, so you want options to choose between? Yes: `maquette`. |
 | `chiaroscuro` / `armature` | Is the problem how it looks, or what scrolls? Scrolling: `armature`. |
 | `chiaroscuro` / `zoetrope` | Is the question how it looks still, or how it moves? Moves: `zoetrope`. |
 | `reflow` / `handfeel` | Does the layout adapt across sizes, or does the phone treat the page like a website? Phone behavior: `handfeel`. |

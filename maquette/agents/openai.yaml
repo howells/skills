@@ -1,6 +1,4 @@
 interface:
   display_name: "Maquette"
-  short_description: "Compare five page directions, then build the chosen one"
-  default_prompt: "Use $maquette to render this page beside five distinct design directions behind a temporary picker, ask me to choose once, then build the chosen direction and remove the rest."
-policy:
-  allow_implicit_invocation: false
+  short_description: "Compare live design options, then keep one"
+  default_prompt: "Use $maquette to build design options for this page, component or region in the running app behind a temporary picker, let me switch or compare them, then keep my choice and delete the rest."
