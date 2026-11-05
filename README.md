@@ -124,7 +124,7 @@ npx skills@latest add howells/skills --skill fail-fast --agent codex --global
 
 ### `fieldtest`
 
-Exercise a running web app in a real browser and return evidence-backed QA findings. Use for dogfooding, localhost review, responsive or mobile defects, console and accessibility checks, and persona walkthroughs; fix only when asked. Not for code-only review, or designing and building the UI (`chiaroscuro`).
+Exercise a running web app in a real browser and return evidence-backed QA findings. Use for dogfooding, localhost review, mobile defects, console and accessibility checks, persona walkthroughs, or to try to break it with hostile content, slow networks and rapid input. Report-only unless asked. Not for code-only review, building UI (`chiaroscuro`) or fixing layout (`reflow`).
 
 Install globally for Codex:
 
@@ -257,7 +257,7 @@ npx skills@latest add howells/skills --skill reflow --agent codex --global
 
 ### `review`
 
-Get an independent review with fable, sol, muse (wonder), opus or astra, then verify its claims. Use for a named-model second opinion on code, a decision or stated criteria. Not for a codebase health grade (`simplify`) or browser QA (`fieldtest`).
+Verify review feedback before acting on it. Use when PR bot comments arrive, reviewer findings are pasted, or an independent opinion is wanted from fable, sol, muse (wonder), opus or astra. Not for reviewing a diff, branch or PR from scratch (`code-review`), codebase health (`simplify`) or browser QA (`fieldtest`).
 
 Install globally for Codex:
 
@@ -265,7 +265,7 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill review --agent codex --global
 ```
 
-Invoke with a model argument: `$review fable <question>`, `$review sol <question>`, `$review muse <question>` (or `wonder`), `$review opus <question>`, or `$review astra <question>`. In Claude Code use `/review` with the same arguments.
+Feedback that arrives from a bot, PR or agent loads it implicitly. To ask for an independent opinion, name the model or let the skill choose one: `$review fable <question>`, `$review sol <question>`, `$review muse <question>` (or `wonder`), `$review opus <question>`, or `$review astra <question>`. In Claude Code use `/review` with the same arguments.
 
 ### `salvage`
 

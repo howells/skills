@@ -56,7 +56,7 @@ Route: `simplify` → the skill each finding points at.
 
 ### A second opinion
 
-- **An independent read of a decision, code or stated criteria** → `review`, with a model argument. A named model takes precedence; otherwise the skill selects the lane for the question.
+- **Review feedback has arrived (bot, PR comments, agent, model), or an independent read of a decision, code or stated criteria is wanted** → `review`. For an independent read, add a model argument; a named model takes precedence, otherwise the skill selects the lane for the question.
 
 ### Lost the thread
 
@@ -87,7 +87,7 @@ Route: `simplify` → the skill each finding points at.
 | `unslop` / `fail-fast` | Should behaviour stay exactly the same? Yes: `unslop`. |
 | `unslop` / `simplify` | Cleaning a diff, or judging its structure? Judging: `simplify`. |
 | `deslop` / `signage` | Paragraphs, or words on a control? Controls: `signage`. |
-| `review` / `simplify` | An independent opinion on a bounded question, or a structural health review? Independent opinion: `review`, with a model argument. |
+| `review` / `simplify` | Feedback to act on or an independent opinion on a bounded question, or a structural health review? Feedback or opinion: `review`. |
 | `what` / `memento` / `muster` | The last reply, this task, or many tasks. |
 | `rebalance` / `implement` | Deciding the order, or doing the work? Doing: `implement`. |
 

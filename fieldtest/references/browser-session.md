@@ -1,6 +1,8 @@
 # Browser Session Reference
 
-Use this reference file when running a rendered app QA session.
+Browser setup, persona checks and severity for a rendered app QA session.
+
+Contents: Browser Tool Selection · Playwriter Sessions · Dev URL Detection · Persona Checks · Evidence · Report Tone
 
 ## Browser Tool Selection
 
@@ -8,14 +10,13 @@ Honour the browser or tab the user specifies, and any browser rules the live hos
 
 | Environment | Preferred browser path | Notes |
 | --- | --- | --- |
-| `playwriter` CLI installed, or a Playwriter skill or MCP exposed | Playwriter | Default whenever available. Drives the user's own Chrome, so signed-in, bot-protected and localhost pages render as the user sees them and the user can watch. See Playwriter Sessions below. |
+| Playwriter MCP, skill or `playwriter` CLI available | Playwriter | Default whenever available. Drives the user's own Chrome, so signed-in, bot-protected and localhost pages render as the user sees them and the user can watch. See Playwriter Sessions below. |
 | Codex desktop or Codex with Browser plugin | Browser plugin / Codex in-app browser | Preferred for local targets, localhost apps, file URLs, screenshots, and current-tab testing. |
 | Claude desktop with in-app browser | Claude desktop in-app browser | Use when it supports navigation, interaction, inspection, and screenshots. |
 | Claude Code CLI with Chrome MCP | Chrome MCP | Strong default for CLI sessions with a real Chrome connection. |
 | Host with agent-browser installed | agent-browser | Use when it fits the task and the host permits it; inspect current help for recording support. |
+| Only native computer use (Codex Computer Use, Claude computer use, or the `computer-use` skill) | Computer use driving a visible browser | Last resort before static inspection. It sees pixels only: mark console, network, DOM and accessibility checks as not run. |
 | No browser-capable option | Static inspection only | Clearly say the result was not browser-verified. |
-
-Use the strongest available browser tool before falling back. A field test should exercise rendered behavior, not just source code.
 
 Recording support varies by tool. Inspect the available browser tool documentation or CLI help; do not assume a recording command exists. Static-only inspection cannot record.
 
@@ -23,14 +24,14 @@ If the host supports lazy tool discovery, search for Browser or browser MCP capa
 
 ## Playwriter Sessions
 
-Check availability with `command -v playwriter`, or a Playwriter skill or MCP the host lists. If none is found, move to the next row; do not install it unasked.
+Check for a Playwriter MCP or skill the host lists, then `command -v playwriter`. Use whichever form the host exposes: the steps below say what to do, with the CLI command where the CLI is what you have. If none is found, move to the next row; do not install it unasked.
 
-- Before the first command, run `playwriter skill` and read the whole output. It documents the installed version's selectors, timeouts and helpers.
-- Create your own session (`playwriter session new`) and open your own tab with `context.newPage()`. Leave the user's existing tabs alone unless they point you at one.
+- Before the first command, read the installed version's docs in full: the Playwriter skill or MCP tool descriptions, or the output of `playwriter skill`. They document its selectors, timeouts and helpers.
+- Create your own session (CLI: `playwriter session new`) and open your own tab with `context.newPage()`. Leave the user's existing tabs alone unless they point you at one.
 - After every navigation or action, print the URL, `snapshot({ page })` and `getLatestLogs({ page, sinceLastCall: true })`. That covers the console check. Take screenshots with absolute paths, and only when layout is the question.
 - Resize the viewport with `page.setViewportSize()` for the mobile and desktop checks, then restore it, because the tab sits in the user's own window.
-- If the CLI reports that the extension is not connected or no tab has Playwriter enabled, ask the user once to click the Playwriter extension icon, then wait for their reply. Do not silently fall back to another browser for signed-in or user-visible pages.
-- For a throwaway run the user does not need to see, `playwriter session new --browser headless` keeps the user's Chrome out of it.
+- If Playwriter reports that the extension is not connected or no tab has Playwriter enabled, ask the user once to click the Playwriter extension icon, then wait for their reply. Do not silently fall back to another browser for signed-in or user-visible pages.
+- For a throwaway run the user does not need to see, a headless session keeps the user's Chrome out of it where your Playwriter form offers one (CLI: `playwriter session new --browser headless`).
 - Playwriter's recorder captures what the user does, not what you do. Treat recording your own flow as unavailable unless the installed docs say otherwise.
 - Close your tab and delete your session when finished, unless the user wants to inspect the result.
 
@@ -60,24 +61,6 @@ Prefer the actual startup URL over an inferred default, since the configured por
 | Next default | `next dev` | `http://localhost:3000` |
 
 If multiple URLs or apps are plausible, ask which app to field test.
-
-## Minimum Session
-
-For a broad app field test:
-
-1. Load the target URL.
-2. Record the browser tool, viewport, and route.
-3. Inspect console errors.
-4. Take or describe the initial rendered state.
-5. Exercise the primary action.
-6. Check one error or empty state.
-7. Navigate to two adjacent routes.
-8. Recheck at mobile width around `375px`.
-9. Recheck at desktop width around `1440px`.
-
-For a focused regression, test only the affected route and one adjacent state.
-
-For async views, observe intermediate loading and error states as well as settled output. Exercise rapid A-to-B changes and late responses. For host-delivered apps, test the real host's delivery events, resize and interactions where accessible. Report standalone and native-host coverage separately when only one is available.
 
 ## Persona Checks
 

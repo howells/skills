@@ -1,4 +1,4 @@
 interface:
   display_name: "Review"
-  short_description: "Independent review with a chosen model"
-  default_prompt: "Use $review with fable, sol, muse (wonder), opus or astra for an independent review of this work, then verify its claims before acting. For a codebase health grade, use $simplify instead."
+  short_description: "Verify review feedback or ask a model"
+  default_prompt: "Use $review on this review feedback: verify each claim against the code and push back where wrong; fix accepted items one at a time only when changes are authorised, otherwise propose them. Or add fable, sol, muse, opus or astra for an independent read."

@@ -4,7 +4,7 @@ Use this route whenever the harness can start a separate thread or task with a c
 
 Follow live host orchestration, failure, routing and approval instructions when they differ from these examples. Use the returned thread link verbatim.
 
-Discover the provider instances and current models from `orchestrator_capabilities`, including configured custom models. Match the argument to the requested family and version, not to whichever model a native tool happens to list. For `muse` or `wonder`, select the standard `muse-wonder-<version>` model, not Spark or the separate full variant unless requested.
+Discover the available models and supported options through the active harness: `orchestrator_capabilities` in T3 Code, otherwise that harness's model catalogue and native delegation controls. Include configured custom models. Match the argument to the requested family and version; do not silently substitute whichever model a native tool happens to list. For `muse` or `wonder`, select the standard `muse-wonder-<version>` model, not Spark or the separate full variant unless requested.
 
 For same-provider work, prefer a native subagent only when it supports the selected model and can start without inheriting conversation history. Otherwise, and for cross-provider work, use `delegate_task` with the discovered `providerInstanceId`, exact `model`, and the model's supported high-effort option. Supply only the bounded brief as `task`, with `role: "review"` and a stable `clientRequestId` for this round. Do not create a top-level thread for a review.
 
