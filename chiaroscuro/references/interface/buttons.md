@@ -17,6 +17,9 @@ Buttons define action hierarchy. Treat them as deliberate system primitives, not
 - MUST: Destructive buttons use destructive semantics and a confirmation step when the action cannot be undone.
 - SHOULD: Tertiary actions use ghost or text treatments only when a stronger button would add visual noise.
 - MUST NOT: Present multiple visually primary buttons in the same cluster.
+- MUST: Action weight matches consequence. Forward progress is strongest; a destructive action is serious, set apart from routine actions, and never the default.
+- SHOULD: Two or three action tiers in a view. A fourth usually means some actions belong in a menu or nowhere.
+- MUST: Everything pressable looks pressable. The inverse, nothing static looking pressable, is the no-dead-zones rule in [interactions.md](interactions.md).
 
 ## Typography
 

@@ -51,6 +51,12 @@ To make a colour lighter or darker, move OKLCH lightness and adjust chroma so it
 - MUST: Follow the project's existing neutral naming if one exists (`gray-*`, `zinc-*`, role tokens, CSS variables, etc.).
 - SHOULD: If creating a new system, choose one neutral family or role-token scheme and use it consistently. Do not mix `gray`, `slate`, `zinc`, and `neutral` casually.
 
+## One Job per Colour
+
+- MUST: Use colour roles consistently. Action treatments stay recognisably interactive; static headings, labels and values never imitate controls.
+- SHOULD: One primary accent, with additional hues reserved for clear semantic or data meanings such as success, warning, error or a chart series.
+- MUST NOT: Near-duplicate shades. Two greys or two blues that are almost the same are one token used twice or a drift; pick one.
+
 ## Semantic Colors
 
 | Color | Requirements |
@@ -69,9 +75,24 @@ To make a colour lighter or darker, move OKLCH lightness and adjust chroma so it
 | Large text (≥ 24px regular, or ≥ 18.67px bold) | 3:1 |
 | UI components | 3:1 |
 
+### Contrast by Role
+
+WCAG sets the floor. Within it, contrast sets depth: the most important things are strongest, and supporting things step down. Starting ranges against the ground:
+
+| Role | Ratio |
+|------|-------|
+| Primary text, dark on light | 12-21:1 |
+| Primary text, light on dark | 7-12:1 |
+| Supporting text, metadata | 4.5-7:1 |
+| Informative icons, boundaries that identify a control or its state | at least 3:1 against adjacent colours |
+| Dividers, quiet fills, disabled states | 1.1-1.5:1 |
+
+These are design targets except the 3:1 row, which is a WCAG minimum. Decorative elements and inactive controls are exempt from it. A button fill needs no particular ratio against the page; its label must meet text contrast against the fill. Something minor that shouts, or something important that fades, is a hierarchy defect even when every ratio passes.
+
 ### Color Independence
 
 - NEVER: Rely on color alone - pair with icons, text, position
+- MUST: View the screen in greyscale. Every state and grouping should still read.
 - 8% of males have red-green deficiency
 
 ## Starter Palette: Blue-Grey

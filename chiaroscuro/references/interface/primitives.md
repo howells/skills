@@ -40,6 +40,7 @@ Covers: photos, thumbnails, screenshots, app mockups, product images, media fram
 - Use `alt=""` on images when the subject is identified by adjacent visible text
 - Choose aspect ratio from the source material and layout role. Preserve a stable ratio to prevent layout shift; use consistent square or landscape crops for repeated grids, but do not force every image into one recipe or reject 16:9 when the content is natively widescreen.
 - Pair `object-cover` with an `object-position` chosen for each image, so the crop keeps its subject
+- Where images come from users or a feed, check the layout with an all-white image, an all-black image and no image. Text over images, edges and placeholders must survive all three.
 
 ## SVG
 

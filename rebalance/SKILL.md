@@ -1,11 +1,11 @@
 ---
 name: rebalance
-description: "Reprioritize a project's backlog for a goal. Not implementation (`next`)."
+description: "Reprioritize a project's backlog for a goal. Not implementation (`implement`)."
 ---
 
 # Rebalance
 
-Set the project's current priorities around the user's goal. Review the whole open backlog, identify the unfinished work needed for that outcome, and make its essential delivery path urgent so `next` can pick it up. Reassess everything else by its current importance. These are the new priorities: no saved priority snapshot, expiry, restoration mechanism or extra tracking system.
+Set the project's current priorities around the user's goal. Review the whole open backlog, identify the unfinished work needed for that outcome, and make its essential delivery path urgent so delivery can pick it up. Reassess everything else by its current importance. These are the new priorities: no saved priority snapshot, expiry, restoration mechanism or extra tracking system.
 
 Use the named project, or infer it from the current repository and conversation. Accept a goal and optional deadline in ordinary language, for example: “prepare the guided design flow for tomorrow's demo.” Resolve relative dates using the user's timezone. Announce the project, concrete outcome and deadline in one short sentence. Ask only when the target or a decision affecting scope cannot be established from available evidence. Do not invent a deadline or treat an example as an instruction to edit that project's tracker.
 
@@ -17,7 +17,7 @@ This skill follows `ask-matt`'s routing principles. Read the installed router wh
 - **Make work buildable:** use `to-spec` when the intended behaviour is missing, then `to-tickets` when it needs several independent deliveries. Prefer small end-to-end increments with testable acceptance and explicit blocking relationships. Improve existing items before creating new ones.
 - **Handle raw incoming reports:** use `triage` when a report needs investigation or clarification. Already specified items do not need another triage cycle merely because their priority changes.
 - **Recognise unresolved decisions:** reserve `wayfinder` for a large effort whose route cannot yet be determined. Identify that gap and keep the independently actionable work moving; do not replace a bounded rebalance with a design programme.
-- **Hand off to delivery:** leave self-contained items for fresh `next` tasks. Do not invoke `implement`, start coding, or automatically open another task.
+- **Hand off to delivery:** leave self-contained items for fresh delivery tasks. Do not invoke `implement`, start coding, or automatically open another task.
 
 Store specs, decisions and dependency evidence in the project's configured tracker. Follow its documentation policy; do not create ticket files, handoff documents or ADRs merely because another skill uses those defaults.
 
@@ -36,8 +36,8 @@ When useful, delegate independent read-only groups of items to native parallel a
 Before changing priorities, check whether the goal has any relevant tickets and whether those tickets contain enough detail for a fresh agent to implement them. Use the complete backlog and relevant descriptions, comments and linked specs, not title matching alone. Missing access or incomplete pagination is an access or coverage problem, not evidence that no related tickets exist.
 
 - **No related tickets:** say plainly, “I couldn't find any tickets covering this goal,” and briefly state what was searched. Invite `grilling` if the intended behaviour still needs decisions, or `to-spec` followed by `to-tickets` if the goal is already clear. Stop without reprioritizing unrelated work or inventing a delivery backlog. An explicit request to also specify or create that backlog can authorize continuing.
-- **Related tickets are too thin:** link them, say they are not yet specific enough to implement, and name the missing decisions or acceptance criteria. A useful ticket establishes the problem, intended user behaviour, testable completion criteria and known dependencies; use linked specs when they provide that detail. Invite `grilling` for unresolved choices, `to-spec` to capture settled requirements, or `to-tickets` to break an existing spec into deliverable increments. Do not silently invent requirements or mark these items ready for `next`.
-- **Some work is ready:** rebalance the well-specified items and explicitly report which part of the goal still needs specification. Thin but essential items may be urgent and marked with the project's information-needed role; urgency does not make them actionable. If none is actionable, say so and finish with the appropriate invitation instead of handing an arbitrary ticket to `next`.
+- **Related tickets are too thin:** link them, say they are not yet specific enough to implement, and name the missing decisions or acceptance criteria. A useful ticket establishes the problem, intended user behaviour, testable completion criteria and known dependencies; use linked specs when they provide that detail. Invite `grilling` for unresolved choices, `to-spec` to capture settled requirements, or `to-tickets` to break an existing spec into deliverable increments. Do not silently invent requirements or mark these items ready for delivery.
+- **Some work is ready:** rebalance the well-specified items and explicitly report which part of the goal still needs specification. Thin but essential items may be urgent and marked with the project's information-needed role; urgency does not make them actionable. If none is actionable, say so and finish with the appropriate invitation instead of handing an arbitrary ticket to delivery.
 
 Make the invitation one short, concrete question explaining what the proposed skill would resolve. Do not automatically start an interview or the whole Ask Matt flow. Where that skill is unavailable, offer the same clarification or specification work in ordinary language. Routine factual improvements and small missing prerequisites below remain allowed when existing evidence is sufficient; they must not conceal missing product decisions or substitute for this notice.
 
@@ -47,7 +47,7 @@ Trace the smallest complete user journey that demonstrates the goal and map its 
 
 Reuse existing items and native blocking links. Create a missing item only when a concrete part of the goal has no owner in the backlog; search for duplicates first. Each item should state the observed gap, intended behaviour, relevant evidence, testable acceptance and dependencies, so a fresh agent can deliver it. Split only when independent end-to-end increments improve delivery; do not manufacture a ticket per technical layer. Check the resulting dependency graph for cycles and mistaken blockers.
 
-Distinguish urgency from readiness. A necessary external decision, unavailable credential, observation period or another owner's active work can be urgent while still blocked. Record the actual dependency and the project's readiness role; never mark it ready just to make `next` select it. Preserve assignees and ongoing ownership. If the deadline is not achievable, say what prevents it and identify a smaller demonstrable outcome without silently changing the user's goal.
+Distinguish urgency from readiness. A necessary external decision, unavailable credential, observation period or another owner's active work can be urgent while still blocked. Record the actual dependency and the project's readiness role; never mark it ready just to get it selected. Preserve assignees and ongoing ownership. If the deadline is not achievable, say what prevents it and identify a smaller demonstrable outcome without silently changing the user's goal.
 
 ## Apply the rebalance
 
@@ -70,6 +70,6 @@ Verify the written priorities, statuses and dependency links from tracker respon
 
 Order the required work blockers-first; do not nominate a dependent item as ready while a necessary prerequisite remains unresolved or unverified. Preserve independently urgent incidents in that ordering.
 
-Give a short plain-language report: the goal, how many items changed, the linked urgent delivery order, and any blocked or unverified part of it. Name the first actionable item for `next`, or explain why none is ready. Always include any missing-ticket or specification gap and the appropriate invitation described above. Link changed items compactly rather than dumping the backlog. Use `deslop` when available to tighten the message.
+Give a short plain-language report: the goal, how many items changed, the linked urgent delivery order, and any blocked or unverified part of it. Name the first actionable item, or explain why none is ready. Always include any missing-ticket or specification gap and the appropriate invitation described above. Link changed items compactly rather than dumping the backlog. Use `deslop` when available to tighten the message.
 
 Stop after the rebalance. The new priorities stand until the user changes them again; no automatic restoration and no implementation in this invocation.

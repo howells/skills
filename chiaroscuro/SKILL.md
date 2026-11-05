@@ -1,13 +1,13 @@
 ---
 name: chiaroscuro
-description: "Design and build polished web UI in Tailwind v4, or rescue a screen that looks messy, generic or unfinished. Use when an interface should look gorgeous. Not for page directions (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or QA (`fieldtest`)."
+description: "Design and build polished web UI in Tailwind v4, rescue a screen that looks messy, generic or unfinished, or critique one without changing it. Use when an interface should look gorgeous or someone asks what feels off. Not for page directions (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or QA (`fieldtest`)."
 ---
 
 # Chiaroscuro
 
 Take a user-facing web interface from request to finished, working implementation. Work in the product's language, use its real content and behaviour, and give the result a specific visual point of view without adding furniture or exposing the system underneath.
 
-Use it to build a component, region or page, or to raise an existing interface's hierarchy, finish and polish. It produces one finished design. Other jobs have their own skills:
+Use it to build a component, region or page, or to raise an existing interface's hierarchy, finish and polish. It produces one finished design. When someone asks only for a critique of a screenshot, page, frame or code, follow [critique](references/critique.md) and change nothing until they ask. Other jobs have their own skills:
 
 - several page directions to choose between: `maquette`;
 - a scrolling-document app turned into a fixed app shell: `armature`;
@@ -85,7 +85,7 @@ Run the real app at the exact route, viewport and state being changed, and compl
 - motion interruption and reduced-motion behaviour;
 - contrast and real raster assets in dark mode.
 
-**Zoom out and reflect.** After the first complete composition and after material changes, look at the whole viewport and successive states together. What draws the eye first? Is that the user's subject or the controls around it? Is the next action apparent? Is the biggest visible problem compositional? Fix that before polishing details, and recompose when local fixes have left the whole incoherent. Passing technical checks does not answer these questions.
+**Zoom out and reflect.** After the first complete composition and after material changes, look at the whole viewport and successive states together. What draws the eye first? Is that the user's subject or the controls around it? Is the next action apparent? Is the biggest visible problem compositional? Fix that before polishing details, and recompose when local fixes have left the whole incoherent. Passing technical checks does not answer these questions. Run the lenses in [critique](references/critique.md) against your own screen, as you would for someone else's.
 
 Use `fieldtest` for a deeper browser-QA pass and `reflow` for a full pass across screen sizes, when installed and the risk warrants it.
 

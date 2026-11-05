@@ -54,6 +54,7 @@ Cite by number in findings, so a reviewer sees the pattern rather than the insta
 20. **Clerical and courtroom register.** `States`, `attests`, `cites`, `is recorded as`, `per the source`, `Source ·`, `stored`. It sounds careful and reads as evasive. Use the word a person would use: `has`, `says`, `from`, `is`.
 21. **Hedges and accounting qualifiers.** `Four of the six returned`, `among the first page of 50`, `where available`, `in most cases`, `nothing is guessed silently`, a caveat in every line. Say the thing once, flatly. A qualifier earns its place only when it changes what the reader does next; otherwise it is the writer protecting themselves.
 22. **The line under a heading that repeats the heading.** `Search with a picture` over `Search with the picture.` If the second line adds nothing, cut it or make it say the next thing.
+23. **A placeholder that repeats its label.** `Email` over a field reading `Enter your email`. Show a format or an example, or nothing. Helper text earns its place by saying why something is asked, not what the field is.
 
 ## Substitutions
 

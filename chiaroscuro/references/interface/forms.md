@@ -132,6 +132,7 @@ To vertically center a checkbox/radio with adjacent text, wrap it in an element 
 - SHOULD: Prefill with user data when available
 - SHOULD: Reuse what the person already entered earlier in the flow; offer it rather than asking again
 - SHOULD: Placeholder ends with ellipsis: `Search…`, `sk-012345…`
+- MUST NOT: A placeholder that repeats the label (`Email` over `Enter your email`). Show a format or example, or leave it empty.
 
 ## Buttons
 

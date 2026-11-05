@@ -10,7 +10,7 @@ Nobody remembers thirty-odd skills. Describe where you are, and this names what 
 
 ## Rules
 
-1. **Recommend, then stop.** Answer with the route and the exact first invocation, in the host's syntax (`/next` in Claude Code, `$next` in Codex). Don't start the work, open the files or fire the skill.
+1. **Recommend, then stop.** Answer with the route and the exact first invocation, in the host's syntax (`/chiaroscuro` in Claude Code, `$chiaroscuro` in Codex). Don't start the work, open the files or fire the skill.
 2. **Open a skill before making a claim about it.** The map below is a summary. Before saying anything load-bearing about what a skill does - that it covers a case, skips a step, or makes another unnecessary - read that skill's `SKILL.md` from where it is installed. Where the map and a `SKILL.md` disagree, the `SKILL.md` is right.
 3. **Explicit-only skills are missing from the list, not from the machine.** `maquette`, `simplify` and this router don't appear in the skill list an agent is given. Check the install directory before reporting any skill as absent.
 4. **When two skills are close, give the test that separates them** - usually one concrete question - and say why the other one is wrong here.
@@ -21,16 +21,17 @@ Nobody remembers thirty-odd skills. Describe where you are, and this names what 
 ### Shipping tracked work
 
 - **The backlog is out of order for a goal or deadline** → `rebalance`. It reprioritises and stops before any code.
-- **Deliver the next item** → `next`, one fresh task per item. It claims the item, builds it and opens a PR.
+- **Deliver an item** → `implement`, which ships with `mattpocock/skills` rather than this collection. One fresh task per item.
 - **Reading or writing tracker items directly** → `linear`, which ships with the `howells/linearcli` repo rather than this collection.
 - **Checks, polls or re-planning are crowding out anything visible** → `plimsoll`. It applies inside every route here.
 
-Route: `rebalance` → `next`, repeated. `plimsoll` whenever delivery stalls.
+Route: `rebalance` → `implement`, repeated. `plimsoll` whenever delivery stalls.
 
 ### Building UI
 
 - **A whole page whose direction isn't settled** → `maquette`: five directions beside the current page, pick one, it builds it.
 - **One direction, a component or a region** → `chiaroscuro`.
+- **A screenshot, page or frame that feels off, visual critique only** → `chiaroscuro`. It names what's off and asks; it changes nothing until asked.
 - **The app scrolls like a document and should behave like an app** → `armature`.
 - **It breaks on laptops, tablets or phones** → `reflow`.
 - **Raw font utilities have multiplied** → `typecase`.
@@ -88,7 +89,7 @@ Route: `simplify` → the skill each finding points at.
 | `deslop` / `signage` | Paragraphs, or words on a control? Controls: `signage`. |
 | `review` / `simplify` | An independent opinion on a bounded question, or a structural health review? Independent opinion: `review`, with a model argument. |
 | `what` / `memento` / `muster` | The last reply, this task, or many tasks. |
-| `rebalance` / `next` | Deciding the order, or doing the work? Doing: `next`. |
+| `rebalance` / `implement` | Deciding the order, or doing the work? Doing: `implement`. |
 
 ## Output
 

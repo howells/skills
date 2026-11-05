@@ -11,6 +11,7 @@
 - SHOULD: Use `overflow-clip` when a visual effect must be clipped without creating a scroll container. Use `overflow-hidden` only when its scroll-container and programmatic-scrolling behavior are intended.
 - SHOULD: Optical alignment: ±1px when perception beats geometry - icons beside text, play triangles in circular buttons, and text in buttons usually need a 1–2px nudge to look centered; section vertical padding often wants slightly more bottom than top to feel balanced
 - SHOULD: Balance icon/text lockups (stroke, weight, size, spacing, color)
+- MUST: Remove accidental near-misses: edges that almost line up and gaps that are almost equal read as mistakes. Preserve deliberate optical corrections; otherwise use shared alignment and spacing values or make the difference clearly intentional.
 
 ## Cross-Element Alignment
 

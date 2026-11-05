@@ -2,6 +2,7 @@
 
 ## Shadows
 
+- MUST: One light source, from above. Highlights, inner edges and shadows across the screen all agree with it.
 - MAY: Layer ambient and direct shadows when the product's elevation model benefits from it. Derive the values from the surface, scale, and background rather than copying a universal recipe.
 - SHOULD: Prefer `box-shadow` over `border` for subtle edges - shadows blend with backgrounds and avoid subpixel rendering issues:
 
@@ -87,6 +88,9 @@ Concrete patterns that make an interface look generated rather than designed.
 | Appended arrows | `→` tacked onto link and button text | Decoration standing in for an affordance the control already has |
 | Near-black and acid | A tinted near-black ground with an acid-green or neon accent | The machine-made idea of "technical" |
 | Big-number hero | A hero built around one oversized metric | A statistic as decoration rather than evidence |
+| Accent stripe on a rounded card | A thick coloured `border-l-*` on an element with `rounded-*` | The stripe bends round the corner; status belongs in an icon, label or fill |
+| Emphasis everywhere | Most elements bold, coloured, badged or raised; competing levels of emphasis that obscure the primary task | See Size Isn't Everything in `design-philosophy.md`; remove emphasis until one thing leads |
+| Stacked overlays | A sheet over a modal over a scrim | Each layer hides the context the last one was opened from; for translucent layers see `surfaces.md` |
 
 ### Structural Tells
 

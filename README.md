@@ -74,7 +74,7 @@ npx skills@latest add howells/skills --skill blender --agent codex --global
 
 ### `chiaroscuro`
 
-Design and build polished web UI in Tailwind v4, or rescue a screen that looks messy, generic or unfinished. Use when an interface should look gorgeous. Not for page directions (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or QA (`fieldtest`).
+Design and build polished web UI in Tailwind v4, rescue a screen that looks messy, generic or unfinished, or critique one without changing it. Use when an interface should look gorgeous or someone asks what feels off. Not for page directions (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or QA (`fieldtest`).
 
 Install globally for Codex:
 
@@ -192,23 +192,6 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill muster --agent codex --global
 ```
 
-### `next`
-
-Claim and deliver the next item with Plimsoll; name the thread for it. Not audits (`simplify`) or recovery (`muster`).
-
-Invoke `next` using the harness's skill invocation syntax in a fresh project task (`$next` in Codex). It skips started items, immediately claims the selected item as In Progress with session ownership, names the current thread for it where supported, checks that the work is still needed, uses parallel agents with a suitable mix of available models, implements and verifies it, then pushes a reviewable PR. It follows configured auto-merge through completion; otherwise it leaves the PR open and waits for review. It adapts to Codex, Claude Code, OpenCode, Cursor and other compatible harnesses; Sol, Terra and Luna are preferences where available.
-
-Previously named `next-issue`; remove that installed copy when installing `next`.
-
-Before editing, it checks the live tracker status and independently verifies whether the work is already delivered. An open but completed item gets evidence and the appropriate status correction; partially delivered work is limited to the remaining acceptance criteria.
-
-Every selected item is introduced with a clickable ticket identifier and one short sentence explaining the outcome in everyday words, before implementation or a status correction.
-
-Selecting a parent includes every child and nested descendant, regardless of priority. It verifies already completed children, delivers the remaining work, and keeps the parent incomplete while any required child lacks acceptance evidence. Selecting a child does not include its siblings.
-
-It works to the selected item's spec, records necessary clarifications there, and files unrelated findings as separate, deduplicated tracker items with acceptance criteria and an evidence-based priority. Those follow-ups stay outside the current implementation. Genuine blockers are documented and resolved in the same task before returning to the original item; the stopping boundary is the selected outcome, including its necessary prerequisites.
-
-After confirmed merge and required delivery checks, it removes its own safely merged branches and unused, clean worktree. It preserves active work, unique artifacts and anything with uncertain ownership, and reports any cleanup still pending.
 
 ### `nomen`
 
@@ -254,9 +237,9 @@ npx skills@latest add howells/skills --skill product-description --agent codex -
 
 ### `rebalance`
 
-Reprioritize a project's backlog for a goal. Not implementation (`next`).
+Reprioritize a project's backlog for a goal. Not implementation (`implement`).
 
-Give it a project, a concrete goal and an optional deadline. It checks the whole open backlog, reconciles evidenced stale statuses, makes essential unfinished work urgent, and prepares dependencies for `next`. The new priorities stand; there is no saved priority snapshot or restoration mechanism. It uses relevant `ask-matt` flows when available and stops before implementation. If no related tickets exist or the tickets are too thin to implement, it explains the gap and invites `grilling`, `to-spec` or `to-tickets` as appropriate.
+Give it a project, a concrete goal and an optional deadline. It checks the whole open backlog, reconciles evidenced stale statuses, makes essential unfinished work urgent, and prepares dependencies for delivery. The new priorities stand; there is no saved priority snapshot or restoration mechanism. It uses relevant `ask-matt` flows when available and stops before implementation. If no related tickets exist or the tickets are too thin to implement, it explains the gap and invites `grilling`, `to-spec` or `to-tickets` as appropriate.
 
 ```bash
 npx skills@latest add howells/skills --skill rebalance --agent codex --global

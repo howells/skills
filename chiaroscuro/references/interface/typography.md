@@ -21,6 +21,8 @@ Typeface choice, pairing, the type ramp, tracking, rendering (smoothing, optical
 
 ## Size and Measure
 
+- SHOULD: Three sizes or fewer per section. Before adding a size, use the other levers in [Size Isn't Everything](../design-philosophy.md).
+- MUST: Each piece of text has one role, such as title, body, label, value, action or metadata, and that role looks the same everywhere.
 - MUST NOT: `text-xs` for body copy. Default to at least `text-sm`, and `text-base` on mobile inputs.
 - SHOULD: Constrain long-form text with `max-w-[*ch]` directly on the text element.
 
