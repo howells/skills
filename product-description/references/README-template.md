@@ -1,8 +1,6 @@
 # README template
 
-Placeholders are written `{like this}` and are usually an instruction or a menu of examples; replace every one with real prose (angle-bracket placeholders are not used because GitHub renders them as HTML and they vanish). Keep the section order. The "Structure" block and the "Coverage" table are the plan; keep them exact mirrors of the files on disk.
-
-Contents: Purpose; Conventions; The work to be done (document template, method, verification, order of work, scope decisions); Structure; Coverage; Reference.
+Placeholders are `{like this}` (angle brackets vanish on GitHub); each is an instruction or a menu of examples, so replace every one with real prose. Keep the section order. The "Structure" block and the "Coverage" table are the plan; keep them exact mirrors of the files on disk.
 
 ---
 
@@ -12,34 +10,34 @@ A written description of the user experience of {product}: what the user sees, w
 
 ## Purpose
 
-{product} is, from the user's point of view, a large state chart. The user moves through it with {the product's inputs: pointer events, drags, clicks, modifier keys, scrolls, keyboard shortcuts / taps and swipes / commands and flags / form submissions}. Most of that behavior is defined implicitly, spread across {where it lives in the code: state machines, reducers, handlers, tests, the UI}. There is no single place that says, in plain language, "when the user does X, this is what happens, and this is what happens if they do Y halfway through."
+{product} is, from the user's point of view, a large state chart, moved through with {the product's inputs: pointer events, drags, modifier keys, shortcuts / taps and swipes / commands and flags / form submissions}. Most of that behavior is implicit, spread across {where it lives: state machines, reducers, handlers, tests, the UI}. No single place says, in plain language, "when the user does X, this happens, and this happens if they do Y halfway through."
 
 This project is that place. It describes the full experience a user has on {the surface being described: a specific route of the app / the default installation / the production site with a fresh account}, in {the default configuration, with nothing customized}.
 
-The documents are for people who need to understand or change the product: designers, engineers, writers, testers, and anyone evaluating whether a behavior is intentional. They are written from the outside in. They describe the experience, not the implementation.
+The documents are for anyone who needs to understand or change the product, or judge whether a behavior is intentional. They describe the experience, not the implementation.
 
 ### What this is not
 
 - Not API documentation. {Say where that lives.}
-- Not organized by package. {The product's packages or modules} are not described separately. A single behavior is described once, wherever the user encounters it.
-- Not a technical design document. Where a technical detail is critical to understanding the experience, it appears in a block quote labeled `Technical note:` and nowhere else.
+- Not organized by package. {The product's packages or modules} are not described separately; each behavior is described once, where the user meets it.
+- Not a technical design document. A technical detail critical to the experience appears only in a block quote labeled `Technical note:`.
 
 ## Conventions
 
 - Describe the experience, not the code. "{an experiential sentence}" rather than "{the same thing said about the code}".
-- Technical detail goes in block quotes, prefixed with `Technical note:`. Use it only when the mechanism changes what the user would expect.
+- Use a `Technical note:` only when the mechanism changes what the user would expect.
 - Use sentence case for headings.
 - Name the vocabulary consistently. The [glossary](glossary.md) is the source of truth for terms like {five or six of the product's load-bearing terms}.
 - Every document ends with the inspected source commit, a separate runtime-verification status, and open questions.
-- When a behavior is surprising, say so and say why it is that way if the reason is known. Do not smooth it over.
+- When a behavior is surprising, say so, and why if known. Do not smooth it over.
 
 ## The work to be done
 
-Each document describes one feature. Features are large things ({example of a big one}) or small things ({example of a tiny one}), but each is described in full, including its edge cases and its interactions with other features.
+Each document describes one feature, large ({example}) or small ({example}), in full, including its edge cases and interactions with other features.
 
 ### Document template
 
-Every feature document follows the same skeleton so that documents are comparable and nothing is skipped.
+Every feature document follows the same skeleton, so documents are comparable and nothing is skipped.
 
 1. **Summary.** One paragraph describing the feature abstractly. For example: "{one-sentence summary of the pilot feature}."
 2. **The simple case.** The common path in prose.
@@ -53,7 +51,7 @@ Every feature document follows the same skeleton so that documents are comparabl
    - {The page or process going away: reload, tab closed, terminal closed, app backgrounded}
    - {Something else changing the target: deleted, locked, edited by another user or tab, changed on disk}
    - {The input channel changing: a second input device, autofill, a pipe closing, touch cancel}
-   {Rewrite this list for the product, drawing on the five families in the skill's product-kinds.md: the user's explicit abort, the user doing something else mid-way, the environment failing, something else changing the target, the input channel changing. It must be identical, and in the same order, in every document.}
+   {Rewrite this list for the product from the five interrupt families in the skill's product-kinds.md. It must be identical, and in the same order, in every document.}
 6. **Interactions with other systems.** {The product's cross-cutting concerns, in a fixed order: permissions, history or undo, containers or parents, locked or readonly state, offline, collaboration or multi-device, notifications, configuration and preferences.}
 7. **Edge cases.** Anything a user could notice that is not covered above.
 8. **Open questions and verification.** The inspected {source repo} commit, runtime-verification status, and any behavior that could not be confirmed.
@@ -65,9 +63,9 @@ Item 5 matters most. Asking the same interrupt questions of every feature is how
 For each document:
 
 1. Read {where the interaction state lives} and the relevant {domain objects}.
-2. Read the matching tests in {test directory}. Files like {list the ones that read as executable specifications} are close to executable specifications of the edge cases.
+2. Read the matching tests in {test directory}; {the ones that read as specifications} are close to executable specifications of the edge cases.
 3. Draft the document.
-4. Try anything ambiguous {in the running product: URL, binary, or account}. Tests settle "what happens"; the running product settles how it feels, what is visible while the interaction is in progress, and what the timing is like.
+4. Try anything ambiguous {in the running product: URL, binary or account}. Tests settle what happens; the running product settles how it feels, what is visible mid-interaction, and the timing.
 5. Record the inspected source commit separately from runtime-verification results.
 
 ### Verification
@@ -78,10 +76,10 @@ Drafting reads the code; verification watches the product. The `verification/` d
 
 ### Order of work
 
-1. **Pilot: {the pilot feature}.** Small and self-contained. Used to settle the template, tone, and depth.
+1. **Pilot: {the pilot feature}.** Small and self-contained; settles the template, tone and depth.
 2. **Foundations: {the input model / the core model}.** Everything else refers to it.
-3. **{The hardest area}.** The bulk of the experience and the hardest part. Written third so the template is already proven.
-4. **Everything else.** Once the template and two exemplars exist, the remaining documents can be drafted in parallel, followed by a consistency pass and a verification pass across the whole set.
+3. **{The hardest area}.** The bulk of the experience, written third so the template is proven.
+4. **Everything else.** Drafted in parallel once two exemplars exist, then a consistency pass and a verification pass across the set.
 
 Progress is tracked in the [coverage table](#coverage) below.
 
