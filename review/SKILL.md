@@ -83,7 +83,7 @@ Give it a fresh context holding only the brief; never resume the author's sessio
 
 ### Send
 
-Prefer the harness's own delegation, such as T3 Code's `delegate_task`: the user can watch the thread and the harness reports completion. Read [references/delegation.md](references/delegation.md) when that route exists. Use the provider's CLI only when the harness cannot run the chosen model:
+Prefer the harness's own delegation, such as T3 Code's `delegate_task`: the user can watch the thread and the harness reports completion. Before delegating that way, read [references/delegation.md](references/delegation.md). Use the provider's CLI only when the harness cannot run the chosen model, and read its file before the run. Read each reference file with its own command.
 
 - Fable or Opus: [references/claude.md](references/claude.md)
 - Sol or Astra: [references/codex.md](references/codex.md)

@@ -39,7 +39,7 @@ Defaults for the roles, to depart from with a reason:
 
 Define it once, in the stylesheet that imports Tailwind or a file `@import`ed into it, as either component classes (`.type-body { @apply … }` in `@layer components`) or theme tokens (`--text-body` in `@theme`, used as `text-body`). Pick one per codebase. A separately bundled stylesheet (a CSS module, a Vue, Svelte or Astro style block, some route sheets) has no theme in scope and needs `@reference`. Where the house style writes custom classes with `@apply`, read [`references/apply-rule.md`](references/apply-rule.md) before converting any CSS: it covers `@reference`, the motion exclusion and utilities whose names lie.
 
-Choosing or changing a face: read [`references/font-recommendations.md`](references/font-recommendations.md). OpenType features, optical sizing, rendering, wrapping and font loading: read [`references/typography-opentype.md`](references/typography-opentype.md).
+Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing or changing a face, read [`references/font-recommendations.md`](references/font-recommendations.md). Before setting OpenType features, optical sizing, rendering, wrapping or font loading, read [`references/typography-opentype.md`](references/typography-opentype.md). Read each reference file with its own command.
 
 ## Steps
 
@@ -58,7 +58,7 @@ For an audit or proposal, stop after step 4 and return the census and mapping. A
 5. **Define the case** with a comment saying a scanner enforces it.
 6. **Name the sanctioned modifiers** and the one dimension each may change: `font-medium` for emphasis, `font-mono` for family, `capitalize` for casing a data value, `tabular-nums` for figures. None changes size, leading or tracking. Everything else typographic belongs to a role.
 7. **Migrate** by the mapping, a whole file at a time. A file half on the case is worse than one consistently raw.
-8. **Install the scanner.** Use the project's existing typography lint rule if it really covers class attributes, `cn`/`cva`-style calls and size maps. Otherwise read [`references/gates.md`](references/gates.md) for the two shapes, the token list and the normalisation that stops sizes slipping past. Wire it into CI. An unreached root reports clean, so plant one violation per root, confirm it is named with `file:line`, and restore it.
+8. **Install the scanner.** Use the project's existing typography lint rule if it really covers class attributes, `cn`/`cva`-style calls and size maps. Otherwise read [`references/gates.md`](references/gates.md) first for the two shapes, the token list and the normalisation that stops sizes slipping past. Wire it into CI. An unreached root reports clean, so plant one violation per root, confirm it is named with `file:line`, and restore it.
 9. **Look at the migrated screens** on desktop and a phone. The small end goes wrong in place: across a 21-row table a one-step size difference lets numerals dominate rows they should annotate. Settle doubts with `getComputedStyle` on live elements.
 10. **Report** combinations before and after, the roles and why that many, files migrated, the scanner, and any exceptions with owner and reason.
 

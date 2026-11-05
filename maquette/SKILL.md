@@ -17,7 +17,7 @@ When the user already gave a direction, or asked to match or extend an existing 
 4. **Every direction is complete.** Real content at the real item count, the whole piece and its core path working. No fragment, mood board, lorem ipsum or dead button.
 5. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting. Proper acronyms keep their capitals.
 6. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. Keep only consent, constraints and error recovery.
-7. **Four to six type styles, in chosen faces.** Use the product's named roles. Before choosing a new face, read the bundled [font guidance](references/font-guidance.md), choose from it and follow its never-use list; Instrument Serif is the first name on that list.
+7. **Four to six type styles, in chosen faces.** Use the product's named roles. Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing one, read [references/font-guidance.md](references/font-guidance.md) and choose from it.
 8. **Reuse before you build.** Use the existing component, shell, header or control, in this product or any package the user pointed to. A second version of an existing control is a defect.
 9. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density. Touch targets at least 44 by 44 CSS pixels.
 
@@ -55,7 +55,7 @@ return <Direction model={sharedModel} actions={sharedActions} />
 
 ### 4. Mount the picker
 
-Read [references/picker.md](references/picker.md) when building `DirectionPicker`: URL contract, keys, framework gotchas, markup and compare mode. It is review tooling with a fixed look, never styled with the project's tokens, or it becomes part of the design being judged.
+Before building `DirectionPicker`, read [references/picker.md](references/picker.md): URL contract, keys, framework gotchas, markup and compare mode. Read each reference file with its own command. It is review tooling with a fixed look, never styled with the project's tokens, or it becomes part of the design being judged.
 
 - **Switch** (always): one direction at a time, full size, instant.
 - **Compare** (component or region only): every direction side by side at its real width. A page is judged by switching, never in thumbnails, because spacing and scale are what is being chosen.

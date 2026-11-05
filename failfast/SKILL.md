@@ -24,8 +24,8 @@ A hidden fallback turns a bug into wrong output nobody sees. Leave one canonical
    python3 scripts/scan-fallbacks.py /path/to/repo   # --json, --include-tests, --fail-on medium|high
    ```
 
-   It lists places to look, not verdicts. It does not find test-only code or mocks: read `references/tests.md` before editing those.
-2. Decide each finding: **remove** (no live caller or contract), **require** (config or a dependency the code can't work without), **validate** (boundary input) or **keep** (say why). Read `references/remediation.md` for env schemas, optional imports, aliases and migrations.
+   It lists places to look, not verdicts. It does not find test-only code or mocks: read `references/tests.md` before editing those. Read each reference file with its own command.
+2. Decide each finding: **remove** (no live caller or contract), **require** (config or a dependency the code can't work without), **validate** (boundary input) or **keep** (say why). Before changing an env schema, optional import, alias or migration, read `references/remediation.md`.
 3. Remove the fallback and move callers and tests to the canonical path. Where a fallback becomes an error, test that the error fires.
 4. Run the repo's checks. Report the fallbacks you kept and why.
 

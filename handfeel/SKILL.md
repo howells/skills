@@ -42,7 +42,7 @@ Done when you can name where each fix below goes.
 | Wrong-colored bands around Safari's bars | Read [`references/safari-bars.md`](references/safari-bars.md) |
 | Installed app opens with browser chrome or the wrong icon | Read [`references/installed-app.md`](references/installed-app.md) |
 
-Read [`references/touch-and-viewport.md`](references/touch-and-viewport.md) before applying any row except the last two: it gives the reason, the exact code and the traps for each.
+Read [`references/touch-and-viewport.md`](references/touch-and-viewport.md) before applying any row except the last two: it gives the reason, the exact code and the traps for each. Read each reference file with its own command.
 
 ## 3. Apply the baseline
 
@@ -78,12 +78,12 @@ Set `theme-color` to the page's actual color at the very top edge, not the brand
 
 Run these only when the app needs them.
 
-- Browser users see a band of the wrong color around Safari's status bar or toolbar: follow [`references/safari-bars.md`](references/safari-bars.md), the full method.
-- The app will be added to the home screen or must install: follow [`references/installed-app.md`](references/installed-app.md).
+- Browser users see a band of the wrong color around Safari's status bar or toolbar: before fixing it, read [`references/safari-bars.md`](references/safari-bars.md) and follow the full method.
+- The app will be added to the home screen or must install: before changing the manifest or icons, read [`references/installed-app.md`](references/installed-app.md).
 
 ## 5. Check on a device
 
-Read [`references/device-testing.md`](references/device-testing.md) for how to reach the app from a phone or the iOS Simulator and what each can and cannot show.
+Before checking, read [`references/device-testing.md`](references/device-testing.md): how to reach the app from a phone or the iOS Simulator and what each can and cannot show.
 
 - Open every state you changed on an iPhone or in the Simulator: tap, long-press, focus an input, open the keyboard, rotate, scroll to the ends.
 - Check an installed copy if the app is installable.

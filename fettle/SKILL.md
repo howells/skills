@@ -12,7 +12,7 @@ A demanding review of structure. The question is not "could this be a bit cleane
 
 - `fettle`: uncommitted changes, else the branch against the default branch. Trace callers and affected paths beyond the changed lines. No changes: say so; don't fall back to the whole repo.
 - `fettle whole codebase`: every authored source root, skipping dependencies, generated and vendored code.
-- `in <path>` narrows either. A named focus (`security`, `performance`) steers attention. `with scores` adds the [scorecard](references/scorecard.md); read it only then.
+- `in <path>` narrows either. A named focus (`security`, `performance`) steers attention. `with scores` adds a scorecard: read [references/scorecard.md](references/scorecard.md) before scoring.
 - Report only. Edit code when asked to apply fixes; write tracker items when asked to create them.
 
 ## What to push for

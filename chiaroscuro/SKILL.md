@@ -7,7 +7,7 @@ description: "Design, build, polish or critique web UI in Tailwind v4. Use when 
 
 Take a web interface from request to finished, working UI with a specific point of view: the product's own language, real content and behaviour, no furniture, and nothing of the system showing through. It builds one design, whether a component, a region or a page, or rescues one that looks messy, generic or unfinished.
 
-When someone asks only for a critique of a screenshot, page, frame, code or change, follow [critique](references/critique.md) and change nothing until they ask.
+When someone asks only for a critique of a screenshot, page, frame, code or change, read [references/critique.md](references/critique.md) first, follow it and change nothing until they ask. Read each reference file with its own command.
 
 Other jobs have their own skills: design options to choose between (`maquette`), a document-scrolling app that needs a fixed shell (`armature`), every screen size (`reflow`), Paper mockups (`paste-up`), browser QA (`fieldtest`), motion craft (`zoetrope`), interface wording (`signage`), the type ramp (`typecase`), duplicated components (`componentize`). Use them when installed and the task needs that depth. This skill works without them, and they never carry the hard rules for you.
 
@@ -17,7 +17,7 @@ These hold everywhere, including work handed to a helper. Styling the product al
 
 1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting, never for labels or headings. Proper acronyms keep their capitals.
 2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. In product UI, headings name things; they don't headline them or introduce a section. Keep only consent, constraints and error recovery.
-3. **Four to six type styles, in chosen faces.** Use the product's named roles. A new size or weight needs a job no existing role does. Before choosing a new face, read [font guidance](references/font-guidance.md), choose from its recommendations and follow its never-use list; Instrument Serif is the first name on it.
+3. **Four to six type styles, in chosen faces.** Use the product's named roles. A new size or weight needs a job no existing role does. Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing one, read [references/font-guidance.md](references/font-guidance.md) and choose from its recommendations.
 4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user pointed to, and use it. A second version of an existing control is a defect.
 5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
 6. **Touch targets at least 44 by 44 CSS pixels**, reached with invisible padding rather than bulky visuals.
@@ -59,7 +59,7 @@ Carry the defining decisions of a supplied design or accepted review into the co
 
 Hide the machinery. Labels, navigation, statuses, empty states and errors describe the user's work: `sync failed` becomes `Updates are paused`, `agent step running` becomes `Checking the next section`. Prompt scaffolds, agent steps, model names, schema, queue states and raw diagnostics stay out of the primary UI unless they are the product's own objects; put diagnostics behind "View details" or "Copy error".
 
-Read only what the work in hand needs:
+Before building, read the reference file for each part the work touches:
 
 - Layout, spacing, alignment, surfaces, depth, app states and navigation: [layout](references/layout.md).
 - Palettes, tokens, contrast and dark mode: [color](references/color.md).
@@ -83,7 +83,7 @@ Build stable states, not just a stable first frame. Reserve room for labels and 
 
 Run the real app at the exact route and exercise the changed path on desktop and phone, including the states, content and input methods the change affects.
 
-Then zoom out, after the first full composition and after any material change. Look at the whole viewport and successive states together. What draws the eye first: the user's subject, or the controls around it? Is the next action apparent? Fix the biggest compositional problem before polishing details, and recompose when local fixes have left the whole incoherent. Run the lenses in [critique](references/critique.md) against your own screen.
+Then zoom out, after the first full composition and after any material change. Look at the whole viewport and successive states together. What draws the eye first: the user's subject, or the controls around it? Is the next action apparent? Fix the biggest compositional problem before polishing details, and recompose when local fixes have left the whole incoherent. Before refining, read [references/critique.md](references/critique.md) and run its lenses against your own screen.
 
 ### 5. Clean up and report
 

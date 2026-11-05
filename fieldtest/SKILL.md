@@ -18,7 +18,7 @@ Test the app as rendered software and report what the browser shows. Report only
 
 ## Browser
 
-Use the browser the user or host names. Otherwise use Playwriter when available: it drives the user's own Chrome, so signed-in and localhost pages render as the user sees them. Read [references/browser-session.md](references/browser-session.md) before the first command for the fallback order, Playwriter session mechanics and dev-server rules.
+Use the browser the user or host names. Otherwise use Playwriter when available: it drives the user's own Chrome, so signed-in and localhost pages render as the user sees them. Read [references/browser-session.md](references/browser-session.md) before the first command for the fallback order, Playwriter session mechanics and dev-server rules. Read each reference file with its own command.
 
 ## Run
 
@@ -33,8 +33,8 @@ Use the browser the user or host names. Otherwise use Playwriter when available:
 
 A focused regression covers the affected route and one adjacent state.
 
-- **Try to break it**: read [references/stress-test.md](references/stress-test.md) when asked to stress-test, break it or find edge cases, or when a full test touches forms, lists or async flows.
-- **Returned content**: read [references/output-quality.md](references/output-quality.md) when the page returns images, search results, generated content or a set of examples. A working control does not make its output useful.
+- **Try to break it**: before a stress test (asked to break it or find edge cases, or a full test that touches forms, lists or async flows), read [references/stress-test.md](references/stress-test.md).
+- **Returned content**: before judging images, search results, generated content or a set of examples the page returns, read [references/output-quality.md](references/output-quality.md). A working control does not make its output useful.
 
 ## Lens
 

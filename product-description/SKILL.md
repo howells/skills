@@ -32,19 +32,19 @@ Settle these first; ask only for what the conversation and source repo can't tel
 - **Source.** The source repo path and commit; every footer cites `git rev-parse --short HEAD`.
 - **Verification setup.** Command or URL, account, environment, owned test data, and which side effects are authorized.
 - **Out of scope**, and why.
-- **The product's shape.** Read [references/product-kinds.md](references/product-kinds.md) and fix, once: the unit of interaction and its five phases, the variant axis, the interrupt list, and the cross-cutting concerns in order. Changing them later means revisiting every document.
+- **The product's shape.** Read [references/product-kinds.md](references/product-kinds.md) first, each reference file with its own command, and fix, once: the unit of interaction and its five phases, the variant axis, the interrupt list, and the cross-cutting concerns in order. Changing them later means revisiting every document.
 
 Then find where interaction state lives (state machines, reducers, controllers, routes, commands), which tests read as specs of edge cases, where the UI is, and where defaults and thresholds are defined. These go in the README's "Reference" and goal.md's reading order.
 
 ## 2. Scaffold
 
-Write README.md from [references/README-template.md](references/README-template.md): its structure section lists every expected document grouped by how the user meets it (foundations, product areas, cross-cutting concerns), never by package. Then glossary.md from [references/glossary-guide.md](references/glossary-guide.md), goal.md from [references/goal-template.md](references/goal-template.md), and the two one-line entry files. Commit.
+Read each template before writing its file. README.md from [references/README-template.md](references/README-template.md): its structure section lists every expected document grouped by how the user meets it (foundations, product areas, cross-cutting concerns), never by package. Then glossary.md from [references/glossary-guide.md](references/glossary-guide.md), goal.md from [references/goal-template.md](references/goal-template.md), and the two one-line entry files. Commit.
 
 ## 3. Pilot, foundations, hardest area: yourself, in order
 
 These set the depth, tone and vocabulary everything else copies.
 
-1. **Pilot.** One small feature with a real interaction, on the full eight-section skeleton in [references/document-template.md](references/document-template.md). Iterate until it's right. Depth follows the behaviour, not a length target.
+1. **Pilot.** Read [references/document-template.md](references/document-template.md) first. One small feature with a real interaction, on its full eight-section skeleton. Iterate until it's right. Depth follows the behaviour, not a length target.
 2. **Foundations.** The input model (events, thresholds, what cancels and interrupts), the core data model, the mode or navigation model, the viewport or session model. They own the facts others link to; add each load-bearing number and rule to goal.md's "Things already established".
 3. **Hardest area.** Read all of its state handling before writing any of it, decide which document owns each state, and record that in goal.md.
 
@@ -62,11 +62,11 @@ One term per thing, all in the glossary. Where two documents touch, one owns the
 
 ## 6. Verification
 
-From [references/verification-template.md](references/verification-template.md): a protocol README and one checklist per cluster, one row per observable claim with a stable ID (`AREA-NN`), priority, setup, steps and expected result. If you can drive the product, run a first pass and say exactly what it covered. A document is `verified` only when every P1/P2 claim was observed in the running product or its failure reproduced in triage; code reading and mocked tests don't count, and visual claims need rendered inspection. A failed row may mean the document is wrong rather than the product.
+Read [references/verification-template.md](references/verification-template.md) first, then write a protocol README and one checklist per cluster, one row per observable claim with a stable ID (`AREA-NN`), priority, setup, steps and expected result. If you can drive the product, run a first pass and say exactly what it covered. A document is `verified` only when every P1/P2 claim was observed in the running product or its failure reproduced in triage; code reading and mocked tests don't count, and visual claims need rendered inspection. A failed row may mean the document is wrong rather than the product.
 
 ## 7. Bug triage
 
-From [references/bug-triage-template.md](references/bug-triage-template.md): gather every suspected defect from bodies and open questions, merge by root cause, and give each where the user meets it, actual versus expected, repro, the cause at file and line, severity, and the decision needed (`fix` or `product call`). Summary table first, sorted by severity.
+Read [references/bug-triage-template.md](references/bug-triage-template.md) first, then gather every suspected defect from bodies and open questions, merge by root cause, and give each where the user meets it, actual versus expected, repro, the cause at file and line, severity, and the decision needed (`fix` or `product call`). Summary table first, sorted by severity.
 
 ## Resuming
 

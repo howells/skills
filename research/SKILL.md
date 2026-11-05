@@ -49,9 +49,9 @@ Run standard work in the foreground. Background it only when asked.
 ## Deep research
 
 1. **Split the question into independent facets** that together cover it: angles, entities, regions or evaluation criteria. Three researchers by default, five at most. If extending an earlier report, cover only what this request adds or needs rechecked.
-2. **Say the plan in one line** (facets and researcher count), then launch every researcher in one turn, in parallel and in the foreground, with the host's own subagent tool. Launch each once; never duplicate a launch. Brief each with [references/brief-template.md](references/brief-template.md); read it when writing the briefs.
+2. **Say the plan in one line** (facets and researcher count), then launch every researcher in one turn, in parallel and in the foreground, with the host's own subagent tool. Launch each once; never duplicate a launch. Before writing the briefs, read [references/brief-template.md](references/brief-template.md) and brief each with it. Read each reference file with its own command.
 3. **Read their notes.** Run one more round only for a gap that would change the bottom line, and only once.
-4. **One writer produces the report** from all the notes and any earlier report: you, or one more subagent when the notes are long. Use [references/report-format.md](references/report-format.md); read it before drafting.
+4. **One writer produces the report** from all the notes and any earlier report: you, or one more subagent when the notes are long. Before drafting, read [references/report-format.md](references/report-format.md).
 
 ## When sources disagree
 

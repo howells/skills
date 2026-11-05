@@ -18,7 +18,7 @@ A responsive pass across a whole app or a named set of views. It changes how lay
 - **Text inputs at 16px or more on phones**, or iOS zooms the page on focus.
 - Reuse the product's components and tokens.
 
-Read [the responsive reference](references/responsive.md) when writing a fix; it has the Tailwind patterns for tables, touch targets, disclosures, safe areas and grids.
+Before writing a fix, read [references/responsive.md](references/responsive.md); it has the Tailwind patterns for tables, touch targets, disclosures, safe areas and grids.
 
 ## Steps
 

@@ -35,7 +35,7 @@ Clusters of:
 - a sharp register shift between sections (a pasted-in passage);
 - leaked tool markers (`oaicite`, `turn0search0`, `[cite: 1]`, `grok_card`, `【29†L582-L589】`, `[web:1]`), `utm_source` parameters, broken citations, placeholder markup.
 
-For the full taxonomy, read [`references/signs-of-ai-writing.md`](references/signs-of-ai-writing.md) for encyclopaedic, reference and report prose (it also gives the sentence-length check and the indicators that do not work), and [`references/rhetorical-tells.md`](references/rhetorical-tells.md) for essays, newsletters, posts and announcements. Read [`references/slop-names.md`](references/slop-names.md) when a draft contains invented people, places or companies.
+Before reviewing encyclopaedic, reference or report prose, read [`references/signs-of-ai-writing.md`](references/signs-of-ai-writing.md); it also gives the sentence-length check and the indicators that do not work. Before reviewing essays, newsletters, posts or announcements, read [`references/rhetorical-tells.md`](references/rhetorical-tells.md). Before judging invented people, places or companies, read [`references/slop-names.md`](references/slop-names.md). Read each reference file with its own command.
 
 ## Rewriting
 

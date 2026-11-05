@@ -13,7 +13,7 @@ The same rules `chiaroscuro` applies to code, so a mockup never needs correcting
 
 1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono only for literal code, identifiers and values whose characters need inspecting. Acronyms keep their capitals.
 2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed; replace it with a label, a control, a value or nothing. Headings name things; they do not headline them. Keep only consent, constraints and error recovery.
-3. **Four to six type styles, in chosen faces.** Use the product's named roles; a new size or weight needs a job no role does. Before choosing a new face, read the [font guidance](references/font-guidance.md), choose from its recommendations and obey its never-use list (Instrument Serif first).
+3. **Four to six type styles, in chosen faces.** Use the product's named roles; a new size or weight needs a job no role does. Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing one, read [references/font-guidance.md](references/font-guidance.md) and choose from its recommendations. Read each reference file with its own command.
 4. **Reuse before you build.** Use the existing component, shell, header or control, in this product or any package the user points to. A second version of an existing control is a defect.
 5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
 6. **Touch targets at least 44 by 44 CSS pixels.**
@@ -58,7 +58,7 @@ Order matters: a token fix touches every node and a layout fix moves them. An au
 
 Report a table: artboard, what changed, what was left alone and why.
 
-For "one page with the current version of every screen" or any whole-app consolidation, read [consolidation](references/consolidation.md) first.
+Before "one page with the current version of every screen" or any whole-app consolidation, read [references/consolidation.md](references/consolidation.md).
 
 ## Checklist
 

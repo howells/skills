@@ -59,7 +59,7 @@ Split in this order, one candidate at a time, running the smallest relevant chec
 
 ## Extracting a package
 
-Define the boundary first. In: the code, its types, styles, assets, fixtures, tests and examples. Out: routes, auth, database clients, env access, product copy, analytics, flags and old-path shims. Report hidden coupling before editing. Design a narrow public API before creating files. Read [references/package-extraction.md](references/package-extraction.md) when setting up `exports`, dependencies or a new repo.
+Define the boundary first. In: the code, its types, styles, assets, fixtures, tests and examples. Out: routes, auth, database clients, env access, product copy, analytics, flags and old-path shims. Report hidden coupling before editing. Before extracting a package, read [references/package-extraction.md](references/package-extraction.md): public API, `exports`, dependencies and new repos. Read each reference file with its own command. Design a narrow public API before creating files.
 
 - Within one repo: migrate the callers and delete the old implementation.
 - To a separate repo: copy, and leave the source app untouched unless removal was asked for.

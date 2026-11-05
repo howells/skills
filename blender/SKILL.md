@@ -25,7 +25,7 @@ Never replace the user's open file with a headless result without reconciling th
 
 Prefer the dedicated MCP tools (`get_objects_summary`, `get_object_detail_summary`, `get_blendfile_summary_*`, `render_*_to_path`, `get_screenshot_of_window_as_image`, `search_api_docs`) over `execute_blender_code`. Inside it, assign a JSON-serialisable dict to `result`.
 
-Read [references/mcp-server.md](references/mcp-server.md) when installing or debugging the server, hitting a timeout, or running an operation that takes minutes (the `check_is_finished` deferred contract).
+Before installing or debugging the server, after a timeout, or before an operation that takes minutes (the `check_is_finished` deferred contract), read [references/mcp-server.md](references/mcp-server.md). Read each reference file with its own command.
 
 ## Measuring
 
@@ -81,9 +81,11 @@ When the render doesn't match the viewport, check:
 
 ## Deeper work
 
-- Recolouring from render passes, basis renders, scoring image differences, or shipping float images to WebGL: read [references/recolouring.md](references/recolouring.md).
-- Assembling several scenes into one film (clocks, camera, light, sound, resumable renders, delivery): read [references/film-production.md](references/film-production.md).
-- Estimating a long render, or a render that feels slow: read [references/render-performance.md](references/render-performance.md) before lowering quality.
+Each of these jobs starts by reading its file:
+
+- Recolouring from render passes, basis renders, scoring image differences, or shipping float images to WebGL: [references/recolouring.md](references/recolouring.md).
+- Assembling several scenes into one film (clocks, camera, light, sound, resumable renders, delivery): [references/film-production.md](references/film-production.md).
+- Estimating a long render, or a render that feels slow, before lowering quality: [references/render-performance.md](references/render-performance.md).
 
 ## Delegating
 

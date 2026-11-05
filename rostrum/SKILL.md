@@ -33,10 +33,10 @@ Each rule here is a correction that has already been given, often more than once
 
 ## Make the film
 
-1. **Storyboard.** Delegate it to the strongest judgment model available as a helper when one is available, otherwise write it yourself; give it the product, the viewer, the one belief, the Paper file and access to live data. It writes STORYBOARD.md: arc, conventions, then shots in absolute frames with what is on screen, motion, exact words, data source and handoff. Read [references/storyboard.md](references/storyboard.md) for the storyboard and build-brief templates. Read the storyboard critically against the rules above before building; fix it, don't relay it.
+1. **Storyboard.** Delegate it to the strongest judgment model available as a helper when one is available, otherwise write it yourself; give it the product, the viewer, the one belief, the Paper file and access to live data. It writes STORYBOARD.md: arc, conventions, then shots in absolute frames with what is on screen, motion, exact words, data source and handoff. Before writing or briefing it, read [references/storyboard.md](references/storyboard.md) for the storyboard and build-brief templates; read each reference file with its own command. Read the storyboard critically against the rules above before building; fix it, don't relay it.
 2. **Data.** Fill the storyboard's gaps from live sources into `src/data/*.json` and `public/img/`. Where data and storyboard disagree, the data wins.
 3. **The frame.** Copy the kit, fonts and config from the most recent film on disk if there is one; otherwise start from [references/clock-and-kit.md](references/clock-and-kit.md), which also lists the Remotion gotchas. The lead agent owns `timeline.ts`, `Film.tsx` (one clock), `kit.tsx`, `theme.ts` and `fonts.ts`. Acts draw from the absolute frame `f` passed down; nothing in an act reads the Remotion clock.
-4. **Product UI.** Read [references/product-ui.md](references/product-ui.md) when a shot shows the product's interface: Paper via `paste-up`, the app's own components, or a live capture.
+4. **Product UI.** Before building a shot that shows the product's interface, read [references/product-ui.md](references/product-ui.md): Paper via `paste-up`, the app's own components, or a live capture.
 5. **Builders.** For a film of several acts, when parallel helpers are available, write BUILD-BRIEF.md and hand each act to a helper that owns only `src/vN/act-<name>.tsx` and its parts files. Builders ask for shared-file changes in their report and never make them. Review every builder's stills yourself and send back anything ordinary. A short film is faster built alone.
 6. **Look at frames.** Video can't be watched here, so look at stills. Bundle once per round (again after every edit), then run this skill's `scripts/sheet.sh` from the film's root (`$SKILL_DIR` below is this skill's folder): it renders the frames you name and tiles them into one labeled contact sheet.
 
@@ -45,10 +45,10 @@ Each rule here is a correction that has already been given, often more than once
    sh "$SKILL_DIR"/scripts/sheet.sh /tmp/film-bundle Agentic5 /tmp/sheet.jpg 0 180 264 410 480
    ```
 
-   Sheet every hero frame and the last frame of every hold; for motion, read [references/render-and-deliver.md](references/render-and-deliver.md). Look for collisions, bad wraps, pops between consecutive frames, mismatched frames either side of a continuation, and anything soft.
+   Sheet every hero frame and the last frame of every hold; before checking motion, read [references/render-and-deliver.md](references/render-and-deliver.md). Look for collisions, bad wraps, pops between consecutive frames, mismatched frames either side of a continuation, and anything soft.
 7. **Cuts.** Each new cut lives in `src/vN/` with its own composition id (`Basis`, `Basis2` …) and its own `STORYBOARD-<n>.md`, opening with a section 0 of amendments when it revises an earlier one. Earlier cuts stay registered and renderable.
-8. **Render and deliver.** Read [references/render-and-deliver.md](references/render-and-deliver.md) for the settings, the phone-safe encode, GPU failures and the Stow link. A film is delivered when the user can play it on a phone from the link. Never overwrite a render that was already shared: give the new one a version suffix.
-9. **Sound.** Only after the silent cut is accepted, and only when asked. Read [references/sound.md](references/sound.md) for ElevenLabs voices at −16 LUFS, a score that dips under them, and Kokoro for local narration.
+8. **Render and deliver.** Before rendering, read [references/render-and-deliver.md](references/render-and-deliver.md) for the settings, the phone-safe encode, GPU failures and the Stow link. A film is delivered when the user can play it on a phone from the link. Never overwrite a render that was already shared: give the new one a version suffix.
+9. **Sound.** Only after the silent cut is accepted, and only when asked. Before adding sound, read [references/sound.md](references/sound.md) for ElevenLabs voices at −16 LUFS, a score that dips under them, and Kokoro for local narration.
 
 ## Report
 

@@ -27,7 +27,7 @@ For each: why it fits, spelling or pronunciation risk, and any obvious conflict.
 
 ## Check
 
-Search the exact name and adjacent terms on the web, then wherever the name has to live: GitHub, package registries, domains, app stores. Read [the availability checks](references/availability.md) for the commands and how to read their results.
+Search the exact name and adjacent terms on the web, then wherever the name has to live: GitHub, package registries, domains, app stores. Before checking, read [references/availability.md](references/availability.md) for the commands and how to read their results.
 
 ## Output
 

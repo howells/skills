@@ -7,7 +7,7 @@ description: "Resolve git conflicts from a merge, rebase, cherry-pick, revert or
 
 No one's work is lost in git. Two jobs:
 
-- **A merge, rebase, cherry-pick, revert or stash apply stopped on conflicts**, or the tree has conflict markers: read [references/conflicts.md](references/conflicts.md) and follow it.
+- **A merge, rebase, cherry-pick, revert or stash apply stopped on conflicts**, or the tree has conflict markers: read [references/conflicts.md](references/conflicts.md) first and follow it.
 - **Work may be stranded, or branches, worktrees or stashes need cleaning up:** follow the rest of this file.
 
 ## Rules

@@ -10,8 +10,8 @@ Mastra's APIs move fast and its expensive mistakes typecheck. Prevent them where
 ## Before changing code
 
 1. **Use the installed version, not memory.** Resolve each `@mastra/*` package from the package that calls it, including the CLI and storage and engine adapters; a manifest range or catalog entry isn't the installed version. Read that version's types and embedded docs, then a configured local vendor mirror (which can describe a newer release). Fall back to published docs and say so. Check model ids against a provider registry.
-2. **Follow the working precedent.** Find the existing bridge, storage provider, model policy and domain operation. Name the execution lane (plain agent, durable workflow, Studio chat, HTTP or stdio MCP) and what constructs and registers it. Read [structure](references/structure.md) when changing ownership, registration or imports.
-3. **Set the contract and the bounds.** Output shape, explicit failure and completion states, the identifiers that cross each step, and limits on output, steps, elapsed time and retries. Read [contracts](references/contracts.md) for tools or structured output, and [execution](references/execution.md) for workflows, state, storage or long loops.
+2. **Follow the working precedent.** Find the existing bridge, storage provider, model policy and domain operation. Name the execution lane (plain agent, durable workflow, Studio chat, HTTP or stdio MCP) and what constructs and registers it. Before changing ownership, registration or imports, read [references/structure.md](references/structure.md).
+3. **Set the contract and the bounds.** Output shape, explicit failure and completion states, the identifiers that cross each step, and limits on output, steps, elapsed time and retries. Before writing a tool or structured output, read [references/contracts.md](references/contracts.md); before a workflow, state, storage or a long loop, read [references/execution.md](references/execution.md). Read each reference file with its own command.
 
 ## Gotchas that typecheck
 
@@ -34,7 +34,7 @@ Mastra's APIs move fast and its expensive mistakes typecheck. Prevent them where
 
 ## When something fails
 
-Reproduce once, minimally, before blaming a provider, changing a dependency or adding a fallback: request size, effective settings, identity, source version and persisted state. Change one cause at a time.
+Reproduce once, minimally, before blaming a provider, changing a dependency or adding a fallback: request size, effective settings, identity, source version and persisted state. Change one cause at a time. Before debugging a symptom below, read its file.
 
 | Symptom | Look first at |
 | --- | --- |
@@ -49,6 +49,6 @@ Reproduce once, minimally, before blaming a provider, changing a dependency or a
 
 ## Done
 
-Exercise the changed journey in its real host: a visible feature through its UI or MCP host, a durable one by reading its stored output and resuming it. Read the dev-server log for framework error ids even on a pass. Read [evidence](references/evidence.md) before writing tests or evals.
+Exercise the changed journey in its real host: a visible feature through its UI or MCP host, a durable one by reading its stored output and resuming it. Read the dev-server log for framework error ids even on a pass. Before writing tests or evals, read [references/evidence.md](references/evidence.md).
 
 Report the installed versions, what ran where, and what stayed unverified. An audit-only request permits source reading and safe local checks, not model calls, workflow runs, storage writes or deploys; rank findings blocking, should fix or noted, each with `file:line`, consequence and fix.
