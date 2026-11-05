@@ -18,8 +18,6 @@ Find what already exists, make it the one canonical version, and move every call
 
 When the user points at something on screen ("the right panel", "that header"), open the running app if available, map the region to its source file through text, labels and test ids, and ask one question if several regions match. Don't guess from layout direction.
 
-For a family of visual primitives (fills, markers, ticks, badges), Daniel likes an at-a-glance inventory page of the canonical set with its size variants, so drift is visible.
-
 ## Conventions
 
 Extend the repo's existing system; never mix a second one in for one extraction.
