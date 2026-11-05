@@ -112,14 +112,14 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill deslop --agent codex --global
 ```
 
-### `fail-fast`
+### `failfast`
 
-Remove hidden fallbacks, swallowed errors, legacy aliases and permissive defaults. Not for behaviour-preserving cleanup (`unslop`) or required compatibility.
+Remove fallbacks and swallowed errors that hide failures, and test-only code or mocks in production. Use when removing hidden defaults or legacy aliases, tests assert on mocks, or a test needs production hooks. Not for ordinary test-writing or test-first workflow (`tdd`), behaviour-preserving cleanup (`unslop`), or required compatibility.
 
 Install globally for Codex:
 
 ```bash
-npx skills@latest add howells/skills --skill fail-fast --agent codex --global
+npx skills@latest add howells/skills --skill failfast --agent codex --global
 ```
 
 ### `fieldtest`
@@ -323,7 +323,7 @@ npx skills@latest add howells/skills --skill typecase --agent codex --global
 
 ### `unslop`
 
-Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. For behavior-changing fallback cleanup use `fail-fast`; for prose use `deslop`.
+Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. For behavior-changing fallback cleanup use `failfast`; for prose use `deslop`.
 
 Install globally for Codex:
 

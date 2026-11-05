@@ -1,6 +1,6 @@
 ---
 name: unslop
-description: "Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. For behavior-changing fallback cleanup use `fail-fast`; for prose use `deslop`."
+description: "Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. For behavior-changing fallback cleanup use `failfast`; for prose use `deslop`."
 ---
 
 # Unslop
@@ -9,7 +9,7 @@ The code-side counterpart to `deslop`. Same instinct, different material: `deslo
 
 Agent-written code carries a signature. Not bugs - it typechecks, the tests pass, it works. It is padded with ceremony that exists because a model was being thorough rather than because anything needs it, and the cost lands on whoever reads it next.
 
-**The rule that decides every call: nothing here changes behaviour.** Remove a tell and the tests still pass unchanged. If a cleanup would alter what the program does, it is not this skill's - a fallback that hides a failure belongs to `fail-fast`, a file too big to hold in your head belongs to `componentize`. Say so and move on rather than smuggling a behaviour change into a tidy-up.
+**The rule that decides every call: nothing here changes behaviour.** Remove a tell and the tests still pass unchanged. If a cleanup would alter what the program does, it is not this skill's - a fallback that hides a failure belongs to `failfast`, a file too big to hold in your head belongs to `componentize`. Say so and move on rather than smuggling a behaviour change into a tidy-up.
 
 Read the surrounding code before calling something a tell. Local conventions and the purpose of an abstraction matter: a one-caller wrapper can still name a meaningful operation or preserve a useful boundary. The catalogue gives you patterns to investigate, not automatic deletions. Prefer the smallest edit that removes confirmed noise; do not rewrite neighbouring code to match your taste.
 
@@ -34,7 +34,7 @@ Cite by number in findings, so a reviewer can see the pattern rather than the in
 
 **Defensive noise**
 
-10. **Redundant defensive handling.** A null check on a value that cannot be absent, a runtime `typeof` after the compiler already narrowed, or a `try/catch` that only rethrows the same error. Establish that the path is trusted; a type annotation alone does not validate runtime input. Keep boundary validation and catches that add meaningful context or cleanup. Catches that swallow errors or supply fallbacks belong to `fail-fast` when removing them would change behaviour.
+10. **Redundant defensive handling.** A null check on a value that cannot be absent, a runtime `typeof` after the compiler already narrowed, or a `try/catch` that only rethrows the same error. Establish that the path is trusted; a type annotation alone does not validate runtime input. Keep boundary validation and catches that add meaningful context or cleanup. Catches that swallow errors or supply fallbacks belong to `failfast` when removing them would change behaviour.
 11. **Redundant assertions.** `as any` used only to silence a type error, `as unknown as T`, a non-null `!` where narrowing would do the job honestly, a known value assigned to `unknown` or a broad record and then asserted back to the type it already had. Use the correct type or narrowing rather than another assertion. If fixing the mismatch requires a runtime change, report it instead.
 12. **Re-implemented standard library.** A hand-rolled `groupBy`, `chunk`, `debounce`, or date formatter beside one that already ships. Replace it only after confirming equivalent semantics for its callers, including timing, defaults, errors, locale and edge cases; otherwise refer.
 13. **Redundant async plumbing.** Remove async syntax only after tracing callers and preserving Promise returns, rejection behaviour and scheduling. An `async` function without `await` still returns a Promise and converts throws to rejections; awaiting a plain value still suspends continuation. Neither is redundant merely because the syntax looks unnecessary. Refer uncertain changes instead of guessing.
@@ -68,6 +68,6 @@ Scale the workflow to the diff. For a small cleanup, keep the scope, reasoning a
 
 - Not a style pass. Formatting follows the repository’s formatter.
 - Not a refactor. Moving logic between modules or extracting a package is `componentize`.
-- Not a hardening pass. Deleting a fallback so it fails loudly is `fail-fast`, and that one changes behaviour on purpose.
+- Not a hardening pass. Deleting a fallback so it fails loudly is `failfast`, and that one changes behaviour on purpose.
 - Not a linter. Rules a machine can check on every file - a type assertion with no stated reason, `unknown` in parameters and returns, module mocking, `Reflect` property access - belong in the repository's lint configuration; `howells-lint` sets up `@howells/lint`, which carries them. If the lint does not load them, refer that rather than policing each site by hand.
 - Not a review. Correctness bugs are a different job; if you find one, report it and leave it.

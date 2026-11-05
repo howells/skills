@@ -1,0 +1,4 @@
+interface:
+  display_name: "Failfast"
+  short_description: "Remove hidden fallbacks and test-only code"
+  default_prompt: "Use $failfast to audit this codebase for hidden fallbacks and test-only code in production. Replace unjustified fallbacks with explicit failures, and move test-only helpers and doubles into tests."

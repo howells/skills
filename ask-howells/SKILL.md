@@ -48,7 +48,7 @@ Route for a new page: `maquette` → `armature` if it's an app shell → `reflow
 
 - **Review a diff or a whole codebase** → `simplify`. It reports; fixing needs asking for.
 - **A diff reads machine-written** → `unslop`. Behaviour stays the same.
-- **Errors swallowed, fallbacks hiding failures** → `fail-fast`. Behaviour changes on purpose.
+- **Errors swallowed, fallbacks hiding failures** → `failfast`, including test-only code and mocks in production. Behaviour changes on purpose.
 - **Setting up lint** → `howells-lint`, which ships with the `howells/lint` package repo rather than this collection.
 - **Exported APIs need hover docs** → `marginalia`.
 - **Any Mastra code** → `mastraudit`, before writing and before calling it done.
@@ -86,7 +86,7 @@ Route: `simplify` → the skill each finding points at.
 | `chiaroscuro` / `zoetrope` | Is the question how it looks still, or how it moves? Moves: `zoetrope`. |
 | `reflow` / `handfeel` | Does the layout adapt across sizes, or does the phone treat the page like a website? Phone behavior: `handfeel`. |
 | `reflow` / `fieldtest` | Do you want it fixed at every size, or a report of what's wrong? Fixed: `reflow`. |
-| `unslop` / `fail-fast` | Should behaviour stay exactly the same? Yes: `unslop`. |
+| `unslop` / `failfast` | Should behaviour stay exactly the same? Yes: `unslop`. |
 | `unslop` / `simplify` | Cleaning a diff, or judging its structure? Judging: `simplify`. |
 | `deslop` / `signage` | Paragraphs, or words on a control? Controls: `signage`. |
 | `review` / `simplify` | Feedback to act on or an independent opinion on a bounded question, or a structural health review? Feedback or opinion: `review`. |

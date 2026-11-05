@@ -24,7 +24,7 @@
     "./componentize",
     "./computer-use",
     "./deslop",
-    "./fail-fast",
+    "./failfast",
     "./fieldtest",
     "./gog",
     "./handfeel",

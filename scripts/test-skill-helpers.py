@@ -33,7 +33,7 @@ class ScannerCoverage(unittest.TestCase):
             (root / 'tests-data').mkdir()
             (root / 'tests-data/config.ts').write_text('const key = process.env.KEY || "fallback";')
             (root / 'screen.test.ts').write_text('const key = process.env.KEY || "fallback";')
-            script = 'fail-fast/scripts/scan-fallbacks.py'
+            script = 'failfast/scripts/scan-fallbacks.py'
             default = cli(script, root, '--json')
             included = cli(script, root, '--json', '--include-tests')
             self.assertEqual(default.returncode, 0, default.stderr)
@@ -66,7 +66,7 @@ class ScannerCoverage(unittest.TestCase):
             self.assertIn('8 more matches', text.stdout)
 
     def test_regular_file_and_empty_directory_are_not_clean_scans(self):
-        for script in ["componentize/scripts/find-god-files.py", "fail-fast/scripts/scan-fallbacks.py", "typecase/scripts/census-typography.py"]:
+        for script in ["componentize/scripts/find-god-files.py", "failfast/scripts/scan-fallbacks.py", "typecase/scripts/census-typography.py"]:
             with self.subTest(script=script), tempfile.TemporaryDirectory() as directory:
                 self.assertNotEqual(cli(script, ROOT / "README.md", "--json").returncode, 0)
                 self.assertNotEqual(cli(script, directory, "--json").returncode, 0)
@@ -74,7 +74,7 @@ class ScannerCoverage(unittest.TestCase):
     def test_real_scans_report_coverage_and_find_a_fallback(self):
         with tempfile.TemporaryDirectory() as directory:
             Path(directory, "config.ts").write_text('export const key = process.env.KEY || "fallback";')
-            fallback = cli("fail-fast/scripts/scan-fallbacks.py", directory, "--json", "--fail-on", "high")
+            fallback = cli("failfast/scripts/scan-fallbacks.py", directory, "--json", "--fail-on", "high")
             self.assertEqual(fallback.returncode, 1)
             self.assertTrue(any(item["rule"] == "env-default" for item in json.loads(fallback.stdout)))
             self.assertIn("Scanned 1", fallback.stderr)
@@ -86,7 +86,7 @@ class ScannerCoverage(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             Path(directory, "config.ts").write_text('const key = process.env.KEY || "fallback";')
             Path(directory, "binary.js").write_bytes(b"\0")
-            result = cli("fail-fast/scripts/scan-fallbacks.py", directory, "--json")
+            result = cli("failfast/scripts/scan-fallbacks.py", directory, "--json")
             self.assertEqual(result.returncode, 2)
             self.assertTrue(any(item["rule"] == "env-default" for item in json.loads(result.stdout)))
             self.assertIn("incomplete", result.stderr)
@@ -103,7 +103,7 @@ class ScannerCoverage(unittest.TestCase):
             try:
                 if os.access(locked, os.R_OK):
                     self.skipTest("Process can read mode-000 directories")
-                for script in ["componentize/scripts/find-god-files.py", "fail-fast/scripts/scan-fallbacks.py", "typecase/scripts/census-typography.py", "product-description/references/check-links.py"]:
+                for script in ["componentize/scripts/find-god-files.py", "failfast/scripts/scan-fallbacks.py", "typecase/scripts/census-typography.py", "product-description/references/check-links.py"]:
                     with self.subTest(script=script):
                         self.assertNotEqual(cli(script, directory).returncode, 0)
             finally:
