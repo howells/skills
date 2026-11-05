@@ -31,7 +31,7 @@ A ship's load line: loaded past it, the ship can't make way. Find the line for t
 - **Gate ladder.** Widening checks because the last one passed (focused test, package typecheck, workspace typecheck, full suite); a gate the change can't break; re-running a passed gate after an unrelated change; reviewing settled work; "136 passed" reported as the outcome.
 - **Watch loop.** Polling CI, a build or a queue; narrating the wait; making the blocker the new job (the build was slow, so now you're optimising the build); halting parallel agents to get a still tree.
 - **Ceremony.** Re-planning specified work; a reviewer per task; a branch and PR per item when one would land the lot; a fourth attempt after three failures (get an outside read with `review` instead).
-- **Test theatre.** Tests because "code changed"; tests against mocks that assert a spy was called (stripping them is `unslop`); coverage of paths nobody will take before the deadline. Before writing a test, finish: "The likely silent failure is ___, and this test catches it by ___." If you can't, don't write it.
+- **Test theatre.** Tests because "code changed"; tests against mocks that assert a spy was called (replace them with behaviour tests using `failfast`); coverage of paths nobody will take before the deadline. Before writing a test, finish: "The likely silent failure is ___, and this test catches it by ___." If you can't, don't write it.
 
 Checking scales with reversibility, not importance. A demo gets one gate at the end, then you use it. Development gets the check the change could actually break. Data loss, auth, money and migrations get deep checks of the affected behaviour. Deleting data, rotating credentials and touching production are always slow.
 

@@ -43,11 +43,12 @@ Route: `rebalance` → `implement`, repeated. `plimsoll` whenever delivery stall
 - **The design lives in a Paper file** → `paste-up`.
 - **A product film or video, a new cut of one, or sound for it** → `rostrum`. It sends motion, look and words to `zoetrope`, `chiaroscuro` and `signage`.
 
-Route for a new page: `maquette` → `armature` if it's an app shell → `reflow` → `signage` → `fieldtest`.
+Route for a new page: `maquette` when options are wanted, otherwise `chiaroscuro`; then `armature` if it needs an app shell → `reflow` → `signage` → `fieldtest`.
 
 ### Code quality
 
-- **Review a diff or a whole codebase** → `fettle`. It reports; fixing needs asking for.
+- **Review a branch or PR against its spec and repo standards** → `code-review`, from `mattpocock/skills`.
+- **Review the structure of a diff or whole codebase** → `fettle`. It reports; fixing needs asking for.
 - **A diff reads machine-written** → `unslop`. Behaviour stays the same.
 - **Errors swallowed, fallbacks hiding failures** → `failfast`, including test-only code and mocks in production. Behaviour changes on purpose.
 - **Setting up lint** → `howells-lint`, which ships with the `howells/lint` package repo rather than this collection.
