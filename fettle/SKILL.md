@@ -1,5 +1,5 @@
 ---
-name: simplify
+name: fettle
 description: "Strict structural review of a diff or whole codebase: finds restructurings that delete complexity, and real security, performance or data risks. Reports findings; edits only when asked. Not for diff tidy-ups (`unslop`), fallback removal (`failfast`) or browser QA (`fieldtest`)."
 disable-model-invocation: true
 ---
@@ -10,8 +10,8 @@ A demanding review of structure. The question is not "could this be a bit cleane
 
 ## Scope
 
-- `simplify`: uncommitted changes, else the branch against the default branch. Trace callers and affected paths beyond the changed lines. No changes: say so; don't fall back to the whole repo.
-- `simplify whole codebase`: every authored source root, skipping dependencies, generated and vendored code.
+- `fettle`: uncommitted changes, else the branch against the default branch. Trace callers and affected paths beyond the changed lines. No changes: say so; don't fall back to the whole repo.
+- `fettle whole codebase`: every authored source root, skipping dependencies, generated and vendored code.
 - `in <path>` narrows either. A named focus (`security`, `performance`) steers attention. `with scores` adds the [scorecard](references/scorecard.md); read it only then.
 - Report only. Edit code when asked to apply fixes; write tracker items when asked to create them.
 

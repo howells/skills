@@ -12,7 +12,7 @@ Nobody remembers thirty-odd skills. Describe where you are, and this names what 
 
 1. **Recommend, then stop.** Answer with the route and the exact first invocation, in the host's syntax (`/chiaroscuro` in Claude Code, `$chiaroscuro` in Codex). Don't start the work, open the files or fire the skill.
 2. **Open a skill before making a claim about it.** The map below is a summary. Before saying anything load-bearing about what a skill does - that it covers a case, skips a step, or makes another unnecessary - read that skill's `SKILL.md` from where it is installed. Where the map and a `SKILL.md` disagree, the `SKILL.md` is right.
-3. **Explicit-only skills are missing from the list, not from the machine.** `simplify` and this router don't appear in the skill list an agent is given. Check the install directory before reporting any skill as absent.
+3. **Explicit-only skills are missing from the list, not from the machine.** `fettle` and this router don't appear in the skill list an agent is given. Check the install directory before reporting any skill as absent.
 4. **When two skills are close, give the test that separates them** - usually one concrete question - and say why the other one is wrong here.
 5. **When nothing fits, say so.** This map covers this collection only. Don't stretch a skill to cover a situation it wasn't written for.
 
@@ -47,14 +47,14 @@ Route for a new page: `maquette` → `armature` if it's an app shell → `reflow
 
 ### Code quality
 
-- **Review a diff or a whole codebase** → `simplify`. It reports; fixing needs asking for.
+- **Review a diff or a whole codebase** → `fettle`. It reports; fixing needs asking for.
 - **A diff reads machine-written** → `unslop`. Behaviour stays the same.
 - **Errors swallowed, fallbacks hiding failures** → `failfast`, including test-only code and mocks in production. Behaviour changes on purpose.
 - **Setting up lint** → `howells-lint`, which ships with the `howells/lint` package repo rather than this collection.
 - **Exported APIs need hover docs** → `marginalia`.
 - **Any Mastra code** → `mastraudit`, before writing and before calling it done.
 
-Route: `simplify` → the skill each finding points at.
+Route: `fettle` → the skill each finding points at.
 
 ### A second opinion
 
@@ -89,9 +89,9 @@ Route: `simplify` → the skill each finding points at.
 | `reflow` / `handfeel` | Does the layout adapt across sizes, or does the phone treat the page like a website? Phone behavior: `handfeel`. |
 | `reflow` / `fieldtest` | Do you want it fixed at every size, or a report of what's wrong? Fixed: `reflow`. |
 | `unslop` / `failfast` | Should behaviour stay exactly the same? Yes: `unslop`. |
-| `unslop` / `simplify` | Cleaning a diff, or judging its structure? Judging: `simplify`. |
+| `unslop` / `fettle` | Cleaning a diff, or judging its structure? Judging: `fettle`. |
 | `deslop` / `signage` | Paragraphs, or words on a control? Controls: `signage`. |
-| `review` / `simplify` | Feedback to act on or an independent opinion on a bounded question, or a structural health review? Feedback or opinion: `review`. |
+| `review` / `fettle` | Feedback to act on or an independent opinion on a bounded question, or a structural health review? Feedback or opinion: `review`. |
 | `what` / `memento` / `muster` | The last reply, this task, or many tasks. |
 | `rebalance` / `implement` | Deciding the order, or doing the work? Doing: `implement`. |
 

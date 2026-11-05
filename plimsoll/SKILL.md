@@ -1,6 +1,6 @@
 ---
 name: plimsoll
-description: "Cut checks, CI watch loops and re-planning that crowd out shipping, and keep Vercel builds on the user's machine. Use near a deadline or when nothing visible has landed. Not for codebase review (`simplify`)."
+description: "Cut checks, CI watch loops and re-planning that crowd out shipping, and keep Vercel builds on the user's machine. Use near a deadline or when nothing visible has landed. Not for codebase review (`fettle`)."
 ---
 
 # Plimsoll

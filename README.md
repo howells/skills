@@ -225,7 +225,7 @@ npx skills@latest add howells/skills --skill paste-up --agent codex --global
 
 ### `plimsoll`
 
-Cut checks, CI watch loops and re-planning that crowd out shipping, and keep Vercel builds on the user's machine. Use near a deadline or when nothing visible has landed. Not for codebase review (`simplify`).
+Cut checks, CI watch loops and re-planning that crowd out shipping, and keep Vercel builds on the user's machine. Use near a deadline or when nothing visible has landed. Not for codebase review (`fettle`).
 
 Install globally for Codex:
 
@@ -273,7 +273,7 @@ npx skills@latest add howells/skills --skill research --agent codex --global
 
 ### `review`
 
-Verify review feedback before acting on it. Use when PR bot comments arrive, reviewer findings are pasted, or an independent opinion is wanted from fable, sol, muse, opus or astra. Not for reviewing a diff from scratch (`code-review`) or codebase health (`simplify`).
+Verify review feedback before acting on it. Use when PR bot comments arrive, reviewer findings are pasted, or an independent opinion is wanted from fable, sol, muse, opus or astra. Not for reviewing a diff from scratch (`code-review`) or codebase health (`fettle`).
 
 Install globally for Codex:
 
@@ -313,17 +313,17 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill signage --agent codex --global
 ```
 
-### `simplify`
+### `fettle`
 
 Strict structural review of a diff or whole codebase: finds restructurings that delete complexity, and real security, performance or data risks. Reports findings; edits only when asked. Not for diff tidy-ups (`unslop`), fallback removal (`failfast`) or browser QA (`fieldtest`).
 
 ```bash
-npx skills@latest add howells/skills --skill simplify --agent codex --global
+npx skills@latest add howells/skills --skill fettle --agent codex --global
 ```
 
-Use `simplify` for selected changes or `simplify whole codebase` for the repository; add `in <path>` to narrow either scope. Add `with scores` only when you want a scorecard. Both scopes report findings; add `apply the fixes` or `create Linear items` to request action.
+Use `fettle` for selected changes or `fettle whole codebase` for the repository; add `in <path>` to narrow either scope. Add `with scores` only when you want a scorecard. Both scopes report findings; add `apply the fixes` or `create Linear items` to request action.
 
-Claude Code's bundled `/simplify` edits a diff for reuse and efficiency; this one reports structural findings and edits only when asked. In Claude Code, this personal skill takes precedence over the bundled skill with the same name.
+Claude Code's bundled `/simplify` edits a diff for reuse and efficiency; `fettle` reports structural findings and edits only when asked.
 
 ### `typecase`
 
@@ -337,7 +337,7 @@ npx skills@latest add howells/skills --skill typecase --agent codex --global
 
 ### `unslop`
 
-Strip machine-written tells from a diff without changing behaviour: narrating comments, one-caller wrappers, impossible guards, decorative logs, leftover scaffolding. Not for structural review (`simplify`), fallback removal (`failfast`) or prose (`deslop`).
+Strip machine-written tells from a diff without changing behaviour: narrating comments, one-caller wrappers, impossible guards, decorative logs, leftover scaffolding. Not for structural review (`fettle`), fallback removal (`failfast`) or prose (`deslop`).
 
 Install globally for Codex:
 
@@ -384,7 +384,7 @@ Merged on 2026-09-06:
 
 | Skill | Where its work went |
 | --- | --- |
-| `survey` | `simplify`, for diff or whole-codebase reviews with optional scoring. Update Simplify, then run `npx skills@latest remove survey --global --yes`. Also remove project-local copies where present. |
+| `survey` | `fettle`, for diff or whole-codebase reviews with optional scoring. Update Fettle, then run `npx skills@latest remove survey --global --yes`. Also remove project-local copies where present. |
 
 Removed on 2026-10-08:
 
@@ -416,3 +416,7 @@ Merged on 2026-11-05:
 | Skill | Where its work went |
 | --- | --- |
 | `web-research` | `research`, which reaches the web through Fieldwork instead of its own Exa and Tavily scripts. |
+| `selvedge` | `handfeel`, which covers the color behind Safari's bars along with the rest of mobile-web feel. |
+| `fail-fast` | `failfast`, renamed, with test-only code and mock rules added. |
+| `simplify` | `fettle`, renamed so Claude Code's bundled `/simplify` no longer shadows it. |
+| `next` | Removed; deliver tracked work with `implement` from `mattpocock/skills`. |

@@ -499,7 +499,10 @@ REMOVED_SKILLS = (
     "glm-review",
     "heathen",
     "inquest",
+    "fail-fast",
     "polyplugin",
+    "selvedge",
+    "simplify",
     "survey",
     "web-research",
 )
