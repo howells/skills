@@ -1,6 +1,6 @@
 ---
 name: maquette
-description: "Explore design options for a page, component or region as live variants in the running app, switch or compare them, then keep one and delete the rest. Use when asked for options, alternatives or directions. Not for one settled direction (`chiaroscuro`) or Paper (`paste-up`)."
+description: "Explore design options for a page, component or region as live variants in the running app, then keep one and delete the rest. Use when asked for options, alternatives or directions. Not for one settled direction (`chiaroscuro`) or Paper (`paste-up`)."
 ---
 
 # Maquette

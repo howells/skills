@@ -41,6 +41,7 @@ Route: `rebalance` → `implement`, repeated. `plimsoll` whenever delivery stall
 - **Motion: should it animate, build it, review it, find where it should move, or diagnose stutter** → `zoetrope`. Includes preserving identity through expanding models and diagrams.
 - **See it running and find what's wrong, including the usefulness of returned images or results** → `fieldtest`. Reports only unless asked to fix.
 - **The design lives in a Paper file** → `paste-up`.
+- **A product film or video, a new cut of one, or sound for it** → `rostrum`. It sends motion, look and words to `zoetrope`, `chiaroscuro` and `signage`.
 
 Route for a new page: `maquette` → `armature` if it's an app shell → `reflow` → `signage` → `fieldtest`.
 
@@ -84,6 +85,7 @@ Route: `simplify` → the skill each finding points at.
 | `maquette` / `chiaroscuro` | Is the direction still open, so you want options to choose between? Yes: `maquette`. |
 | `chiaroscuro` / `armature` | Is the problem how it looks, or what scrolls? Scrolling: `armature`. |
 | `chiaroscuro` / `zoetrope` | Is the question how it looks still, or how it moves? Moves: `zoetrope`. |
+| `zoetrope` / `rostrum` | Does it move in a live page, or in a rendered video? Video: `rostrum`. |
 | `reflow` / `handfeel` | Does the layout adapt across sizes, or does the phone treat the page like a website? Phone behavior: `handfeel`. |
 | `reflow` / `fieldtest` | Do you want it fixed at every size, or a report of what's wrong? Fixed: `reflow`. |
 | `unslop` / `failfast` | Should behaviour stay exactly the same? Yes: `unslop`. |

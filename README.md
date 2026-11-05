@@ -124,7 +124,7 @@ npx skills@latest add howells/skills --skill failfast --agent codex --global
 
 ### `fieldtest`
 
-QA a running web app in a real browser and report evidence-backed findings. Use for dogfooding, localhost review, console and accessibility checks, persona walkthroughs, or trying to break it. Reports unless asked to fix. Not for building UI (`chiaroscuro`) or fixing layout (`reflow`).
+QA a running web app in a real browser and report evidence-backed findings. Use for dogfooding, localhost review, console and accessibility checks, persona walkthroughs, or trying to break it. Not for building UI (`chiaroscuro`) or fixing layout (`reflow`).
 
 Install globally for Codex:
 
@@ -154,7 +154,7 @@ npx skills@latest add howells/skills --skill handfeel --agent codex --global
 
 ### `maquette`
 
-Explore design options for a page, component or region as live variants in the running app, switch or compare them, then keep one and delete the rest. Use when asked for options, alternatives or directions. Not for one settled direction (`chiaroscuro`) or Paper (`paste-up`).
+Explore design options for a page, component or region as live variants in the running app, then keep one and delete the rest. Use when asked for options, alternatives or directions. Not for one settled direction (`chiaroscuro`) or Paper (`paste-up`).
 
 Install globally for Codex:
 
@@ -164,7 +164,7 @@ npx skills@latest add howells/skills --skill maquette --agent codex --global
 
 ### `marginalia`
 
-Add short JSDoc where IDE hovers or generated API docs need a contract the types don't show. Use for JS/TS exports, components, hooks, generics, tricky internals and packages about to publish. Not for deleting restating comments (`unslop`), README or guide prose, or behaviour changes.
+Add short JSDoc where IDE hovers or generated API docs need a contract the types don't show. Use for JS/TS exports, components, hooks and packages about to publish. Not for deleting restating comments (`unslop`) or README prose.
 
 Install globally for Codex:
 
@@ -282,6 +282,16 @@ npx skills@latest add howells/skills --skill review --agent codex --global
 ```
 
 Feedback that arrives from a bot, PR or agent loads it implicitly. To ask for an independent opinion, name the model or let the skill choose one: `$review fable <question>`, `$review sol <question>`, `$review muse <question>` (or `wonder`), `$review opus <question>`, or `$review astra <question>`. In Claude Code use `/review` with the same arguments.
+
+### `rostrum`
+
+Make product films in Remotion, from storyboard to a cut that plays on a phone. Use when asked for a video, film or movie of a product, a new cut of one, or sound for it. Not for web animation (`zoetrope`) or on-screen words alone (`signage`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill rostrum --agent codex --global
+```
 
 ### `salvage`
 

@@ -1,6 +1,6 @@
 ---
 name: marginalia
-description: "Add short JSDoc where IDE hovers or generated API docs need a contract the types don't show. Use for JS/TS exports, components, hooks, generics, tricky internals and packages about to publish. Not for deleting restating comments (`unslop`), README or guide prose, or behaviour changes."
+description: "Add short JSDoc where IDE hovers or generated API docs need a contract the types don't show. Use for JS/TS exports, components, hooks and packages about to publish. Not for deleting restating comments (`unslop`) or README prose."
 ---
 
 # Marginalia

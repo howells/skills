@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rostrum"
+  short_description: "Make product films in Remotion"
+  default_prompt: "Use $rostrum to storyboard and build a product film in Remotion, check it frame by frame, and deliver a cut that plays on a phone."

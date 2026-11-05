@@ -1,6 +1,6 @@
 ---
 name: fieldtest
-description: "QA a running web app in a real browser and report evidence-backed findings. Use for dogfooding, localhost review, console and accessibility checks, persona walkthroughs, or trying to break it. Reports unless asked to fix. Not for building UI (`chiaroscuro`) or fixing layout (`reflow`)."
+description: "QA a running web app in a real browser and report evidence-backed findings. Use for dogfooding, localhost review, console and accessibility checks, persona walkthroughs, or trying to break it. Not for building UI (`chiaroscuro`) or fixing layout (`reflow`)."
 ---
 
 # Fieldtest
