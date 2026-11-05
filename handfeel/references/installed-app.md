@@ -15,6 +15,7 @@ On iOS 26 any site can be added to the Home Screen, and it opens as a web app by
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
     { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
@@ -34,7 +35,7 @@ Link it with `<link rel="manifest" href="/manifest.webmanifest">`. `background_c
 ```
 
 - `status-bar-style`: `default` is dark text on a light bar; `black-translucent` lets the page paint under the status bar, which needs `viewport-fit=cover` and top-inset padding; `black` is a solid black bar.
-- iOS reads manifest icons, but the apple-touch-icon takes precedence when present. Give it an opaque background and square corners; the platform applies the corner mask.
+- Which source iOS uses for the home-screen icon has changed between versions, so list the 180×180 icon in both the manifest and the apple-touch-icon link. Give it an opaque background and square corners; the platform applies the corner mask.
 
 ## Traps
 
