@@ -124,7 +124,7 @@ npx skills@latest add howells/skills --skill failfast --agent codex --global
 
 ### `fieldtest`
 
-Exercise a running web app in a real browser and return evidence-backed QA findings. Use for dogfooding, localhost review, mobile defects, console and accessibility checks, persona walkthroughs, or to try to break it with hostile content, slow networks and rapid input. Report-only unless asked. Not for code-only review, building UI (`chiaroscuro`) or fixing layout (`reflow`).
+QA a running web app in a real browser and report evidence-backed findings. Use for dogfooding, localhost review, console and accessibility checks, persona walkthroughs, or trying to break it. Reports unless asked to fix. Not for building UI (`chiaroscuro`) or fixing layout (`reflow`).
 
 Install globally for Codex:
 
