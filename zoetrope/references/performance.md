@@ -1,10 +1,6 @@
-# Animation performance
+# Performance
 
-Adapted from Emil Kowalski's `animation-performance`; revision and licence are in [source.md](source.md). Use this for dropped frames and property/driver choices. Keep the purpose, timing and accessibility decisions from `values.md`.
-
-## Diagnose before changing code
-
-List each affected element, driver, animated properties and concurrent work. Expand `transition: all` and shorthand props into the properties they drive. Name a supported cause before proposing a fix; `will-change` is a late diagnostic option.
+Find the cause before changing code. List each affected element, its driver, the properties it animates and what else runs at the same time. Expand `transition: all` and shorthand props into the properties they drive. Name a supported cause before proposing a fix.
 
 The frame budget is about 16.7ms at 60Hz and 8.3ms at 120Hz. Design against the smaller budget. A fast laptop can hide work that misses that budget on a phone.
 
@@ -61,10 +57,8 @@ Apply it to the moving element, for the needed lifetime, and keep the layer smal
 
 An expensive paint on a blurred or filtered element can justify testing layer promotion. Keep the layer as small as the effect allows and measure the benefit; this isn't a reason to promote every filtered element.
 
-## Verify and report
+## Measure and report
 
-Record dropped frames, long tasks, layout and paint in DevTools Performance. Use the Animations panel for timing inspection. Reproduce on a real mid-range phone using remote debugging when device performance is the claim; desktop CPU throttling doesn't model a weak GPU or limited GPU memory.
+Record dropped frames, long tasks, layout and paint in DevTools Performance; use the Animations panel for timing. When the claim is about a phone, reproduce on a mid-range phone over remote debugging: desktop CPU throttling doesn't model a weak GPU or limited GPU memory, and a smooth laptop preview proves nothing about the device.
 
-For each finding, report the element and source location, supported cause, exact before/after and evidence. Separate **supported by code**, **measured in this browser** and **verified on this device**. If device access is unavailable, name that gap. A smoother-looking laptop preview doesn't establish a device fix.
-
-Order findings by cost: layout before paint, busy-main-thread motion before idle motion. A diagnostic request ends with the report; apply fixes when asked.
+For each finding give the element and `file:line`, the cause, the exact before and after, and whether it rests on the code, a measurement in this browser, or the device. Order by cost: layout before paint, motion on a busy main thread before idle motion. The report is the result; apply fixes when asked.

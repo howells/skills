@@ -2,6 +2,8 @@
 
 For anything a finger or pointer moves directly: drags, swipes, sheets, carousels, sliders, reorderable lists. A gesture feels physical when four things hold: it responds on contact, the object stays under the finger, the motion can be caught and reversed at any moment, and the release carries the finger's speed into the settle.
 
+Output the code, then at most three lines: why it moves, the ingredients (tool, spring, thresholds), and the feel check. A gesture always needs one on a real touch device.
+
 ## Respond on contact
 
 - Show feedback on pointer-down. Waiting for `click` or pointer-up makes the control feel dead.

@@ -38,7 +38,7 @@ Route: `rebalance` → `implement`, repeated. `plimsoll` whenever delivery stall
 - **Raw font utilities have multiplied** → `typecase`.
 - **Labels, buttons, headings or empty states read badly** → `signage`.
 - **Duplicated components, or a file doing too many jobs** → `componentize`.
-- **Motion: should it animate, build it, review it, find where it should move, or diagnose stutter** → `zoetrope`. Includes preserving identity through expanding models and diagrams.
+- **Motion: should it animate, build it, review it, find where it should move, cut it back, name an effect, or diagnose stutter** → `zoetrope`. Includes preserving identity through expanding models and diagrams.
 - **See it running and find what's wrong, including the usefulness of returned images or results** → `fieldtest`. Reports only unless asked to fix.
 - **The design lives in a Paper file** → `paste-up`.
 - **A product film or video, a new cut of one, or sound for it** → `rostrum`. It sends motion, look and words to `zoetrope`, `chiaroscuro` and `signage`.

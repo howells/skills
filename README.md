@@ -357,7 +357,7 @@ npx skills@latest add howells/skills --skill what --agent codex --global
 
 ### `zoetrope`
 
-Build, review or find web animation, and diagnose dropped frames: purpose, timing, springs, gestures, interruption and reduced motion. Not for static visual polish (`chiaroscuro`) or browser QA (`fieldtest`).
+Build, review, find, cut or name web animation, and fix dropped frames. Use when motion feels slow, off, overdone or janky. Not for static polish (`chiaroscuro`), films (`rostrum`) or QA (`fieldtest`).
 
 Install globally for Codex:
 

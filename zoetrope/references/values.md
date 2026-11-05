@@ -1,65 +1,54 @@
 # Values
 
-The numbers and rules to cite. Copy values from here or from the project's own tokens; never approximate from memory. Where a rule has an exception, the exception is written next to it.
+The numbers to cite. Copy them from here or from the project's own tokens; never approximate.
 
-## Choosing the tool
+## Tool
 
 Walk down the list and stop at the first that fits.
 
 | Need | Tool |
 | --- | --- |
-| A state you toggle with a class or attribute: hover, press, open, selected | CSS `transition` |
+| A state toggled by a class or attribute: hover, press, open, selected | CSS `transition` |
 | An entrance when an element first renders | CSS `@starting-style` (Tailwind v4: the `starting:` variant) |
 | An exit to `display: none`, or a dialog or popover leaving the top layer | `transition-behavior: allow-discrete` on `display` and `overlay`, or a library's presence handling |
-| Fixed choreography that must stay smooth while the page is busy | CSS `@keyframes` on properties the browser can composite |
+| Fixed choreography that must stay smooth while the page is busy | CSS `@keyframes` on compositable properties |
 | Scripted control without a dependency | Web Animations API, `element.animate()` |
-| Springs, gestures, shared-layout moves, exits after unmount | A motion library |
+| Springs, gestures, shared-layout moves, exits after unmount | Motion (`motion/react`) |
 | A whole-page or route change | The View Transitions API, where supported |
 
-JavaScript driven by `requestAnimationFrame` competes with the page's other main-thread work. CSS and the Web Animations API can hand suitable motion to the compositor; a library remains appropriate for springs, shared layout and gestures. For a diagnosis, use [performance.md](performance.md).
+`requestAnimationFrame` loops compete with the page's other main-thread work. CSS and the Web Animations API can hand suitable motion to the compositor.
 
 ## Properties
 
-- Prefer `transform` and `opacity`. They avoid relayout and can run on the compositor; acceleration still depends on the browser and element.
-- `clip-path`, `filter` and colour are fine when they produce the effect; measure them on a real device rather than assuming they're free. Keep an animated `blur()` under about 20px, as larger radii get expensive, especially in Safari.
-- `width`, `height`, `margin`, `padding`, `top` and `left` relayout on every frame. The accepted exception is a collapse, where there's no transform equivalent; keep it short.
-- **Never grow from `scale(0)`.** Start at `scale(0.94)`-`scale(0.97)` with `opacity: 0`. Nothing real appears from a point.
-- **Scale from the trigger.** Popovers, menus, selects and tooltips take `transform-origin` from their anchor. Base UI exposes `--transform-origin`; Radix exposes `--radix-<component>-content-transform-origin`. Centred dialogs are exempt and scale from the centre.
-- `translate()` percentages are relative to the element itself: `translateY(100%)` moves by exactly its own height, so a sheet or notice hides fully whatever its content.
-- Set the transform on the moving element. Updating a custom property on a parent that children read makes the browser recalculate style for every child, every frame.
-- `transition: all` (Tailwind `transition-all`) animates properties nobody chose. Name them.
+- Prefer `transform` and `opacity`. They avoid relayout and usually composite.
+- `clip-path`, `filter` and colour are fine when they make the effect; measure them on a device rather than assuming they're free. Keep animated `blur()` under 20px, especially for Safari; 2-5px is enough to soften a crossfade.
+- A collapse is the one accepted layout animation. Keep it short.
+- Anchored origins: Base UI exposes `--transform-origin`; Radix exposes `--radix-<component>-content-transform-origin`.
+- `translate()` percentages are relative to the element: `translateY(100%)` hides a sheet or notice fully whatever its height. Prefer them to pixel offsets.
+- `opacity: 0` alone still takes clicks and stays in the accessibility tree. Hide the element properly at rest.
 
-### In Motion
-
-Keep readable `x`, `y`, `scale` and `rotate` shorthands by default. When motion must survive a busy main thread, a full `transform` string (`animate={{ transform: "translateX(120px)" }}`) can use WAAPI's accelerated path. Preserve independently timed transforms and motion values where needed. Don't add `will-change` without an observed shift or measured dropped frames; see [performance.md](performance.md). Import from `motion` (`motion/react`), not the old `framer-motion` package.
+In Motion, keep the readable `x`, `y`, `scale` and `rotate` props by default. When motion must survive a busy main thread, a full transform string (`animate={{ transform: "translateX(120px)" }}`) can take WAAPI's accelerated path.
 
 ## Easing
 
 | Motion | Curve |
 | --- | --- |
-| Entering or leaving | ease-out |
-| Moving between two visible positions, or morphing | ease-in-out |
+| Entering or leaving | ease-out (`--ease-out-quint`) |
+| Moving between two visible positions, or morphing | ease-in-out (`--ease-in-out-quart`) |
+| A sheet or drawer | `--ease-sheet` |
 | Colour or hover change | `ease` |
-| Constant motion: a marquee, a progress fill | `linear` |
+| Constant motion: a marquee, a progress fill, a hold | `linear` |
 | Unsure | ease-out |
-
-`ease-in` is wrong for interface motion: it spends its first frames barely moving, which is exactly when the user is looking. The same 200ms feels quicker as ease-out than as ease-in.
-
-The built-in `ease-out` is weak for deliberate motion. Standard stronger curves, as tokens:
 
 ```css
 @theme {
-  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);    /* entrances and exits */
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);     /* entrances and exits */
   --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1); /* on-screen movement */
   --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);         /* iOS-style sheet */
 }
 ```
 
-In Tailwind v4 each `--ease-*` token becomes an `ease-*` utility (`ease-out-quint`). Outside Tailwind, put the same custom properties on `:root`.
-
-If a needed curve isn't here or in the project, take a named curve from [easing.dev](https://easing.dev/) or [easings.co](https://easings.co/) and add it to the project's tokens. Don't hand-roll one.
-
-A reversible transition can mirror its curve so the way back retraces the way out.
+In Tailwind v4 each `--ease-*` token becomes an `ease-*` utility (`ease-out-quint`). Outside Tailwind, put the same custom properties on `:root`. If a needed curve isn't here or in the project, take a named one from [easing.dev](https://easing.dev/) or [easings.co](https://easings.co/) and add it to the tokens.
 
 ## Duration
 
@@ -71,72 +60,39 @@ A reversible transition can mirror its curve so the way back retraces the way ou
 | Dialog, sheet, drawer | 200-400ms; a large sheet can reach 500ms |
 | Onboarding, marketing, explanation | Longer when the motion is the content |
 
-Interface motion stays under 300ms unless the element is large or its character calls for it. A notice that glides in at 350-400ms with plain `ease` can suit a calm product; that's a choice to state, not a default. Distance matters: a panel crossing the screen needs longer than a chip moving 8px.
+Distance matters: a panel crossing the screen needs longer than a chip moving 8px. A notice that glides in at 350-400ms with plain `ease` can suit a calm product; that's a choice to state, not a default.
 
-Perceived speed is part of duration. Once one tooltip in a group has opened, open its neighbours instantly with no delay and no animation (Base UI marks these with `data-instant`). A quicker spinner makes the same wait feel shorter.
+Perceived speed is part of duration. Once one tooltip in a group has opened, open its neighbours instantly, with no delay and no animation (Base UI marks these `data-instant`). A spinner on work that finishes in under 300ms reads as a glitch; show nothing.
 
 ## Springs
 
-A spring has no fixed duration; it settles according to its parameters, it starts from whatever value is on screen, and it carries velocity when retargeted. Use one for anything the user can touch, drag, flick or interrupt.
+A spring has no fixed duration. It starts from whatever is on screen and carries velocity when retargeted. Use one for anything the user can touch, drag, flick or interrupt.
 
-Think in two numbers: how quickly it arrives, and how much it overshoots. In Motion that's `visualDuration` (seconds until it visually arrives) and `bounce` (0 is none). The damping ratio used in native toolkits is roughly `1 - bounce`.
+Think in two numbers: how quickly it arrives and how much it overshoots. In Motion those are `visualDuration` (seconds until it visually arrives) and `bounce` (0 is none). Native damping ratio is roughly `1 - bounce`.
 
 | Situation | Motion config |
 | --- | --- |
 | Default for interface motion | `{ type: "spring", visualDuration: 0.3, bounce: 0 }` |
-| A settle after a flick or throw | `{ type: "spring", visualDuration: 0.35, bounce: 0.15 }` to `bounce: 0.25` |
+| A settle after a flick or throw | `{ type: "spring", visualDuration: 0.35, bounce: 0.15 }` up to `bounce: 0.25` |
 | Playful product, rare moment | `bounce` up to 0.3 |
 
-Overshoot is earned by momentum. A menu that fades in and wobbles feels wrong; a card thrown into place that overshoots slightly feels right. Serious products (money, health, operations) keep `bounce: 0`.
+Physical parameters (`mass`, `stiffness`, `damping`) don't map onto the duration and bounce API; if a library needs them, start from `{ mass: 1, stiffness: 100, damping: 10 }` and check the actual settle for visible bounce.
 
-For hand-written CSS a spring can be sampled into a `linear()` easing, but that copy can't carry velocity through an interruption; use a real spring wherever the motion can be interrupted.
-
-For a value that follows the pointer decoratively, smooth it with a spring (`useSpring`) rather than binding it straight to the pointer position.
-
-Where the library needs physical parameters, upstream's example is `{ type: "spring", mass: 1, stiffness: 100, damping: 10 }`. Those parameters control mass, restoring force and resistance; they aren't interchangeable with the duration/bounce API. Apply the same restraint on visible bounce and check the actual settle.
+A spring sampled into a CSS `linear()` easing can't carry velocity through an interruption; use a real spring wherever the motion can be interrupted. A value that follows the pointer decoratively is smoothed with `useSpring`, not bound straight to the pointer.
 
 ## Interruption and timing
 
-- **Anything triggered twice quickly uses a transition or a spring.** A transition retargets from the current value; `@keyframes` restarts from its first frame and jumps. This covers notices stacking, toggles, expanding rows, anything a user can double-click.
-- **Leave the way you came.** A sheet that rises from the bottom returns to the bottom. A symmetric path is what makes a swipe to dismiss obvious.
-- **Slow where the user decides, fast where the system answers.** A hold-to-confirm fills over about 2s with `linear` easing, because it's progress; releasing early snaps back in about 200ms with ease-out.
-- **Stagger groups by 30-80ms per item**, only on things seen occasionally, and never block input while the stagger plays.
+- A transition retargets from the current value; `@keyframes` restart from the first frame. Springs also keep velocity. Choose by how often it can fire.
+- A reversible transition can mirror its curve so the way back retraces the way out.
+- A hold-to-confirm fills over about 2s with `linear`, because it's progress; an early release snaps back in about 200ms with ease-out.
+- Cap a stagger: set `--i` per item and clamp it so the tenth item isn't waiting half a second.
 
 ## Reduced motion and input
 
 - Under `prefers-reduced-motion: reduce` (Tailwind `motion-reduce:`), remove travel, zoom, parallax, bounce and loops. Keep short opacity or colour changes that explain state. Reduced motion is gentler motion, not no feedback.
 - In React with Motion, `useReducedMotion()` returns the preference so a transform target can become 0.
-- Under `prefers-reduced-transparency: reduce`, make translucent panels and bars solid. Under `prefers-contrast: more`, give them a solid background and a defined border.
-- Gate hover motion behind `@media (hover: hover) and (pointer: fine)`, because touch screens fire a hover on tap. Tailwind v4's `hover:` already sits inside `@media (hover: hover)`.
-- Avoid full-screen moving backgrounds, slow endless oscillation and abrupt brightness jumps; fade large surfaces during a big move.
-
-## Checking feel
-
-- Slow it to 10-25% in the browser's animation panel, or multiply the durations by five. Check the origin, that the curve doesn't stop abruptly, and that paired properties stay in step.
-- Step frame by frame to find drift between properties meant to move together.
-- Run gestures on a real touch device: load the dev server on a phone by the machine's local IP.
-- Enable reduced motion in the browser's rendering settings and walk the same path.
-- Look again later. Flaws invisible while building show up with fresh eyes.
-
-## Defects
-
-Each is a finding in review and a self-check before finishing a build.
-
-| Defect | Instead |
-| --- | --- |
-| Motion on a keyboard action or something used constantly | An instant state change |
-| `ease-in` on interface motion | ease-out, or `--ease-out-quint` |
-| Weak built-in easing on a deliberate animation | A strong token curve |
-| Growing from `scale(0)` | `scale(0.95)` with `opacity: 0` |
-| Pure-fade component entrance with no initial transform | Pair opacity with a small scale or travel from the recipe; keep opacity-only reduced-motion variants |
-| Anchored popover scaling from the centre | The library's transform-origin variable |
-| `transition: all` or `transition-all` | The named properties |
-| Keyframes on something triggered repeatedly | A transition, or a spring |
-| Layout properties animated where a transform would do | `transform` and `opacity` |
-| Interface motion over 300ms with no stated reason | 150-250ms |
-| Parent custom property driving child transforms | Transform set on the element |
-| No reduced-motion handling on movement | A gentler variant |
-| Ungated hover motion | Hover and fine-pointer media query |
-| Symmetric timing on a press or hold | Slow press, quick release |
-| A group arriving all at once | 30-80ms stagger |
-| Bounce on motion no gesture threw | `bounce: 0` |
+- Every animated state change also leaves a static cue (colour, icon or label), so the state survives with motion off.
+- Under `prefers-reduced-transparency: reduce`, make translucent panels solid. Under `prefers-contrast: more`, give them a solid background and a defined border.
+- Gate hover motion behind `@media (hover: hover) and (pointer: fine)`; touch screens fire hover on tap. Tailwind v4's `hover:` already sits inside `@media (hover: hover)`. `:active` is a real press on touch and needs no gate.
+- Avoid full-screen moving backgrounds, slow endless oscillation and abrupt brightness jumps; fade large areas during a big move.
+- Changing numbers use tabular figures (`tabular-nums`) so digits don't jitter sideways.
