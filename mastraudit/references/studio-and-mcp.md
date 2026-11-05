@@ -1,51 +1,42 @@
 # Studio and MCP
 
-Read this before starting Studio, interpreting a Studio failure, changing cross-package imports or accepting an inline app. Work with the runtime owner; preserve peers' processes and in-flight runs.
+Running Studio, reading its failures, cross-package imports and inline MCP Apps. Work with the runtime's owner; don't stop a peer's process or in-flight run.
 
-## Establish what is running
+## What is running
 
-Record the checkout and source state, command, owning process, actual listening port, browser origin and API target. Use the project's script and emitted URL rather than assuming a default port. A background task's time limit can stop an otherwise healthy server.
+- **Record the process, command, actual port, browser origin and API target.** Use the project's script and printed URL, not a default port. A background task's time limit can stop a healthy server.
+- **HTTP MCP on a deployed endpoint and stdio MCP from local source are different.** A stdio session may load its code once; a deployed fix doesn't reach it. Check its start time and reconnect or launch a fresh client before reopening a fixed defect.
+- **Diagnose the effective env source.** An exported shell credential can override an env file, or a project helper the shell. Never print or copy credentials into logs, briefs or arguments.
+- **`Failed to load Studio`: read the failed browser request first.** `localhost` and `127.0.0.1` are different origins, and credentialed requests can't use a wildcard origin. Match the configured origins; don't loosen CORS to hide a mismatch.
 
-Distinguish HTTP MCP on a deployed endpoint from stdio MCP started from local source. An existing stdio session may load its code only once. A deployed fix doesn't update that process. Inspect its start time and source; reconnect or launch a fresh owned client before reopening a fixed defect. Keep local, deployed and long-lived-client evidence separate.
+## Reloads and stale builds
 
-Check environment precedence without printing secrets. An exported shell credential can override an env-file value, while a project env helper can deliberately override the shell. Diagnose the effective source, not merely the presence of a value in a file. Resolve a stale exported value for the owned process using the intended secret loader. Never copy a credential into logs, briefs, plugin files or command arguments.
-
-For `Failed to load Studio`, inspect the failed browser request first. `localhost` and `127.0.0.1` are different origins. Credentialed requests cannot use a wildcard allowed origin. Match the configured UI/API origins and credential policy; don't universalise one project's loopback hostname or loosen CORS to hide the mismatch.
-
-## Hot reload and stale builds
-
-A source save in the Mastra package or a watched domain dependency can reload Studio and kill an in-flight generation. Agree a quiet write window for a timed acceptance run. Record reloads separately from model failures; don't spend another run until the runtime is stable.
-
-File deletion and new cross-package exports can invalidate the watcher's dependency graph. A watcher stuck at `Bundling...`, an old tool list, or a missing export after a successful rebundle can require a clean restart, rather than repeated cache deletion. Confirm the actual registered capability list and emitted module. Coordinate the restart with its owner and stop only the owned process or agreed port.
-
-Installed dependency source, generated `.mastra` output and served browser assets are separate artefacts. Removing a patch or changing a version is not enough if the host still serves a cached bundle. Inspect the browser's actual asset URLs and compare the complete relevant bundle to the intended installed distribution, not only its loader. Rebuild/restart when needed and authorised. Honour an explicitly removed patch; record upstream host limitations rather than silently restoring it.
-
-Reproduce a suspected vendor regression on the actual installed build with one controlled case. A bundle diff or a remembered version comparison is a lead. Before pinning or upgrading, verify the relevant upstream change and the application/client compatibility affected by it.
+- **File deletions and new cross-package exports can break the watcher's dependency graph.** Stuck at `Bundling...`, an old tool list, or a missing export after a successful rebundle means a clean restart, not repeated cache deletion. Coordinate it with the owner.
+- **Installed source, generated `.mastra` output and served browser assets are separate artefacts.** A changed version or removed patch means nothing while the host serves a cached bundle; compare the browser's actual asset URLs and full bundle to the installed distribution.
+- **Reproduce a suspected vendor regression on the installed build with one controlled case** before pinning or upgrading. A bundle diff or remembered changelog is a lead.
 
 ## Execution lanes and processors
 
-Plain generation, thread chat/send-message and a durable adapter can follow different execution paths. An adapter may mutate the agent it wraps; if it changes thread runtime routing, give it a dedicated Agent definition rather than also using that instance for in-process chat. Verify the intended lane through both generation and the actual chat endpoint, with process logs and trace correlation.
-
-Trace singleton import cycles before blaming bundling: workflow to runtime adapter to singleton to workflow can fail at module initialisation. Definitions depend on domain or engine code; an adapter that reads the singleton is not a safe dependency for constructing that singleton. A private execution variant may need explicit storage injection; creating another full Mastra instance can duplicate storage, observability and public registration.
-
-Studio's registry, detail endpoint and rendered list can disagree about processors. Inspect the actual hook methods and source responsible for detecting phases before treating a missing row as a missing runtime guard. Confirm invocation at the provider boundary. Don't add a dummy hook or change runtime behaviour merely to make a UI count agree.
+- **Plain generation, thread chat and a durable adapter can take different paths.** An adapter may mutate the agent it wraps; if it reroutes thread runtime, give it a dedicated Agent definition. Verify the lane through both generation and the real chat endpoint, with logs and trace correlation.
+- **An adapter that reads the singleton is not a safe dependency for constructing it.** A private execution variant may need explicit storage injection rather than another Mastra instance.
+- **Studio's registry, detail endpoint and rendered list can disagree about processors.** Check the hook methods and confirm invocation at the provider boundary; don't add a dummy hook to make a UI count agree.
 
 ## Inline app contract
 
-MCP Apps serve HTML resources over MCP for a host to render. Browser WebMCP exposes tools from a page to a browser agent. They are different capabilities; one doesn't establish support for the other.
+MCP Apps serve HTML resources over MCP for a host to render. Browser WebMCP exposes a page's tools to a browser agent. One doesn't imply the other.
 
-For an MCP App, check the installed server and target host's extension support. Follow [Mastra MCP Apps](https://mastra.ai/docs/connections/mcp) and the [MCP Apps SDK](https://github.com/modelcontextprotocol/ext-apps), then verify the actual wire:
+For an MCP App, check the installed server's and target host's extension support against [Mastra MCP](https://mastra.ai/docs/connections/mcp) and the [MCP Apps SDK](https://github.com/modelcontextprotocol/ext-apps), then verify the wire:
 
-1. `tools/list` preserves the tool's UI resource URI, visibility and any host-specific entrypoint metadata.
-2. The resource registry/read serves that exact `ui://` URI with the supported HTML profile, metadata and CSP. Bundle guest dependencies where the intended host requires it.
-3. The tool result separates concise model-facing `content` from UI data in `structuredContent` or another explicitly supported channel. Inspect initial tool delivery and later guest tool calls: host-specific result envelopes can differ. Unwrap only measured/documented shapes; don't accumulate speculative fallbacks.
-4. The guest registers handlers before connecting, receives tool arguments/results, renders them and uses the SDK's supported host methods. An iframe, successful resource read or static standalone page doesn't establish the handshake.
-5. A real host interaction changes a selection or query, sends the revised arguments, receives the correct result and updates the agent context where the feature requires it. Distinguish a read-only tool call from a guest method that sends chat and starts another paid model turn.
+1. `tools/list` keeps the tool's UI resource URI, visibility and any host-specific entrypoint metadata.
+2. The resource read serves that exact `ui://` URI with the supported HTML profile, metadata and CSP; bundle guest dependencies where the host requires it.
+3. The result separates concise model-facing `content` from UI data in `structuredContent` or another supported channel. Initial delivery and later guest calls can use different host envelopes; unwrap only measured or documented shapes.
+4. The guest registers handlers before connecting, receives arguments and results, renders them, and uses the SDK's host methods. An iframe or successful resource read doesn't prove the handshake.
+5. A real host interaction changes a selection, sends revised arguments, gets the right result and updates agent context where needed. A guest method that sends chat starts another paid model turn; a read-only tool call doesn't.
 
-An ordinary Studio JSON tool form may have no custom field or async picker hook. Verify the installed host's support before trying to inject controls; an MCP App can own the picker when that path is supported. Don't copy a historical route restriction into a permanent rule about where Studio renders apps.
+A plain Studio JSON tool form may have no custom field or async picker hook; an MCP App can own the picker where the host supports it.
 
-## Acceptance in the intended host
+## Acceptance in the host
 
-Use real records with identities that expose disputed assumptions, such as a brand id different from its URL slug. Check images, record links, selected identities, empty/error states, pagination exhaustion, a revised choice, dimensions and horizontal overflow. Run the project's browser QA and accessibility tooling when appropriate. Attribute a missing parent-iframe title or other host-owned violation to the host; changing guest HTML cannot repair the parent wrapper.
+Use real records whose identities expose assumptions, such as a brand id that differs from its URL slug. Check images, record links, selected identities, empty and error states, pagination exhaustion, a revised choice, dimensions and horizontal overflow. A host-owned accessibility violation such as a missing parent-iframe title belongs to the host; guest HTML can't fix it.
 
-A saved Studio result establishes saved rendering. A fresh agent call establishes current tool invocation. A local web preview establishes that web host. Installation and metadata establish neither native-host interaction nor comparison in the current chat. Report each separately and leave unavailable host acceptance open.
+A saved Studio result proves saved rendering, a fresh agent call proves current invocation, a local preview proves that web host, and installation proves none of them. Report each separately.

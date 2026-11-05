@@ -1,4 +1,4 @@
 interface:
   display_name: "Marginalia"
-  short_description: "Add useful JSDoc to APIs and complex internal code"
-  default_prompt: "Use $marginalia to add concise JSDoc where it improves public APIs, exports, or complex internal code."
+  short_description: "Add hover-sized JSDoc where types don't tell"
+  default_prompt: "Use $marginalia to add short JSDoc where these exports or complex internals hide a contract the types don't show."

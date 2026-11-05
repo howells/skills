@@ -1,73 +1,60 @@
 ---
 name: unslop
-description: "Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. For behavior-changing fallback cleanup use `failfast`; for prose use `deslop`."
+description: "Strip machine-written tells from a diff without changing behaviour: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, leftover scaffolding. Not for structural review (`simplify`), behaviour-changing fallback removal (`failfast`) or prose (`deslop`)."
 ---
 
 # Unslop
 
-The code-side counterpart to `deslop`. Same instinct, different material: `deslop` takes the tells out of writing, `unslop` takes them out of code.
+Agent-written code works, but it carries ceremony a model added to look thorough, and the next reader pays for it. Take the ceremony out; leave behaviour exactly as it was.
 
-Agent-written code carries a signature. Not bugs - it typechecks, the tests pass, it works. It is padded with ceremony that exists because a model was being thorough rather than because anything needs it, and the cost lands on whoever reads it next.
-
-**The rule that decides every call: nothing here changes behaviour.** Remove a tell and the tests still pass unchanged. If a cleanup would alter what the program does, it is not this skill's - a fallback that hides a failure belongs to `failfast`, a file too big to hold in your head belongs to `componentize`. Say so and move on rather than smuggling a behaviour change into a tidy-up.
-
-Read the surrounding code before calling something a tell. Local conventions and the purpose of an abstraction matter: a one-caller wrapper can still name a meaningful operation or preserve a useful boundary. The catalogue gives you patterns to investigate, not automatic deletions. Prefer the smallest edit that removes confirmed noise; do not rewrite neighbouring code to match your taste.
+- **Nothing here changes behaviour.** If removing a tell would change what the program does, report it and name the owner: a fallback that hides a failure is `failfast`, a file or module to split is `componentize`, a correctness bug is simply reported.
+- **Read the neighbourhood first.** A one-caller wrapper can name a real operation or hold a deliberate boundary; local convention wins. Make the smallest edit that removes the noise, and don't restyle the code around it.
+- **The scope is the diff:** the branch against its merge base, or the working tree. Sweep the whole repo only when asked.
+- **Output others read is a contract.** CLI output, error text and logs consumed by scripts, users or monitoring stay as they are unless their change was asked for. Never update snapshots to make a cleanup pass.
 
 ## The tells
 
-Cite by number in findings, so a reviewer can see the pattern rather than the instance.
+Cite by number so a reviewer sees the pattern, not just the instance.
 
 **Comments and names**
 
-1. **Narrating comments.** `// loop over the users`, `// Phase 1: build the cards`. The code says it already. The assertion string or the log line is the only documentation a step needs.
-2. **Doc comments that restate the signature.** "@param userId - the user id". If the doc adds nothing the type doesn't, delete it. If the symbol is exported and deserves real hover help, that is `marginalia`, not a deletion.
-3. **Commented-out alternatives.** The other approach, kept "just in case". Git has it.
-4. **Over-explicit names.** `userDataObject`, `handleClickEventHandler`, `configurationOptionsMap`, or the kind of thing restated in a type name: `UserShape`, `UserInterface`. Say the noun.
+1. **Narrating comments.** `// loop over the users`, `// Phase 1: build the cards`.
+2. **Doc comments that restate the signature.** `@param userId - the user id`. Delete; if an export needs real hover help, that's `marginalia`.
+3. **Commented-out alternatives.** Git has them.
+4. **Over-explicit names.** `userDataObject`, `handleClickEventHandler`, `UserShape`. Say the noun.
 
 **Ceremony**
 
-5. **One-caller wrappers.** A function, class or module that exists to be called from exactly one place and adds nothing on the way through. Inline it.
-6. **Interfaces with one implementation.** Written for a second implementation that never arrived.
-7. **Options nobody passes.** Parameters whose default is the only value ever used, config objects with one live key, feature switches with one state.
-8. **Symmetry for its own sake.** An empty `else`, a `default:` that cannot be reached, a `finally` that does nothing, a wrapper that only awaits.
-9. **Files holding one constant.** Unless the boundary is the point, put it where it is used.
+5. **One-caller wrappers** that add nothing on the way through. Inline them.
+6. **Interfaces with one implementation,** written for a second that never came.
+7. **Options nobody passes.** Parameters only ever defaulted, config objects with one live key, switches with one state.
+8. **Symmetry for its own sake.** Empty `else`, unreachable `default:`, empty `finally`, a wrapper that only awaits.
+9. **Files holding one constant,** unless the boundary is the point.
 
 **Defensive noise**
 
-10. **Redundant defensive handling.** A null check on a value that cannot be absent, a runtime `typeof` after the compiler already narrowed, or a `try/catch` that only rethrows the same error. Establish that the path is trusted; a type annotation alone does not validate runtime input. Keep boundary validation and catches that add meaningful context or cleanup. Catches that swallow errors or supply fallbacks belong to `failfast` when removing them would change behaviour.
-11. **Redundant assertions.** `as any` used only to silence a type error, `as unknown as T`, a non-null `!` where narrowing would do the job honestly, a known value assigned to `unknown` or a broad record and then asserted back to the type it already had. Use the correct type or narrowing rather than another assertion. If fixing the mismatch requires a runtime change, report it instead.
-12. **Re-implemented standard library.** A hand-rolled `groupBy`, `chunk`, `debounce`, or date formatter beside one that already ships. Replace it only after confirming equivalent semantics for its callers, including timing, defaults, errors, locale and edge cases; otherwise refer.
-13. **Redundant async plumbing.** Remove async syntax only after tracing callers and preserving Promise returns, rejection behaviour and scheduling. An `async` function without `await` still returns a Promise and converts throws to rejections; awaiting a plain value still suspends continuation. Neither is redundant merely because the syntax looks unnecessary. Refer uncertain changes instead of guessing.
+10. **Impossible guards.** Null checks on values that can't be absent, `typeof` after the compiler narrowed, `try/catch` that only rethrows. A type annotation doesn't validate runtime input, so keep checks at real boundaries, and keep catches that add context or cleanup.
+11. **Assertions that silence types.** `as any`, `as unknown as T`, `!` where narrowing works, widening to `unknown` and asserting back. Fix the type; if that needs a runtime change, report it.
+12. **Hand-rolled standard library.** `groupBy`, `chunk`, `debounce`, date formatting. Swap only when semantics match for every caller: timing, defaults, errors, locale, edge cases.
+13. **Async plumbing.** An `async` function with no `await` still returns a Promise and turns throws into rejections; awaiting a plain value still yields. Trace callers before removing either.
 
 **Output and leftovers**
 
-Published CLI output, error messages and logs consumed by scripts, users or monitoring are observable contracts. Keep them unchanged unless their alteration was requested separately. Do not update snapshots merely to make a cleanup pass; refer changes whose compatibility you cannot establish.
-
-14. **Decorated console output.** Emoji, box-drawing, ✅/❌ status theatre, banner headers in logs and CLI output.
-15. **Congratulatory strings.** "Successfully completed!", "All done!". Report the outcome or say nothing.
-16. **Error messages that restate the stack.** Say what failed and what the caller should do; the stack is already there.
-17. **Dead scaffolding.** `TODO` placeholders nobody owns, example blocks, and any mock, stub or fixture that leaked into a production path.
-18. **Tests asserting only incidental mock details.** Inspect what the assertion protects: a call count or argument can be a real contract, such as preventing duplicate writes. Preserve meaningful interaction checks. Report tests that prove no behaviour rather than silently deleting coverage or starting a test rewrite outside the request.
+14. **Decorated output.** Emoji, box-drawing, ✅/❌ theatre, banners.
+15. **Congratulatory strings.** "Successfully completed!", "All done!".
+16. **Error messages that restate the stack.** Say what failed and what to do.
+17. **Dead scaffolding.** Unowned `TODO`s, example blocks, and mocks, stubs or fixtures in production paths.
+18. **Tests asserting only incidental mock details.** A call count can be a real contract, such as no duplicate writes; keep those. Report tests that prove nothing rather than deleting coverage.
 
 **Control flow**
 
-19. **Unnecessary nesting.** Newly introduced layers of `if/else` that an early return would make easier to follow. Flatten only when execution order, side effects, cleanup and return values stay the same. Leave nesting alone when it expresses the logic clearly or fits the surrounding code.
+19. **New nesting an early return would flatten,** when order, side effects and return values stay the same.
 
 ## Steps
 
-Scale the workflow to the diff. For a small cleanup, keep the scope, reasoning and verification brief; a separate task list is optional.
+1. Read the diff against the catalogue and record each confirmed instance as tell number plus `file:line`. Don't edit while scanning; editing mid-pass drifts into improving things.
+2. Split the list: remove (behaviour-preserving) and refer (everything else, with its owning skill).
+3. Apply the removals. Run the narrowest existing check that could catch a change, and revert any removal that changes a result.
+4. Report in a few sentences: what went, what was referred and to whom, the check result. Counts by tell only for a large diff.
 
-1. **Fix the scope.** Default to the diff - the branch against its merge base, or the working tree. A whole-repo sweep is a different job and needs saying out loud, because it will touch code nobody asked you to touch.
-2. **Choose relevant verification.** Name the behaviour that could change and use the narrowest existing check that could catch it. For comment-only changes, inspect the diff and any applicable documentation check. Record unrelated baseline failures and continue safe independent work. Preserve repository-required final checks; do not start a workspace-wide gate ladder.
-3. **Pass over the diff against the catalogue.** Read nearby code to establish local conventions, then record one finding per confirmed instance, each carrying the tell number and a `file:line`. Do not rewrite as you read - a pass that edits while it scans loses the thread and starts improving things.
-4. **Sort the findings into remove and refer.** Remove is anything behaviour-preserving. Refer is anything that would change what the program does, named with the skill that owns it. Never do a refer inline.
-5. **Apply the removals, then verify the affected contract.** Run the selected checks and inspect return values, side effects and timing where relevant. Passing tests support equivalence; they do not prove it. Investigate changed results, distinguish flaky or pre-existing failures, and revert any removal that changes behaviour.
-6. **Report.** For a small cleanup, use one to three sentences: what changed, anything referred elsewhere, and the gate result before and after. Include tell numbers and file locations when needed to explain a finding; reserve counts by tell for a requested audit or a larger diff that benefits from them.
-
-## What this is not
-
-- Not a style pass. Formatting follows the repository’s formatter.
-- Not a refactor. Moving logic between modules or extracting a package is `componentize`.
-- Not a hardening pass. Deleting a fallback so it fails loudly is `failfast`, and that one changes behaviour on purpose.
-- Not a linter. Rules a machine can check on every file - a type assertion with no stated reason, `unknown` in parameters and returns, module mocking, `Reflect` property access - belong in the repository's lint configuration; `howells-lint` sets up `@howells/lint`, which carries them. If the lint does not load them, refer that rather than policing each site by hand.
-- Not a review. Correctness bugs are a different job; if you find one, report it and leave it.
+Rules a linter can enforce on every file (unexplained type assertions, `unknown` in signatures, module mocking, `Reflect` access) belong in `@howells/lint`. If the repo doesn't load them, refer to `howells-lint` rather than fixing each site by hand.

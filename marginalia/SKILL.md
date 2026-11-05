@@ -1,235 +1,52 @@
 ---
 name: marginalia
-description: "Add concise, useful JSDoc where IDE hover help or a generated API reference needs a non-obvious contract. Use for JavaScript or TypeScript APIs, components, hooks, classes, complex types, complex internal code, or package publishing. Not for obvious comments, prose docs or behaviour changes."
+description: "Add short JSDoc where IDE hovers or generated API docs need a contract the types don't show. Use for JS/TS exports, components, hooks, generics, tricky internals and packages about to publish. Not for deleting restating comments (`unslop`), README or guide prose, or behaviour changes."
 ---
 
 # Marginalia
 
-Use this skill to add high-signal JSDoc that helps readers, IDEs, declaration files, and generated API docs. The goal is not comments everywhere; the goal is concise documentation at the right boundaries. Overly long JSDoc makes IDE hovers harder to use, so prefer the shortest comment that explains the missing context.
+JSDoc that teaches what the signature can't, short enough to read in a hover. Public declarations are the source of truth for API reference (props, defaults, constraints, callback contracts, deprecations), so hovers, `.d.ts` output and generated docs agree. Guides, quick starts, migration notes and recipes belong in the README or docs site.
 
-For TypeScript package APIs, treat JSDoc as the source of truth for API reference material, not as a replacement for authored docs. Props, exported types, defaults, constraints, callback contracts, and deprecations belong close to the public declarations so IDE hovers, `.d.ts` output, and generated docs agree. Usage guides, examples, conceptual explanations, migration notes, and recipes usually belong in README or site documentation.
+## Rules
 
-## Start
-
-When invoked:
-
-1. State that you are using the `marginalia` skill.
-2. Determine the documentation target:
-   - public package API
-   - all exports in a package or module
-   - complex internal code only
-   - React components, hooks, utilities, classes, or types
-   - generated docs or IDE hover quality
-3. If the user does not name a file, symbol, package, or scope, ask one concise clarification question before editing. Infer a public API pass only when the request clearly mentions package docs, publishing documentation, generated API docs, or IDE hover quality for a package.
-4. Read the right amount before editing:
-   - targeted pass: requested file/symbol, nearby types, and one relevant usage or test when available
-   - public API pass: `package.json` exports/types, public entrypoints, barrels, `tsconfig*`, docs tooling, README/examples, and representative call sites
-   - complex internal pass: implementation, tests, and callers that reveal behavior
-
-Do not infer behavior from names alone. Read the implementation and at least one usage path when available.
-
-## Documentation Density
-
-Choose the smallest density that satisfies the request.
-
-- **Public API pass:** Consider every exported symbol reachable from package entrypoints. Add JSDoc only where it teaches behavior, constraints, usage, or API intent; record obvious exports as `leave`.
-- **Meaningful pass:** Document exported symbols plus complex internal functions, tricky types, overloads, state machines, lifecycle behavior, side effects, and non-obvious constraints.
-- **Targeted pass:** Document only the named file, component, or symbol.
-
-Meaningful and targeted passes reuse steps 2-4 of the Package API Workflow (decide, write, validate) without the full public surface inventory from step 1.
-
-Avoid blanket comments on obvious local variables, simple one-line wrappers, and code whose type signature already explains everything.
-
-## What To Document
-
-Prioritize:
-
-- exported functions, classes, constants with non-obvious semantics, React components, hooks, and types
-- overloads, generics, conditional types, mapped types, branded types, and callback contracts
-- options objects and config fields when IDE completion should guide consumers
-- side effects, thrown errors, async behavior, caching, lifecycle, cleanup, ordering, and idempotency
-- units, ranges, defaults, stability guarantees, runtime environment, and SSR/client constraints
-- deprecations, experimental APIs, and internal-only exports when the repo uses those conventions
-
-For published packages, focus on symbols included in `exports` and generated `.d.ts` files. Internal helpers only need JSDoc when they are complex enough that maintainers benefit.
-
-For generated API docs, make defaults and behavioral constraints explicit in comments when they are not visible from the type alone. Prefer standard TSDoc-compatible tags such as `@remarks`, `@defaultValue`, `@example`, `@deprecated`, `@see`, and release tags when the repo's tooling recognizes them.
-
-## Comment Rules
-
-Write comments that add information the type system cannot express. Keep them short enough to be useful in an IDE hover.
-
-Brevity rules:
-
-- Prefer one sentence for simple public APIs.
-- Use one short summary plus one short paragraph for behavior or constraints.
-- Use examples sparingly; include them only when they prevent likely misuse.
-- Split long conceptual material into external docs instead of putting it in JSDoc.
-- If a hover would feel like an article, cut it down.
-
-Good JSDoc:
+- **Teach or skip.** Document hidden behaviour: side effects, thrown errors, async, caching, lifecycle and cleanup, ordering, idempotency, units, ranges, defaults the type doesn't show, SSR or client constraints, how type parameters relate. Leave obvious exports, locals and one-line wrappers alone.
+- **Hover-sized.** One summary sentence; a second short paragraph only for behaviour or constraints. If the point isn't in the first two sentences, rewrite. Long concepts go to external docs.
+- **Read before writing.** Read the implementation and at least one caller or test; never document from the name. A stale guess is worse than no comment.
+- **TypeScript: no types in tags.** Don't repeat declared types in `@param` or `@returns`. Use `@param` only when meaning, units, defaults or callbacks aren't obvious, `@returns` only when return semantics aren't, `@typeParam` for generics whose role isn't.
+- **JavaScript: tag types are the types.** IDEs and `checkJs` read JSDoc type annotations; keep them and add missing ones.
+- **Examples only to prevent likely misuse,** and consistent with real usage.
+- **Don't change the API.** No runtime changes or renames unless asked. Don't add or remove `@internal`, `@public`, `@alpha`, `@beta` or `@deprecated` unless asked: with `stripInternal` or API Extractor they change emitted declarations and consumer diagnostics.
+- **Use the repo's tag dialect.** Where TypeDoc, API Extractor or TSDoc conventions exist, use their tags (`@remarks`, `@defaultValue`, `@example`, `@see`, release tags) and nothing nonstandard. Don't add docs tooling unasked.
 
 ```ts
 /**
  * Builds a stable cache key for a request.
  *
- * The key includes the normalized URL and sorted query params so equivalent
+ * Includes the normalised URL and sorted query params, so equivalent
  * requests dedupe even when callers pass params in different orders.
  */
-export function createRequestKey(input: RequestInput): string {
-  // ...
-}
-```
+export function createRequestKey(input: RequestInput): string;
 
-Avoid:
-
-```ts
-/** Gets the user. */
+/** Gets the user. */ // Avoid: restates the name.
 export function getUser(id: string): User;
 ```
 
-Rules:
+## Where comments go
 
-- Start with a concise summary sentence.
-- Add a second paragraph only for behavior, constraints, or examples that matter.
-- Prefer prose over noisy `@param` tags when TypeScript names and types are clear.
-- Use `@param` for public APIs when parameter meaning is not fully obvious from the name, or when a function has multiple positional parameters, callbacks, options, units, defaults, side effects, or overloaded semantics.
-- Use `@returns` only when return semantics are not obvious from the type.
-- Use `@typeParam` for exported generics when the role, constraints, inference behavior, defaults, or relationship between type parameters is not obvious.
-- Use `@throws`, `@deprecated`, `@example`, `@remarks`, `@defaultValue`, `@see`, `@internal`, `@public`, `@alpha`, or `@beta` when the repo's tooling or docs use them.
-- In TypeScript sources, do not duplicate declared types in `@param` or `@returns` annotations. In plain JavaScript, JSDoc type annotations supply type information to IDEs and `checkJs`; preserve them and add them when needed.
-- Do not add comments that simply restate the function name.
-- Do not change runtime behavior while documenting.
+- **On the declaration consumers see.** For overloads, shared docs go on the first overload and distinct docs on each overload that behaves differently; implementation-signature JSDoc never reaches consumers.
+- **Components and hooks:** purpose, controlled versus uncontrolled, accessibility expectations, SSR or client requirements, side effects. Document props on the exported props interface; skip self-explanatory visual props.
+- **Types:** document fields consumers choose between, that carry defaults or runtime effect, or that define callbacks. Leave structural fields bare.
+- **Easy to miss:** exported `as const` maps, token objects, schemas, discriminated unions and inferred public types are API too.
 
-When TypeDoc, API Extractor, or TSDoc conventions are present, follow the repo's established tag style, preserve release tags, avoid nonstandard tags unless configured, and run the existing docs or API report check when practical.
+## Scope
 
-## Generated API Reference
+- **Named file or symbol:** that, plus nearby types it depends on.
+- **Nothing named:** the exports added or changed in the current diff.
+- **A package, or "everything":** every symbol reachable from `package.json` `exports` and `types` entrypoints and their barrels. "Everything" means every meaningful export, not exhaustive comments. Track each as add, improve, leave or skip, with a reason.
+- **Internal code:** only where a maintainer would otherwise misread it: state machines, overloads, lifecycles, tricky types.
 
-When the documentation target is generated API docs or single-source package documentation:
+## Check comments survive
 
-- Treat public source declarations as the canonical input for API reference.
-- Inspect existing docs tooling first, such as TypeDoc, API Extractor, React docgen, declaration rollups, or custom site generators.
-- Prefer structured tooling over parsing comments with ad hoc string matching.
-- Keep generated API tables/reference data separate from authored examples, guides, and conceptual copy.
-- Verify comments survive the package's declaration or docs pipeline before calling the pass complete.
-- If no docs tooling exists, recommend a generated-docs plan but do not add new tooling unless the user asked for implementation.
+When hovers or published docs are the goal, inspect the emitted `.d.ts` or generated docs. `removeComments`, `stripInternal`, declaration rollups, and re-exports through barrels or subpath exports can drop or detach comments. Run the repo's typecheck and existing docs or API-report script for touched packages.
 
-Common split:
-
-- **JSDoc/TSDoc:** API tables, prop descriptions, exported type docs, callback contracts, defaults, constraints, IDE hover text.
-- **Authored docs:** installation, quick starts, composition examples, design rationale, migration guidance, recipes, and screenshots.
-
-## Package API Workflow
-
-### 1. Build The Public Surface
-
-List symbols exposed through:
-
-- `package.json` `exports`
-- `types`, `typings`, or declaration entrypoints
-- root barrel files
-- intentional subpath exports
-
-Useful searches:
-
-```sh
-rg '^\s*export\b' -g '*.{ts,tsx,js,jsx,mts,cts,d.ts}'
-rg '"(exports|types|typings|main|module|browser)"' -g 'package.json'
-rg '^\s*(module\.exports|exports\.)' -g '*.{js,cjs,cts}'
-rg '@public|@internal|@deprecated|@alpha|@beta|@remarks|@example' -g '*.{ts,tsx,js,jsx}'
-```
-
-For each public symbol, record whether it already has useful JSDoc and whether the declaration output would preserve it.
-
-Use a lightweight inventory before package-wide edits:
-
-```markdown
-| Symbol | Source file | Export path | Existing JSDoc | Decision | Reason |
-| --- | --- | --- | --- | --- | --- |
-```
-
-### 2. Decide What Needs JSDoc
-
-Classify each candidate:
-
-- add: missing useful public API documentation
-- improve: existing comment is stale, vague, or type-duplicative
-- leave: signature and naming are already sufficient
-- skip: private/simple helper with no meaningful hidden behavior
-
-If the user asked for "everything", interpret that as every meaningful exported/public symbol unless they explicitly ask for exhaustive comments.
-
-### 3. Write The Comments
-
-Keep comments close to the exported declaration that consumers see. For overloads, place shared docs on the first overload or exported declaration, place distinct docs on each overload whose behavior differs, and do not rely on implementation-signature JSDoc for consumer docs.
-
-For React components and hooks:
-
-- document the component/hook purpose and key behavior
-- document important props through exported prop interfaces when present
-- mention controlled/uncontrolled behavior, accessibility expectations, SSR/client requirements, and side effects
-- avoid documenting every visual prop when the prop name and type are enough
-
-For types and interfaces:
-
-- document the interface purpose
-- document fields when users choose between them, when defaults matter, when they affect runtime behavior, or when they define callback contracts
-- leave obvious structural fields undocumented
-- prefer examples for complex config objects
-
-Also inspect exported const assertions, token maps, schemas, namespace-like objects, discriminated unions, and inferred public types when they are part of the package API.
-
-### 4. Validate
-
-Choose commands from `package.json` scripts, workspace package scripts, or existing CI/docs config. Do not invent new tooling just to validate comments.
-
-Run the narrowest meaningful checks:
-
-- typecheck for touched packages
-- lint/format if comments are linted
-- package build when declaration output matters
-- API docs generation if the repo uses TypeDoc, API Extractor, or similar
-- inspect generated `.d.ts` or docs output when publishing/IDE hover quality is the goal
-
-For declaration preservation, check relevant compiler/doc settings such as `removeComments`, declaration emit, generated `.d.ts` entrypoints, re-exported symbols, `stripInternal`, API Extractor rollups, and whether docs remain attached after barrel or subpath export generation.
-
-Report the exact commands run. If checks are unavailable or too broad, report exactly what was and was not verified.
-
-## Output
-
-When planning, provide:
-
-- public surface inspected
-- symbols to add, improve, leave, and skip
-- validation plan
-
-For package-wide or multi-module passes, present the candidate public surface and intended documentation density before editing when the user asked for a plan. A request to add or improve documentation already authorizes the scoped edits.
-
-When implementing, finish with:
-
-- files changed
-- kinds of APIs documented
-- public symbols considered, JSDoc added, JSDoc improved, and symbols left undocumented with reasons
-- validation results
-
-## Guardrails
-
-- Do not create documentation theater. A comment must teach something.
-- Do not add stale guesses. If behavior is unclear, read usage or tests before documenting.
-- Do not write long comments that bury the useful detail. If the important point is not visible in the first sentence or two, rewrite.
-- Do not document private helpers exhaustively unless complexity justifies it.
-- Do not use JSDoc to hide poor names. Rename only when the user asked for refactoring or the rename is necessary and safe.
-- Do not add examples that are not typechecked or at least consistent with real usage.
-- Do not introduce generated docs tooling unless the user asks or the repo already uses it.
-- Do not alter public API while adding JSDoc unless explicitly requested. Preserve release and deprecation tags; add or remove `@internal`, `@public`, `@alpha`, `@beta` or `@deprecated` only when that API-status change is requested. These can affect emitted declarations or consumer diagnostics.
-
-## Completion Check
-
-Before finishing, verify:
-
-- public exported symbols requested by the user were considered
-- comments explain behavior, constraints, examples, or IDE-helpful usage
-- comments are concise enough to improve hover clarity
-- no comments merely restate obvious names or TypeScript types
-- generated declarations/docs preserve comments when that matters
-- validation ran or the gap is reported
+Report files changed, symbols documented or improved, symbols deliberately left with the reason, and what was checked.

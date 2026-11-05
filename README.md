@@ -164,7 +164,7 @@ npx skills@latest add howells/skills --skill maquette --agent codex --global
 
 ### `marginalia`
 
-Add concise, useful JSDoc where IDE hover help or a generated API reference needs a non-obvious contract. Use for JavaScript or TypeScript APIs, components, hooks, classes, complex types, complex internal code, or package publishing. Not for obvious comments, prose docs or behaviour changes.
+Add short JSDoc where IDE hovers or generated API docs need a contract the types don't show. Use for JS/TS exports, components, hooks, generics, tricky internals and packages about to publish. Not for deleting restating comments (`unslop`), README or guide prose, or behaviour changes.
 
 Install globally for Codex:
 
@@ -174,7 +174,7 @@ npx skills@latest add howells/skills --skill marginalia --agent codex --global
 
 ### `mastraudit`
 
-Prevent recurring Mastra failures while building agents, tools, workflows and MCP Apps. Use before changes, during debugging and for focused acceptance. Not for general UI review (`fieldtest`).
+Prevent recurring Mastra failures in agents, tools, workflows, storage, Studio and MCP Apps. Use when writing, debugging or auditing Mastra code. Not for general UI review (`fieldtest`).
 
 Install globally for Codex:
 
@@ -297,9 +297,7 @@ npx skills@latest add howells/skills --skill signage --agent codex --global
 
 ### `simplify`
 
-Review a diff or whole codebase for structural simplification and relevant health risks, with source-confirmed findings and optional scores. Not routine cleanup (`unslop`) or browser QA (`fieldtest`).
-
-Combines Cursor's strict structural review with stage-aware risk assessment, source vetting, grouped fixes and honest coverage. Reviews relevant security, performance and reliability concerns alongside opportunities to remove complexity. Cursor's upstream rubric and MIT attribution are preserved.
+Strict structural review of a diff or whole codebase: finds restructurings that delete complexity, and real security, performance or data risks. Reports findings; edits only when asked. Not for diff tidy-ups (`unslop`), fallback removal (`failfast`) or browser QA (`fieldtest`).
 
 ```bash
 npx skills@latest add howells/skills --skill simplify --agent codex --global
@@ -307,7 +305,7 @@ npx skills@latest add howells/skills --skill simplify --agent codex --global
 
 Use `simplify` for selected changes or `simplify whole codebase` for the repository; add `in <path>` to narrow either scope. Add `with scores` only when you want a scorecard. Both scopes report findings; add `apply the fixes` or `create Linear items` to request action.
 
-In Claude Code, this personal skill takes precedence over the bundled skill with the same name.
+Claude Code's bundled `/simplify` edits a diff for reuse and efficiency; this one reports structural findings and edits only when asked. In Claude Code, this personal skill takes precedence over the bundled skill with the same name.
 
 ### `typecase`
 
@@ -321,7 +319,7 @@ npx skills@latest add howells/skills --skill typecase --agent codex --global
 
 ### `unslop`
 
-Remove machine-written code tells from a diff without changing behavior: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, and leftover scaffolding. For behavior-changing fallback cleanup use `failfast`; for prose use `deslop`.
+Strip machine-written tells from a diff without changing behaviour: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, leftover scaffolding. Not for structural review (`simplify`), behaviour-changing fallback removal (`failfast`) or prose (`deslop`).
 
 Install globally for Codex:
 

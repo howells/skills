@@ -1,4 +1,4 @@
 interface:
-  display_name: "Mastra building guide"
+  display_name: "Mastraudit"
   short_description: "Prevent recurring failures while building with Mastra"
-  default_prompt: "Use $mastraudit while building or debugging this Mastra implementation. Verify installed APIs, prevent recurring execution and contract failures, and obtain focused acceptance evidence within the authorised scope."
+  default_prompt: "Use $mastraudit while writing or debugging this Mastra code: check the installed APIs, avoid the known failures, and exercise the changed path."

@@ -1,48 +1,54 @@
 ---
 name: mastraudit
-description: "Prevent recurring Mastra failures while building agents, tools, workflows and MCP Apps. Use before changes, during debugging and for focused acceptance. Not for general UI review (`fieldtest`)."
+description: "Prevent recurring Mastra failures in agents, tools, workflows, storage, Studio and MCP Apps. Use when writing, debugging or auditing Mastra code. Not for general UI review (`fieldtest`)."
 ---
 
 # Mastraudit
 
-Use this as a building guide throughout Mastra work. Prevent the expensive mistakes at the point the implementation makes them. The existing name also supports an explicitly requested audit.
+Mastra's APIs move fast and its expensive mistakes typecheck. Prevent them where the code makes them. The reference files describe recurring failure classes, not universal semantics: confirm against the installed version before flagging one.
 
 ## Before changing code
 
-1. **Find the runtime owner and the actual version.** Resolve packages from the package that calls them, including the CLI, storage and engine adapters. A manifest range, catalog entry or directory listing isn't an installed version. Read that version's embedded docs and types, plus the matching page in a configured local vendor mirror. A recent mirror can still describe a newer release. Use published documentation when local evidence is missing; state the gap.
-2. **Read the working precedent.** Follow the existing public bridge, storage provider, model policy and domain operation. Identify the execution lane: plain agent, durable workflow, Studio chat, HTTP or stdio MCP. Trace what constructs it and what registration makes public. Read [structure](references/structure.md) for ownership and import changes.
-3. **Choose the contract and the bound.** Specify the useful output, explicit failure and completion states, references that cross each step, and limits on output, steps, elapsed time and retries. Give an agent the operations it needs to decide; wrapping the whole deterministic workflow can make an agent comparison circular. Read [contracts](references/contracts.md) for tools or structured output, and [execution](references/execution.md) for stateful work.
-4. **Choose the acceptance path before running it.** Name the one changed journey and its observable outcome. Check test/import side effects first. Audit-only scope permits source inspection and safe local checks, not model calls, workflow admissions, storage writes or deployments. Read [evidence](references/evidence.md) before tests, evaluations or completion claims.
+1. **Use the installed version, not memory.** Resolve each `@mastra/*` package from the package that calls it, including the CLI and storage and engine adapters; a manifest range or catalog entry isn't the installed version. Read that version's types and embedded docs, then a configured local vendor mirror (which can describe a newer release). Fall back to published docs and say so. Check model ids against a provider registry.
+2. **Follow the working precedent.** Find the existing bridge, storage provider, model policy and domain operation. Name the execution lane (plain agent, durable workflow, Studio chat, HTTP or stdio MCP) and what constructs and registers it. Read [structure](references/structure.md) when changing ownership, registration or imports.
+3. **Set the contract and the bounds.** Output shape, explicit failure and completion states, the identifiers that cross each step, and limits on output, steps, elapsed time and retries. Read [contracts](references/contracts.md) for tools or structured output, and [execution](references/execution.md) for workflows, state, storage or long loops.
 
-This is a short implementation decision, not a new planning document. Keep evidence on the owning tracker item when the project uses one.
+## Gotchas that typecheck
 
-Reuse an established pre-flight for the same source, installed versions and runtime. Revisit the relevant contract when dependencies, imports, settings or the execution lane change; don't reread settled documentation or rerun a green gate after every save.
-
-## While building
-
-- Keep domain behaviour and canonical schemas at their source; Mastra wires them together. Inspect the glue that typecheck cannot validate: registration keys, generated schemas, output projection, callback delivery, storage injection, resume forwarding and model settings.
-- Reuse applicable installed scanners. Read their signatures and coverage before invoking them. Scanner output is a lead until checked against the actual caller and supported contract. No scanner available means a stated coverage gap, not an invented package export.
-- Establish a minimal reproduction before changing a dependency, adding a fallback or blaming a provider. Start with request size, effective settings, identity, source version and persisted state. Change one cause at a time.
-- For Studio, coordinate a stable runtime window with its owner before a timed run. Read [Studio and MCP](references/studio-and-mcp.md) for origins, hot reload, stale bundles, local stdio and inline apps.
-- Turn a demonstrated silent failure into the smallest useful guard at its shared boundary. Make it fail on the original adverse case before trusting it. Avoid a broad suite merely because a focused check passed.
+- **Generation settings nest under `modelSettings`.** Flat `maxOutputTokens`, `temperature` or `topP` are silently ignored; the most repeated mistake. Cap output on every user-facing or high-volume call. Legacy generate and stream methods differ, so check the signature.
+- **Call-level `instructions` replaces the agent's instructions; `system` adds to them.** Policy added through `instructions` silently breaks tool routing.
+- **The tool-map key is the name the model sees,** not the tool's `id`. Use explicit `verb_noun` keys; shorthand leaks camelCase into tool selection.
+- **Step limits default low** and cap how many tool calls an agent can chain. Set one on every tool-holding agent and on each delegated agent, which doesn't inherit its supervisor's. A limit hit after a tool call returns empty text, which a supervisor reads as failure and re-delegates.
+- **Use native structured output:** `structuredOutput: { schema }` and the native object. Never `JSON.parse(response.text)`, strip fences or fill missing fields. Refusals, truncation and validation failures stay visible failures.
+- **Inspect the JSON Schema that reaches the provider,** not the Zod type. Re-check every tool and sub-agent schema after a model or provider swap; a rejected schema arrives as a refused call, not a warning.
+- **Mastra wraps; domain code implements.** Tool `execute` bodies delegate in about a line. No HTTP, parsing, persistence or business rules in wrappers, and no tool calling another tool.
+- **Nothing heavy is reachable from the singleton** that request handlers import, and no build-time or `server-only` module sits in its runtime graph. Both pass typecheck and fail at boot.
+- **Every MCP client gets an explicit id and is memoised at module scope.** A second identical client without an id throws, and hot reload builds one.
+- **A retry re-runs the whole step body,** writes included. Make side effects idempotent by natural key, set retries per step, and never retry billing, quota or auth failures.
+- **Don't fire-and-forget a workflow from a request handler** on a platform that freezes after the response; the run shows as running forever. Use the after-response primitive, await it, or hand it to a durable engine.
+- **No state crosses invocations through process memory.** Module-level maps read by `onError`, finalizers or reconcilers are empty in the process that runs them.
+- **No in-memory storage fallback where state must outlive the process.** Where nothing must, the in-memory warning isn't a finding; provisioning storage just to silence it has caused an incident.
+- **Memory is opt-in per surface.** Routers, classifiers and one-shot structured calls don't carry it.
+- **Enforce with the call, not the prompt.** `toolChoice` and the tool map are the contract. Never branch on a value scanned out of model narration.
+- **Saving a watched file reloads Studio and kills in-flight generations.** Hold edits during a timed run, and count reloads separately from model failures.
 
 ## When something fails
 
-| Symptom | First investigation |
+Reproduce once, minimally, before blaming a provider, changing a dependency or adding a fallback: request size, effective settings, identity, source version and persisted state. Change one cause at a time.
+
+| Symptom | Look first at |
 | --- | --- |
-| Empty object, ignored tools, rejected schema | Native result, generated provider schema and tools/structured-output compatibility in [contracts](references/contracts.md). |
-| Slow steps, repeated searches, missing earlier facts | Measured prompt/result/snapshot size and processor retention in [execution](references/execution.md). |
-| Lost progress, duplicate writes, stuck resume | Checkpoint, identity, idempotency and durable state in [execution](references/execution.md). |
-| Unit tests connect or write unexpectedly | Import-time initialisation, environment precedence and driver guard in [evidence](references/evidence.md). |
-| Studio fails to load, hangs bundling or loses a run | Process, origin, dependency graph and reload window in [Studio and MCP](references/studio-and-mcp.md). |
-| Fix works over HTTP but fails in an existing MCP session | Transport identity and process start time in [Studio and MCP](references/studio-and-mcp.md). |
-| Inline HTML works but agent UI does not | Tool metadata, resource, result envelope and guest-host handshake in [Studio and MCP](references/studio-and-mcp.md). |
-| Scores pass but the answer breaks the brief | Independent expectations, hard requirements and persisted experiment evidence in [evidence](references/evidence.md). |
+| Empty object, ignored tools, rejected schema | Native result, emitted provider schema, tools plus structured output: [contracts](references/contracts.md) |
+| Slow steps, repeated searches, forgotten facts | Measured prompt, result and snapshot size; processor retention: [execution](references/execution.md) |
+| Lost progress, duplicate writes, stuck resume | Checkpoints, identity, idempotency, durable state: [execution](references/execution.md) |
+| Unit tests connect or write unexpectedly | Import-time initialisation, env precedence: [evidence](references/evidence.md) |
+| Studio won't load, hangs bundling, loses a run | Origin, dependency graph, reload window: [Studio and MCP](references/studio-and-mcp.md) |
+| Fixed over HTTP, still broken in an MCP session | Stdio process start time: [Studio and MCP](references/studio-and-mcp.md) |
+| Inline HTML works, agent UI doesn't | Tool metadata, resource, result envelope, handshake: [Studio and MCP](references/studio-and-mcp.md) |
+| Scores pass, answer breaks the brief | Independent expectations, hard requirements: [evidence](references/evidence.md) |
 
-## Before calling it done
+## Done
 
-Exercise the changed path with the closest permitted evidence. A visible feature needs interaction in its intended host; a durable feature needs its stored output and recovery boundary inspected. When those effects aren't authorised, state the missing acceptance evidence.
+Exercise the changed journey in its real host: a visible feature through its UI or MCP host, a durable one by reading its stored output and resuming it. Read the dev-server log for framework error ids even on a pass. Read [evidence](references/evidence.md) before writing tests or evals.
 
-Return a short verdict, what changed, the installed versions and exact source/runtime tested, focused evidence, and remaining gaps. Keep source checks, runtime execution, persistence, host interaction, publication and deployment as separate claims. An explicit audit ranks confirmed findings by failure cost: blocking, should fix, noted; each carries `file:line`, consequence and fix. Include a coverage map for skipped checks.
-
-Stop when the stated acceptance condition is met. A new unrelated finding goes on the tracker, not into an open-ended round of extra checks.
+Report the installed versions, what ran where, and what stayed unverified. An audit-only request permits source reading and safe local checks, not model calls, workflow runs, storage writes or deploys; rank findings blocking, should fix or noted, each with `file:line`, consequence and fix.
