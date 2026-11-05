@@ -237,7 +237,6 @@ npx skills@latest add howells/skills --skill plimsoll --agent codex --global
 
 Document a product's user-visible behaviour feature by feature from code, tests and the running product, then triage suspected defects. Not for marketing copy, READMEs, single-feature specs or browser QA alone (`fieldtest`).
 
-
 Install globally for Codex:
 
 ```bash
