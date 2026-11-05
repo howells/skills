@@ -1,45 +1,79 @@
-# Typography & OpenType Reference
+# Typography and OpenType
 
-Advanced typography features for polished, professional work - interface and identity alike. Companion to the baseline typography rules the consuming skill keeps in its own interface references.
+How text renders inside the roles: rendering, features, tracking, leading, wrapping and loading.
 
----
+Contents: rendering · OpenType features · tracking · line height · wrapping · fluid sizing · details · loading · quick reference.
 
-## The Rendering Stack
+## Rendering
 
-"Gorgeous text rendering" is not one property - it's a stack of decisions, ordered here by how much each actually contributes. The highest-impact levers are font choice and layout discipline, not CSS tweaks.
+The biggest levers are the font and the layout, not CSS tweaks.
 
-### 1. Pixel density beats everything
+- **Pixel density beats everything.** On a 2x display plain grayscale antialiasing is the good rendering. Design on 2x; check weight and contrast on a 1x screen before shipping.
+- **`antialiased` once, on the root** (Tailwind sets both `-webkit-font-smoothing` and `-moz-osx-font-smoothing`), never per component. At 1x, light text on dark can go too thin: bump that role's weight a step rather than dropping `antialiased`.
+- **Never set `text-rendering: optimizeLegibility`.** Kerning and common ligatures are already on, and it costs layout time on long pages.
+- **Optical sizing is on by default** (`font-optical-sizing: auto` is the initial value). It only works when the loaded font has an `opsz` axis: InterVariable, Source Serif 4, Fraunces, Newsreader, Roboto Flex. Static-weight imports such as `Inter({ weight: ['400','700'] })` drop the axis. Do not hard-code `"opsz"` in `font-variation-settings` unless the design deliberately decouples optical size from font size. If the variable font has `opsz`, a separate display cut (Inter Tight) may be redundant.
+- **Inter means InterVariable**, self-hosted from rsms.me with `next/font/local` (`InterVariable.woff2` plus the italic). Google's build has stripped some cv/ss features; if staying on Google Fonts, request the axis: `Inter({ subsets: ['latin'], axes: ['opsz'] })`.
+- **Text and Display cuts.** "Display" in a family name means a cut drawn for large sizes (SF Pro Display, Heldane Display). Use the cut that matches the role's size.
 
-On a 2x/Retina display, plain grayscale antialiasing *is* the gorgeous rendering - hinting and subpixel tricks stop mattering (Apple deleted subpixel AA entirely in macOS Mojave). Nothing in CSS matches the jump from 1x to 2x. Consequence: design and QA type on a 2x display, but verify weight/contrast on a 1x display before shipping.
+## OpenType features
 
-### 2. Grayscale antialiasing
+Use the property where one exists: `font-weight: 650`, not `font-variation-settings: "wght" 650`; `font-variant-numeric: tabular-nums`, not `font-feature-settings: "tnum"`. Properties keep working when a non-variable fallback renders. Keep `font-feature-settings` for features with no property, such as `cv05` or `ss01`.
 
-```html
-<body class="antialiased">
-```
+### Figures
 
-Tailwind's `antialiased` sets `-webkit-font-smoothing: antialiased` + `-moz-osx-font-smoothing: grayscale`. Text renders thinner and crisper than the default (which dilates stems), matching Figma and Apple's own UI. The one real trade-off: at 1x DPI, light text on dark backgrounds can go too thin - fix by bumping `font-medium` → `font-semibold` on those UI surfaces, never by dropping `antialiased`.
+| Property value | Effect | Use for |
+| --- | --- | --- |
+| `tabular-nums` | Fixed-width digits | Prices, timers, counters, metrics, numeric columns, anything that changes |
+| `lining-nums` | Cap-height digits | Tables, UI |
+| `oldstyle-nums` | Digits with ascenders and descenders | Running editorial text, if the font has them |
+| `diagonal-fractions` | ½ | Recipes, measurements |
+| `slashed-zero` | 0 with a slash | Codes, keys, tables mixing O and 0 |
 
-Do **not** add `text-rendering: optimizeLegibility` - kerning and common ligatures are on by default in modern browsers, and it still costs layout time on long pages.
+Without `tabular-nums`, a changing number shifts layout because `1` is narrower than `0`. Leave figures in prose proportional.
 
-### 3. Optical sizing
+### Ligatures
 
-The most under-used lever. Fonts drawn for text sizes have wider spacing, taller x-heights, sturdier hairlines; display cuts are tighter and more elegant. A variable font with an `opsz` axis interpolates this continuously:
+Common ligatures are on by default. Turn them off in code: `code, pre { font-variant-ligatures: none; }`, since `fi` as one glyph misleads in code.
+
+### Small caps
+
+Not a UI treatment (see the SKILL.md rules). Where a brand treatment or the user calls for them, use `font-variant-caps: small-caps` only on a font with drawn small-cap glyphs; scaled capitals look wrong. A small-caps wordmark does not license small-caps navigation, captions or buttons.
+
+### Character variants and stylistic sets (InterVariable)
+
+| Feature | Effect | Use when |
+| --- | --- | --- |
+| `cv05` | `l` with a tail | Codes and IDs: separates `I`, `l` and `1` |
+| `cv11` | Single-storey `a` | Softer, more geometric voice |
+| `ss01` | Open digits | Dense dashboards |
+| `ss02` | Disambiguation set: serifed I, slashed 0, tailed l | Licence keys, technical output |
+| `ss03` | Round quotes and commas | Editorial and marketing |
+| `case` | Case-sensitive punctuation | Caps-only text; usually automatic via `calt` |
+
+Set one to three globally on the font token so every use carries them; a per-component patchwork of glyph shapes is a bug.
 
 ```css
-/* Tailwind has no utility for this - set once in base */
-@layer base {
-  body { font-optical-sizing: auto; }
+@theme {
+  --font-sans: "InterVariable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans--font-feature-settings: "cv05", "ss03";
 }
 ```
 
-- Requires a font with an `opsz` axis (InterVariable 4.0+, Source Serif 4, Fraunces, Roboto Flex, Newsreader). Static-weight imports (e.g. `next/font/google` `Inter({ weight: ['400','700'] })`) don't carry the axis - load the variable font.
-- **If the project uses Inter, use InterVariable** - the canonical variable build from rsms.me/inter. It carries the `opsz` axis *and* the complete OpenType feature set (character variants + stylistic sets - see § Character Variants below); Google Fonts' build pipeline has historically stripped some of these. Self-host via `next/font/local` with `InterVariable.woff2` (+ `InterVariable-Italic.woff2`), or if staying on Google Fonts, request the axis explicitly: `Inter({ subsets: ['latin'], axes: ['opsz'] })`.
-- A text/display *pairing* (e.g. Inter + Inter Tight) is the manual version of optical sizing. If the variable font has `opsz`, the display cut may be redundant.
+Per-element overrides only for a scoped need: `<code class="[font-feature-settings:'ss02','zero']">`.
 
-### 4. Tracking tuned per size
+## Tracking
 
-Tracking must tighten as size grows. The reference curve is Inter's dynamic metrics formula (`tracking ≈ -0.0223 + 0.185·e^(-0.1745·px)`); in practice a stepped scale is fine - see the Manual Tracking table under Kerning below. In Tailwind, bind tracking into the type scale via `@theme` so `text-6xl` brings its tracking with it rather than relying on authors to remember `tracking-tight`:
+Kerning is built into the font and on by default; `font-kerning: none` is never a fix. Tracking tightens as size grows. Inter's own curve is `tracking ≈ -0.0223 + 0.185·e^(-0.1745·px)`; a stepped scale is fine:
+
+| Context | Tracking |
+| --- | --- |
+| Display above 48px | -0.02em to -0.04em |
+| Headings 24px and up | -0.01em to -0.02em |
+| Body 14–18px | 0 |
+| Small text under 12px | +0.01em to +0.02em |
+| Uppercase, where a role is sanctioned | +0.05em to +0.1em |
+
+Use `em`, never `px`, so tracking scales with size. Bind it to the size token so the step brings its tracking with it:
 
 ```css
 @theme {
@@ -49,340 +83,68 @@ Tracking must tighten as size grows. The reference curve is Inter's dynamic metr
 }
 ```
 
-### 5. OpenType features
+## Line height
 
-Kerning and common ligatures are on by default. Opt into the extras - `tabular-nums` for anything numeric that aligns or changes, `slashed-zero` for codes, stylistic sets where the font offers them. Full detail in the sections below.
+Unitless, so it scales with size. The ratio falls as size rises:
 
-### 6. Layout-level polish
+| Size | Line height | Ratio |
+| --- | --- | --- |
+| 12px | 16px | 1.33 |
+| 14px | 20px | 1.43 |
+| 16px | 24px | 1.5 |
+| 18px | 28px | 1.56 |
+| 24px | 32px | 1.33 |
+| 30px | 36px | 1.2 |
+| 36px | 40px | 1.11 |
+| 48px+ | 1.0–1.1 | nearly solid |
 
-The newest tier, all cheap wins:
+Tight leading is for short text. Anything that wraps to three lines or more needs 1.4 or more.
 
-```html
-<h1 class="text-balance">…</h1>          <!-- no orphan word on line two -->
-<p class="text-pretty">…</p>             <!-- better rag, fewer orphans -->
-<blockquote class="[hanging-punctuation:first]">…</blockquote>  <!-- Safari: quotes hang into margin -->
-<div class="hyphens-auto" lang="en">…</div>  <!-- needs a correct lang attribute -->
-```
+## Wrapping
 
-And the part no property can do: measure ~45–75 characters per line, line-height tightening as size grows (1.5 at 16px → ~1.1 at 60px - table under Line Height Relationships below).
+- `text-balance` on headings and short descriptions. Never on paragraphs; it costs layout time and Chromium ignores it past six lines.
+- `text-pretty` on paragraphs keeps a lone word off the last line.
+- `text-wrap: stable` on editable text, so it does not reflow while typing.
+- `overflow-wrap: break-word` wherever a long word, URL or ID could escape its container; `whitespace-nowrap` on badges and short labels where a break looks broken.
+- `hyphens-auto` in narrow columns, with a correct `lang` attribute. Not on headlines, code or short labels.
+- Cap long-form measure at 45–75 characters (`max-w-prose` or a `ch` width).
+- Interface text stays `text-start`; justified text belongs only in deliberate editorial layouts.
+- `[hanging-punctuation:first]` hangs opening quotes into the margin in Safari.
 
-### The stack, condensed
+## Fluid sizing
 
-```html
-<body class="antialiased">  <!-- + font-optical-sizing: auto in @layer base -->
-```
+`clamp()` for display sizes, always with a minimum and a maximum: `font-size: clamp(1.5rem, 1rem + 2vw, 3rem)`. Keep body text fixed. Set sizes in `rem` so the reader's browser setting still applies.
 
-```
-RENDERED ON        → 2x display, verified at 1x
-FONT               → variable, with opsz axis where possible (Inter → InterVariable, always)
-SMOOTHING          → antialiased (Tailwind), weight bump on dark 1x surfaces
-OPTICAL SIZING     → font-optical-sizing: auto (base layer)
-TRACKING           → bound to type scale via @theme, tighter as size grows
-FEATURES           → tabular-nums etc. - see below
-WRAPPING           → text-balance / text-pretty / hanging-punctuation
-MEASURE & LEADING  → 45–75ch; line-height falls as size rises
-```
+## Details
 
----
+- **Punctuation.** Rendered text uses `…`, en dashes in ranges (`2010–2020`), curly quotes and `&nbsp;` inside values like `10 km`. Code keeps straight quotes. Match the product's existing convention where one exists.
+- **Natural case.** Store text in natural case and set case in the role with `text-transform`, so a redesign never means rewriting copy.
+- **Underlines.** `text-underline-position: from-font` and `text-decoration-thickness: from-font`, or tune `text-underline-offset`. Never `text-decoration-skip-ink: none`.
+- **Tight containers.** `text-box: trim-both cap alphabetic` stops text sitting low in buttons and badges, as a progressive enhancement.
+- **Truncation.** `truncate` for one line; `line-clamp-3` for several. A clamped value needs a way to reach the full text.
 
-## OpenType Feature Settings
+## Loading
 
-OpenType features add professional typographic refinement. Use `font-feature-settings` for fine control or `font-variant-*` for standardized features.
+| `font-display` | Behaviour | Use for |
+| --- | --- | --- |
+| `swap` | Fallback at once, swap when ready | Body text |
+| `optional` | Fallback unless cached, no swap | Performance-critical pages |
+| `block` | Brief invisible period, then swap | Short display or brand text |
 
-### Numeric Formatting
+Preload only the one or two faces the first screen needs (`<link rel="preload" as="font" type="font/woff2" crossorigin>`). Match the fallback's metrics with `size-adjust`, `ascent-override`, `descent-override` and `line-gap-override` on a local fallback `@font-face` so the swap does not reflow; Fontaine and `next/font` calculate them. Serve `woff2`. Subset with `unicode-range` (`next/font` does it automatically). Load every weight and style the roles use: a missing face is synthesised, and `font-synthesis: none` on body text hides the symptom by breaking the fallback.
 
-| Feature | Property | Effect | Use When |
-|---------|----------|--------|----------|
-| `tnum` | `font-variant-numeric: tabular-nums` | Fixed-width digits | Data tables, prices, timers, counters |
-| `lnum` | `font-variant-numeric: lining-nums` | Uniform height digits | Tables, UI elements |
-| `onum` | `font-variant-numeric: oldstyle-nums` | Varying height digits | Running body text, editorial |
-| `frac` | `font-variant-numeric: diagonal-fractions` | Proper fractions (½) | Recipes, measurements |
-| `ordn` | `font-variant-numeric: ordinal` | Ordinal indicators (1st) | Dates, rankings |
-
-```css
-/* Data tables - digits align vertically */
-.data-cell {
-  font-variant-numeric: tabular-nums lining-nums;
-}
-
-/* Tailwind */
-<td class="tabular-nums">1,234.56</td>
-
-/* Body text - digits blend with lowercase */
-.prose {
-  font-variant-numeric: oldstyle-nums proportional-nums;
-}
-```
-
-**Most important rule:** Always use `tabular-nums` for:
-- Prices and currency
-- Timers and countdowns
-- Table columns with numbers
-- Statistics and metrics
-- Any numbers that animate or change
-
-Without `tabular-nums`, changing digits cause layout shift because `1` is narrower than `0`.
-
-### Ligatures
-
-| Feature | Property | Effect |
-|---------|----------|--------|
-| `liga` | `font-variant-ligatures: common-ligatures` | Standard ligatures (fi, fl) |
-| `dlig` | `font-variant-ligatures: discretionary-ligatures` | Decorative ligatures |
-| `clig` | `font-variant-ligatures: contextual` | Context-dependent connections |
-
-```css
-/* Enable standard ligatures (usually on by default) */
-body {
-  font-variant-ligatures: common-ligatures;
-}
-
-/* Disable ligatures in code */
-code, pre {
-  font-variant-ligatures: none;
-}
-```
-
-**Always disable ligatures in monospace/code text.** `fi` as a ligature in code is misleading.
-
-### Small Caps
-
-Do not introduce decorative small caps into UI labels, dates, prices, headings or status text. Preserve a small-caps treatment only where an explicitly supplied brand treatment or a user-selected direction calls for it. Proper acronyms do not require small-cap styling. For those established exceptions, use designed glyphs:
-
-```css
-/* True small caps (not fake scaled-down capitals) */
-.small-caps {
-  font-variant-caps: small-caps;
-}
+## Quick reference
 
 ```
-
-Only use if the font has designed small cap glyphs. Faked small caps (scaled capitals) look bad.
-
-Keep each exception in its intended role. A small-caps wordmark does not authorize small-caps navigation, captions or buttons. Ordinary UI uses the established type roles and sentence case; aligned figures use tabular numerals in the body font.
-
-### Character Variants & Stylistic Sets (Inter / InterVariable)
-
-InterVariable ships a large set of `cv`/`ss` features - one of the strongest reasons to use the rsms.me build over a stripped CDN copy. The high-value ones for interfaces:
-
-| Feature | Effect | Use When |
-|---------|--------|----------|
-| `cv05` | Lowercase `l` with tail | Any UI showing codes/IDs - disambiguates `I`/`l`/`1` |
-| `cv11` | Single-storey `a` | Softer, more geometric personality |
-| `ss01` | Open digits (alternate 0, 6, 9) | Data-dense UI, dashboards |
-| `ss02` | Disambiguation set (serifed I, slashed 0, tailed l) | Codes, license keys, technical output |
-| `ss03` | Round quotes & commas | Editorial/marketing surfaces |
-| `zero` | Slashed zero only | Tables mixing O and 0 |
-| `case` | Case-sensitive punctuation (raised hyphens/brackets in ALL CAPS) | Auto via `calt` in most cases; force for caps-only labels |
-
-Wire features into the font token in Tailwind v4 so every use of `font-sans` gets them - don't sprinkle arbitrary properties per element:
-
-```css
-@theme {
-  --font-sans: "InterVariable", ui-sans-serif, system-ui, sans-serif;
-  --font-sans--font-feature-settings: "cv05", "ss03";
-  --font-sans--font-variation-settings: normal;
-}
-```
-
-Per-element overrides only for scoped needs:
-
-```html
-<code class="[font-feature-settings:'ss02','zero']">4f7I-l0O1</code>
-```
-
-Pick 1–3 features that suit the brand and set them globally. A different `a` or `l` across the whole product is a quiet personality decision; a per-component patchwork of glyph styles is a bug.
-
----
-
-## Kerning
-
-```css
-/* Enable font-level kerning */
-body {
-  font-kerning: normal;
-}
-
-/* Tailwind */
-<h1 class="tracking-tight">Tight Headlines</h1>
-```
-
-### Manual Tracking Adjustments
-
-| Context | Tracking | Why |
-|---------|----------|-----|
-| Large display text (>48px) | Tighter (`-0.02em` to `-0.04em`) | Large text has too much visual space |
-| Body text (14-18px) | Default (0) | Designed for this range |
-| Small text (<12px) | Looser (`0.01em` to `0.02em`) | Improves legibility at small sizes |
-| All caps | Looser (`0.05em` to `0.1em`) | Caps need more breathing room |
-| Short caps runs in an established brand treatment or user-selected direction | Looser (`0.02em` to `0.05em`) | Improves readability at small sizes |
-
-These tracking values describe how to render an established treatment; they do not authorize decorative uppercase in UI. Preserve proper acronyms, explicitly supplied brand treatments and treatments in a user-selected direction, only in their intended roles. Use sentence case for ordinary interface text.
-
-```css
-/* Headline */
-h1 { letter-spacing: -0.02em; }
-
-/* Caps run - an eyebrow in UI, a lockup subhead in identity.
-   In interface work check the baseline typography rules before defaulting to caps. */
-.caps-label {
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-```
-
----
-
-## Text Wrapping
-
-### `text-wrap` Values
-
-| Value | Use For | Effect |
-|-------|---------|--------|
-| `balance` | Headings, short text | Evenly distributes text across lines |
-| `pretty` | Body paragraphs | Avoids orphaned words on last line |
-| `stable` | Editable content | Doesn't reflow as user types |
-
-```css
-/* Headings: balanced wrapping */
-h1, h2, h3 {
-  text-wrap: balance;
-}
-
-/* Body: avoid orphans */
-p {
-  text-wrap: pretty;
-}
-```
-
-```html
-<!-- Tailwind -->
-<h1 class="text-balance">A heading that wraps nicely across lines</h1>
-<p class="text-pretty">Body text that avoids leaving a single word on the last line</p>
-```
-
-**Performance note:** `text-wrap: balance` has a performance cost on very long text (it tries multiple layouts). Only use on headings and short text blocks, not on entire pages of prose.
-
-### Hyphenation
-
-```css
-/* Enable hyphenation for narrow columns */
-.narrow-column {
-  hyphens: auto;
-  -webkit-hyphens: auto;
-  overflow-wrap: break-word;
-}
-```
-
-Use hyphenation for:
-- Narrow sidebar text
-- Mobile layouts where words exceed container width
-- Multi-column layouts
-
-Avoid for:
-- Headlines (use `text-balance` instead)
-- Code or technical terms
-- Short labels
-
----
-
-## Line Height Relationships
-
-Line height should relate to the type scale:
-
-| Text Size | Line Height | Ratio |
-|-----------|-------------|-------|
-| 12px (xs) | 16px | 1.33 |
-| 14px (sm) | 20px | 1.43 |
-| 16px (base) | 24px | 1.5 |
-| 18px (lg) | 28px | 1.56 |
-| 20px (xl) | 28px | 1.4 |
-| 24px (2xl) | 32px | 1.33 |
-| 30px (3xl) | 36px | 1.2 |
-| 36px (4xl) | 40px | 1.11 |
-| 48px (5xl) | 48px | 1.0 |
-| 60px+ | 1.0–1.1 | Nearly solid |
-
-**Pattern:** As text gets larger, line height ratio decreases. Large display text at 1.5 line height looks excessively spaced.
-
----
-
-## Viewport-Based Sizing
-
-Use `clamp()` for responsive typography without breakpoints:
-
-```css
-/* Fluid heading: 24px at 320px viewport, 48px at 1440px */
-h1 {
-  font-size: clamp(1.5rem, 1rem + 2vw, 3rem);
-}
-
-/* Fluid body: 14px minimum, 18px maximum */
-body {
-  font-size: clamp(0.875rem, 0.8rem + 0.25vw, 1.125rem);
-}
-```
-
-**Rules:**
-- Always set a minimum (`clamp` first value) - viewport units alone can make text unreadable on small screens
-- Always set a maximum - text shouldn't grow forever on large screens
-- Body text range: 14px–18px
-- Heading text range: 24px–64px depending on hierarchy level
-
----
-
-## Performance
-
-### Font Loading Strategy
-
-```css
-/* Prevent FOIT (Flash of Invisible Text) */
-@font-face {
-  font-family: "Custom Font";
-  src: url("/fonts/custom.woff2") format("woff2");
-  font-display: swap; /* Show fallback immediately, swap when loaded */
-}
-```
-
-| `font-display` | Behavior | Use When |
-|----------------|----------|----------|
-| `swap` | Fallback immediately, swap when ready | Body text (readability > style) |
-| `optional` | Fallback if not cached, no swap | Performance-critical pages |
-| `block` | Brief invisible period, then swap | Display/brand fonts (short text) |
-
-### Preload and Fallback Metrics
-
-Preload only the one or two faces the first screen needs (`<link rel="preload" as="font" type="font/woff2" crossorigin>`). Match the fallback's metrics with `size-adjust`, `ascent-override`, `descent-override` and `line-gap-override` on a local fallback `@font-face`, so the swap does not reflow text. Fontaine and `next/font` calculate the values.
-
-### Subsetting
-
-Only load the characters you need:
-
-```css
-/* Latin-only subset */
-@font-face {
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153;
-}
-```
-
-Next.js `next/font` handles subsetting automatically.
-
----
-
-## Quick Reference
-
-```
-FONT SMOOTHING        → antialiased on body (always; weight bump on dark 1x)
-OPTICAL SIZING        → font-optical-sizing: auto + opsz variable font
-text-rendering        → never set optimizeLegibility (redundant + slow)
-NUMBERS IN TABLES     → tabular-nums (always)
-NUMBERS IN PROSE      → oldstyle-nums (if font supports)
-LIGATURES IN CODE     → disabled (always)
-LARGE HEADINGS        → tighter tracking (-0.02em)
-ALL CAPS              → wider tracking (+0.05em)
-HEADINGS WRAPPING     → text-balance
-BODY WRAPPING         → text-pretty
-LINE HEIGHT           → decreases as text size increases
-FLUID SIZING          → clamp(min, preferred, max)
-FONT DISPLAY          → swap for body, optional for perf-critical
+SMOOTHING        antialiased on the root; weight bump on dark 1x surfaces
+OPTICAL SIZING   auto by default; load a font with an opsz axis (Inter → InterVariable)
+text-rendering   never optimizeLegibility
+FEATURES         properties first; font-feature-settings only for cv/ss
+FIGURES          tabular-nums on anything that aligns or changes
+CODE             ligatures off
+TRACKING         em, bound to the size token, tighter as size grows
+LEADING          unitless, falls as size rises; 1.4+ for anything that wraps
+WRAP             text-balance on headings, text-pretty on paragraphs
+FLUID SIZING     clamp(min, preferred, max) for display only
+LOADING          swap for body, preload one or two faces, metric-matched fallback
 ```

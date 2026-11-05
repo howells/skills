@@ -1,132 +1,88 @@
 ---
 name: typecase
-description: "Design and enforce named typography roles across a UI codebase. Use when raw font utilities have multiplied or a type ramp needs consolidating. Not for visual direction (`chiaroscuro`), interface wording (`signage`), or one-off type polish."
+description: "Replace a UI codebase's scattered font utilities with a few named type roles and a scanner that holds them, and choose the faces. Use when text sizes have multiplied or a type ramp needs designing. Not for visual direction (`chiaroscuro`) or wording (`signage`)."
 ---
 
 # Typecase
 
-A compositor's type case is a tray of fixed compartments, and you set from what is in it. **Text shape comes from one named role, chosen from a set small enough to hold in your head.**
+A compositor sets from the compartments in the case. **Every piece of text takes its shape from one named role, chosen from a set small enough to hold in your head.**
 
-Shape is size, weight, family, tracking, leading and case. Colour, alignment, wrapping and truncation are not shape and stay free. `capitalize` is the one casing utility that stays a modifier rather than a role, because it cases a data value rather than styling a label; `uppercase` and `lowercase` belong to a role.
+Shape is size, weight, family, tracking, leading and case. Colour, alignment, wrapping and truncation are not shape and stay free.
 
-Agents write UI faster than anyone reads it, and each one sizes text by picking a plausible utility for the element in front of it. Nothing in that loop notices that the last file chose differently. One measured codebase reached **169 distinct inline typography combinations across 867 usages** before anyone counted - twelve display clamps, fifteen uppercase-marker variants, and a micro-size soup of 9/10/10.5/11/12/13px. No single commit was wrong.
+Agents size text by picking a plausible utility for the element in front of them, and nothing notices that the last file chose differently. One codebase reached 169 distinct combinations across 867 usages, including a micro-size soup of 9/10/10.5/11/12/13px, with no single wrong commit. **A rule nobody checks does not hold**, so the job ends with a scanner in CI.
 
-**Writing the rule down does not hold it.** From a repo where the rule sat in `CLAUDE.md` for months: *"CLAUDE.md has always stated the rule. Nothing enforced it, which is why the palette grew three pairs of roles that shared a size."* A rule nothing checks is a rule the next agent will not follow.
+## Rules
 
-## What the case holds
+1. **Four to six roles; nine is the ceiling.** Every role past the fifth needs a sentence saying what it does that its neighbour cannot. Add one only when a real, nameable job has no home.
+2. **Hierarchy steps have distinct sizes.** Two roles sharing a size are one role. The exception is a declared family variant such as `type-data`: same size and weight as its base, different family or numeric features. It counts toward the total but adds no step.
+3. **Mono is never a new step.** It is the small role in another family. A mono role with its own size has started a second ladder.
+4. **No small-caps or tracked-uppercase role** unless the user asks for one or supplies a brand treatment that uses it, and then about one per screen region. An existing small-caps habit is a finding to migrate. Keep uppercase and mono apart unless the text genuinely is a code. Whatever `uppercase` sits in is a role, which owns its positive tracking.
+5. **The nearest Tailwind step beats an arbitrary value.** Pixel drift between screens was never designed. Where the scale truly lacks a step, name one in `@theme` (`--text-micro: 0.6875rem`). Keep `text-[11px]` only for a measured, load-bearing value, with a comment. A role's own definition is exempt: naming the value is its job.
+6. **Every weight a role uses is a face the page loads.** A `font-semibold` role over a family shipped in 400 and 700 renders a synthesised bold.
 
-Four to six roles. Every text element in the product picks exactly one.
+Defaults for the roles, to depart from with a reason:
 
-| Role | For |
-| --- | --- |
-| `type-display` | Page heroes. One responsive clamp, one role across every viewport. |
-| `type-heading` | Section headings. |
-| `type-body` | Names, titles and running copy. The same role does both. |
-| `type-small` | Metadata, labels, captions, controls. The workhorse. |
-| `type-data` | Numerics and codes. A **family variant** of the smallest role, sharing its size and weight. |
+| Role | For | Leading |
+| --- | --- | --- |
+| `type-display` | Page heroes. One responsive clamp across every viewport. | 1.0–1.1 |
+| `type-heading` | Section headings. | 1.2–1.3 |
+| `type-body` | Names, titles and running copy, one role for both. 16px for long-form; 14px is fine in dense tools. | 1.5 |
+| `type-small` | Metadata, labels, captions, controls. The workhorse. Not below 12px. | 1.4 |
+| `type-data` | Numerics and codes: `type-small` with `tabular-nums` or mono. | as base |
 
-Add a role only when a real, nameable job has no home. A products-and-editorial site may need more roles than an operations console. Nine is the ceiling, and every role past the fifth needs a sentence saying what it does that its neighbour cannot.
+- Below 18px, weight 400 or heavier; light weights belong at 28px and up.
+- Anything that can wrap to three lines needs leading of 1.4 or more, even in a tight row. `leading-tight` on a card description is the usual offender.
+- Tracking tightens as size grows: about -0.02em from 24px up, 0 for body, about +0.05em for uppercase at 14px and below. Bind it into the role or the `@theme` size token, never inline.
+- iOS Safari zooms the page when an input's text is under 16px. A role used in inputs carries the bump itself (`text-base sm:text-sm`).
 
-**Hierarchy steps need distinct sizes.** Collapse accidental hierarchy roles that share a size. An explicitly named family variant such as `type-data` is the exception: it shares its base role's size and weight and changes only family and the numeric features its job needs. Count it in the declared role total; it does not add another size step.
+## Where the case lives
 
-**Mono is never a new step.** It is the small role in a different family. A mono role that also picks its own size has started a second ladder.
+Define it once, in the stylesheet that imports Tailwind or a file `@import`ed into it, as either component classes (`.type-body { @apply … }` in `@layer components`) or theme tokens (`--text-body` in `@theme`, used as `text-body`). Pick one per codebase. A separately bundled stylesheet (a CSS module, a Vue, Svelte or Astro style block, some route sheets) has no theme in scope and needs `@reference`. Where the house style writes custom classes with `@apply`, read [`references/apply-rule.md`](references/apply-rule.md) before converting any CSS: it covers `@reference`, the motion exclusion and utilities whose names lie.
 
-### Small caps, and mono small caps especially
-
-Letter-spaced uppercase micro-labels are the single most over-reached style in agent-written UI. It looks designed, so the model reaches for it on every heading, eyebrow, chip, table header and empty state, and the interface fills with shouting at 10px.
-
-- **No small-caps role by default.** Add one only when the user explicitly asks for it or supplies a brand treatment that uses it, and then keep it sparse - roughly one per screen region, never one per card. An existing small-caps habit in the codebase is a finding to migrate, not a role to keep.
-- **Uppercase mono is the sharpest version of the same fault.** Mono already reads as machine output; tracking it out and shouting it turns a label into a system log. Keep uppercase and mono apart unless the thing genuinely is a code.
-- The role owns its tracking. Uppercase without positive tracking is unreadable, and inline `tracking-*` beside it means someone is tuning the role from the outside.
-- Whatever `uppercase` sits in is a role, never a modifier. Where `uppercase` appears in class attributes, the codebase has a habit rather than a role.
-
-### Arbitrary values are the last resort
-
-`text-[11px]` stays available for a value that genuinely has no name, and it is the last thing to reach for. A one-off pixel value names nothing, so the next file writes its own, and that is how a census reaches a soup of 9/10/10.5/11/12/13px.
-
-In order of preference:
-
-1. **The nearest step on the standard Tailwind scale.** Pixel-level drift between screens was arbitrary rather than designed, and unifying to the nearest step is the point.
-2. **A named step added to `@theme`** where the scale genuinely has no step for the job. `--text-micro: 0.6875rem` gives the value a name the next file can reuse, and it appears in the ladder rather than beside it.
-3. **The arbitrary value**, where the number is measured and load-bearing. Say so in a comment beside it.
-
-A role's own definition is the exception: `.type-small { @apply text-[0.8125rem] … }` is naming the value, which is the whole job.
-
-### Choosing the faces
-
-When the case needs a family chosen or changed, read [`references/font-recommendations.md`](references/font-recommendations.md) for curated faces and pairings. For OpenType features, optical sizing and per-size tracking inside a role, read [`references/typography-opentype.md`](references/typography-opentype.md).
-
-### Where the case lives
-
-Two shapes, both fine, and both defined once in the file that imports Tailwind:
-
-- **Component classes** - `.type-body { @apply … }` in `@layer components`.
-- **Theme tokens** - `--text-body` in `@theme`, used as `text-body`.
-
-Pick one per codebase. Where the house style is `@apply` for custom classes, the case is written that way too - see [`references/apply-rule.md`](references/apply-rule.md), which carries the `@reference` requirement, the motion exclusion, and the utilities that do not mean what their name says.
-
-`@apply` needs the theme in scope. The stylesheet that imports Tailwind has it, and so does anything `@import`ed into that one. A separately bundled stylesheet - a CSS module, a Vue, Svelte or Astro style block, a route sheet a framework compiles on its own - does not, and needs `@reference` pointing back at the entry. Define the case in the entry, or in a file imported into it, and the question does not arise.
+Choosing or changing a face: read [`references/font-recommendations.md`](references/font-recommendations.md). OpenType features, optical sizing, rendering, wrapping and font loading: read [`references/typography-opentype.md`](references/typography-opentype.md).
 
 ## Steps
 
-Use these steps at the requested scope. For an audit or proposal, return the census and mapping. A request to migrate, consolidate or enforce typography authorizes the implementation steps; do not add another approval gate. Keep any task list brief.
+For an audit or proposal, stop after step 4 and return the census and mapping. A request to migrate or enforce authorises the rest.
 
-1. **Census before designing.** Run the script and read its output before forming any opinion about how many roles the codebase needs.
+1. **Census.** Run the script before forming a view on how many roles the codebase needs, and report its counts; they make the case arguable rather than a preference.
 
    ```bash
    python3 scripts/census-typography.py /path/to/repo --roots apps/web/app apps/web/components
    ```
 
-   It counts combinations while retaining responsive variants, important markers and size/leading modifiers, reports sample locations, and proposes a case from the size census. Use `--json` for the complete migration inventory and all source locations; the default text view shows only the top combinations. This is a lexical census of supported class forms, not a complete AST analysis. Embedded Vue/Svelte/Astro style blocks are not scanned for `@apply`; inspect those separately. Exit 2 means invalid or incomplete coverage, not a clean census. Inspect dynamic expressions, custom utilities and reported skipped files with the project's scanner before claiming complete coverage. Its proposal is a starting point. Report the counts before proposing anything - the numbers are what make the case arguable rather than a preference.
-
-2. **Read representative occurrences before naming anything.** For each distinct combination the census found, open two or three of the places it is used and write down the job the text is doing there - a row title, a table header, a form hint, a stat figure. A combination doing two jobs gets both recorded. The census counts tokens and cannot see jobs, and a role named from size alone is a guess wearing a number.
-
-   ```bash
-   grep -rn 'text-\[11px\]' apps/web --include='*.tsx' | head -5
-   ```
-
-3. **Design the case from the jobs, checked against the size ladder.** Take the census's proposal as the starting shape, then decide each band's actual size by hand. Name every role by the job you recorded in step 2. Reject any role that would carry only its own current usages, and any pair of hierarchy steps sharing a size. An authorised family variant may share its base role's size and weight; name that relationship explicitly. State the total count, including variants, and why that count.
-
-4. **Write the migration mapping.** A table: every combination the census found, and the role it becomes. Where an old value falls between two roles, pick the nearer and say so. This table is the deliverable a reviewer checks the diff against.
-
-5. **Define the case once**, in the file that imports Tailwind, with a comment saying what the case is and that a scanner enforces it. Set leading and tracking inside each role.
-
-6. **Name the sanctioned modifiers.** Record each modifier's permitted dimension: `font-medium` changes emphasis weight, `font-mono` changes family, `capitalize` cases a data value, and `tabular-nums` changes numeric features. None changes size, leading or tracking. Use either a declared family variant or its sanctioned family modifier for the same job, without creating competing size ladders. Truncation, wrapping, alignment and colour stay free. Every sanctioned modifier must be allowed by the installed scanner; align its namespace with the chosen contract. Everything typographic outside that list belongs to a role.
-
-7. **Migrate**, following the mapping. Convert whole files rather than leaving a file half on the case - a stylesheet with some rules converted and some raw is worse than one consistently raw.
-
-8. **Install the scanner.** Use an existing project typography rule when its verified coverage fits. Otherwise, [`references/gates.md`](references/gates.md) has the three shapes to write instead, the token list, and the five ways a size hides from a naive matcher. Wire it into CI.
-
-9. **Prove the scanner bites.** Plant a violation in a file it should cover, confirm it is named with a `file:line` and a suggested role, then restore. Do this once per configured root, checking each against where the UI actually lives.
-
-10. **Record the exceptions**, if any. Each needs a named file, a stated reason, and an owner. One is normal; three means the case is wrong.
-
-11. **Render it and look.** Screenshot the migrated screens at desktop and mobile widths and compare against before. Roles that were right in a table can still be wrong on a page - especially the small end, where a 21-row table compounds a size difference until the numerals dominate rows they are meant to annotate. Fix by reading `getComputedStyle` on live elements, rather than by reading the diff.
-
-12. **Report.** Combinations before and after, roles and why that many, files migrated, the scanner and its planted-violation proof, exceptions and their owners.
+   `--json` gives every location for the migration. It is lexical: it does not scan `@apply` inside Vue, Svelte or Astro style blocks, and it cannot resolve dynamic class expressions, so check those by hand. Exit 2 means coverage was incomplete, not that the census is clean.
+2. **Read the jobs.** For each combination, open two or three uses and write down what the text is doing there: row title, table header, form hint, stat figure. The census sees tokens, not jobs, and a role named from its size alone is a guess.
+3. **Design the case** from those jobs, using the census's proposal as a starting shape and the rules above. Name each role by its job. State the count and why.
+4. **Write the mapping:** every combination the census found and the role it becomes, with the nearer role chosen where a value falls between two. Reviewers check the diff against this table.
+5. **Define the case** with a comment saying a scanner enforces it.
+6. **Name the sanctioned modifiers** and the one dimension each may change: `font-medium` for emphasis, `font-mono` for family, `capitalize` for casing a data value, `tabular-nums` for figures. None changes size, leading or tracking. Everything else typographic belongs to a role.
+7. **Migrate** by the mapping, a whole file at a time. A file half on the case is worse than one consistently raw.
+8. **Install the scanner.** Use the project's existing typography lint rule if it really covers class attributes, `cn`/`cva`-style calls and size maps. Otherwise read [`references/gates.md`](references/gates.md) for the three shapes, the token list and the normalisation that stops sizes slipping past. Wire it into CI. An unreached root reports clean, so plant one violation per root, confirm it is named with `file:line`, and restore it.
+9. **Look at the migrated screens** on desktop and a phone. The small end goes wrong in place: across a 21-row table a one-step size difference lets numerals dominate rows they should annotate. Settle doubts with `getComputedStyle` on live elements.
+10. **Report** combinations before and after, the roles and why that many, files migrated, the scanner, and any exceptions with owner and reason.
 
 ## What the scanner forbids
 
-Anywhere outside the file defining the case:
+Outside the file that defines the case:
 
-- Font sizes: `text-xs` … `text-9xl`, `text-[13px]`, `text-[clamp(…)]`, `text-(length:--my-size)`, and the `text-sm/6` shorthand
-- Weights: `font-thin` … `font-black` and `font-[450]`, other than a single sanctioned emphasis weight
-- Families: `font-sans`, `font-serif`, `font-display`, `font-[Inter]`, and `font-mono` other than as a sanctioned modifier
-- `tracking-*` and `leading-*`, entirely
-- `uppercase`, `lowercase`
+- sizes: `text-xs` … `text-9xl`, `text-[13px]`, `text-[clamp(…)]`, `text-(length:--x)`, `text-sm/6`;
+- weights: `font-thin` … `font-black`, `font-[450]`, except the sanctioned emphasis weight;
+- families: `font-sans`, `font-serif`, `font-display`, `font-[Inter]`, and `font-mono` except as sanctioned;
+- all `tracking-*` and `leading-*`;
+- `uppercase` and `lowercase`.
 
-Normalise each token before matching, or five real Tailwind forms walk past: the variant prefix (`md:text-lg`), the important marker in all three positions Tailwind allows (`!text-xl`, `hover:!text-xl`, `text-xl!`), the leading modifier (`text-sm/6`), and v4's CSS-variable shorthand (`text-(length:--my-size)`, which is a size). Class-utility calls (`cn`, `clsx`, `cva`, `tv`, `twMerge`) are scanned as class lists, and so are pass-through props such as `triggerClassName`. Arbitrary text colours are colour and must not be flagged, in every spelling: `text-[#hex]`, `text-[var(--x)]`, `text-[oklch(…)]`, `text-[color:var(--x)]`, `text-[color-mix(…)]`.
+Arbitrary text colours (`text-[#hex]`, `text-[var(--x)]`, `text-[oklch(…)]`, `text-[color:…]`) are colour and must pass, or the first false positive gets the scanner switched off.
 
 ## Exceptions
 
-Two hold up. A third is a sign the case itself is wrong.
+Two hold up; a third means the case is wrong.
 
-- **A component that owns its own typography internally** and exposes a `size` prop - a stat figure, a chart axis. One component, named in the scanner, and nothing else passes it inline sizes.
-- **Control primitives in a UI package.** A button's weight is part of the control, and rewriting shadcn primitives against a document ladder is the wrong fix for a real distinction. Scope the scanner to the app and leave the primitives out.
+- **A component that owns its typography** and exposes a `size` prop, such as a stat figure or chart axis. Name it in the scanner; nothing passes it inline sizes.
+- **Control primitives in a UI package.** A button's weight belongs to the control. Scope the scanner to the app rather than rewriting shadcn primitives against a document ladder.
 
 ## Where this fits
 
-- Visual design, tokens, spacing, dark mode and browser verification: `chiaroscuro`.
-- The words in the labels rather than their size, and over-reached small caps as a copy problem: `signage`.
-- Duplicated components behind the duplicated styling: `componentize`.
-- Removing the raw utilities as machine-written code tells: `unslop`.
+- Visual design, tokens, spacing and dark mode: `chiaroscuro`.
+- The words in the labels: `signage`.
+- Duplicated components behind duplicated styling: `componentize`.

@@ -1,12 +1,14 @@
 # Scanners
 
+Contents: existing rules · the token list · normalising tokens · shape 1 oxlint plugin · shape 2 baselined script · shape 3 test · scoping the roots · CSS files.
+
 Use an existing project typography rule when it covers the required syntax. Inspect its configuration and enable it with the agreed role classes and sanctioned modifiers. Verify coverage for `className`/`class`, class-composition calls and size maps; a familiar rule name is not evidence of coverage.
 
 Otherwise choose one of the shapes below. The bundled lexical census helps inventory debt, but a lint rule should use AST scoping so comments, documentation and unrelated string props do not become violations. Align the governed namespace with the migration: colour, alignment and wrapping remain outside typography unless explicitly included.
 
 ## Writing your own
 
-Three implementation shapes. Pick by the codebase's state, not by taste.
+Pick the shape by the codebase's state.
 
 | Shape | Pick it when | Cost |
 | --- | --- | --- |
@@ -163,6 +165,6 @@ Then restore. Do this once per root, on install and whenever the roots change.
 
 Where a sibling scanner already keeps a root list - an arbitrary-colour check, a drift check - read it rather than writing a second one. Two separately maintained lists that should agree is a defect waiting for one of them to be updated alone.
 
-## Where the case is `@apply`
+## CSS files
 
-A stylesheet compiled as its own chunk knows no utilities, so every `@apply` in it is an unknown-class build error until it carries `@reference`. Scan `.css` files too where the house style puts typography there, and skip the rules that define the roles themselves - `.type-body { @apply text-sm … }` is the case, not a violation of it. See [`apply-rule.md`](apply-rule.md).
+Where the house style puts typography in `.css` through `@apply`, scan stylesheets too, and skip the rules that define the roles: `.type-body { @apply text-sm … }` is the case, not a violation of it.

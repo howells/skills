@@ -104,7 +104,7 @@ npx skills@latest add howells/skills --skill computer-use --agent codex --global
 
 ### `deslop`
 
-Rewrite prose that sounds synthetic, inflated, or assistant-like. Use for AI-writing tells, vague attribution, suspicious citations, chatbot artefacts. Applies to prose; for interface labels use `signage`; for machine-written code tells use `unslop`.
+Rewrite prose that reads as machine-written or inflated: vague attribution, staged contrasts, crutch phrases, fake citations, chatbot artefacts. Use for drafts, docs, posts and PR text. Not for interface strings (`signage`) or code (`unslop`).
 
 Install globally for Codex:
 
@@ -287,7 +287,7 @@ npx skills@latest add howells/skills --skill salvage --agent codex --global
 
 ### `signage`
 
-Rewrite interface strings into the words the audience already uses: labels, headings, buttons, status lines, empty states, generated text, and the captions in films and decks. Not for body prose (`deslop`), product names (`nomen`), layout or visual styling (`chiaroscuro`), or the type ramp (`typecase`).
+Rewrite interface strings into the words the audience already uses: labels, buttons, headings, errors, empty states, generated text, film and deck captions. Use when UI copy reads as jargon or machine-made. Not for body prose (`deslop`), product names (`nomen`) or visual styling (`chiaroscuro`).
 
 Install globally for Codex:
 
@@ -311,7 +311,7 @@ In Claude Code, this personal skill takes precedence over the bundled skill with
 
 ### `typecase`
 
-Design and enforce named typography roles across a UI codebase. Use when raw font utilities have multiplied or a type ramp needs consolidating. Not for visual direction (`chiaroscuro`), interface wording (`signage`), or one-off type polish.
+Replace a UI codebase's scattered font utilities with a few named type roles and a scanner that holds them, and choose the faces. Use when text sizes have multiplied or a type ramp needs designing. Not for visual direction (`chiaroscuro`) or wording (`signage`).
 
 Install globally for Codex:
 

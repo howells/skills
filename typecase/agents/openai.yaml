@@ -1,4 +1,4 @@
 interface:
   display_name: "Typecase"
-  short_description: "Constrain text styling to a few named type roles"
-  default_prompt: "Use $typecase to census the inline typography in this codebase, design the smallest set of type roles that covers it, migrate the in-scope UI to those roles, install a scanner, and verify the rendered result."
+  short_description: "Consolidate text styling into a few named type roles"
+  default_prompt: "Use $typecase to census the typography in this codebase, design the smallest set of type roles that covers it, migrate the UI to them and install a scanner."

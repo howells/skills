@@ -1,12 +1,18 @@
-# Font Recommendations
+# Font recommendations
 
-Curated font guidance for both UI work (body, interface, data, mono) and brand/display work (headlines, identity, editorial). Every font listed here has been chosen for quality, distinctiveness, and practical utility.
+Curated faces for interface work (body, labels, data, mono) and brand work (headlines, identity, editorial). `chiaroscuro`, `maquette` and `paste-up` each bundle a condensed copy of this file as their own font guidance; change the selection policy or the recommended faces there in the same edit.
+
+Contents: selection · never use · finding pairings · UI fonts · brand and display fonts · pairing principles · proven pairings.
+
+## Selection
+
+Keep the product's existing faces unless the task requires a change. Choose a new face from the recommendations below, suited to its job and the real content. One family in several weights is often enough; add a second only for genuine contrast. Check the actual font files, licence, available weights and the rendered result.
 
 ---
 
-## Never Use
+## Never use
 
-These fonts signal "no one made a choice here." Avoid in both UI and brand contexts:
+These signal that nobody made a choice. Never pick them for a new selection, in UI or brand work; only an explicit user instruction overrides this.
 
 - **Instrument Serif** - the number one AI-slop serif. Every AI-generated landing page uses it. "Currently trending" means it has been strip-mined of all distinctiveness.
 - **Playfair Display** - template-tier. Beautiful in isolation, generic in practice.
@@ -32,8 +38,6 @@ A pairing that looks good in a type specimen may fail in a real interface. Real-
 
 Fonts that disappear. They serve content without drawing attention - that's their job. Choose these for body text, interface labels, navigation, form elements, and anywhere readability and neutrality matter more than personality.
 
-**You often don't need a second font.** One well-chosen font family in multiple weights creates cleaner hierarchy than two competing typefaces. Only add a second font when you need genuine contrast (e.g., display headlines + body text).
-
 ### UI Sans-Serif - Commercial
 
 | Font | Foundry | Character | Good for |
@@ -52,7 +56,7 @@ Fonts that disappear. They serve content without drawing attention - that's thei
 | Font | Designer/Foundry | Character | Good for |
 |------|-----------------|-----------|----------|
 | Inter | Rasmus Andersson | The benchmark UI font. Excellent metrics, huge feature set | Any interface where personality isn't the goal |
-| ↳ *always as **InterVariable*** | rsms.me/inter | The canonical variable build: `opsz` axis + full cv/ss OpenType feature set (CDN builds strip some). Self-host via `next/font/local` | See [typography-opentype.md](typography-opentype.md) § Character Variants for feature selection |
+| ↳ *always as **InterVariable*** | rsms.me/inter | The canonical variable build: `opsz` axis + full cv/ss OpenType feature set (CDN builds strip some). Self-host via `next/font/local` | Feature choice: `typography-opentype.md`, character variants |
 | Geist | Vercel | Clean, modern, tight metrics | Developer tools, Vercel ecosystem, modern products |
 | DM Sans | Colophon Foundry | Low-contrast geometric, designed for small sizes | Dense interfaces, mobile, compact UI |
 | Hedvig Letters Sans | Kanon Foundry | Swedish warmth, slightly editorial proportions without quirk | Brands that want warmth without eccentricity |
@@ -135,8 +139,8 @@ These go beyond neutral - they have personality suitable for display, headlines,
 | EB Garamond | Georg Maurer | Best free Garamond. True small caps, ligatures, old-style figures | Academic, literary, classical - for people who know type |
 | Fraunces | Undercase Type | Warmth, craft, slight quirk in the details | Artisanal, food, creative brands |
 | Cormorant | Christian Thalmann | Elegant, high contrast, Claude Garamond-inspired | Luxury, fashion, high-end display |
-| Crimson Pro | Readable authority | Long-form content, institutional brands |
-| Libre Baskerville | Classical, bookish | Academic, legal, traditional brands |
+| Crimson Pro | Jacques Le Bailly | Readable authority | Long-form content, institutional brands |
+| Libre Baskerville | Impallari Type | Classical, bookish | Academic, legal, traditional brands |
 
 ### Display (headlines and hero moments)
 
@@ -157,10 +161,8 @@ These go beyond neutral - they have personality suitable for display, headlines,
 - **Contrast, not conflict.** Pair a serif with a sans, or a display with a body font. Two similar fonts compete.
 - **One does the talking.** The brand/display font carries personality; the body font stays quiet.
 - **Weight matters more than family.** A bold condensed heading + light body text creates hierarchy regardless of font family.
-- **Test at real sizes.** A font that looks great at 72px may look wrong at 16px. Always check both.
-- **Validate with evidence.** Search fontsinuse.com and typewolf.com for your chosen fonts before committing. See how they pair, what sizes they work at, and what contexts they thrive in.
-
-NEVER pair fonts that are similar but not identical (e.g., two geometric sans-serifs). They create visual tension without clear hierarchy.
+- **Test at real sizes.** A face that looks great at 72px may look wrong at 16px.
+- **Never pair two similar faces**, such as two geometric sans-serifs. They create tension without hierarchy.
 
 When pairing, contrast on multiple axes:
 - Serif + Sans (structure contrast)
@@ -169,7 +171,7 @@ When pairing, contrast on multiple axes:
 
 ### Proven Pairings
 
-These combinations are validated in real shipped projects:
+Validated in shipped projects; still a starting point, not proof a pair fits this product:
 
 | Display / Heading | Body / UI | Mood |
 |-------------------|-----------|------|
