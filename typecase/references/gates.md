@@ -1,6 +1,6 @@
 # Scanners
 
-Contents: existing rules · the token list · normalising tokens · shape 1 oxlint plugin · shape 2 baselined script · shape 3 test · scoping the roots · CSS files.
+Contents: existing rules · the token list · normalising tokens · shape 1 oxlint plugin · shape 2 test · scoping the roots · CSS files.
 
 Use an existing project typography rule when it covers the required syntax. Inspect its configuration and enable it with the agreed role classes and sanctioned modifiers. Verify coverage for `className`/`class`, class-composition calls and size maps; a familiar rule name is not evidence of coverage.
 
@@ -13,10 +13,9 @@ Pick the shape by the codebase's state.
 | Shape | Pick it when | Cost |
 | --- | --- | --- |
 | **oxlint plugin** | The codebase is clean, or close. Editor squiggles and a per-line message. | Needs oxlint with JS plugin support and a local rule implementation. |
-| **Baselined script** | Existing debt is real and cannot be paid down now. Files may not grow their count; new files must be clean. | A checked-in baseline that needs deliberate refreshing. |
 | **Test** | The test suite is already the CI gate and you want no new script. | Runs at test speed, reports as a test failure. |
 
-All three read the same token list, matched against the normalised token from the section below. Only the delivery differs.
+Both read the same token list, matched against the normalised token from the section below. Only the delivery differs.
 
 ## The token list
 
@@ -112,29 +111,7 @@ export default {
 };
 ```
 
-## Shape 2: baselined script
-
-`scripts/check-typography.mjs` with `scripts/typography-baseline.json`. Counts forbidden tokens per file; a file may not exceed its baseline, and a file absent from the baseline must be clean.
-
-```js
-const violations = [];
-for (const [file, n] of Object.entries(current)) {
-  const allowed = baseline[file] ?? 0;
-  if (n > allowed) violations.push({ file, n, allowed });
-}
-```
-
-`--update` rewrites the baseline. It is for recording a deliberate reduction. A baseline refreshed to make CI green records the drift as approved, and the next agent reads it as the standard.
-
-Print the fix in the failure, and say which roles exist:
-
-```
-Typography gate: raw type utilities must be a role class (type-*).
-  apps/web/features/panel.tsx: 4 (baseline 1)
-Fix by using the roles defined in this project. Refresh the baseline only for a reviewed, deliberate change.
-```
-
-## Shape 3: test
+## Shape 2: test
 
 `src/typography-discipline.test.ts`, walking the source tree and asserting an empty violation list. Two regexes are needed, because the attribute pattern cannot reach inside a `cn()` call:
 

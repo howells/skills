@@ -33,7 +33,7 @@ A ship's load line: loaded past it, the ship can't make way. Find the line for t
 - **Ceremony.** Re-planning specified work; a reviewer per task; a branch and PR per item when one would land the lot; a fourth attempt after three failures (get an outside read with `review` instead).
 - **Test theatre.** Tests because "code changed"; tests against mocks that assert a spy was called (stripping them is `unslop`); coverage of paths nobody will take before the deadline. Before writing a test, finish: "The likely silent failure is ___, and this test catches it by ___." If you can't, don't write it.
 
-Checking scales with reversibility, not importance. A demo gets one gate at the end, then you use it. Development gets a narrow gate per change and the full gate before merge. Data loss, auth, money and migrations get deep checks of the affected behaviour. Deleting data, rotating credentials and touching production are always slow.
+Checking scales with reversibility, not importance. A demo gets one gate at the end, then you use it. Development gets the check the change could actually break. Data loss, auth, money and migrations get deep checks of the affected behaviour. Deleting data, rotating credentials and touching production are always slow.
 
 Delegated code gets one read by the main agent; that's ownership. Cut extra reviewer agents, duplicate verification and polish rounds. If the brief costs more than the change, do it yourself.
 
