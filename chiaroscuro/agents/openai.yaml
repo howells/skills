@@ -1,4 +1,4 @@
 interface:
   display_name: "Chiaroscuro"
-  short_description: "Design, build, rescue or critique web UI"
-  default_prompt: "Use $chiaroscuro to design, build, rescue or critique this web interface. For critique only, report confirmed findings and questions, suggest one small experiment, and change nothing. For implementation, deliver a distinctive, responsive, accessible Tailwind v4 interface, free of UI furniture and system leakage, and look at it in a browser."
+  short_description: "Design, build, polish or critique web UI"
+  default_prompt: "Use $chiaroscuro to design, build or polish this web interface in Tailwind v4 and look at it in a browser on desktop and phone. If I only asked for a critique, report what's off and change nothing."

@@ -1,123 +1,101 @@
 ---
 name: chiaroscuro
-description: "Design and build polished web UI in Tailwind v4, rescue a screen that looks messy, generic or unfinished, or critique one without changing it. Use when an interface should look gorgeous or someone asks what feels off. Not for design options (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or QA (`fieldtest`)."
+description: "Design, build, polish or critique web UI in Tailwind v4. Use when an interface should look gorgeous, looks generic or unfinished, or someone asks what feels off. Not for design options (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or browser QA (`fieldtest`)."
 ---
 
 # Chiaroscuro
 
-Take a user-facing web interface from request to finished, working implementation. Work in the product's language, use its real content and behaviour, and give the result a specific visual point of view without adding furniture or exposing the system underneath.
+Take a web interface from request to finished, working UI with a specific point of view: the product's own language, real content and behaviour, no furniture, and nothing of the system showing through. It builds one design, whether a component, a region or a page, or rescues one that looks messy, generic or unfinished.
 
-Use it to build a component, region or page, or to raise an existing interface's hierarchy, finish and polish. It produces one finished design. When someone asks only for a critique of a screenshot, page, frame or code, follow [critique](references/critique.md) and change nothing until they ask. Other jobs have their own skills:
+When someone asks only for a critique of a screenshot, page, frame, code or change, follow [critique](references/critique.md) and change nothing until they ask.
 
-- several design options to choose between: `maquette`;
-- a scrolling-document app turned into a fixed app shell: `armature`;
-- a responsive pass across small laptops, tablets and phones: `reflow`;
-- a mockup in Paper: `paste-up`.
+Other jobs have their own skills: design options to choose between (`maquette`), a document-scrolling app that needs a fixed shell (`armature`), every screen size (`reflow`), Paper mockups (`paste-up`), browser QA (`fieldtest`), motion craft (`zoetrope`), interface wording (`signage`), the type ramp (`typecase`), duplicated components (`componentize`). Use them when installed and the task needs that depth. This skill works without them, and they never carry the hard rules for you.
 
-The work is complete when the requested UI works in context, looks right on desktop and on a phone, and existing behaviour is intact.
+## Hard rules
 
-## Hard Rules
-
-These hold for every part of the work, including anything handed to a helper. Styling the product already has is not an exception; fix it inside the scope and mention it outside. Only an explicit instruction from the user overrides a rule.
+These hold everywhere, including work handed to a helper. Styling the product already has is not an exception: fix it inside the scope and mention it outside. Only an explicit instruction from the user overrides a rule.
 
 1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting, never for labels or headings. Proper acronyms keep their capitals.
-2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. In product UI, headings name things; they do not headline them or introduce a section. Keep only consent, constraints and error recovery.
-3. **Four to six type styles, in chosen faces.** Use the product's named roles. A new size or weight needs a job no existing role does. Before choosing a new face, read the bundled [font guidance](references/font-guidance.md), choose from its recommendations and follow its never-use list; Instrument Serif is the first name on that list.
-4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user has pointed to, and use it. A second version of an existing control is a defect.
+2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. In product UI, headings name things; they don't headline them or introduce a section. Keep only consent, constraints and error recovery.
+3. **Four to six type styles, in chosen faces.** Use the product's named roles. A new size or weight needs a job no existing role does. Before choosing a new face, read [font guidance](references/font-guidance.md), choose from its recommendations and follow its never-use list; Instrument Serif is the first name on it.
+4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user pointed to, and use it. A second version of an existing control is a defect.
 5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
-6. **Touch targets at least 44 by 44 CSS pixels.**
+6. **Touch targets at least 44 by 44 CSS pixels**, reached with invisible padding rather than bulky visuals.
 7. **Look at it before calling it done.** Use the path in a real browser, then look at each whole screen on desktop and on a phone as the user would. Static checks show neither that it works nor that it looks right.
 
-## Work End to End
+## Machine-made tells
 
-### 1. Inspect the Product and Task
+These make an interface look generated rather than designed. Leave them out unless the brief genuinely asks for one.
 
-Read project instructions, product and brand documents, the relevant route and components, existing tokens, and the runnable interface. Identify:
+- Stacked rounded cards; the same padding, radius and shadow on every container; cards inside cards; white cards on a white or `gray-50` ground.
+- Decorative gradients, purple or multicolour gradients, glows, blurs beyond `blur-xl`, grain or noise laid over the page.
+- The editorial default: a cream or parchment ground, terracotta accent and big serif display headline. Its "technical" twin: tinted near-black with an acid-green or neon accent. Indigo as the accent by reflex.
+- A headline where a name belongs ("Your week, at a glance"), one word of it picked out in colour or italic, a filler sentence under every heading.
+- Numbered section labels (`01 / Capabilities`), `Step 1` or `Phase 01` as the label, word-dash labels (`Fast - built for teams`), dotted metadata strings (`Design · 4 min · Updated today`), `→` appended to links and buttons.
+- Ornamental pills, coloured dots before labels (a dot is for real live state), version stamps, city and local-time strips, scroll prompts, hairlines and grid lines drawn for atmosphere.
+- A thick coloured stripe on one side of a rounded card. Status belongs in an icon, label or fill.
+- A fake product preview built from styled divs, a hero built around one oversized metric, emoji as icons, placeholder copy.
+- Hero, features, testimonials, CTA by reflex; everything centred.
+- Emphasis everywhere: most things bold, coloured, badged or raised, so nothing leads.
+- A sheet over a modal over a scrim.
 
-- the user's job and core path;
-- real content, data, and states;
-- the established shell, grid, components, and vocabulary;
-- technical constraints and the styling system;
-- what must remain unchanged.
+## Work end to end
 
-Do not begin by inventing a visual theme in isolation. You should be able to describe the user's task, the product constraints and the interface boundary in a few concrete sentences.
+### 1. Inspect the product and the task
 
-For a flow, walk one concrete scenario before drawing its screens: what the person supplies, what must stay unchanged, what they choose, and what result they leave with. Keep inputs with different meanings distinct. Establish the useful end state, then work through the transitions that reach it. For a contained edit, check its place in the existing path; do not reopen the whole product.
+Read the project instructions, brand documents, the route, its components and tokens, and run the interface. Know the user's job and core path, the real content and states, the established shell, components and vocabulary, and what must not change. Don't invent a visual theme in isolation.
 
-### 2. Load Only the Relevant References
+For a flow, walk one concrete scenario before drawing screens: what the person supplies, what stays unchanged, what they choose, what they leave with. Keep inputs with different meanings distinct. For a contained edit, check its place in the existing path rather than reopening the whole product.
 
-Read [`references/interface/index.md`](references/interface/index.md) and open only the branch needed for this task.
+### 2. Decide the look
 
-- For motion, begin with [`references/interface/animation.md`](references/interface/animation.md). If installed, use `zoetrope` for specialist motion craft, and the library's own documentation for current API facts.
-- When writing or changing UI copy, use `signage` if installed, before the words shape the layout. Otherwise apply its core test here: would you say this to someone in the audience and be understood without explaining it? Keep labels concrete and remove prose that substitutes for a control.
-- For charts or a collection of data visualisations, load [references/interface/charts.md](references/interface/charts.md).
+Settle the shape before the styling. A focused, single-purpose experience, such as a picker, a checkout or a viewer, puts its subject on screen with no header, navigation or title by default. A persistent shell earns its place only when people move between places or work across panes.
 
-The reference files are a router, not a checklist. Never load every rule file by default.
+Then state the look in a sentence or two: hierarchy, typography, colour behaviour, density and interaction temperament, specific enough to constrain the code. Test each choice by swapping it: if the alternative wouldn't change the meaning (the same font, sidebar and grey-with-blue as every SaaS dashboard), it is a default, not a choice. With the product name removed, the design should still say what it's for.
 
-### 3. Decide the Look
+Compose the phone as its own design, not the desktop squeezed down: the primary action within thumb reach, sheets rather than centred modals, media full-bleed, fewer controls at once and a smaller display size.
 
-Settle the product's shape before its styling. A focused, single-purpose experience puts its subject on screen and little else: no header, navigation or title by default. A persistent shell earns its place only when people move between places or work across panes.
+Carry the defining decisions of a supplied design or accepted review into the code: what leads, what stays quiet, what remains visible, how actions relate to supporting information. A convenient component variant is not a reason to change the composition. When borrowing another interface's aesthetic, name the features borrowed (type, texture, density, control treatment) and keep the target product's tasks and state transitions intact.
 
-Then decide the look in a sentence or two: hierarchy, typography, colour behaviour, density and interaction temperament. It should be specific enough to constrain implementation, not a mood-board slogan.
+Hide the machinery. Labels, navigation, statuses, empty states and errors describe the user's work: `sync failed` becomes `Updates are paused`, `agent step running` becomes `Checking the next section`. Prompt scaffolds, agent steps, model names, schema, queue states and raw diagnostics stay out of the primary UI unless they are the product's own objects; put diagnostics behind "View details" or "Copy error".
 
-Compose the phone as its own design, not the desktop squeezed down: the primary action within thumb reach, sheets rather than centred modals, media full-bleed, fewer controls on screen at once and a smaller display size.
+Read only what the work in hand needs:
 
-Carry the few defining decisions from a supplied design or accepted review into implementation: what leads, what stays quiet, what remains visible, and how actions relate to supporting information. Component defaults must preserve these decisions; a convenient variant is not a reason to change the composition.
+- Layout, spacing, alignment, surfaces, depth, app states and navigation: [layout](references/layout.md).
+- Palettes, tokens, contrast and dark mode: [color](references/color.md).
+- Text in use, rich text, custom fonts, numbers and dates: [type](references/type.md).
+- Interactive states, overlays, menus, focus, keyboard, touch and accessibility: [interaction](references/interaction.md).
+- Forms, settings and native control markup: [forms](references/forms.md).
+- Buttons, tables, dashboards, navigation, badges, avatars, icons, images, SVG and charts: [components](references/components.md).
+- A marketing or landing page: [marketing](references/marketing.md).
+- Any motion: [motion](references/motion.md).
+- Tailwind class authoring and rendering performance: [tailwind](references/tailwind.md).
 
-When borrowing another interface's aesthetic, name the features being borrowed, such as typography, texture, density or control treatment. Keep the target product's tasks, objects and state transitions intact; visual resemblance doesn't establish that the original app still works.
+### 3. Build in Tailwind v4
 
-### 4. Implement in Tailwind v4
+Use the project's components and conventions before new primitives, and express decisions as utilities, variants and `@theme` tokens rather than scattered arbitrary values. Where adopting v4 would change package manifests, build config or the global CSS entry point, recommend the migration and ask first; a contained UI request never becomes a repository-wide styling migration.
 
-Use the project's components and conventions before creating new primitives. Express visual decisions through Tailwind v4 utilities, variants, and `@theme` tokens rather than scattered arbitrary values. Where adopting v4 would change package manifests, build configuration or the global CSS entry point, recommend the migration and ask first; a contained UI request never becomes a repository-wide styling migration.
+When the project has nothing for the job, default to these rather than hand-rolling: Base UI for accessible primitives (dialogs, popovers, menus, selects), cmdk for command menus, Sonner for toasts, input-otp for code inputs, Motion for springs, layout and exit animation, NumberFlow for animated numbers, Recharts for charts, dnd kit for drag and drop, Virtuoso for long lists, clsx for conditional classes and cva for typed variants, next-themes for flash-free theming. Never mix component libraries.
 
-Build stable states, not just a stable first frame. Prevent unintended layout shift: reserve room for labels and controls that arrive late, draw state-dependent edges as rings or inset shadows rather than borders, keep controls in a row at one height, and give images a fixed ratio. Keyboard actions keep native form semantics; focus stays visible and moves into view; clipping never creates an accidental scroll container.
+Build stable states, not just a stable first frame. Reserve room for labels and controls that arrive late, draw state-dependent edges as rings or inset shadows rather than borders, keep controls in a row at one height, and give images a fixed ratio. Keep native form semantics; focus stays visible and moves into view; clipping never creates an accidental scroll container.
 
-### 5. Exercise and Refine the Rendered Experience
+### 4. Look, then refine
 
-Run the real app at the exact route, viewport and state being changed, and complete the core user path. Check, as relevant:
+Run the real app at the exact route, viewport and state. Complete the core path with keyboard and pointer, on desktop and on a phone, with long, empty, loading and failing content, in dark mode when the product has one and with reduced motion. Watch the console and network for errors, and check the user's action reaches its downstream effect.
 
-- desktop and phone layouts;
-- keyboard and pointer operation;
-- focus order, focus visibility, semantics, and the accessibility tree;
-- long, empty, loading, failure, and success states;
-- console errors and failed network requests;
-- persistence and the downstream effect of the user's action;
-- motion interruption and reduced-motion behaviour;
-- contrast and real raster assets in dark mode.
+Then zoom out, after the first full composition and after any material change. Look at the whole viewport and successive states together. What draws the eye first: the user's subject, or the controls around it? Is the next action apparent? Fix the biggest compositional problem before polishing details, and recompose when local fixes have left the whole incoherent. Run the lenses in [critique](references/critique.md) against your own screen.
 
-**Zoom out and reflect.** After the first complete composition and after material changes, look at the whole viewport and successive states together. What draws the eye first? Is that the user's subject or the controls around it? Is the next action apparent? Is the biggest visible problem compositional? Fix that before polishing details, and recompose when local fixes have left the whole incoherent. Passing technical checks does not answer these questions. Run the lenses in [critique](references/critique.md) against your own screen, as you would for someone else's.
+### 5. Clean up and report
 
-Use `fieldtest` for a deeper browser-QA pass and `reflow` for a full pass across screen sizes, when installed and the risk warrants it.
+Remove temporary wrappers, hidden branches, suppressions and unused imports the work introduced. Report what changed, what you exercised and what you looked at, and any limitation. Never claim the browser pass when only static checks ran.
 
-### 6. Clean Up and Report
+## Taste
 
-Remove temporary wrappers, hidden branches, suppressions and unused imports introduced by the work. Report what changed, what you exercised and what you looked at, and any honest limitation. Never claim the browser pass when only static checks ran.
-
-## Taste and Craft Guardrails
-
-- Use authentic product content. Placeholder slogans and generic dashboard data conceal design problems.
+- Use authentic product content. Placeholder slogans and generic dashboard data hide design problems.
 - Use the product's own imagery as one coherent set, consistent in light, ratio and crop. No image is better than stock filler or the wrong object.
-- Use sentence case for ordinary UI text. Aligned figures need tabular numerals in the body font, not mono.
-- Icons need accessible names or adjacent labels when their meaning is not obvious.
-- Reach touch targets with invisible padding rather than making every visual control bulky.
-- Align optical shapes by eye where mathematical centering looks wrong.
-- Avoid generic AI defaults: stacked rounded cards, gratuitous gradients, glowing borders, ornamental pills, oversized hero copy, editorial headlines in product UI, and decorative status chrome.
-- In dark mode, rebuild contrast relationships rather than invert colours. Use dark-mode variants for raster assets when the light asset does not hold up.
-- Motion needs a purpose, an origin, an interruption behaviour, a frequency budget, and a reduced-motion treatment. Fast feedback and perceived speed matter more than spectacle.
-
-## Specialist Boundaries
-
-Chiaroscuro remains usable on its own. A specialist adds depth but never carries the Hard Rules for you. Delegate only when a specialist skill is installed and the task benefits from depth:
-
-- `typecase` for the type ramp and its scanner;
-- `componentize` for a reuse and duplication audit;
-- `zoetrope` for building, reviewing or finding motion, including gestures;
-- `signage` when writing or changing UI copy, as directed in step 2;
-- `fieldtest` for evidence-heavy browser QA;
-- `reflow` for a responsive pass across every view;
-- `armature` when the app needs a fixed shell with panes before it needs polish;
-- `maquette` when the user wants several design options to choose between;
-- `paste-up` for any work in a Paper file;
-- `dark-mode-image`, `canonicalize-tailwind`, `markup-from-image`, or `pick-ui-library` for their narrow utilities.
-
-Do ordinary end-to-end interface work here. Do not force a specialist dependency, a saved design spec, a wireframe, or an approval pause unless the user asks for one.
+- Sentence case for ordinary UI text. Aligned figures take tabular numerals in the body font, not mono.
+- Emphasise by quietening the rest. There is a ceiling on how loud something can get and no floor on how quiet the rest can go.
+- Every border, shadow, gradient, blur and wrapper has a job: hierarchy, grouping, affordance, state or meaning. If removing it costs nothing, remove it.
+- Align by eye where the maths looks wrong: an icon in a circle, a play triangle, text in a button.
+- In dark mode, rebuild the contrast relationships rather than inverting colours.
+- Motion needs a purpose, an origin, interruption behaviour, a frequency budget and a reduced-motion treatment. Fast feedback beats spectacle.
