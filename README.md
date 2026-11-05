@@ -40,7 +40,7 @@ The marketplace also carries the `fiction` plugin. Don't install the plugin alon
 
 ## Skills
 
-The integration skills (`gog` and `web-research`) use tools, accounts and credentials configured by the installing user. They include no account inventory or private repository dependency. Installing a skill does not provision access. The other skills may require their named applications or CLIs, as documented inside each skill.
+The integration skills (`gog` and `research`) use tools, accounts and credentials configured by the installing user. They include no account inventory or private repository dependency. Installing a skill does not provision access. The other skills may require their named applications or CLIs, as documented inside each skill.
 
 ### `armature`
 
@@ -74,7 +74,7 @@ npx skills@latest add howells/skills --skill blender --agent codex --global
 
 ### `chiaroscuro`
 
-Design, build, polish or critique web UI in Tailwind v4. Use when an interface should look gorgeous, looks generic or unfinished, or someone asks what feels off. Not for design options (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or browser QA (`fieldtest`).
+Design, build, polish or critique web UI in Tailwind v4. Use when an interface should look gorgeous, looks generic or unfinished, or feels off. Not for design options (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper (`paste-up`) or QA (`fieldtest`).
 
 Install globally for Codex:
 
@@ -134,7 +134,7 @@ npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 
 ### `gog`
 
-Work in Gmail, Calendar, Drive, Docs and Sheets through the authenticated gog CLI instead of Google connectors. Not for web research (`web-research`).
+Work in Gmail, Calendar, Drive, Docs and Sheets through the authenticated gog CLI instead of Google connectors. Not for web research (`research`).
 
 Install globally for Codex:
 
@@ -261,9 +261,19 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill reflow --agent codex --global
 ```
 
+### `research`
+
+Research a question from primary sources and earlier notes at quick, standard or deep depth, and hand back one cited answer. Use to research, compare options, check docs or API facts, enrich records, or as a research sub-agent. Not for searching this codebase or browser QA (`fieldtest`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill research --agent codex --global
+```
+
 ### `review`
 
-Verify review feedback before acting on it. Use when PR bot comments arrive, reviewer findings are pasted, or an independent opinion is wanted from fable, sol, muse (wonder), opus or astra. Not for reviewing a diff, branch or PR from scratch (`code-review`), codebase health (`simplify`) or browser QA (`fieldtest`).
+Verify review feedback before acting on it. Use when PR bot comments arrive, reviewer findings are pasted, or an independent opinion is wanted from fable, sol, muse, opus or astra. Not for reviewing a diff from scratch (`code-review`) or codebase health (`simplify`).
 
 Install globally for Codex:
 
@@ -275,7 +285,7 @@ Feedback that arrives from a bot, PR or agent loads it implicitly. To ask for an
 
 ### `salvage`
 
-Resolve git conflicts when a merge, rebase, cherry-pick, revert or stash apply or pop reports CONFLICT or leaves conflict markers, including mid-task. Rescue stranded work in detached HEADs, worktrees, unpushed branches and stashes; remove only copies proven merged and pushed. Not for status recovery (`muster`).
+Resolve git conflicts from a merge, rebase, cherry-pick, revert or stash, even mid-task. Rescue work stranded in detached HEADs, worktrees, unpushed branches and stashes; delete only what's proven merged and pushed. Not for status recovery (`muster`).
 
 Install globally for Codex:
 
@@ -285,7 +295,7 @@ npx skills@latest add howells/skills --skill salvage --agent codex --global
 
 ### `signage`
 
-Rewrite interface strings into the words the audience already uses: labels, buttons, headings, errors, empty states, generated text, film and deck captions. Use when UI copy reads as jargon or machine-made. Not for body prose (`deslop`), product names (`nomen`) or visual styling (`chiaroscuro`).
+Rewrite interface strings into the words the audience already uses: labels, buttons, headings, errors, empty states, generated text, film captions. Use when UI copy reads as jargon or machine-made. Not for prose (`deslop`) or product names (`nomen`).
 
 Install globally for Codex:
 
@@ -317,7 +327,7 @@ npx skills@latest add howells/skills --skill typecase --agent codex --global
 
 ### `unslop`
 
-Strip machine-written tells from a diff without changing behaviour: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, leftover scaffolding. Not for structural review (`simplify`), behaviour-changing fallback removal (`failfast`) or prose (`deslop`).
+Strip machine-written tells from a diff without changing behaviour: narrating comments, one-caller wrappers, impossible guards, decorative logs, leftover scaffolding. Not for structural review (`simplify`), fallback removal (`failfast`) or prose (`deslop`).
 
 Install globally for Codex:
 
@@ -333,16 +343,6 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill what --agent codex --global
-```
-
-### `web-research`
-
-Research the open web with Exa and Tavily and synthesize one cited answer. Not for browser QA (`fieldtest`) or scraping (`firecrawl-*`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill web-research --agent codex --global
 ```
 
 ### `zoetrope`
@@ -400,3 +400,9 @@ Consolidated on 2026-10-13:
 | `glm-review` | Removed; GLM is no longer a review lane. |
 
 Install `review`, then remove the three stale copies from local and global install locations as described above.
+
+Merged on 2026-11-05:
+
+| Skill | Where its work went |
+| --- | --- |
+| `web-research` | `research`, which reaches the web through Fieldwork instead of its own Exa and Tavily scripts. |

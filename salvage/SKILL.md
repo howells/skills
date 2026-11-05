@@ -1,6 +1,6 @@
 ---
 name: salvage
-description: "Resolve git conflicts when a merge, rebase, cherry-pick, revert or stash apply or pop reports CONFLICT or leaves conflict markers, including mid-task. Rescue stranded work in detached HEADs, worktrees, unpushed branches and stashes; remove only copies proven merged and pushed. Not for status recovery (`muster`)."
+description: "Resolve git conflicts from a merge, rebase, cherry-pick, revert or stash, even mid-task. Rescue work stranded in detached HEADs, worktrees, unpushed branches and stashes; delete only what's proven merged and pushed. Not for status recovery (`muster`)."
 ---
 
 # Salvage

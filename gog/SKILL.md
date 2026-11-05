@@ -1,6 +1,6 @@
 ---
 name: gog
-description: "Work in Gmail, Calendar, Drive, Docs and Sheets through the authenticated gog CLI instead of Google connectors. Not for web research (`web-research`)."
+description: "Work in Gmail, Calendar, Drive, Docs and Sheets through the authenticated gog CLI instead of Google connectors. Not for web research (`research`)."
 ---
 
 # GOG

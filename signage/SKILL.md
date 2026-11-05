@@ -1,6 +1,6 @@
 ---
 name: signage
-description: "Rewrite interface strings into the words the audience already uses: labels, buttons, headings, errors, empty states, generated text, film and deck captions. Use when UI copy reads as jargon or machine-made. Not for body prose (`deslop`), product names (`nomen`) or visual styling (`chiaroscuro`)."
+description: "Rewrite interface strings into the words the audience already uses: labels, buttons, headings, errors, empty states, generated text, film captions. Use when UI copy reads as jargon or machine-made. Not for prose (`deslop`) or product names (`nomen`)."
 ---
 
 # Signage

@@ -1,6 +1,6 @@
 ---
 name: review
-description: "Verify review feedback before acting on it. Use when PR bot comments arrive, reviewer findings are pasted, or an independent opinion is wanted from fable, sol, muse (wonder), opus or astra. Not for reviewing a diff, branch or PR from scratch (`code-review`), codebase health (`simplify`) or browser QA (`fieldtest`)."
+description: "Verify review feedback before acting on it. Use when PR bot comments arrive, reviewer findings are pasted, or an independent opinion is wanted from fable, sol, muse, opus or astra. Not for reviewing a diff from scratch (`code-review`) or codebase health (`simplify`)."
 ---
 
 # Review

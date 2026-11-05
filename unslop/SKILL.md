@@ -1,6 +1,6 @@
 ---
 name: unslop
-description: "Strip machine-written tells from a diff without changing behaviour: narrating comments, one-caller wrappers, impossible guards, unused options, decorative logs, leftover scaffolding. Not for structural review (`simplify`), behaviour-changing fallback removal (`failfast`) or prose (`deslop`)."
+description: "Strip machine-written tells from a diff without changing behaviour: narrating comments, one-caller wrappers, impossible guards, decorative logs, leftover scaffolding. Not for structural review (`simplify`), fallback removal (`failfast`) or prose (`deslop`)."
 ---
 
 # Unslop

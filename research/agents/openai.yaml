@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research"
+  short_description: "Answer a question from primary sources, with citations"
+  default_prompt: "Use $research to answer this question from primary sources and hand back a cited answer."

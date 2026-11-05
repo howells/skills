@@ -1,6 +1,6 @@
 ---
 name: chiaroscuro
-description: "Design, build, polish or critique web UI in Tailwind v4. Use when an interface should look gorgeous, looks generic or unfinished, or someone asks what feels off. Not for design options (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper mockups (`paste-up`) or browser QA (`fieldtest`)."
+description: "Design, build, polish or critique web UI in Tailwind v4. Use when an interface should look gorgeous, looks generic or unfinished, or feels off. Not for design options (`maquette`), app shells (`armature`), screen sizes (`reflow`), Paper (`paste-up`) or QA (`fieldtest`)."
 ---
 
 # Chiaroscuro

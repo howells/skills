@@ -39,13 +39,13 @@
     "./product-description",
     "./rebalance",
     "./reflow",
+    "./research",
     "./review",
     "./salvage",
     "./signage",
     "./simplify",
     "./typecase",
     "./unslop",
-    "./web-research",
     "./what",
     "./zoetrope"
   ]

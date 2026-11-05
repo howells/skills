@@ -501,6 +501,7 @@ REMOVED_SKILLS = (
     "inquest",
     "polyplugin",
     "survey",
+    "web-research",
 )
 
 

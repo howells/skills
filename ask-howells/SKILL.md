@@ -75,7 +75,7 @@ Route: `simplify` → the skill each finding points at.
 
 ### Accounts and tools
 
-`gog` (Google Workspace), `web-research` (the open web), `blender` (3D scenes), `computer-use` (native macOS app control through the configured Codex runtime, invoked from Codex or Claude Code). An explicit choice of native Computer Use also owns Chrome control; ordinary browser-only QA stays with `fieldtest`. `linear` and `starling` ship with their CLIs, in `howells/linearcli` and `howells/starlingcli`.
+`gog` (Google Workspace), `research` (questions answered from primary sources, through Fieldwork), `blender` (3D scenes), `computer-use` (native macOS app control through the configured Codex runtime, invoked from Codex or Claude Code). An explicit choice of native Computer Use also owns Chrome control; ordinary browser-only QA stays with `fieldtest`. `linear` and `starling` ship with their CLIs, in `howells/linearcli` and `howells/starlingcli`.
 
 ## Close pairs
 
