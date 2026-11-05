@@ -6,9 +6,9 @@ Tells found in essays, newsletters, social posts and announcements, where the wr
 stages a point before stating it. `signs-of-ai-writing.md` covers the encyclopaedic
 register; this file covers the persuasive one.
 
-The caveats in `signs-of-ai-writing.md` apply here too, and people wrote every one of
-these patterns before any model did; in casual or spoken-register writing several of
-them are ordinary voice, so read the register before cutting.
+These are clues, not proof of authorship: weigh clusters. People wrote every one of
+these patterns before any model did, and in casual or spoken-register writing several
+of them are ordinary voice, so read the register before cutting.
 
 Each entry gives the pattern, some watch phrases, and the default edit.
 
