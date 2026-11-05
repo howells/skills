@@ -1,6 +1,6 @@
 ---
 name: muster
-description: "Recover project purpose, decisions and in-flight work across concurrent or older sessions; check transcripts, git, peers and the tracker for catch-ups or handoffs. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`)."
+description: "Recover project purpose, decisions and in-flight work across concurrent or older sessions; check transcripts, git, peers and the tracker for catch-ups or handoffs. Not for one current task (`memento`), rewriting the last reply (`what`), or git conflicts and repository cleanup (`salvage`)."
 ---
 
 # Muster

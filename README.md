@@ -194,7 +194,7 @@ npx skills@latest add howells/skills --skill memento --agent codex --global
 
 ### `muster`
 
-Recover project purpose, decisions and in-flight work across concurrent or older sessions; check transcripts, git, peers and the tracker for catch-ups or handoffs. Not for one current task (`memento`), rewriting the last reply (`what`), or repository cleanup (`salvage`).
+Recover project purpose, decisions and in-flight work across concurrent or older sessions; check transcripts, git, peers and the tracker for catch-ups or handoffs. Not for one current task (`memento`), rewriting the last reply (`what`), or git conflicts and repository cleanup (`salvage`).
 
 Install globally for Codex:
 
@@ -279,7 +279,7 @@ Feedback that arrives from a bot, PR or agent loads it implicitly. To ask for an
 
 ### `salvage`
 
-Rescue work that exists in only one place - detached HEADs, worktrees, unpushed branches, or stashes - then remove only what is proven merged and pushed. Use for repository cleanup that must preserve ambiguous work. For status reconstruction without cleanup use `muster`.
+Resolve git conflicts when a merge, rebase, cherry-pick, revert or stash apply or pop reports CONFLICT or leaves conflict markers, including mid-task. Rescue stranded work in detached HEADs, worktrees, unpushed branches and stashes; remove only copies proven merged and pushed. Not for status recovery (`muster`).
 
 Install globally for Codex:
 

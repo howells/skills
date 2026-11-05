@@ -1,117 +1,85 @@
 ---
 name: salvage
-description: "Rescue work that exists in only one place - detached HEADs, worktrees, unpushed branches, or stashes - then remove only what is proven merged and pushed. Use for repository cleanup that must preserve ambiguous work. For status reconstruction without cleanup use `muster`."
+description: "Resolve git conflicts when a merge, rebase, cherry-pick, revert or stash apply or pop reports CONFLICT or leaves conflict markers, including mid-task. Rescue stranded work in detached HEADs, worktrees, unpushed branches and stashes; remove only copies proven merged and pushed. Not for status recovery (`muster`)."
 ---
 
 # Salvage
 
-Salvage is recovery first and disposal second. The job is to find work that exists in exactly one place, get it somewhere safe, and only then clear away what is provably redundant.
+No one's work is lost in git. Two jobs:
 
-Run it in that order or not at all. A cleanup that deletes before it rescues is how a week of work disappears, and the reflog does not cover the two worst cases: uncommitted changes in a worktree you remove, and a branch whose commits were never pushed anywhere.
+- **A merge, rebase, cherry-pick, revert or stash apply stopped on conflicts**, or the tree has conflict markers: read [references/conflicts.md](references/conflicts.md) and follow it.
+- **Work may be stranded, or branches, worktrees or stashes need cleaning up:** follow the rest of this file.
 
-## What actually gets lost
+## Rules
 
-Worst first. This ordering is your rescue order when time is short.
+- **Never destroy the only copy.** Rescue first, delete last. Record every SHA before changing anything, and copy uncommitted work somewhere private; a SHA preserves only commits.
+- **Don't abort, reset or force-push your way out of trouble.** `--abort`, `reset --hard`, `checkout .` and `checkout --conflict` discard work recorded nowhere; a force push can overwrite someone else's. Do them only when asked, or abort an operation you started by mistake before resolving anything.
+- **Do git writes yourself, from where you stand.** Don't hand branch, worktree or stash changes to a helper; it cannot see who else is in the tree. Inside a worktree, don't run git against the shared checkout.
+- **Push recovered work only when asked** or when standing policy covers it.
 
-1. **Uncommitted changes in a removed worktree.** Nothing records them. No reflog, no recovery.
-2. **A detached HEAD carrying commits.** Reachable from no ref, so the next `gc` takes it.
-3. **Stash entries.** Reachable but invisible, and one mistyped `git stash clear` from gone.
-4. **Unpushed commits.** Reflog holds them ~90 days, on one machine.
-5. **A branch deleted while unmerged.** Same window, but nobody looks - the name is gone too.
+## What gets lost
+
+Rescue in this order:
+
+1. Uncommitted changes in a removed worktree. No reflog, no recovery.
+2. A detached HEAD carrying commits. On no ref, so the next `gc` takes it.
+3. Stash entries. One `git stash clear` from gone.
+4. Unpushed commits. The reflog holds them about 90 days, on one machine.
+5. A branch deleted while unmerged. Same window, and the name is gone.
 
 ## Three buckets
 
-Every worktree, branch and stash lands in exactly one. Anything you cannot place goes in the first bucket, not the last.
+Every worktree, branch and stash lands in one. Anything you cannot place is in flight.
 
-**In flight.** Someone is using it right now. Report it, name who, and touch nothing.
-
-**At risk.** Holds content that exists nowhere else. Rescue it, then re-classify.
-
-**Safe.** Provably redundant: every commit reachable from a pushed default branch, tracked and untracked content preserved, ignored content accounted for as below, nothing running, and ownership released. A clean `git status` alone does not cover ignored files. Only this bucket is eligible for removal.
-
-## Ignored and private content
-
-Inventory ignored files with `git ls-files --others --ignored --exclude-standard` in each checkout before classifying it. Keep private paths and preservation evidence in a suitable private record; never print secret contents or add credentials to a recovery commit.
-
-- **Regenerable:** identify the preserved inputs and known recipe that recreate the output, and establish that it contains no local modifications or unique state. Dependency, build and cache directories such as `node_modules`, `.next`, `dist` and `.turbo` are leads, not deletion permissions based on their names.
-- **Unique/private:** preserve configuration such as `.env.local`, local databases, certificates and hand-authored scratch work in an appropriate private destination. Verify that the preserved copy is complete before removing its only source.
-- **Ambiguous:** retain the checkout and record the unresolved content. Retaining it is a completed cleanup decision, not a reason to keep searching indefinitely.
-
-For example, an ignored `node_modules/` with preserved dependency inputs, a working regeneration recipe and no unique state can be discarded. An ignored `.env.local` still needs private preservation. If either classification lacks evidence, keep the checkout. Ordinary `git worktree remove` can delete ignored files even when status is clean.
-
-## Judging "in flight" across agent hosts
-
-This is the part that goes wrong. Worktrees on a shared machine belong to whichever agent made them, and you cannot see the others.
-
-- **Your host's session list only shows your host's sessions.** In Claude Code, `ListAgents` says nothing about a Codex session, and vice versa. Absence from your own roll-call is not evidence of abandonment - it is no information at all.
-- **Filesystem and process evidence is the only cross-host signal.** Directory and index mtime, a lock in `.git/worktrees/<name>/locked`, a process whose working directory sits inside the tree, a dev server on a port served from it.
-- **Recent means live.** A tree touched inside the last day is presumed occupied.
-- **Ask before assuming.** If peer agents are reachable, ask which paths they own. That beats every inference above.
-- **Default to leaving it.** A stale worktree costs disk; a deleted live one costs someone their afternoon.
-
-## Naming what you found
-
-A rescued branch nobody can identify gets deleted next month by whoever is tidying up. Naming it is what makes the rescue stick, so do this for every at-risk item before reporting it.
-
-- **Read the branch name for a ticket ID.** `feat/APP-123-search` carries `APP-123`. Look it up in whatever tracker the session can reach and report the title and status beside the branch.
-- **The ticket's state is evidence about the branch's state.** An open ticket says the work is still wanted, whatever the timestamps suggest; a closed one with the branch merged is the strongest safe-to-remove signal there is.
-- **No ticket means read the commits.** Subjects and diffstat, one line: "three commits, adds the facet-filter timeout guard."
-- **Say what it is not.** Work superseded by something already on the default branch is the finding, not a footnote - cite the commit that replaced it.
-
-## Proving "safe"
-
-Merge detection is where confident wrong answers come from.
-
-- **Verify the pushed target.** Fetch the configured remote successfully, without incidental pruning, and resolve its intended default branch. Test `git merge-base --is-ancestor <branch-tip> <remote>/<default>` against that fresh remote-tracking ref, not local `main`. If the remote cannot be verified, removal is blocked.
-- **Squash and rebase merges defeat it.** The commits genuinely are not ancestors, so ancestry reports unmerged and `git cherry` and patch-ids both lie. Use the forge to verify the PR's merged head and destination. Match that head to the current branch tip and confirm its merge landed on the intended pushed default branch. A merged PR describes historical work, not later commits added to the branch. Classify those separately; if equivalence after a squash or rebase cannot be established, leave the branch alone.
-- **A pushed branch is an off-machine copy, not integration proof.** It can still be deleted remotely. Verified integration into the pushed default branch is the cleanup bar.
-- **Record every SHA before you delete anything.** Branch tip, worktree HEAD, stash commit. Written down, a deletion is reversible; unwritten, you are relying on someone thinking to check the reflog.
-
-## Operational helpers
-
-Use [scripts/census.py](scripts/census.py) for the read-only census. Pass repository or container paths and `--output` naming a new private JSON file outside every requested root and registered checkout. It writes complete versioned evidence and displays three bounded lines; a failed observation exits non-zero and retains an explicit incomplete result. Ignored entries, exclusions, unknown ownership and missing cross-host knowledge remain protected. This is coverage evidence, not a safe-to-delete verdict or an atomic snapshot.
-
-Optional `--ownership` accepts JSON with `version: 1` and a `claims` list. Each claim names an absolute `path`; retain its owner, scope, permitted actions, authority source and release condition as evidence. Set `exclude: true`, or repeat `--exclude PATH`, to omit an explicitly protected path from inspection. No claim is interpreted as approval.
-
-For separately authorised publication, use [scripts/integrate.py](scripts/integrate.py) with `--repo`, an existing `--remote`, an exact `--commit` and the independently observed `--expected-old` SHA. `--intent integrate` resolves and rechecks the server default, fetches without pruning, requires a fast-forward and uses ordinary push hooks. It never guesses a branch name. `--intent preserve` also requires `--destination-ref` naming an explicit feature or salvage ref; use `--expected-old absent` only for a new ref. Preservation cannot target the server default. An unknown default permits only a named `refs/salvage/` destination.
-
-The publication JSON identifies the remote transport by digest, full destination ref and resulting SHA. It does not certify source checks, custody or deployment permission. A remote change around publication is a conflict; inspect the actual remote state before deciding what to do next, rather than retrying automatically.
+- **In flight.** Someone may be using it. Report it with the owner and touch nothing.
+- **At risk.** Holds content that exists nowhere else. Rescue it, then re-sort.
+- **Safe.** Every commit reachable from the pushed default branch, ignored content accounted for, nothing running in it. Only this bucket is removed.
 
 ## Steps
 
-Use these steps to organize recovery. Keep a compact census and ownership record rather than copying the workflow verbatim.
+1. **Census, read-only.** One repo unless the user asked for more; propose a machine-wide sweep rather than widening mid-run. Run `python3 scripts/census.py <repo> --output <new-private-file>.json` (see Scripts). It covers worktrees, branches (upstream, ahead/behind, merged), stashes and unreachable reflog commits.
+2. **Work out who owns what** (below), then sort into buckets and name every at-risk item.
+3. **Rescue, additively.** No deletion and no overwriting an existing ref.
+   - **Detached HEAD:** `git branch salvage/<name> <sha>`.
+   - **Dirty worktree you own:** commit the selected files as WIP on a recovery branch. Leave credentials out.
+   - **Stash:** don't use `git stash branch`; it can drop the stash and leave changes uncommitted. Instead: `git worktree add -b <recovery-branch> <path> <stash-sha>^1`, then `git stash apply --index <stash-sha>` there, commit, and check the staged and untracked files all came across. Leave the stash in the list.
+4. **Remove only the safe bucket,** worktrees before their branches, recording each SHA as you go.
+5. **Report** (below).
 
-1. **Fix the scope and say it back.** One repo by default. A sweep of every repo on the machine is a different job with a much larger blast radius, and it needs saying out loud before it starts.
+## Who owns a worktree
 
-2. **Do the whole census before touching anything.** Worktrees with branch, detached state, dirty count, ignored/private content and age. Branches with upstream, ahead/behind and merge status. Stashes with age and origin branch. Commits in the reflog reachable from no ref. Read-only, no exceptions.
+Your host's session list shows only your host. Absence from it says nothing about a Codex or Claude session elsewhere. The cross-host evidence is the filesystem: directory and index mtimes, `.git/worktrees/<name>/locked`, a process or dev server running inside the tree. Touched in the last day means occupied. If peers are reachable, ask them which paths they own; that beats inference. When unsure, leave it: a stale worktree costs disk, a deleted live one costs someone their afternoon.
 
-3. **Take the roll of live sessions and processes.** Your own host's sessions, then the cross-host evidence above. Write down which paths are spoken for before any classification.
+## Ignored files
 
-4. **Sort into the three buckets, and name every at-risk item** per the section above. Unplaceable goes to in-flight.
+`git worktree remove` deletes ignored files even when `git status` is clean. Run `git ls-files --others --ignored --exclude-standard` in each checkout before calling it safe.
 
-5. **Rescue, additively.** A detached HEAD becomes `git branch salvage/<name> <sha>`. For an at-risk dirty worktree whose ownership is resolved, inspect staged, unstaged and untracked content before selecting files for a WIP commit on a recovery branch. Do not blindly stage credentials or another person’s active work. Push recovered work only when publication is within the user’s request or standing policy; otherwise preserve it locally and request the missing authorization after preparing the recovery. For a stash, first identify its owner, base and full contents, including staged and untracked files. Preserve its commit under a new durable ref, create a new owned clean worktree at the stash base (`git worktree add -b <recovery-branch> <new-owned-path> <saved-sha>^1`), add that worktree to the ownership census, and use `git stash apply --index <saved-sha>` without dropping it. Commit the recovered content, inspect that all stash content was preserved, and push when appropriate. `git stash branch` is not additive: it can drop the stash while leaving changes uncommitted. Nothing is deleted in this step, and no rescue may overwrite an existing ref. Follow the host's branch and worktree policy for names and locations.
+- **Regenerable** (`node_modules`, `.next`, `dist`) only when the inputs are preserved and nothing in them was edited by hand.
+- **Unique:** `.env.local`, local databases, certificates, scratch work. Copy them privately and check the copy before removing the source.
+- **Unclear:** keep the checkout and say what is unresolved.
 
-6. **Re-verify, then remove only from the safe bucket.** Re-run the check that put each item there against the verified remote target and current item tip, because step 5 changed the repo. Recheck ignored/private content and verified preservation destinations too; a SHA preserves only committed content. Then remove, worktrees before their branches, recording each SHA first.
+## Naming what you found
 
-7. **Report to the contract below.**
+An unnamed `salvage/` branch gets deleted next month by whoever tidies up. For each at-risk item, look up any ticket ID in the branch name and report its title and status; an open ticket means the work is still wanted. With no ticket, summarise the commits in one line ("three commits, adds the facet-filter timeout guard"). If the default branch has superseded it, cite the replacing commit.
 
-Do every git operation yourself. Branch, worktree and stash work is never delegated to a subagent: the state is shared and mutable, a subagent cannot see who else is in the tree, and a wrong move is unrecoverable. Reading and tracker lookups can be delegated freely.
+## Proving "safe"
 
-If you are working inside a worktree, stay in it. Running git against the shared checkout from a worktree session mutates a repo another session is standing in.
+- **Test against the fresh remote, not local `main`.** Fetch without pruning, then `git merge-base --is-ancestor <tip> <remote>/<default>`. If the remote cannot be reached, nothing is removed.
+- **Squash and rebase merges defeat ancestry,** and `git cherry` and patch-ids mislead too. Ask the forge for the merged PR's head and match it to the current branch tip; commits after that head are unmerged. If equivalence cannot be shown, keep the branch.
+- **A pushed branch is a copy, not integration.** It can be deleted remotely. The bar is the pushed default branch.
 
-## Output contract
+## Scripts
 
-- **Rescued.** One line each: what it was, where it now lives, and the ticket or commit summary that identifies it. This is the part worth reading.
-- **Removed.** One line each with the recorded SHA, so any of it can be put back.
-- **Left alone.** One line each with the reason and the owner where known. A long list here is a good outcome, not a failure.
-- **Needs you.** Anything that could not be placed. One line, one question each.
+Both take `--help`.
 
-Lead with the count of rescued items. If nothing was at risk, say so, then still report any removals and items left alone.
+- [scripts/census.py](scripts/census.py) is read-only. `--output` must be a new file outside every scanned repo. `--ownership` takes `{"version": 1, "claims": [{"path": "/abs/path", ...}]}`; claims are evidence, not permission. `--exclude PATH` skips a protected path. A non-zero exit means the census is incomplete. Its output is coverage, not a safe-to-delete verdict.
+- [scripts/integrate.py](scripts/integrate.py) publishes one exact commit, only when the push is authorised. `--intent integrate` fast-forwards the server's default branch; `--intent preserve --destination-ref <ref>` pushes a named feature or `refs/salvage/` ref, never the default (`--expected-old absent` for a new one). `--expected-old` is the remote SHA you observed. If the remote moved, inspect it; don't retry.
 
-## Failure modes
+## Report
 
-- **Deleting before rescuing.** The entire point. Rescue is additive and reversible; deletion is neither.
-- **Reading absence from your own session list as abandonment.** It only ever means the other host is invisible to you.
-- **Trusting ancestry in a squash-merging repo.** Ask the forge.
-- **Rescuing anonymously.** An unnamed `salvage/` branch is a deferred deletion, not a save.
-- **Widening from one repo to the machine mid-run.** Finish the stated scope and propose the sweep separately.
+Lead with the number of items rescued, or say nothing was at risk.
+
+- **Rescued:** what it was, where it lives now, the ticket or commit summary.
+- **Removed:** the recorded SHA, so it can be put back.
+- **Left alone:** the reason and owner. A long list is a good outcome.
+- **Needs you:** one line and one question per unplaced item.

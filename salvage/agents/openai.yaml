@@ -1,4 +1,4 @@
 interface:
   display_name: "Salvage"
-  short_description: "Rescue unique work before repository cleanup"
-  default_prompt: "Use $salvage to rescue unique work, then remove only branches, worktrees, and stashes proven merged and pushed."
+  short_description: "Resolve git conflicts; rescue stranded work"
+  default_prompt: "Use $salvage to resolve this merge or rebase conflict, or to rescue unique work before removing only what is proven merged and pushed."
