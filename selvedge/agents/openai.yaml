@@ -1,4 +1,0 @@
-interface:
-  display_name: "Selvedge"
-  short_description: "Match the color behind mobile Safari's bars to the page"
-  default_prompt: "Use $selvedge to make the bands behind mobile Safari's status bar and toolbar match this page's edges on every screen, then list what still needs checking on an iPhone."

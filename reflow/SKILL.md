@@ -1,6 +1,6 @@
 ---
 name: reflow
-description: "Make every view of a web app work on small laptops, tablets and phones, checked in a browser. Not for QA reports (`fieldtest`)."
+description: "Make every view of a web app work on small laptops, tablets and phones, checked in a browser. Not for phone-browser behavior (`handfeel`) or QA reports (`fieldtest`)."
 ---
 
 # Reflow

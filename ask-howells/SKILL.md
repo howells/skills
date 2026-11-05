@@ -34,6 +34,7 @@ Route: `rebalance` → `implement`, repeated. `plimsoll` whenever delivery stall
 - **A screenshot, page or frame that feels off, visual critique only** → `chiaroscuro`. It names what's off and asks; it changes nothing until asked.
 - **The app scrolls like a document and should behave like an app** → `armature`.
 - **It breaks on laptops, tablets or phones** → `reflow`.
+- **It works on a phone but feels like a website: safe areas, input zoom, tap, hover, Safari's bar colors, installed app** → `handfeel`.
 - **Raw font utilities have multiplied** → `typecase`.
 - **Labels, buttons, headings or empty states read badly** → `signage`.
 - **Duplicated components, or a file doing too many jobs** → `componentize`.
@@ -83,6 +84,7 @@ Route: `simplify` → the skill each finding points at.
 | `maquette` / `chiaroscuro` | Is the direction for a whole page still open? Yes: `maquette`. |
 | `chiaroscuro` / `armature` | Is the problem how it looks, or what scrolls? Scrolling: `armature`. |
 | `chiaroscuro` / `zoetrope` | Is the question how it looks still, or how it moves? Moves: `zoetrope`. |
+| `reflow` / `handfeel` | Does the layout adapt across sizes, or does the phone treat the page like a website? Phone behavior: `handfeel`. |
 | `reflow` / `fieldtest` | Do you want it fixed at every size, or a report of what's wrong? Fixed: `reflow`. |
 | `unslop` / `fail-fast` | Should behaviour stay exactly the same? Yes: `unslop`. |
 | `unslop` / `simplify` | Cleaning a diff, or judging its structure? Judging: `simplify`. |

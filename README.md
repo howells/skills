@@ -142,6 +142,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill gog --agent codex --global
 ```
 
+### `handfeel`
+
+Make a web app feel native on a phone. Use when it works on desktop but feels wrong on a phone, or for PWA behavior, notch or home-indicator overlap, iOS input zoom, sticky hover, tap feedback, overscroll or the color behind Safari's bars. Not for responsive layout (`reflow`), app shells (`armature`) or motion (`zoetrope`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill handfeel --agent codex --global
+```
+
 ### `maquette`
 
 Render five page directions beside the current page, then build the chosen one. Not for a single direction (`chiaroscuro`).
@@ -247,7 +257,7 @@ npx skills@latest add howells/skills --skill rebalance --agent codex --global
 
 ### `reflow`
 
-Make every view of a web app work on small laptops, tablets and phones, checked in a browser. Not for QA reports (`fieldtest`).
+Make every view of a web app work on small laptops, tablets and phones, checked in a browser. Not for phone-browser behavior (`handfeel`) or QA reports (`fieldtest`).
 
 Install globally for Codex:
 
@@ -275,16 +285,6 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill salvage --agent codex --global
-```
-
-### `selvedge`
-
-Make the color behind mobile Safari's status bar and toolbar match the page's edges, on every screen and as it scrolls. Use when a band of the wrong color sits around Safari's bars. Not for safe-area layout or screen sizes (`reflow`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill selvedge --agent codex --global
 ```
 
 ### `signage`

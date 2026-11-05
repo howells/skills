@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handfeel"
+  short_description: "Make a web app feel native on a phone"
+  default_prompt: "Use $handfeel to remove what makes this web app feel like a website on a phone: safe areas, input zoom, tap and hover, overscroll and Safari's bar colors, then say what still needs checking on a device."

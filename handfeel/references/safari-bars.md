@@ -1,19 +1,14 @@
----
-name: selvedge
-description: "Make the color behind mobile Safari's status bar and toolbar match the page's edges, on every screen and as it scrolls. Use when a band of the wrong color sits around Safari's bars. Not for safe-area layout or screen sizes (`reflow`)."
----
+# Color behind Safari's bars
 
-# Selvedge
+Contents: how Safari picks the color, map the edges, add the strips, set the colors, check.
 
-The selvedge is the finished edge of a cloth. On an iPhone, a web page's edges are the bands Safari paints behind its status bar and toolbar, and by default they rarely match the page.
-
-State at the start that you are using the `selvedge` skill.
+A web page's edges are the bands Safari paints behind its status bar and toolbar. By default they rarely match the page.
 
 ## How Safari picks the color
 
-In the browser, as opposed to a web app added to the home screen, `theme-color` alone does not settle these bands, and it cannot give the top and bottom different colors. Safari takes each band's color from a **fixed element at that edge**: a strip with at least 5px on screen. It picks up a change of the strip's color when the screen changes, even without a scroll.
+Safari 26 ignores `theme-color` in browser tabs. Keep the tag for installed apps and other browsers, but it does not settle these bands, and it cannot give the top and bottom different colors. Safari extends the solid color of a **fixed element at each edge**. In observed behavior the element needs at least 5px on screen; confirm that on the target Safari version. Safari picks up a change of the strip's color when the screen changes, even without a scroll.
 
-It extends a **solid color only**. An image, a canvas, a video or a gradient running across the width never continues under the bars. A full-bleed photo or 3D view can't run behind the address bar; the best available is a solid band that matches its edge.
+It extends a **solid color only**. A fixed image, canvas, video or horizontal gradient never continues under the bars. A full-bleed photo or 3D view cannot run behind the address bar; the best available is a solid band that matches its edge. Safari can also show scrolling content behind its controls; that is a different case, which these strips do not change.
 
 `viewport-fit=cover` must be on the viewport meta tag, or none of this applies.
 
@@ -32,7 +27,7 @@ Two empty elements, last in `body` and outside any ancestor with a `transform`, 
 <div class="edge-bottom" aria-hidden="true"></div>
 ```
 
-Each edge gets a solid strip with 5px on screen, plus a fade into the page across the safe-area inset, so there is no hard line and nothing covers content. Where the inset is zero, as on desktop, the fade has no height.
+Each edge gets a solid strip with 5px on screen, plus a fade into the page across the safe-area inset, so there is no hard line. The 5px strips stay visible when the insets are zero, desktop included; only the fades follow the inset. So each strip must match the background next to it and must not cover content.
 
 ```css
 :root {
@@ -87,15 +82,13 @@ function setEdges(top, bottom = top) {
 
 Call it at every state change from step 1, with values from the page's color tokens. Where an edge's color changes as the page scrolls, also call it on scroll (once per animation frame), on resize, and on `pageshow`, so a restored scroll position gets its colors.
 
+With two `theme-color` tags that differ by `prefers-color-scheme`, select the one script updates, or replace them with the single tag above when `setEdges` drives every state.
+
 Done when every state from step 1 calls `setEdges` with its two colors.
 
 ## 4. Check
 
-- In a desktop browser at phone size, screenshot every state: the strips must not show. Device emulation does not draw Safari's bars, so this checks only that nothing looks wrong.
-- On an iPhone in Safari, open each state, move between them without scrolling, and scroll where the colors change. Until this is done, report the bands as unchecked.
+- In a desktop browser, narrow and wide, screenshot every state: each strip must blend with the background next to it and cover no content. Device emulation does not draw Safari's bars, so this checks only that nothing looks wrong.
+- On an iPhone in Safari, or in the iOS Simulator (it draws the bars), open each state, move between them without scrolling, and scroll where the colors change. Until this is done, report the bands as unchecked.
 
-## Report
-
-The edge map from step 1, the files changed, and which states were checked on an iPhone.
-
-Technique from Josh Puckett, [Seamless Backgrounds on Mobile Safari](https://joshpuckett.me/seamless-mobile-safari).
+Report the edge map from step 1, the files changed, and which states were checked on a device.
