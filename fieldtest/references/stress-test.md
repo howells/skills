@@ -8,11 +8,11 @@ Contents: Rules · Map the screen · Content · Behaviour · Environment · Sign
 
 - **Be the most awkward real user.** Name like Aleksandra Wiśniewska-Kowalczyk, a colleague at `bartholomew.fitzgerald@northwind-industries-holdings.example.com`, an intern called Jo, a workspace of 1,284 members. Apps are built against Jane Doe and twelve rows.
 - **Plausible or schema-backed, never random.** Use a real naming pattern or the actual limit from the validation schema, database column or API contract. `aaaa…` at 5,000 characters proves nothing and gets dismissed. If no limit exists, that is a finding ("unbounded"); test something long but believable.
-- **Enter data through the app's real boundary**: form fields, URL params, fixtures, stubbed responses. Do not edit markup or CSS to fake a break.
-- **Hostile input can write before submit.** Apply the destination check in `SKILL.md` before typing, pasting, changing or blurring a field, and look for autosave and remote validation. Use a disposable target, or request interception you have verified blocks the remote write. If neither is available, skip the case and report the gap.
+- **Enter data through the app's real boundary**: form fields, URL params, fixtures, stubbed responses. Don't edit markup or CSS to fake a break.
+- **Hostile input can write before submit.** Autosave and remote validation fire on typing and blur, so apply the destination rule in `SKILL.md` before the first keystroke, or skip the case and say so.
 - **Use `example.com`, `example.org` or `.test`** for emails and URLs.
-- **A predicted break is not a finding.** Report as Broken or Ugly only what rendered and misbehaved. A risk read from code or a schema without a rendered break is labelled inferred and goes under Fragile or Residual Risk.
-- **Put the browser back.** Restore every setting a case changes (viewport, zoom, root font size, throttling, offline, blocked requests, emulated media, touch, direction or locale) before the next case and at the end. Report any you could not restore.
+- **A predicted break is not a finding.** Only what rendered and misbehaved is Broken or Ugly; a risk read from code or a schema is labelled inferred.
+- **Put the browser back.** Restore viewport, zoom, font size, throttling, offline and emulation after each case; it is often the user's own Chrome.
 
 ## Map the screen
 
@@ -45,7 +45,7 @@ Pick the rows that match the fields. Spread different failures across the first 
 
 ## Environment
 
-Run the stressed content at each of these, asserting the viewport first.
+Run the stressed content at each of these.
 
 - Real container width, then 320px, then 2560px.
 - Browser zoom 200% and raised root font size: text grows, boxes must not clip it.

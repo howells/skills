@@ -1,6 +1,6 @@
 # Fable and Opus through Claude
 
-Check `claude --help` for the required flags. Set `REVIEW_MODEL` to the user's exact version if named, otherwise the supported alias `fable` or `opus`. Run from the repository under review. The command below defines the argv to run through the bounded process handling in [process.md](process.md); pass the brief on stdin and close it.
+Check `claude --help` for current flags. Set `REVIEW_MODEL` to the user's exact version if named, otherwise the alias `fable` or `opus`. Run from the repository under review with the brief on stdin, as described under Send in `SKILL.md`:
 
 ```bash
 claude -p \
@@ -14,10 +14,7 @@ claude -p \
   --output-format json
 ```
 
-`--tools` removes the shell and other built-in tools; `--allowedTools` would only preapprove them. The empty strict MCP configuration excludes unrelated integrations. These controls restrict tools, not every operating-system write route; retain the read-only brief boundary. Add `--add-dir` for any input outside the repository.
-
-Do not pass a positional brief after variadic `--disallowedTools`: it can be swallowed as tool names. Do not use `--continue`, `--resume` or a fallback model.
-
-Before the first invocation with this family in a session, run the same restricted command with `Reply with exactly: lane-ok` as stdin. The JSON can be a result object or an array of messages; for an array, use the final message with `type: "result"`. Require exit 0, `is_error: false`, exactly `lane-ok`, and a `modelUsage` key in the selected family (`claude-fable-*` or `claude-opus-*`). An explicitly requested version must match exactly. If metadata is absent, report identity as unverified; a different family or version is a failure.
-
-For the actual review, require exit 0, `is_error: false`, and a non-empty `result`. Verify model identity again on the actual reply, not only the probe. Reject empty or failed replies; do not salvage them into a verdict.
+- `--tools` removes the shell and other built-ins; `--allowedTools` would only preapprove them. The empty strict MCP config keeps unrelated integrations out. Add `--add-dir` for inputs outside the repository.
+- Don't pass the brief as a positional argument after `--disallowedTools`: the variadic flag swallows it as tool names.
+- Don't use `--continue`, `--resume` or a fallback model.
+- The JSON is a result object or an array of messages; for an array, take the final `type: "result"` message. Require exit 0, `is_error: false`, a non-empty `result`, and a `modelUsage` key in the selected family (`claude-fable-*` or `claude-opus-*`, or the exact version requested).

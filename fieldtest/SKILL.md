@@ -5,88 +5,64 @@ description: "Exercise a running web app in a real browser and return evidence-b
 
 # Fieldtest
 
-Evaluate the app as rendered software. Every finding rests on browser evidence: route, viewport, interaction, console and network signal, screenshot or recording, and reproduction steps. Say you are using `fieldtest`.
+Test the app as rendered software and report what the browser shows. Report only; fix when asked.
 
-## Hard rules
+## Rules
 
-- **Report only.** Fix only when the user asks.
-- **Use a browser.** Do not satisfy a field test with shell checks or source reading when a browser is available. Static-only results are labelled "not browser-verified", and the completion check is not claimed.
-- **Check where a write lands before making one.** `localhost` names the frontend, not its database, storage, accounts or email. Resolve the effective destinations from config and runtime, inspect only the settings needed, redact credentials, and prefer a disposable target. An unknown destination is unverified. Permission to browse is not permission to seed data or write remotely; apply the host's approval rules to the real destination.
-- **Destructive or external actions** (payments, emails, orders, publishing, deletes, production changes) need explicit authorisation for that action. Ask if it is missing.
-- **Never report a number from the wrong page or size.** See Measurement discipline.
+- **Use a real browser.** Source reading and shell checks are not a field test. With no browser available, label the result "not browser-verified".
+- **Don't write to real destinations unasked.** `localhost` is only the frontend; its database, storage, accounts, email and payments may be production. Before submitting, seeding or typing into autosaving fields, check from config where writes land, and prefer a disposable target. Payments, emails, orders, publishing, deletes and production changes need the user's go-ahead for that action.
+- **Findings come from what rendered.** A break predicted from code or a schema is labelled inferred and goes under Residual risk.
+- **Assert the viewport and URL before every measurement.** Read back `innerWidth`, `innerHeight` and `location.href`; a number from the wrong page or size is worse than none.
+- **Use real clicks and wait for the end state.** Programmatic clicks skip hit-testing, pointer-events and overlays. An element appearing, or a fixed sleep, is not the flow finishing.
+- **Aim checks so they could fail.** A boundary between two near-identical tones proves nothing, and checking what a page declares misses what it leaves undeclared.
 
 ## Browser
 
-Honour the user's and host's browser choice. Otherwise use Playwriter when available: it drives the user's own Chrome, so signed-in and localhost pages render as the user sees them. If it is absent, use the strongest other browser. Read `references/browser-session.md` before the first command: it holds the fallback table, Playwriter session rules, dev URL detection, persona checks and the severity guide.
+Use the browser the user or host names. Otherwise use Playwriter when available: it drives the user's own Chrome, so signed-in and localhost pages render as the user sees them. Read [references/browser-session.md](references/browser-session.md) before the first command for the fallback order, Playwriter session mechanics and dev-server rules.
 
 ## Run
 
-1. **Mode**: report-only QA, QA plus fixes, focused route or regression, responsive or mobile audit, persona walkthrough, or stress test.
-2. **Context scan.** Read `package.json` (and the delegated workspace's), framework and route files, `git log --oneline -10`, `git status --short`, product docs and `AGENTS.md`. For `.env*`, read only URL and port keys; never quote secrets. Pin a summary: intent, primary flows, stack, dev URL, backing targets and permitted effects, routes in scope, lens.
-3. **URL.** Use the one given, else detect it (see `references/browser-session.md`). Start a dev server only if the right command is clear, local and non-mutating, never `dev:all` or a production-backed script. If several apps or commands fit, ask one question.
-4. **Load** the page and confirm it is the target. Check the console and failed requests.
-5. **Capture the first impression** before interacting.
-6. **Exercise the primary flow.**
-7. **Trigger one empty, invalid, loading or error state** when safe.
-8. **Visit nearby and secondary routes.**
-9. **Check mobile (~375px) and desktop (~1440px)** for broad or visual tasks.
-10. **Check keyboard and accessible names** on primary controls.
-11. **Async flows**: start A, then B before A completes. A late response must not replace B, and an unrelated update must not replay A or clear a current error.
-12. **Embedded apps**: test in the real host. A standalone demo covers only itself; report each separately.
-13. **Record** a ~30s clip of the primary flow on a full test if the tool supports it. A reader should be able to verify the finding from the clip alone. Skip when it cannot record.
+1. Learn the app: `package.json`, routes, `git log --oneline -10`, `AGENTS.md`. Read only URL and port keys from `.env*`.
+2. Use the URL given, else find it (see `references/browser-session.md`). Ask if several apps fit.
+3. Load the page, confirm it is the target, and check the console and failed requests. Note the first impression before interacting.
+4. Exercise the primary flow, then one empty, invalid, loading or error state, then nearby routes.
+5. For broad or visual work, check ~375px and ~1440px, plus keyboard focus and accessible names on primary controls.
+6. Async flows: start A, then B before A completes. A late A must not overwrite B, replay, or clear a current error.
+7. Embedded apps: test inside the real host. A standalone demo covers only itself.
+8. Record the primary flow when the tool can record its own actions.
 
 A focused regression covers the affected route and one adjacent state.
 
-### Try to break it
+- **Try to break it**: read [references/stress-test.md](references/stress-test.md) when asked to stress-test, break it or find edge cases, or when a full test touches forms, lists or async flows.
+- **Returned content**: read [references/output-quality.md](references/output-quality.md) when the page returns images, search results, generated content or a set of examples. A working control does not make its output useful.
 
-Read `references/stress-test.md` when the user asks to stress-test, break or find edge cases, or a full test touches forms, lists or async flows. It holds the hostile content set, abuse and network cases, environment extremes and report rows.
+## Lens
 
-### Judge returned content
+Use the user's persona, else pick one:
 
-Read `references/output-quality.md` when the page returns images, search results, generated content or a collection of examples, or the user says to inspect every one. A working control does not make its output useful.
-
-## Measurement discipline
-
-Each rule here is a measurement that once returned a confident wrong number.
-
-- **Assert the viewport and URL before every measurement.** Read back `innerWidth+"x"+innerHeight` and `location.href`. If either is wrong, reset and retry; never report a number from the wrong size or page.
-- **Let the instrument find the defect.** A check aimed where you already expect the answer cannot disconfirm you. State beforehand what result would have.
-- **Prove the capture could show the defect.** Two areas close in tone prove nothing about their boundary. Check the precondition (contrast, state, data present); refuse the capture if it fails.
-- **Pair every "declared thing is right" check with a "nothing left undeclared" check.** A gate on what a page declares is blind to a page declaring nothing.
-- **Wait for the end state, not the first appearance.** Wait on the condition that means finished, not on an element appearing or a fixed sleep.
-- **A synthetic click is not a tap.** Programmatic clicks bypass hit-testing, pointer-events and overlays. Use the tool's real click and assert the intended change.
-- **Put thresholds in the driver script, not in your head.** A value you read can be rationalised; one you refuse on can be trusted.
-
-## Lenses
-
-Use the user's persona, else pick one. Questions for each are in `references/browser-session.md`.
-
-- **First-time user**: clarity, orientation, next step, error recovery.
-- **Designer**: hierarchy, spacing, type, interaction quality.
+- **First-time user**: what is this, what do I do next, can I recover from a mistake.
+- **Designer**: hierarchy, spacing, type, interaction states.
 - **Operator**: repeated work, density, tables, filters, bulk actions.
-- **Demo presenter**: narrative, reliability, hazards mid-walkthrough.
-- **Responsive auditor**: fit, overflow, target sizes, sticky overlap.
+- **Demo presenter**: a safe first screen, awkward waits, fragile steps.
+- **Responsive auditor**: overflow, tap targets, sticky overlap, narrow dialogs and tables.
 
-Findings still need evidence and impact; no taste commentary.
+A lens shapes where you look; findings still need evidence.
 
-## Findings
+## Report
 
-Report only what browser evidence supports. Fewer, better findings beat a long list. Lead with findings; keep praise short. Each finding has: severity, route or screen, what happened, why it matters, reproduction steps, evidence (path, console message, network status or visible state), likely cause when code supports it, and a suggested fix. If nothing meaningful turned up, say so and list what was tested.
+Fewer, better findings, leading the report. Each has route, what happened, why it matters, reproduction steps, evidence (screenshot path, console message, network status or visible state), likely cause when the code shows it, and a fix.
 
-## Fix mode
-
-When asked to fix: reproduce in the browser, inspect the smallest relevant code path, make scoped edits, run the relevant checks, re-test in the browser. Capture before and after clips when the tool can record. Do not fix what was not reproduced.
-
-## Output
+- **High**: blocks the primary flow, loses data, risks security, or is unusable at a key viewport.
+- **Medium**: hurts comprehension, trust, accessibility or repeated work.
+- **Low**: polish, minor inconsistency, weak copy.
 
 ```markdown
 ## Fieldtest Report
 
 Target: [URL]
-Mode: [report-only QA | QA plus fixes | focused check | responsive audit | persona walkthrough | stress test]
-Lens: [persona or lens]
-Browser: [tool | static inspection only, not browser-verified]
-Viewports: [sizes tested]
+Lens: [persona]
+Browser: [tool | not browser-verified]
+Viewports: [sizes]
 Recordings: [paths, or none]
 
 ## Findings
@@ -98,14 +74,6 @@ Recordings: [paths, or none]
 ## Residual Risk
 ```
 
-A focused check is shorter but keeps target, steps and result. A stress test adds the Stress table from `references/stress-test.md`.
+If nothing meaningful turned up, say so and list what was tested. A stress test adds the Stress table from `references/stress-test.md`.
 
-## Completion check
-
-- The app loaded in a browser; the URL and viewports are named.
-- Console and network were checked where the tool allowed.
-- Findings carry reproduction steps or concrete evidence.
-- Collection coverage names the inspected cases and the omissions; loaded or captured does not count as visually inspected.
-- No destructive flow ran without confirmation.
-- Fixes were re-tested in the browser.
-- Recordings were captured, or their absence is stated.
+When asked to fix: reproduce first, change the smallest code path, and re-test in the browser. Don't fix what you could not reproduce.
