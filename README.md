@@ -94,7 +94,7 @@ npx skills@latest add howells/skills --skill componentize --agent codex --global
 
 ### `computer-use`
 
-Operate macOS apps through native Codex Computer Use, including signed-in Chrome and API-backed setups. Not for browser-only QA (`fieldtest`).
+Control Mac apps, including signed-in Chrome, through native Codex Computer Use from Codex or Claude Code. Not for browser-only QA (`fieldtest`).
 
 Install globally for Codex:
 
@@ -134,7 +134,7 @@ npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 
 ### `gog`
 
-Use gogcli for configured Google accounts instead of Google connectors. Not for web research (`web-research`).
+Work in Gmail, Calendar, Drive, Docs and Sheets through the authenticated gog CLI instead of Google connectors. Not for web research (`web-research`).
 
 Install globally for Codex:
 
@@ -184,7 +184,7 @@ npx skills@latest add howells/skills --skill mastraudit --agent codex --global
 
 ### `memento`
 
-Report what this task is doing now from live state: original ask, completed work, remaining work, branch, uncommitted files, and drift. Use when returning to a long session. For a roll-call across tasks use `muster`; for rewriting only the last reply use `what`.
+Say where this task stands from live state: the ask, done, left, branch, uncommitted files and any drift. Use on returning to a long session. Not for many sessions (`muster`) or the last reply (`what`).
 
 Install globally for Codex:
 
@@ -194,7 +194,7 @@ npx skills@latest add howells/skills --skill memento --agent codex --global
 
 ### `muster`
 
-Recover project purpose, decisions and in-flight work across concurrent or older sessions; check transcripts, git, peers and the tracker for catch-ups or handoffs. Not for one current task (`memento`), rewriting the last reply (`what`), or git conflicts and repository cleanup (`salvage`).
+Catch up on work across concurrent or older sessions: what's in flight, who owns it, what was decided, and a handoff when asked. Not for this task's status (`memento`), the last reply (`what`) or git conflicts and cleanup (`salvage`).
 
 Install globally for Codex:
 
@@ -225,7 +225,7 @@ npx skills@latest add howells/skills --skill paste-up --agent codex --global
 
 ### `plimsoll`
 
-Cut process weight when gate ladders, CI/build watch loops, remote Vercel builds or re-planning displace shipping. Keeps Vercel builds on the user's machine. Use near a deadline or after nothing user-visible has landed. Not `simplify`.
+Cut checks, CI watch loops and re-planning that crowd out shipping, and keep Vercel builds on the user's machine. Use near a deadline or when nothing visible has landed. Not for codebase review (`simplify`).
 
 Install globally for Codex:
 
@@ -235,7 +235,7 @@ npx skills@latest add howells/skills --skill plimsoll --agent codex --global
 
 ### `product-description`
 
-Document user-visible product behaviour from code, tests and the running product, then consolidate defects into triage. Not for marketing copy, READMEs, single-feature specs, or browser QA alone (`fieldtest`).
+Document a product's user-visible behaviour feature by feature from code, tests and the running product, then triage suspected defects. Not for marketing copy, READMEs, single-feature specs or browser QA alone (`fieldtest`).
 
 Imported from [Steve Ruiz's original `product-description` gist](https://gist.github.com/steveruizok/83ae5c53f2784ebf8f5fe0a3fb94480f).
 
@@ -247,9 +247,7 @@ npx skills@latest add howells/skills --skill product-description --agent codex -
 
 ### `rebalance`
 
-Reprioritize a project's backlog for a goal. Not implementation (`implement`).
-
-Give it a project, a concrete goal and an optional deadline. It checks the whole open backlog, reconciles evidenced stale statuses, makes essential unfinished work urgent, and prepares dependencies for delivery. The new priorities stand; there is no saved priority snapshot or restoration mechanism. It uses relevant `ask-matt` flows when available and stops before implementation. If no related tickets exist or the tickets are too thin to implement, it explains the gap and invites `grilling`, `to-spec` or `to-tickets` as appropriate.
+Reprioritize a project's backlog around a goal or deadline, and flag goal work too thin to build. Not for doing the work (`implement`).
 
 ```bash
 npx skills@latest add howells/skills --skill rebalance --agent codex --global
@@ -333,7 +331,7 @@ npx skills@latest add howells/skills --skill unslop --agent codex --global
 
 ### `what`
 
-Re-explain only the previous reply in three plain lines: what happened, current state, next step. No new facts. Not task status (`memento`) or session recovery (`muster`).
+Re-explain only the previous reply in three plain lines: what happened, where things stand, what's next. No new facts. Not task status (`memento`) or session recovery (`muster`).
 
 Install globally for Codex:
 

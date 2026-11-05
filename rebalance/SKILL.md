@@ -1,75 +1,50 @@
 ---
 name: rebalance
-description: "Reprioritize a project's backlog for a goal. Not implementation (`implement`)."
+description: "Reprioritize a project's backlog around a goal or deadline, and flag goal work too thin to build. Not for doing the work (`implement`)."
 ---
 
 # Rebalance
 
-Set the project's current priorities around the user's goal. Review the whole open backlog, identify the unfinished work needed for that outcome, and make its essential delivery path urgent so delivery can pick it up. Reassess everything else by its current importance. These are the new priorities: no saved priority snapshot, expiry, restoration mechanism or extra tracking system.
+Re-set a project's priorities around the user's goal: make the goal's essential delivery path Urgent and reassess everything else on current importance. These are simply the new priorities, with no snapshot, expiry or restore.
 
-Use the named project, or infer it from the current repository and conversation. Accept a goal and optional deadline in ordinary language, for example: “prepare the guided design flow for tomorrow's demo.” Resolve relative dates using the user's timezone. Announce the project, concrete outcome and deadline in one short sentence. Ask only when the target or a decision affecting scope cannot be established from available evidence. Do not invent a deadline or treat an example as an instruction to edit that project's tracker.
+- **Scope.** Take the named project, or infer it from the repo and conversation. Take the goal and any deadline in ordinary words ("the guided design flow for tomorrow's demo"); resolve relative dates in the user's timezone. Never invent a deadline. Ask only when the target or a scope-changing decision can't be found from evidence.
+- **Authority.** Invoking this authorizes tracker writes within the project: priorities, spec improvements, missing goal items, blocking links and evidenced status fixes. A request for advice or a preview does not. Leave other projects' priorities alone.
+- **Stop before code.** No `implement`, no new delivery task. Keep specs, decisions and dependencies in the tracker under its documentation policy; no ticket files, handoff docs or ADRs.
 
-## Use the relevant parts of Ask Matt
+## 1. Read the real backlog
 
-This skill follows `ask-matt`'s routing principles. Read the installed router when available, and invoke its supporting skills only when a specific gap needs them. The essentials below apply independently; installing the whole collection or running its setup flow is not a prerequisite.
+- Fetch every page of open items in every open state: backlog, in progress, blocked, review. A failed or partial fetch is not the whole backlog; say what's missing rather than concluding from it.
+- Read comments and linked PRs for goal-critical, already-urgent, contradictory or unclear items.
+- Check whether open work is already delivered, against its acceptance criteria and the code, release or running product. A merged PR doesn't prove it's deployed. Fix stale status with evidence; mark what you can't verify as unverified.
+- For a large backlog, split read-only checks across parallel agents and keep tracker writes with one coordinator.
 
-- **Clarify the outcome:** use `grilling` for a decision the user must make, after gathering facts yourself. A stated, testable goal needs no interview.
-- **Make work buildable:** use `to-spec` when the intended behaviour is missing, then `to-tickets` when it needs several independent deliveries. Prefer small end-to-end increments with testable acceptance and explicit blocking relationships. Improve existing items before creating new ones.
-- **Handle raw incoming reports:** use `triage` when a report needs investigation or clarification. Already specified items do not need another triage cycle merely because their priority changes.
-- **Recognise unresolved decisions:** reserve `wayfinder` for a large effort whose route cannot yet be determined. Identify that gap and keep the independently actionable work moving; do not replace a bounded rebalance with a design programme.
-- **Hand off to delivery:** leave self-contained items for fresh delivery tasks. Do not invoke `implement`, start coding, or automatically open another task.
+## 2. Flag work that can't be built yet
 
-Store specs, decisions and dependency evidence in the project's configured tracker. Follow its documentation policy; do not create ticket files, handoff documents or ADRs merely because another skill uses those defaults.
+Check that tickets exist for the goal and say enough for a fresh agent to build them: problem, intended behaviour, testable acceptance, dependencies. Judge from descriptions, comments and linked specs, not titles.
 
-## Read the actual backlog and delivery state
+- **None:** say "I couldn't find any tickets covering this goal" and what you searched. Offer `grilling` if decisions are still open, or `to-spec` then `to-tickets` if the goal is clear. Then stop; don't reshuffle unrelated work or invent a backlog unless asked.
+- **Too thin:** link them, name the missing decisions or acceptance criteria, and offer the same skills. Don't invent requirements or mark them ready.
+- **Some ready:** rebalance those and name the part of the goal still unspecified. An essential thin item can be Urgent with the project's needs-info state; urgency doesn't make it actionable.
 
-Discover the configured tracker and account, using `linear` when appropriate. This works in Codex, Claude Code, OpenCode, Cursor or another host: use native tools and the available skill mechanism. Do not assume provider names, credentials, personal paths or a particular tracker schema. If access is missing, state the limitation and provide a proposed rebalance without claiming it was applied.
+Make the offer one concrete question; don't start the interview. Use `triage` for raw reports that need investigation, and `wayfinder` only for a large effort whose route is unknown, keeping independent work moving meanwhile.
 
-Fetch every page of open items for the selected project, including backlog, in-progress, blocked and review states. Read priorities, descriptions, acceptance criteria, owners, labels and blocking relationships. Read relevant comments and linked PRs for goal-critical, currently urgent, contradictory or unclear items. Follow dependencies outside the project to understand them, but do not reprioritize another project's backlog without authorization. A partial page or failed lookup is not the whole backlog; report incomplete coverage and do not make bulk conclusions from it.
+## 3. Map the goal
 
-Check whether apparently open work is already delivered using its acceptance criteria and the relevant code, release, query or running product. Concentrate deeper checks on the goal-critical path and status corrections; this is not a whole-codebase audit. Record evidence and reconcile stale status under the project's rules. A merged PR alone does not establish deployment or completed operational evidence. Keep unresolved acceptance criteria open, and do not promote already delivered work merely because its ticket is stale. An unverifiable item remains explicitly unverified.
+Trace the smallest complete user journey that demonstrates the goal, including the deployment, data and verification prerequisites it really needs. Shared titles or components don't prove a dependency. Reuse items and native blocking links. Create an item only when part of the goal has no owner, after searching for duplicates; one end-to-end increment beats a ticket per layer.
 
-When useful, delegate independent read-only groups of items to native parallel agents: the cheap tier for bounded status checks, the workhorse for code and dependency tracing, the frontier tier for scope or conflicting evidence. Use only models and tools the host supports. Keep tracker writes with one coordinator to avoid overlapping edits. For a small backlog, work directly. Apply `plimsoll` when available: bounded investigation, no repeated audit or polling loop.
+Urgency isn't readiness. Work waiting on an outside decision, credential or another owner can be Urgent and still blocked; record the blocker and never mark it ready to get it picked. Keep assignees. If the deadline can't be met, say why and propose a smaller demonstrable outcome rather than quietly changing the goal.
 
-## Flag missing or underspecified work
+## 4. Set priorities
 
-Before changing priorities, check whether the goal has any relevant tickets and whether those tickets contain enough detail for a fresh agent to implement them. Use the complete backlog and relevant descriptions, comments and linked specs, not title matching alone. Missing access or incomplete pagination is an access or coverage problem, not evidence that no related tickets exist.
+Use the user's own rules first; otherwise map to the tracker's native values:
 
-- **No related tickets:** say plainly, “I couldn't find any tickets covering this goal,” and briefly state what was searched. Invite `grilling` if the intended behaviour still needs decisions, or `to-spec` followed by `to-tickets` if the goal is already clear. Stop without reprioritizing unrelated work or inventing a delivery backlog. An explicit request to also specify or create that backlog can authorize continuing.
-- **Related tickets are too thin:** link them, say they are not yet specific enough to implement, and name the missing decisions or acceptance criteria. A useful ticket establishes the problem, intended user behaviour, testable completion criteria and known dependencies; use linked specs when they provide that detail. Invite `grilling` for unresolved choices, `to-spec` to capture settled requirements, or `to-tickets` to break an existing spec into deliverable increments. Do not silently invent requirements or mark these items ready for delivery.
-- **Some work is ready:** rebalance the well-specified items and explicitly report which part of the goal still needs specification. Thin but essential items may be urgent and marked with the project's information-needed role; urgency does not make them actionable. If none is actionable, say so and finish with the appropriate invitation instead of handing an arbitrary ticket to delivery.
+- **Urgent:** indispensable to the goal, its blockers, and incidents or commitments that still need immediate attention.
+- **High:** supports the goal without being required, or another important current commitment.
+- **Normal:** useful, off the delivery path.
+- **Low:** polish that can wait.
 
-Make the invitation one short, concrete question explaining what the proposed skill would resolve. Do not automatically start an interview or the whole Ask Matt flow. Where that skill is unavailable, offer the same clarification or specification work in ordinary language. Routine factual improvements and small missing prerequisites below remain allowed when existing evidence is sufficient; they must not conceal missing product decisions or substitute for this notice.
+Reassess existing Urgent items too: demote stale urgency, but not a live severe incident just because it's off-goal. Missing information isn't evidence of low importance; keep the current priority when there's no basis to change it. Add a one-line rationale to each changed item. Don't create a parent item to record the rebalance, assign work, or move it to In Progress because it became urgent.
 
-## Establish what the goal actually requires
+## 5. Report
 
-Trace the smallest complete user journey that demonstrates the goal and map its acceptance to existing items. Include implementation, integration, deployment, data and verification prerequisites when they are actually required. Similar titles or shared components do not prove a dependency. Read the owning code or delivery evidence when necessary to establish the relationship.
-
-Reuse existing items and native blocking links. Create a missing item only when a concrete part of the goal has no owner in the backlog; search for duplicates first. Each item should state the observed gap, intended behaviour, relevant evidence, testable acceptance and dependencies, so a fresh agent can deliver it. Split only when independent end-to-end increments improve delivery; do not manufacture a ticket per technical layer. Check the resulting dependency graph for cycles and mistaken blockers.
-
-Distinguish urgency from readiness. A necessary external decision, unavailable credential, observation period or another owner's active work can be urgent while still blocked. Record the actual dependency and the project's readiness role; never mark it ready just to get it selected. Preserve assignees and ongoing ownership. If the deadline is not achievable, say what prevents it and identify a smaller demonstrable outcome without silently changing the user's goal.
-
-## Apply the rebalance
-
-Invocation authorizes priority changes within the selected project, necessary spec improvements, missing goal-related items, dependency links and evidenced status reconciliation. Do not ask for another confirmation merely because these are tracker writes. A request for advice or a preview alone does not authorize mutations.
-
-Use the user's explicit priority rules first, otherwise map these meanings to the tracker's native values:
-
-- **Urgent:** unfinished work indispensable to the stated goal and its necessary blockers, plus independently urgent incidents or commitments that still warrant immediate attention.
-- **High:** valuable near-term work that supports the goal but is not required to demonstrate it, or another important current commitment.
-- **Normal:** useful work outside the immediate delivery path.
-- **Low:** optional polish or minor improvements that can wait.
-
-Reassess existing urgent items as well as promoting new ones. Demote stale urgency when its reason no longer applies. Do not preserve an old priority solely because it is already set, or demote an active severe incident simply because it is unrelated to the goal. Missing information is not evidence that something is unimportant; clarify material uncertainty and retain the current priority where there is no defensible basis to change it.
-
-Apply only necessary changes. Add a brief rationale tied to the goal or current impact on changed items, and put shared goal context in an existing owning item or project when available. Avoid creating an administrative parent item just to record the rebalance. Re-read affected fields before writing when concurrent edits are possible; preserve unrelated labels, descriptions, owners and fresh decisions. Use native blocking relationships and existing readiness roles. Do not assign work or move it to In Progress simply because it became urgent.
-
-Verify the written priorities, statuses and dependency links from tracker responses or a focused readback. After an uncertain write result, reconcile the item's live state before retrying. Report partial application accurately. Do not keep polling or rechecking settled items.
-
-## Finish
-
-Order the required work blockers-first; do not nominate a dependent item as ready while a necessary prerequisite remains unresolved or unverified. Preserve independently urgent incidents in that ordering.
-
-Give a short plain-language report: the goal, how many items changed, the linked urgent delivery order, and any blocked or unverified part of it. Name the first actionable item, or explain why none is ready. Always include any missing-ticket or specification gap and the appropriate invitation described above. Link changed items compactly rather than dumping the backlog. Use `deslop` when available to tighten the message.
-
-Stop after the rebalance. The new priorities stand until the user changes them again; no automatic restoration and no implementation in this invocation.
+Project, goal and deadline; how many items changed; the urgent delivery order, blockers first, linked; anything blocked or unverified; the first actionable item, or why none is ready; any spec gap with its one-question offer. Then stop.

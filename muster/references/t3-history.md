@@ -1,23 +1,10 @@
 # Reading T3 history
 
-Use the live T3 tool schemas; names and pagination fields can change. A thread list establishes membership, not that its transcripts were read.
+Use the live T3 tool schemas; names and pagination fields change.
 
-## Coverage
-
-1. Record the requested date window, timezone, projects and a snapshot time. Follow every project/thread listing page in scope, including archived entries when requested. Separate empty project groups from inaccessible ones.
-2. Record parent/child relationships and activity timestamps. A child may contain the actual work while a root contains only orchestration. Include children when the user asks for all transcripts; distinguish them in the coverage count.
-3. Read each transcript through every message page. Recover truncated items with the returned item identifier and text offset until no continuation remains. A search excerpt alone isn't a full read.
-4. Use activity/tool details to verify load-bearing claims, failures and ambiguous outcomes. Reading every message doesn't imply inspecting every tool result, image, video or embedded app. Name the actual coverage.
-5. Keep identifiers and positions alongside evidence so a finding is recoverable. Report the snapshot and counts of projects, top-level threads, child threads, complete reads and gaps. For a moving corpus, don't imply coverage beyond the snapshot.
-
-For broad reviews, keep a compact coverage ledger in tool state or disposable scratch storage while reading and return findings in chat. Before handing off, preserve any ledger or cited evidence another task needs in a durable source or authorised copy, with exact locations and a completeness check. Where the project uses a tracker and its instructions or the user authorise updates, put durable findings and evidence on the owning item. Don't create repo reports by default.
-
-## Attribution and current state
-
-- Attribute the user's direct instructions separately from agent proposals, inherited context and peer messages. A handoff quoting an earlier message isn't a new user decision.
-- Deduplicate inherited transcript excerpts rather than counting repeated copies as repeated incidents. Check the original item when the distinction matters.
-- Preserve corrections and the final accepted direction. An abandoned plan doesn't establish what shipped.
-- Check live peers before entering a checkout. A transcript status or a list of this thread's children isn't a census of every writer.
-- Verify completion at the relevant source: code integration, actual data, rendered host or delivered artefact. State when that source is unavailable.
-
-Use each thread's host-returned link verbatim; do not construct a URI from its ID or hardcode a scheme/version. If no link is supplied, retain the exact ID as evidence and report the missing link. Include an item ID or position where useful for a long transcript.
+- **Listing isn't reading.** A thread list establishes membership, not that a transcript was read. Follow every listing page in scope, archived entries included when asked, and every message page within a thread. Recover truncated items with the returned item ID and text offset. A search excerpt isn't a full read.
+- **Children do the work.** A child thread often holds the actual work while its root only orchestrates. Include children when asked for all transcripts, and count them separately.
+- **Attribute carefully.** Separate the user's direct instructions from agent proposals, inherited context and peer messages. A handoff quoting an earlier message isn't a new user decision. Deduplicate inherited excerpts rather than counting copies as repeat incidents. An abandoned plan doesn't establish what shipped.
+- **Check peers before entering a checkout.** This thread's children are not a census of every writer.
+- **Links verbatim.** Use each thread's host-returned link as given; never build one from an ID. If none is returned, keep the exact ID.
+- **Report coverage.** A snapshot time, and counts of projects, top-level threads, child threads, complete reads and gaps. Don't imply coverage beyond the snapshot.

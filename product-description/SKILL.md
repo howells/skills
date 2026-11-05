@@ -1,149 +1,85 @@
 ---
 name: product-description
-description: "Document user-visible product behaviour from code, tests and the running product, then consolidate defects into triage. Not for marketing copy, READMEs, single-feature specs, or browser QA alone (`fieldtest`)."
+description: "Document a product's user-visible behaviour feature by feature from code, tests and the running product, then triage suspected defects. Not for marketing copy, READMEs, single-feature specs or browser QA alone (`fieldtest`)."
 ---
 
-# Product description repo
+# Product description
 
-A product description treats the product as a large state chart the user moves through with input. The repo describes that state chart feature by feature, in plain language, from the user's point of view, with the same skeleton for every document so that gaps and inconsistencies show up by comparison. Documents are drafted from the source code and its tests, then verified by hand against the running product, and everything that looks like a defect is collected into one triage file.
+Treat the product as a large state chart the user moves through with input. Describe it feature by feature, in plain language, from the user's side, with the same skeleton for every document so gaps and contradictions show up by comparison. Draft from source and tests, verify against the running product, and collect everything that looks wrong into one triage file.
 
-The files under `references/`:
-
-| File | What it is |
-| --- | --- |
-| `product-kinds.md` | How to map the template onto a canvas editor, a web app, a CLI, or a chat product. Read in Phase 0. |
-| `README-template.md`, `goal-template.md`, `glossary-guide.md` | Skeletons for the three files that steer the whole build. |
-| `document-template.md` | The eight-section skeleton every feature document follows. |
-| `verification-template.md`, `bug-triage-template.md` | Skeletons for the checking half. |
-| `check-links.py` | Link and anchor checker for the consistency pass. `python3 check-links.py {repo}`. |
-
-## Destination before scaffolding
-
-Read the consuming project's operating rules before creating a documentation repository. The default below is a standalone repo. When policy requires tracker-owned documentation, use the existing owning issue and linked documents instead, within the user's authorised scope. Do not create local reports, a new repo or extra instruction files to bypass that policy.
-
-Map the logical outputs once:
-
-| Repository output | Tracker-owned destination |
-| --- | --- |
-| README and coverage table | Owning document with scope, structure, conventions and linked feature coverage |
-| Standing drafting instructions in goal.md | Linked instructions document, including established facts and reading order |
-| Glossary | One linked glossary document owned by the coordinator |
-| Feature documents | Linked documents using the same eight-section skeleton and source footer |
-| Verification files | Linked checklist documents with stable IDs, results and evidence |
-| Bug triage | Deduplicated triage section on the owning record; upstream issues remain a separately authorised action |
-| AGENTS.md / CLAUDE.md entry points | A reading-order pointer on the owning record; no new local instruction files |
-
-In tracker mode, the filenames in later phases name these logical outputs. Save and read back records where repository mode says to commit; verify record links and coverage through the configured tracker instead of running the filesystem link checker on remote documents. Give delegates the actual record links. Keep pilot, foundations, glossary ownership, behavioural depth, verification and triage unchanged in either destination. Resume from the owning record and its linked outputs.
+**Never modify the source repo.** It is read-only reference. **Never send messages, take payments or publish to document behaviour**: a throwaway production account doesn't isolate those. Use an isolated setup for mutating flows unless the user authorized those exact actions; otherwise mark the claim unverified. **Filing triage entries upstream is outward-facing**: offer it, don't do it unasked.
 
 ## Outputs
 
 ```
 README.md            purpose, conventions, document template, method, structure, coverage table
-goal.md              the standing instructions for whoever drafts (you, subagents, a future session)
-glossary.md          the vocabulary; the source of truth for every term of art
+goal.md              standing instructions for every drafter: reading order, established facts, rules
+glossary.md          the vocabulary; source of truth for every term of art
 AGENTS.md            "Read README.md, then goal.md. The coverage table in README.md is the work list."
 CLAUDE.md            "Read @AGENTS.md."
 {area}/{feature}.md  one document per feature, all on the same skeleton
-verification/        README.md (protocol) + one checklist file per cluster of documents
+verification/        README.md (protocol) + one checklist per cluster of documents
 bug-triage.md        every suspected defect, deduplicated, with repro, cause, severity, decision needed
 ```
 
-## Phase 0: scope
+The default is a standalone git repo. When the consuming project keeps documentation in its tracker, put the same outputs there as linked documents on the owning issue (no local repo, reports or instruction files) and check links by reading the records back instead of running the link checker.
 
-Settle these before writing a file. Ask only for what you cannot infer from the conversation or the source repo; record the answers in the README's "Scope decisions" section.
+## 1. Scope
 
-1. **Product and surface.** What exactly is being described: which app, which route, role, or configuration, with what customization (usually "the defaults, nothing customized"). One surface per repo.
-2. **Source of truth.** The path to the source repo (read-only reference) and the commit. Every document footer cites `git rev-parse --short HEAD` of that repo.
-3. **Where and how to verify.** Record the command and URL, binary or account, environment, owned test data and authorized side effects. A throwaway production account does not isolate payments, invitations, publishing or shared records. Use an isolated setup for mutating flows unless the user already authorized those exact actions. Mark other such checks unverified and continue read-only work; never send messages or make production transactions merely to document behaviour.
-4. **Out of scope.** Name what is excluded and why, so later readers do not think it was forgotten.
-5. **Destination.** Select the repository or tracker mapping above. In repository mode, choose the new directory, `git init` and first commit `Initial commit`. In tracker mode, record the existing owning issue and document links without creating a local repo.
-6. **The product's shape.** Read `references/product-kinds.md` and decide, once: the unit of interaction and the names of its five phases; the variant axis (modifiers, flags, roles); the fixed interrupt list; the cross-cutting concerns and their order. These go into the README's "Document template" section and the glossary before the pilot is written, and they do not change afterwards without revisiting every document.
+Settle these first; ask only for what the conversation and source repo can't tell you. Record them in the README's "Scope decisions".
 
-Then do a reconnaissance pass over the source repo to find: where interaction state lives (state machines, reducers, controllers, route handlers, command definitions), where behavior tests are (the ones that read as executable specs of edge cases), where the UI is, and where defaults and thresholds are defined (options, constants, config schemas). These go into the README's "Reference" section and goal.md's reading order.
+- **Surface.** Which app, route, role or configuration, usually the defaults. One surface per repo.
+- **Source.** The source repo path and commit; every footer cites `git rev-parse --short HEAD`.
+- **Verification setup.** Command or URL, account, environment, owned test data, and which side effects are authorized.
+- **Out of scope**, and why.
+- **The product's shape.** Read [references/product-kinds.md](references/product-kinds.md) and fix, once: the unit of interaction and its five phases, the variant axis, the interrupt list, and the cross-cutting concerns in order. Changing them later means revisiting every document.
 
-## Phase 1: scaffold
+Then find where interaction state lives (state machines, reducers, controllers, routes, commands), which tests read as specs of edge cases, where the UI is, and where defaults and thresholds are defined. These go in the README's "Reference" and goal.md's reading order.
 
-Write, in this order, adapting the templates in `references/`:
+## 2. Scaffold
 
-1. **README.md** from `README-template.md`. The structure section is the plan: list every document you expect to write with a one-line gloss, grouped by how the user meets the feature (foundations, then the areas of the product, then cross-cutting concerns), never by package or module. The coverage table lists every document as `not started`. Getting the structure right up front is most of the planning; expect to revise it as you learn, and update the table whenever you do.
-2. **glossary.md** from `glossary-guide.md`. Start with the terms the foundations will need and the interrupt words from Phase 0; grow it as documents demand new words. A term used in a document that is not in the glossary is a consistency bug.
-3. **goal.md** from `goal-template.md`. This is the prompt that drives all drafting. Its "Things already established" section is empty at first and fills in as the foundations are written.
-4. **AGENTS.md** and **CLAUDE.md** with the one-line contents shown under Outputs. Do not leave AGENTS.md empty; it is what a fresh session reads first.
+Write README.md from [references/README-template.md](references/README-template.md): its structure section lists every expected document grouped by how the user meets it (foundations, product areas, cross-cutting concerns), never by package. Then glossary.md from [references/glossary-guide.md](references/glossary-guide.md), goal.md from [references/goal-template.md](references/goal-template.md), and the two one-line entry files. Commit.
 
-Commit: `docs: add README, glossary, goal`.
+## 3. Pilot, foundations, hardest area: yourself, in order
 
-## Phase 2: pilot, foundations, the hard part
+These set the depth, tone and vocabulary everything else copies.
 
-Do these yourself, in sequence, not in parallel. They fix the template, tone, depth, and vocabulary that everything else copies.
+1. **Pilot.** One small feature with a real interaction, on the full eight-section skeleton in [references/document-template.md](references/document-template.md). Iterate until it's right. Depth follows the behaviour, not a length target.
+2. **Foundations.** The input model (events, thresholds, what cancels and interrupts), the core data model, the mode or navigation model, the viewport or session model. They own the facts others link to; add each load-bearing number and rule to goal.md's "Things already established".
+3. **Hardest area.** Read all of its state handling before writing any of it, decide which document owns each state, and record that in goal.md.
 
-1. **Pilot.** One small, self-contained feature with a real interaction in it (`product-kinds.md` names one per product kind). Write it on the full eight-section template (`document-template.md`). Iterate on it until it is right; every later document copies it. Cover each applicable phase, variant, interrupt and cross-cutting concern with evidence. Depth follows the feature's actual behaviour, not a line target; explain non-applicable sections briefly rather than padding them.
-2. **Foundations.** The documents everything else links to: the input or invocation model (events, thresholds, what cancels, completes, and interrupts), the core object or data model, the mode, tool, or navigation model, the viewport or session model. These *own* the facts other documents link to instead of restating. As each is written, add its load-bearing facts (numbers, defaults, rules) to goal.md's "Things already established" so no later document re-derives or contradicts them.
-3. **The hardest area.** The bulk of the experience (the selection tool, the main editor, the `build` command, the composer plus the streaming response). Read all of its state handling before writing any of its documents, because the states hand off to each other and the documents must agree on where one ends and the next begins. Decide which document owns each state and write that down in goal.md.
+## 4. Draft the rest in parallel
 
-Commit after each document or coherent group: `docs: add {path}`.
+One document or small cluster per subagent, prompted:
 
-## Phase 3: draft the rest in parallel
+> Read `goal.md`, `README.md`, `glossary.md`, `{pilot}` and `{the foundation this depends on}`. Write `{area}/{feature}.md` on the same skeleton and depth, in the glossary's words. Return any missing term as a proposed definition; don't edit the glossary or any other document, or the source repo. End with "## Open questions and verification" and the footer. Report what code and tests couldn't tell you.
 
-Once the exemplars exist, the remaining documents are independent. Fan out with subagents, one document or small cluster per agent. Each agent's prompt is:
+The coordinator alone edits the glossary. Before accepting a document, check: glossary words used correctly, established facts not contradicted, every interrupt row filled (even "no effect"), suspected bugs stated plainly in open questions rather than smoothed over. Mark it `drafted` in the coverage table.
 
-> Read `goal.md`, `README.md`, `glossary.md`, `{pilot}`, and `{the foundation document this feature depends on}`. Write `{area}/{feature}.md` on the same skeleton, at the same depth. Use the glossary's words; if you need a missing term, return its proposed definition to the coordinating agent. The coordinator alone edits the shared glossary and resolves competing definitions before accepting documents. Do not edit any other existing document. Do not modify the source repo. End with "## Open questions and verification" and the footer. Report what you could not determine from code and tests.
+## 5. Consistency pass
 
-Review every result yourself before accepting it. Check: glossary words used correctly, established facts not contradicted, relative links resolve, footer present, interrupt table complete (every row, even if the answer is "no effect"), suspected bugs stated plainly in "Open questions" rather than smoothed over.
+One term per thing, all in the glossary. Where two documents touch, one owns the behaviour and the other links. Interrupt rows and cross-cutting concerns in the same order everywhere. README structure and coverage table match the files exactly. Check links and anchors by running `python3 references/check-links.py {repo}` from this skill's directory (exit 1 is broken targets; exit 2 is incomplete coverage, so raw HTML links and renderer-specific anchors still need a look). Then deepen the documents whose open questions were thinnest.
 
-Update the coverage table to `drafted` as each lands. Commit in groups: `docs: add {paths}`.
+## 6. Verification
 
-## Phase 4: consistency pass
+From [references/verification-template.md](references/verification-template.md): a protocol README and one checklist per cluster, one row per observable claim with a stable ID (`AREA-NN`), priority, setup, steps and expected result. If you can drive the product, run a first pass and say exactly what it covered. A document is `verified` only when every P1/P2 claim was observed in the running product or its failure reproduced in triage; code reading and mocked tests don't count, and visual claims need rendered inspection. A failed row may mean the document is wrong rather than the product.
 
-Over the whole set:
+## 7. Bug triage
 
-- Same term for the same thing everywhere; every term of art defined in the glossary; glossary definitions agree with the documents.
-- No two documents describe the same behavior differently. Where two documents touch, one owns the behavior and the other links.
-- In repository mode, check Markdown inline and reference links, including images, and ATX heading anchors with `python3 {skill dir}/references/check-links.py {repo}`. Exit 1 identifies broken targets; exit 2 means incomplete coverage. Raw HTML destinations, indented link/code blocks, unsupported definition syntax and renderer-specific anchors require a separate check; do not treat those gaps as clean. In tracker mode, read back linked records and verify their destinations and coverage instead.
-- Every document has the footer and an "Open questions and verification" section.
-- The interrupt table has the same rows in the same order in every document; the cross-cutting concerns appear in the same order.
-- The README structure and coverage table match the files on disk exactly.
+From [references/bug-triage-template.md](references/bug-triage-template.md): gather every suspected defect from bodies and open questions, merge by root cause, and give each where the user meets it, actual versus expected, repro, the cause at file and line, severity, and the decision needed (`fix` or `product call`). Summary table first, sorted by severity.
 
-Commit: `docs: revise the set after the consistency review`. Then go back through the documents whose open questions were thinnest and deepen them; expect a second revision pass on a handful of documents.
+## Resuming
 
-## Phase 5: verification checklists
+Read AGENTS.md, README.md, goal.md, glossary.md and the pilot. If the source commit has moved, ask whether new documents cite the new commit or the repo stays pinned; never mix silently. Add a new feature to the structure and coverage table before writing it, then its checklist and triage entries with the next free IDs. Never renumber a checklist or triage ID once used.
 
-Drafting reads the code; verification watches the product. From `verification-template.md`:
+## Writing rules (carry into goal.md)
 
-- `verification/README.md`: how to bring up the surface, confirm the commit, run a pass, record results, file failures, and when a document moves from `drafted` to `verified`.
-- One checklist file per cluster of documents, one table per document, one row per observable claim: stable ID (`AREA-NN`), priority (P1 established fact or suspected bug, P2 ordinary claim, P3 a number, color, or timing), what it needs (device, role, network condition), the claim with a link to the section, setup, numbered steps, expected result, Result column (`—` until run). Claims that cannot be checked by hand go under "Not checkable by hand".
-
-If you can drive the product (browser tools, a console handle on the app, a shell for a CLI, a test harness), run a first pass yourself on what can be observed that way, record the results in the Result columns, and say plainly in `verification/README.md` what that pass did and did not cover (for example: a scripted pass checks output, exit codes, and stored state but not what was shown on screen or how long it took to appear). Mark a document `verified` only when the pass directly exercised and observed every required P1/P2 claim, or recorded a reproduced failure in triage. A real CLI invocation can verify output, exit codes and persisted state; code inspection or mocked assertions cannot. Visual claims require rendered inspection. Record the method and remaining coverage gaps. A failed item is not automatically a product bug; sometimes the document is wrong, and the Status line says which.
-
-## Phase 6: bug triage
-
-From `bug-triage-template.md`: collect every suspected defect from every document's body and open questions, merge duplicates (the same root cause raised by many documents is one entry with many "Raised by" links), and write each up with where the user meets it, what happens vs. what was expected, reproduction steps, the cause in the code with file and line, a severity, and the decision the product team needs (`fix` or `product call`). Summary table at the top sorted by severity. Entries confirmed by a verification pass carry a **Status** line.
-
-**Filing upstream is a separate, outward-facing step.** Offer it; do not do it unasked. If the user wants the entries filed as issues, confirm the repo and the format first, file them, then add an Issue line to each entry and a link column to the summary table (`docs: revise bug-triage.md with links to the filed issues`).
-
-## Resuming and extending an existing repo
-
-A later session, or a request to add a feature that was out of scope, starts here rather than at Phase 0.
-
-1. Read `AGENTS.md`, `README.md` (structure, coverage table, scope decisions), `goal.md` (established facts), and `glossary.md`. Read the pilot to recalibrate depth.
-2. Confirm the source repo's commit. If it has moved, decide with the user whether new documents cite the new commit (and say so in their footer) or the repo pins the old one. Do not silently mix.
-3. To add a document: add it to the README structure and coverage table first, write it, add its checklist table to the right `verification/` file (new ID prefix, numbered from 01), add any new triage entries to `bug-triage.md` with the next `B-NN`, and commit each step: `docs: add {path}`, `docs: add the {name} checklist ({PREFIX}-01 to {PREFIX}-NN) to verification/{cluster}.md`, `docs: add B-NN to B-MM to bug-triage.md from the {name} work`.
-4. To revise a document after a verification pass: change the document, update the checklist row's Result and note, update the triage entry's Status, and commit as `docs: revise {path}`.
-5. Never renumber checklist IDs or triage IDs once a pass or an issue has used them.
-
-## Writing rules (carry into goal.md verbatim or adapted)
-
-- Describe the experience, not the code. "The form stays disabled until the server answers", not "the mutation sets isPending". "The file is written only after every check passes", not "validate() runs before write()".
-- Technical detail only in `> Technical note:` block quotes, and only when the mechanism changes what the user would expect.
-- Sentence case for headings. Direct, concrete, no hedging, no marketing.
-- Surprising behavior is stated plainly, with the reason if the code or a comment gives one. If it looks like a bug, say so in "Open questions".
-- Variants and interrupts go in tables, split by phase ("at the start" / "during"). Every cell filled, even with "no effect".
-- Cross-reference with relative links instead of repeating. The foundation documents own thresholds and definitions.
-- One Mermaid `stateDiagram-v2` per interaction, limited to the states the user passes through.
-- Footer: `## Open questions and verification`, a bullet list, then `Source inspected: {repo} commit \`{sha}\`.` and `Runtime verification: {not run, or environment/date and linked checklist results}.`
-- Commits: `docs: add {path}` / `docs: revise {path}`. Follow whatever the user's repo does about AI attribution in commit messages.
-- Never modify the source repo. It is read-only reference material.
-- When a behavior cannot be determined from code and tests, write what can be determined, put the rest in "Open questions", move on. Do not guess, do not block.
-
-## What never changes, whatever the product
-
-The outside-in stance; one skeleton for every document; the interrupt list asked of every feature in the same order; a glossary that owns the words; foundations written first so they own the numbers; a pilot that sets the depth; drafting from code and tests, then verifying against the running product, then triaging what looks wrong. `product-kinds.md` is about what to rename; this list is what not to.
+- Describe the experience, not the code: "the form stays disabled until the server answers", not "the mutation sets isPending". Mechanism goes in a `> Technical note:` only when it changes what the user would expect.
+- Sentence-case headings. Direct and concrete; no hedging or marketing.
+- State surprising behaviour plainly, with the reason if the code gives one. If it looks like a bug, say so in open questions.
+- Variants and interrupts go in tables split by phase, every cell filled.
+- Link rather than repeat; foundations own thresholds and definitions.
+- One Mermaid `stateDiagram-v2` per interaction, limited to states the user passes through.
+- Footer: `## Open questions and verification`, a bullet list, then `Source inspected: {repo} commit \`{sha}\`.` and `Runtime verification: {not run, or environment/date and linked results}.`
+- What code and tests can't settle goes in open questions; don't guess, don't block.
+- Commit per document or group: `docs: add {path}`, `docs: revise {path}`.

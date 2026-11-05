@@ -2,6 +2,8 @@
 
 Placeholders are written `{like this}` and are usually an instruction or a menu of examples; replace every one with real prose (angle-bracket placeholders are not used because GitHub renders them as HTML and they vanish). Keep the section order. The "Structure" block and the "Coverage" table are the plan; keep them exact mirrors of the files on disk.
 
+Contents: Purpose; Conventions; The work to be done (document template, method, verification, order of work, scope decisions); Structure; Coverage; Reference.
+
 ---
 
 # {product} product description

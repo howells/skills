@@ -1,5 +1,4 @@
 interface:
   display_name: "GOG"
-  short_description: "Use GOG for configured Google accounts"
-  default_prompt: "Use $gog to work with my Google accounts through the authenticated GOG CLI."
-
+  short_description: "Gmail, Calendar and Drive through the gog CLI"
+  default_prompt: "Use $gog to work with my Google accounts through the authenticated gog CLI."

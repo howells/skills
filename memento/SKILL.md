@@ -1,33 +1,25 @@
 ---
 name: memento
-description: "Report what this task is doing now from live state: original ask, completed work, remaining work, branch, uncommitted files, and drift. Use when returning to a long session. For a roll-call across tasks use `muster`; for rewriting only the last reply use `what`."
+description: "Say where this task stands from live state: the ask, done, left, branch, uncommitted files and any drift. Use on returning to a long session. Not for many sessions (`muster`) or the last reply (`what`)."
 ---
 
 # Memento
 
-Someone has lost the thread and wants it back in ten seconds. Answer from what is true this minute - the task list, the working tree, what is running - not from a recap of the conversation. Use live repository state for code-status claims, and the user’s latest instructions for the ask. Work outside Git needs its own current evidence.
+Someone has lost the thread and wants it back in ten seconds. Answer from what is true this minute (task list, working tree, what's running, the last few tool results), not from a recap of the conversation. Stop reading as soon as you can answer. No transcript mining, tracker or subagents; if the answer needs those, offer `muster`.
 
-`muster` is the archaeological version: many sessions, transcript mining, tracker sweep. This is the cheap one, about a single session, and it should cost seconds.
+**Lead with their ask, in their words.** They've forgotten it; that's why they asked. If it was amended, give the version in force and say it changed.
 
-**Drift is the point.** Nobody asks this out of curiosity. They ask because they suspect they have lost track, and what they need to know is whether the work is still the work they asked for. *You asked for X; I am doing Y, because Z* is worth more than a tidy list of completed steps, and it is the one thing invisible from outside. State it plainly when it is true - as a fact, not an apology.
+**Drift is the point.** People ask because they suspect the work has wandered. "You asked for X; I'm doing Y, because Z" is worth more than a tidy list of steps. State it as a fact, not an apology.
 
-**Lead with their ask, in their words.** They have forgotten it; that is why they asked. Opening with your current sub-task confirms nothing. If the ask was amended, give the version in force and say it changed.
+Three tries at the same failing command is "stuck", not "working on it". A plan alone is "not started". Uncommitted work is a risk, so give the file count. "Waiting on a build" is a complete answer.
 
-## Reading
+## Output
 
-Task list, working tree, running processes, the last few tool results. Stop as soon as you can answer. No transcript mining, no tracker, no subagents - if the honest answer needs those, say so and offer `muster`.
-
-Three attempts at the same failing command is "stuck", not "working on it". A plan alone is "not started"; source reading, diagnosis and validation are work when they produce evidence, even without edits. Uncommitted work is a risk, so give the file count. "Waiting on a build" is a complete answer.
-
-## Output contract
-
-One screen. These lines, nothing else - no preamble, no restating the question.
+One screen, these lines and nothing else:
 
 - **Ask.** What was asked for.
-- **Now.** What you are doing this minute.
+- **Now.** What you're doing this minute.
 - **Done** / **Left.** Up to five each.
 - **State.** Branch, uncommitted count, anything running.
 - **Next.** One concrete action.
 - **Drift** or **Blocked**, only when true, leading with the mismatch.
-
-Use plain, direct prose; `deslop` is optional when installed and useful. If it takes three paragraphs, they have to read it twice to decide whether to interrupt you.
