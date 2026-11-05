@@ -81,7 +81,7 @@ Build stable states, not just a stable first frame. Reserve room for labels and 
 
 ### 4. Look, then refine
 
-Run the real app at the exact route, viewport and state. Complete the core path with keyboard and pointer, on desktop and on a phone, with long, empty, loading and failing content, in dark mode when the product has one and with reduced motion. Watch the console and network for errors, and check the user's action reaches its downstream effect.
+Run the real app at the exact route and exercise the changed path on desktop and phone, including the states, content and input methods the change affects.
 
 Then zoom out, after the first full composition and after any material change. Look at the whole viewport and successive states together. What draws the eye first: the user's subject, or the controls around it? Is the next action apparent? Fix the biggest compositional problem before polishing details, and recompose when local fixes have left the whole incoherent. Run the lenses in [critique](references/critique.md) against your own screen.
 

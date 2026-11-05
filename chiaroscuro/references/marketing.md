@@ -50,7 +50,7 @@ Left-align a heading group whose subheadline runs past about three centred lines
 - **Header:** the logo links home (`<a href="/" aria-label="Homepage">`).
 - **Footer:** logo `h-5` to `h-7`, links `font-normal`, social icons no lighter than `text-gray-600`.
 - **Features:** list several features as `<dl>`, `<dt>`, `<dd>`.
-- **Testimonials:** hanging quote marks with `relative before:absolute before:-translate-x-full before:content-['\201C'] after:content-['\201D']`, and no whitespace inside the `<p>`. Bottom-align attribution across equal-height cards (`flex flex-col justify-between`). Use unisex names with placeholder photos.
+- **Testimonials:** hanging quote marks with `relative before:absolute before:-translate-x-full before:content-['\201C'] after:content-['\201D']`, and no whitespace inside the `<p>`. Bottom-align attribution across equal-height cards (`flex flex-col justify-between`).
 - **Team:** portrait or square photos, never landscape; muted role text; a `<ul>` of people; `alt=""` when the name is beside the photo.
 - **Logo clouds:** balance wrapped rows (3 and 3, not 5 and 1). Beneath a hero, match its alignment. A marquee duplicates the sequence once and animates the track from `0` to `-50%` linearly with stable item widths, masks both edges, and pauses off screen (on hover only when the logos are links).
 - **Login:** a solid white or dark ground, not a light grey tint, unless the form sits in a distinct panel.

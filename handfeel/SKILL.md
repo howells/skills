@@ -7,8 +7,6 @@ description: "Make a web app feel native on a phone: safe areas, viewport units,
 
 In textiles, hand is how a cloth feels to the touch. A web app on a phone has the same test: a handful of platform defaults tell the user they are holding a website. This pass finds them and removes them, one by one.
 
-State at the start that you are using the `handfeel` skill.
-
 ## The line with other skills
 
 `handfeel` owns how the browser and the touch screen behave: viewport and meta tags, safe areas, input zoom, tap, hover and selection on touch, overscroll, the colors behind the browser bars, installed-app meta, device testing. `reflow` owns how layouts adapt across sizes: breakpoints, overflow, tables, navigation, touch-target size. `armature` owns what scrolls. `zoetrope` owns motion. If a fix changes how a layout looks at a width, it is `reflow`; if it changes how the phone treats the page, it is here.

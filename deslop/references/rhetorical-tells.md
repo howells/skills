@@ -1,5 +1,7 @@
 # Rhetorical tells
 
+Contents: openers · sentence structures · commentary · endings and rhythm · word level · formatting · portability test · limits.
+
 Tells found in essays, newsletters, social posts and announcements, where the writer
 stages a point before stating it. `signs-of-ai-writing.md` covers the encyclopaedic
 register; this file covers the persuasive one.

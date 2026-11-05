@@ -27,7 +27,7 @@ Rules 5 to 9 are `chiaroscuro`'s. Directions differ within them, never by breaki
 
 ### 1. Scope and inspect
 
-One piece per run: a page, a component or a region. If the request spans several ("the dashboard"), pick the highest-leverage piece and offer the rest as later runs.
+Explore the pages, components or regions the user asked for.
 
 Read the piece, its shell, tokens and real content. The product's density and voice bound how far the boldest direction may go. Note any uncommitted work first, so cleanup never sweeps it up.
 

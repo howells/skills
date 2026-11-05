@@ -36,7 +36,7 @@ Read [the responsive reference](references/responsive.md) when writing a fix; it
 
    Plus a phone in landscape and one view at 200% zoom. Note horizontal overflow (`document.scrollingElement.scrollWidth > clientWidth`, and the element causing it), content clipped or truncated so it loses meaning, primary actions you have to hunt for, small touch targets, small inputs, and chrome crowding the screen.
 3. **Fix in this order**: shell, navigation, text and forms, overflow, then individual components.
-4. **Reload every view at every size**, not only the ones you touched. A shared-component fix moves other views.
+4. **Recheck changed layouts and every view that uses a changed component**, at the affected widths. A shared-component fix moves other views.
 
 ## Report
 

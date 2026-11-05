@@ -1,5 +1,7 @@
 # Signs of AI writing
 
+Contents: caveats · content tells · language tells · style and formatting · assistant leakage · markup and citations · miscellaneous · human writing · ineffective indicators · historical indicators.
+
 A taxonomy of clues, not proof of authorship. Weigh clusters over isolated hits, and
 read "Signs of human writing" and "Ineffective indicators" before concluding anything.
 

@@ -8,6 +8,7 @@ Stills show composition; motion problems show between frames. Render a range fro
 
 ```bash
 npx remotion render /tmp/film-bundle <Id> /tmp/clip.mp4 --frames=900-1080 --concurrency=6 --log=error
+mkdir -p /tmp/clip
 ffmpeg -v error -i /tmp/clip.mp4 -vf "select=not(mod(n\,3))" -fps_mode vfr /tmp/clip/%04d.jpg
 magick montage /tmp/clip/*.jpg -tile 6x -geometry 480x270+2+2 /tmp/clip-sheet.jpg
 ```
@@ -45,6 +46,6 @@ WebGL effects (`@remotion/effects`, light leaks, color correction, `three`) need
 
 ## Delivery
 
-1. Upload the phone-safe file with `stow` and give the user the link. That is how they watch it.
+1. Upload the phone-safe file with the `stow` skill and give the user the link; without it, give the local path. That is how they watch it.
 2. If they asked for it in a deck or a site, use `wiredeck` or copy it to the site's public folder.
 3. If the user keeps a register of finished films, add the final there with its length, frame size and source path.

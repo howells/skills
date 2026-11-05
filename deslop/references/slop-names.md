@@ -1,5 +1,7 @@
 # Slop names
 
+Contents: caveats · names by strength of evidence · sources.
+
 The stock names language models reach for when they invent a person, place or
 company for an example, a piece of sample data, a story or a demo. One such name
 proves nothing. A cast of them, or one that does not fit the setting, is a tell that

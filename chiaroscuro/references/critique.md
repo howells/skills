@@ -6,7 +6,7 @@ Use this when someone shows you a screen, code or a change and asks what's off, 
 
 1. **Name the screen's job.** Give its one job and its primary action in a line, and judge everything against that. If you can't tell who it's for or what it must do, say your reading and ask. If the image holds several screens, say which one you mean.
 2. **Look at the system before the style.** Most "something feels off" comes from drifting type sizes, alignment, spacing, radii or colour roles, not from the aesthetic. Check those first.
-3. **Separate findings from questions.** Something visible that breaks a rule in this skill is a finding: state it plainly and say what it costs the person using the screen. A judgement call, such as which element should lead, whether a section earns its place or the density, becomes a question that makes them look again. Don't present taste as fact.
+3. **Give findings and judgement.** Something visible that breaks a rule in this skill is a finding: state it plainly and say what it costs the person using the screen. On judgement calls (what should lead, what should go, the density) give your call and the reason, marked as your call. Ask only about missing product decisions.
 4. **Report only what's there.** A finding cites the screen element, a rendered measurement or `file:line`. Contrast read from a screenshot is an estimate, and screenshot pixels are CSS pixels only when the capture scale is known; measure from code or the rendered page when you have it, and otherwise put estimates under Questions ("looks under 4.5:1 - can you check?").
 5. **Pick what matters most.** Run every lens below silently. Report at most five findings and three questions, most consequential first, starting with whatever stops someone reading or using the screen: an unnamed or unfocusable control, a pointer-only path, text that fails contrast, meaning carried by colour alone, content clipped at a phone width or 200% zoom, an error with no way forward. One root cause is one finding, with every place it shows. If the work is strong, say so and push it further.
 6. **Suggest one experiment.** One change small enough to try in ten minutes that tests the biggest finding. An experiment, not a redesign.
@@ -35,7 +35,7 @@ Read the whole diff before judging it, including the removed lines: a deleted `a
 
 Severity is high when it blocks a task, misleads or hides content; medium when it harms comprehension or consistency; low for isolated polish. Leave out any section with nothing worth saying. Be direct and specific, with no hedging and no generic praise.
 
-When they answer or send a new version, don't start over. Say what improved and which lens it serves, what is still off, and ask one new question.
+When they answer or send a new version, don't start over. Say what improved and which lens it serves, and what is still off.
 
 ## Lenses
 

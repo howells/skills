@@ -48,7 +48,7 @@ For an audit or proposal, stop after step 4 and return the census and mapping. A
 1. **Census.** Run the script before forming a view on how many roles the codebase needs, and report its counts; they make the case arguable rather than a preference.
 
    ```bash
-   python3 scripts/census-typography.py /path/to/repo --roots apps/web/app apps/web/components
+   python3 <this skill's directory>/scripts/census-typography.py /path/to/repo --roots apps/web/app apps/web/components
    ```
 
    `--json` gives every location for the migration. It is lexical: it does not scan `@apply` inside Vue, Svelte or Astro style blocks, and it cannot resolve dynamic class expressions, so check those by hand. Exit 2 means coverage was incomplete, not that the census is clean.
