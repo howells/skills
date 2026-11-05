@@ -48,4 +48,3 @@ WebGL effects (`@remotion/effects`, light leaks, color correction, `three`) need
 
 1. Upload the phone-safe file with the `stow` skill and give the user the link; without it, give the local path. That is how they watch it.
 2. If they asked for it in a deck or a site, use `wiredeck` or copy it to the site's public folder.
-3. If the user keeps a register of finished films, add the final there with its length, frame size and source path.
