@@ -1,116 +1,84 @@
 ---
 name: paste-up
-description: "Build a Paper mockup from a spec, or audit and repair a Paper file: tokens, fonts, artboards, crops, labels. Only for app.paper.design. Not for coded UI (`chiaroscuro`) or browser QA (`fieldtest`)."
+description: "Build a mockup in Paper (app.paper.design) from a spec, or audit and repair a Paper file: tokens, fonts, artboards, crops, labels. Not for coded UI (`chiaroscuro`) or browser QA (`fieldtest`)."
 ---
 
 # Paste-up
 
-Paper is where the design happens before any code, and the specification everything answers to afterwards. This skill covers both jobs: draw a file from a written spec, or open a file that already exists and put it right.
+Paper is where the design happens before code, and the specification the code answers to afterwards. Downstream, pixel parity is never the goal. Paper governs the information architecture, the step and state model, the hierarchy, the copy intent, the density and the behaviour.
 
-Pixel parity with Paper is never the goal downstream. What Paper governs is the information architecture, the step and state model, the hierarchy, the copy intent, the density and the operational behaviour.
+## Hard rules
 
-## Hard Rules
+The same rules `chiaroscuro` applies to code, so a mockup never needs correcting for them later. The product's existing styling is no exception: fix it inside scope, report it outside. Only an explicit instruction from the user overrides one.
 
-These hold wherever the work happens: in code, in a Paper file and in any brief handed to a helper. Styling the product already has is not an exception; fix it inside the scope and report it outside. Only an explicit instruction from the user overrides a rule.
-
-1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting, never for labels or headings. Proper acronyms keep their capitals.
-2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. In product UI, headings name things; they do not headline them or introduce a section. Keep only consent, constraints and error recovery.
-3. **Four to six type styles, in chosen faces.** Use the product's named roles. A new size or weight needs a job no existing role does. Before choosing a new face, read the bundled [font guidance](references/font-guidance.md), choose from its recommendations and follow its never-use list; Instrument Serif is the first name on that list.
-4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user has pointed to, and use it. A second version of an existing control is a defect.
+1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono only for literal code, identifiers and values whose characters need inspecting. Acronyms keep their capitals.
+2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed; replace it with a label, a control, a value or nothing. Headings name things; they do not headline them. Keep only consent, constraints and error recovery.
+3. **Four to six type styles, in chosen faces.** Use the product's named roles; a new size or weight needs a job no role does. Before choosing a new face, read the [font guidance](references/font-guidance.md), choose from its recommendations and obey its never-use list (Instrument Serif first).
+4. **Reuse before you build.** Use the existing component, shell, header or control, in this product or any package the user points to. A second version of an existing control is a defect.
 5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
 6. **Touch targets at least 44 by 44 CSS pixels.**
-7. **Look at it before calling it done.** Use the path in a real browser, or walk a mockup's boards in order, then look at each whole screen on desktop and on a phone as the user would. Static checks show neither that it works nor that it looks right.
+7. **Look at the whole screen, desktop and phone.** Walk the boards in order as the user would. Read computed styles for caps, letter spacing and mono; a screenshot hides them.
 
-These are the same rules `chiaroscuro` applies to code, copied here so a mockup never has to be corrected for them later.
+## The file
 
-## Invoking it
+A Paper URL is `https://app.paper.design/file/<fileId>/<page>/<nodeId>`, e.g. `01M1AMPBSYGK8DPDW1G5824M7K/1-0/FIE-0`. Pass the `fileId` on every file-scoped call rather than relying on whichever file was last opened. A trailing node id scopes the request to that artboard; without one the page is in scope. An untidy rest-of-file does not widen a one-board request.
 
-A Paper URL is `https://app.paper.design/file/<fileId>/<page>/<nodeId>` - for example `01M1AMPBSYGK8DPDW1G5824M7K/1-0/FIE-0`. The ULID is the `fileId`; pass it on every file-scoped call that accepts it, rather than relying on whichever file was most recently opened. `1-0` is the page. A trailing node id means the request is scoped to that one artboard; without it, the whole page is in scope.
+Never read node ids back to the user. Name artboards by what they show.
 
-- **URL plus a repair ask** ("go through this and make sure shared tokens are used") runs the repair lane. An audit-only request uses its inventory and checklist without edits, deletion or comment resolution.
-- **A whole-app or end-state consolidation** ("one page with the current version of every screen") runs the repair lane under [Whole-app consolidation](#whole-app-consolidation). A request scoped to one artboard stays a one-board repair, however untidy the rest of the file.
-- **No URL** runs the build lane, and the first thing to settle is which file and page to draw in.
+If the Paper tools are missing, say so and ask the user to connect the file (Paper Desktop runs the local MCP server). Never claim a file was inspected or edited without them.
 
-Never read node ids back to the person who asked. Name artboards by what they show.
+Start every session with `get_guide({ topic: "paper-mcp-instructions" })` (again if the thread is long enough to have lost it), then `get_basic_info`, `get_font_family_info`, `get_tokens`.
 
-## Before the file opens, either lane
+A token definition is shared: check its consumers outside scope before changing it, and create a distinct token rather than make an unauthorised global change.
 
-Use the Paper MCP connection supplied by the host. If its guide or file tools are unavailable, report the missing connection and ask the user to connect the target file through the host’s supported Paper route (Paper Desktop for the local MCP server). Continue any brief preparation that does not need the connection; do not claim a file was inspected or edited.
+## Build
 
-1. `get_guide({ topic: "paper-mcp-instructions" })`. Once per session, and again if the thread has been long enough to lose it.
-2. Read the available specification, linked tracker context and project docs. If none exists, derive a short list of views and states from the user’s request, state the assumptions and proceed; ask only where missing scope changes what should be built. Name the views in the brief before drawing.
-3. `get_basic_info`, `get_font_family_info`, `get_tokens`. Use the existing design and written direction to establish type and colour.
-4. Record the in-scope page/artboards and permitted edits. Carry that boundary through every read, repair and completion check. Inspect out-of-scope consumers before changing shared token definitions; reassign in-scope nodes or create a distinct token if a global change is not authorized.
+Work from the spec. With none, derive the views and states from the request, state the assumptions and draw.
 
-## Build lane
+- **Tokens before any view**: colour names and the type scale. Parallel agents without them invent four names for one hex, and the file has to be reconciled by hand.
+- **Fonts from `get_font_family_info`**, never from memory. Fonts set from memory once needed a repair agent across a thousand nodes.
+- **One visual group per `write_html`, screenshot after each**, `finish_working_on_nodes` when a set is done. Screenshotting only at the end finds six compounded problems at once.
+- **After the first complete view**, zoom out, check its hierarchy, and draw the next state beside it so each action stays connected to its consequence.
+- **Borrowing another interface's look**: name the features borrowed and keep the target product's tasks, objects and states. Copying its screens can quietly replace the app being designed.
 
-**Establish direction before drawing.** Define each view's purpose, audience, content and states from the supplied specification. The current agent can direct and draw sequentially. Delegate only when available and useful; use installed specialist skills or models as optional aids, not prerequisites. A delegated drawing brief must preserve the agreed direction and carry the Hard Rules.
+A brief handed to a helper carries the agreed direction and the hard rules.
 
-When borrowing another interface's aesthetic, name the features to borrow and preserve the target product's tasks, objects and state model. Walk the target scenario through the boards in order; copying its screens can otherwise replace the very app being designed.
+## Repair
 
-**Set the file up once, before any view exists.**
+Order matters: a token fix touches every node and a layout fix moves them. An audit-only request reports against these steps without editing, deleting or resolving anything.
 
-- Create the tokens: colour names and the type scale. Parallel agents that skip this invent four names for one hex value and the file has to be reconciled by hand afterwards.
-- Name artboards for the views they show. Follow the file's existing organization or supplied direction; a horizontal row is one useful default for a new linear flow, not a requirement for every file.
-- Confirm the font family with `get_font_family_info` and use it. Fonts set from memory have needed a dedicated repair agent across a thousand nodes.
-
-**Then draw.** One visual group per `write_html`, screenshot after each one, `finish_working_on_nodes` when a set is done. Screenshotting only at the end means finding six problems at once, all of them compounded.
-
-Once the first complete view exists, zoom out and inspect its hierarchy, then read the next state beside it. Keep the user's action and its visible consequence connected before repeating the pattern across more boards.
-
-## Repair lane
-
-Order matters here, because a token fix touches every node and a layout fix moves them.
-
-1. **Inventory.** `get_tree_summary`, then list the in-scope artboards: name, size, position and purpose. Inspect neighbours only as needed to understand context.
-2. **Tokens.** Inspect hard-coded values within scope and their intended roles. Equal values can have different semantic roles; merge only confirmed duplication. Before `create_tokens` / `set_tokens`, check all consumers affected by a definition change. Use `update_styles` only on in-scope nodes.
-3. **Fonts.** Confirm installed families and correct departures from the agreed type roles and the Hard Rules. Mono stays only on literal codes and values. Leave typography outside scope alone and report it.
-4. **Layout.** Correct unintended overlap or spacing within scope. For a flow, make its start, reading order, branches and return paths clear. Preserve useful existing organization; repair organization that obscures the journey when the task includes it. Do not rearrange unrelated artboards.
+1. **Inventory.** `get_tree_summary`; list the in-scope artboards with name, size and purpose.
+2. **Tokens.** Replace hard-coded values with tokens. Equal values can have different roles; merge only real duplication.
+3. **Fonts.** Correct departures from the type roles and the hard rules. Report typography outside scope.
+4. **Layout.** Fix unintended overlap and spacing. A flow shows its start, reading order, branches and returns. Leave unrelated artboards where they are.
 5. **Names.** `rename_nodes` so each artboard says what it shows.
-6. **Dead work.** Old experiments and superseded versions. Where the user has explicitly authorised deleting them, delete the in-scope boards that permission covers without asking again. Ask before deleting anything else you did not make. Requested explorations stay, labelled apart from the current design.
+6. **Dead work.** Delete superseded boards only where the user has explicitly said so, and only those it covers. Ask before deleting anything else you did not make. Requested explorations stay, labelled apart from the current design.
 7. **The checklist below**, artboard by artboard.
-8. **Comments.** Read in-scope comment threads. Address requests covered by the user's task; report unrelated requests separately. Resolve only comments whose requested work has actually been completed within the authorized scope.
+8. **Comments.** Do the in-scope requests; report the rest. Resolve a thread only when its work is done.
 
-Report as a table: artboard, what changed, what was left alone and why.
+Report a table: artboard, what changed, what was left alone and why.
 
-### Whole-app consolidation
+For "one page with the current version of every screen" or any whole-app consolidation, read [consolidation](references/consolidation.md) first.
 
-Only when the user asks for it. The result is the requested page with every screen as its own top-level artboard, each individually selectable, rather than one giant board or frame enclosing the rest. Follow any organization the user specified; otherwise lay the current sequence out in reading order.
+## Checklist
 
-- **One current version per screen.** Name and place it so someone opening the file can tell which board is current without asking.
-- **Explorations stay visible.** Requested alternatives and superseded studies remain reviewable, labelled and set apart from the current sequence. Moving a board aside is not deleting it, and being superseded is not permission to delete.
-- **Reconcile before calling it current.** Compare the boards with the implemented branch or revision established for the task, or the shipped version when that is the task, on what Paper governs: information architecture, state model, hierarchy, copy intent, density and behaviour. If the target is missing, record the gap and ask only when it blocks an in-scope decision. Where they disagree, follow the authority the user or agreed specification names; neither code nor Paper wins by default. Correct boards within scope and record each discrepancy left unresolved, including drift the code has to settle.
-- **Deletion follows Dead work.** Explicit existing permission applies to the in-scope superseded boards within its terms. "End state" or "whole app" on its own grants none.
+Each line is a correction given more than once.
 
-## The checklist
+- **Real images**, supplied or properly sourced. Without product photography, say so; label any illustrative image.
+- **Crops chosen from the content**, subject kept, never stretched on one axis. No accidental repetition.
+- **Imagery that flatters the product.** A realistic photo can still be the wrong photo; match the audience's aspiration.
+- **Text is not interface.** Paragraphs standing in for controls fail the view, however well written.
+- **Density a stranger can parse**: someone seeing it for the first time in a meeting, with the presenter talking over it.
+- **Plain labels**: the audience's words, outcomes stated, no filler (`signage` goes deeper).
+- **Data the product can actually serve.** No invented production facts; label illustrative values.
+- **A presentable sequence**: someone opening the file finds the start, follows each action to its next state, and can tell the current design from alternatives and notes.
 
-Every line here is a correction that has had to be given more than once.
+`export_combined_pdf` when the work has to leave Paper; a file link cannot always be shared.
 
-- **Real images.** Use supplied assets or appropriate project/public sources within the task’s scope. When product photography is unavailable, state the gap; label any authorized illustrative image rather than presenting it as the real product.
-- **Purposeful imagery.** Avoid accidental repetition; keep repetition when it identifies the same item or supports comparison.
-- **Appropriate crops.** Choose aspect ratios from the content and supplied direction. Preserve the subject, crop inside the frame, and never distort one axis.
-- **Imagery that flatters the product.** A realistic photograph can still be the wrong photograph. Match the aspiration of the audience.
-- **Consistent navigation.** Reuse shared chrome where the product requires it; focused or standalone views may intentionally omit it.
-- **Appropriate interaction.** Follow the product's purpose. An editor, document, marketing page and dashboard need different structures.
-- **Text is not interface.** Paragraphs standing in for controls is a failed view, however well written.
-- **Reviewable alternatives.** Clearly label alternatives when exploration is requested; keep the selected direction identifiable.
-- **Density a stranger can parse.** The test is someone seeing it for the first time in a meeting, with the presenter talking over it. Depth is fine, an unreadable wall is not.
-- **Labels and copy.** Use words the audience understands, state outcomes plainly, and remove filler. Use `signage` or `deslop` for deeper review when installed and useful.
-- **Data the product can actually serve.** Verify displayed facts from supplied evidence or an authorized project data source. Use scoped reads, avoid exposing unrelated records, and do not invent production facts. Label illustrative values clearly and record the source gap when real data is unavailable.
+## Gotchas
 
-## Before calling it done
-
-- Check every Hard Rule across the in-scope artboards, reading computed styles for caps, letter spacing and mono rather than trusting the screenshot.
-- Review the in-scope artboards for clarity and task completion. An independent review is optional when a material uncertainty warrants it.
-- Recheck in-scope comments and report their actual resolution.
-- Screenshot the changed artboards and inspect them in context. A view that reads well alone can be wrong beside its neighbours.
-- Walk the in-scope sequence as someone opening the file for a presentation: can they find the start, follow each action to its next state, and distinguish the current design from alternatives? Keep working notes, explorations and superseded work clearly separate from that sequence, deleting only what Dead work permits and keeping necessary illustrative-data disclosures visible. For a whole-app consolidation, confirm each screen has one identifiable current top-level artboard on the requested page, and report the reconciliation with the named revision, including unresolved discrepancies. For one-board edits, check its immediate context and report wider organization problems without expanding scope.
-- `export_combined_pdf` when it has to leave Paper, since a file link cannot always be shared.
-
-## Gotchas, all of them measured
-
-- **`get_jsx` blows the token limit constantly** - the largest share of recorded Paper errors. The result is written to a file and the error names the path; read it from there, or scope the read with `get_node_info` and `get_computed_styles` on a subtree.
-- **`write_html` can exceed the limit too** when the subtree it returns is large. One visual group per call keeps it under.
-- **Paper disconnects mid-session.** "Your Paper file is currently disconnected from the server" means wait and retry that one call. Never rebuild work already written.
-- **`finish_working_on_nodes` is required and routinely skipped.** Call it when a set of nodes is done.
+- **`get_jsx` blows the token limit constantly**, the largest share of recorded Paper errors. The error names a file holding the result; read it there, or scope with `get_node_info` and `get_computed_styles` on a subtree.
+- **`write_html` can exceed it too** when the returned subtree is large. One visual group per call keeps it under.
+- **"Your Paper file is currently disconnected from the server"** means wait and retry that one call. Never rebuild work already written.
+- **`finish_working_on_nodes` is routinely skipped.** Call it when each set of nodes is done.
 - **`get_computed_styles` takes an array** of node ids, even for one node.

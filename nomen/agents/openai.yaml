@@ -1,4 +1,4 @@
 interface:
   display_name: "Nomen"
-  short_description: "Generate and validate product names"
-  default_prompt: "Use $nomen to generate and validate project name candidates."
+  short_description: "Generate, critique and check product names"
+  default_prompt: "Use $nomen to propose names for this project and check them for conflicts."

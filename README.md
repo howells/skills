@@ -205,7 +205,7 @@ npx skills@latest add howells/skills --skill muster --agent codex --global
 
 ### `nomen`
 
-Generate, critique, and validate names for products, packages, CLIs, apps or features, with domain, package, GitHub, App Store and web conflict checks. Use for naming and renaming decisions. Not for interface labels (`signage`), body prose (`deslop`), or legal clearance.
+Generate, critique and check names for products, packages, CLIs, apps or features, with domain, registry, GitHub, App Store and web conflict checks. Use when naming or renaming something. Not for interface labels (`signage`) or legal clearance.
 
 Install globally for Codex:
 
@@ -215,7 +215,7 @@ npx skills@latest add howells/skills --skill nomen --agent codex --global
 
 ### `paste-up`
 
-Build a Paper mockup from a spec, or audit and repair a Paper file: tokens, fonts, artboards, crops, labels. Only for app.paper.design. Not for coded UI (`chiaroscuro`) or browser QA (`fieldtest`).
+Build a mockup in Paper (app.paper.design) from a spec, or audit and repair a Paper file: tokens, fonts, artboards, crops, labels. Not for coded UI (`chiaroscuro`) or browser QA (`fieldtest`).
 
 Install globally for Codex:
 
