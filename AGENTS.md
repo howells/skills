@@ -1,8 +1,6 @@
 # skills
 
-Documentation, specifications, decisions and outstanding work live in Linear (howells, SKI).
-
-- [skills — project documentation](https://linear.app/howells/document/skills-project-documentation-bc3a4e0f33c9)
+Issues live in Linear (howells, SKI).
 
 Do not add local documentation or task reports.
 
