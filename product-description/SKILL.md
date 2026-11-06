@@ -22,7 +22,7 @@ verification/        README.md (protocol) + one checklist per cluster of documen
 bug-triage.md        every suspected defect, deduplicated, with repro, cause, severity, decision needed
 ```
 
-The default is a standalone git repo. When the consuming project keeps documentation in its tracker, put the same outputs there as linked documents on the owning issue (no local repo, reports or instruction files) and check links by reading the records back instead of running the link checker.
+The outputs live in a standalone git repo.
 
 ## 1. Scope
 

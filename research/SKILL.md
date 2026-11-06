@@ -71,7 +71,7 @@ First match wins:
 
 1. The destination the brief, ticket or request names.
 2. Material Bank, Sandow or lab strategy: `~/Sites/ground/research/notes/{YYYY-MM-DD-slug}/report.md`, notes beside it. Follow Ground's AGENTS.md: primary material stays verbatim, and a transcript proves someone said something, not that there is demand.
-3. A ticket question: a comment on the owning Linear issue that answers it, with the evidence.
+3. A question from an issue: a comment on that issue that answers it.
 4. Otherwise, the cited answer in chat.
 
 Never create `reports/` or `research_notes/` in whatever directory happens to be current. Deep-mode researcher notes go beside the report when it is a file, otherwise in a temporary directory.

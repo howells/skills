@@ -34,6 +34,6 @@ Cite transcript findings by session ID and everything else by artefact: PR numbe
 
 ### Handoff
 
-When asked for one, write it in chat: purpose and outcome, settled decisions and rejected approaches, live code and tracker state, the current writer and checkout owner, authorized side effects and limits, coverage gaps, then the next action. Separate proposals from decisions and done from intended. Link the owning tracker item; don't write a local handoff file.
+When asked for one, write it in chat: purpose and outcome, settled decisions and rejected approaches, live code and tracker state, then the next action. Separate proposals from decisions and done from intended. Don't write a handoff file.
 
-Anything the next task depends on that lives only in temporary storage (briefs, datasets, evidence) needs a durable home and exact location before you hand off: a pinned commit, an authorized tracker attachment, or private task storage. Carry each unanswered question's exact text and status; a restart, timeout or unrelated message is not an answer.
+If the next task depends on something that only exists in a temporary directory, commit it or say exactly where it is. Carry each unanswered question's exact text; a restart, timeout or unrelated message is not an answer.

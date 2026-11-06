@@ -9,7 +9,7 @@ Re-set a project's priorities around the user's goal: make the goal's essential 
 
 - **Scope.** Take the named project, or infer it from the repo and conversation. Take the goal and any deadline in ordinary words ("the guided design flow for tomorrow's demo"); resolve relative dates in the user's timezone. Never invent a deadline. Ask only when the target or a scope-changing decision can't be found from evidence.
 - **Authority.** Invoking this authorizes tracker writes within the project: priorities, spec improvements, missing goal items, blocking links and evidenced status fixes. A request for advice or a preview does not. Leave other projects' priorities alone.
-- **Stop before code.** No `implement`, no new delivery task. Keep specs, decisions and dependencies in the tracker under its documentation policy; no ticket files, handoff docs or ADRs.
+- **Stop before code.** No `implement`, no new delivery task. Specs and dependencies go in the tracker; no ticket files or handoff docs.
 
 ## 1. Read the real backlog
 
