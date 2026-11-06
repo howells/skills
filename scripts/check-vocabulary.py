@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Vocabulary gate: flag prose that contradicts CONTEXT.md.
+"""Vocabulary gate: flag prose that contradicts GLOSSARY.md.
 
-CONTEXT.md fixes the words this collection uses about itself. A glossary nobody
+GLOSSARY.md fixes the words this collection uses about itself. A glossary nobody
 checks is a glossary that drifts, so this reads the rules below over every
 SKILL.md and reference file and reports the lines that break them.
 
@@ -45,7 +45,7 @@ RULES: list[tuple[str, str, str]] = [
     (
         # Skipped entirely when a verb of holding/returning precedes it: "the
         # arm returns a reference" is a pointer to stored data, a general
-        # programming concept that CONTEXT.md deliberately does not govern.
+        # programming concept that GLOSSARY.md deliberately does not govern.
         "bare-reference",
         rf"(?<!returns )(?<!return )(?<!validates )(?<!validate )(?<!holds )(?<!hold )"
         rf"(?<!stores )(?<!store )(?<!passes )(?<!pass )\b{DET}\s+references?\b(?!\s+(?:file|implementation|set|catalogue|documents?"
@@ -97,7 +97,7 @@ ALLOW: dict[str, list[str]] = {
 }
 
 # Files this gate does not govern.
-SKIP_NAMES = {"CONTEXT.md", "CHANGELOG.md"}
+SKIP_NAMES = {"GLOSSARY.md", "CHANGELOG.md"}
 
 # A rule does not apply to a file whose own subject is that word. A chapter
 # about UI surfaces says "the surface" the way a chapter about colour says
