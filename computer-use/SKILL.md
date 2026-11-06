@@ -5,11 +5,15 @@ description: "Control Mac apps, including signed-in Chrome, through native Codex
 
 # Computer Use
 
-Drive the desktop through the bundled runner, which launches a headless `codex exec` with Computer Use enabled. An explicit request for Computer Use means native app control, Chrome included; don't substitute a browser extension, CDP, AppleScript or another desktop driver. File and shell work stay with their own tools.
+Use the current session's native Computer Use tools when available. An explicit request for Computer Use means native app control, Chrome included; don't substitute a browser extension, CDP, AppleScript or another desktop driver. File and shell work stay with their own tools.
 
-Needs macOS, the Codex CLI with a configured model, and the `computer-use@openai-bundled` and `unified-computer-use@openai-bundled` plugins enabled. Claude Code uses the same local Codex install. `python3 scripts/run.py --check` confirms config and plugins; it does not test auth or app access.
+Follow the live tool documentation, inspect the target app before acting, and verify the result on screen. Respect runtime app approvals and macOS permissions. Use one desktop controller at a time; finish or stop an existing controller before starting another.
 
-## Run
+## Hosts without native tools
+
+When the current session has no native Computer Use tools, or its native bridge fails to initialise before app access, report that limitation and use the bundled runner. An app permission refusal still follows the approval flow below. The runner launches a headless `codex exec` with Computer Use enabled, including from Claude Code.
+
+The runner needs macOS, the Codex CLI with a configured model, and the `computer-use@openai-bundled` and `unified-computer-use@openai-bundled` plugins enabled. `python3 scripts/run.py --check` confirms config and plugins; it does not test auth or app access.
 
 1. Write a brief to a file: target app and account, the outcome wanted, what may change, and how to tell it's done.
 2. From this skill's directory:
@@ -26,13 +30,15 @@ Needs macOS, the Codex CLI with a configured model, and the `computer-use@openai
 
 ## First use of an app
 
-**"Computer Use was not approved to use …"** means the app has no saved allowance, not an auth problem. Headless `codex exec` can't collect that decision. Stop the controller and give the human this to run in an interactive terminal on the Mac running Codex, from this skill's directory (same `--codex-home` if you overrode it):
+Use the current session's normal app-approval flow. **"Computer Use was not approved to use …"** means the app has no saved allowance, not an auth problem.
+
+For the headless runner, stop the controller and launch the interactive helper in a visible terminal on the Mac running Codex. Open that terminal yourself when terminal-management tools are available; otherwise give the user the command. From this skill's directory (same `--codex-home` if you overrode it):
 
 ```sh
 python3 scripts/run.py --approve-app "Google Chrome"
 ```
 
-They choose **Always allow**; a one-time allowance doesn't carry over to headless runs. Never choose for them. They then quit that Codex session to release the lock, and you retry the task once. If the same refusal persists, report the exact error.
+The user chooses the approval scope; **Always allow** persists across headless invocations. After the access check completes, close the idle helper session to release the lock and resume the task. If the same refusal persists, report the exact error.
 
 ## Telling failures apart
 
