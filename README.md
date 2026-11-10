@@ -315,15 +315,15 @@ npx skills@latest add howells/skills --skill signage --agent codex --global
 
 ### `fettle`
 
-Strict structural review of a diff or whole codebase: finds restructurings that delete complexity, and real security, performance or data risks. Reports findings; edits only when asked. Not for diff tidy-ups (`unslop`), fallback removal (`failfast`) or browser QA (`fieldtest`).
+Strict structural review of a diff or whole codebase: finds restructurings that delete complexity, and real security, performance or data risks. Reports, then fixes what you pick. Not for diff tidy-ups (`unslop`), fallback removal (`failfast`), UI consolidation (`componentize`) or browser QA (`fieldtest`).
 
 ```bash
 npx skills@latest add howells/skills --skill fettle --agent codex --global
 ```
 
-Use `fettle` for selected changes or `fettle whole codebase` for the repository; add `in <path>` to narrow either scope. Add `with scores` only when you want a scorecard. Both scopes report findings; add `apply the fixes` or `create Linear items` to request action.
+Use `fettle` for selected changes or `fettle whole codebase` for the repository; add `in <path>` to narrow either scope. Add a focus such as `security` or `state machines`, or `with scores` for a scorecard. The report ends with numbered clusters; reply `fix all` or `fix 1 3` and it fixes them without re-planning. Ask for `Linear items` instead if you want them tracked.
 
-Claude Code's bundled `/simplify` edits a diff for reuse and efficiency; `fettle` reports structural findings and edits only when asked.
+Claude Code's bundled `/simplify` edits a diff for reuse and efficiency; `fettle` reports structural findings and fixes the ones you pick.
 
 ### `typecase`
 
