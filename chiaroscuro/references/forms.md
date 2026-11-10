@@ -39,8 +39,8 @@ Build native controls and style state with variants. Never toggle classes from i
 
 ```html
 <span class="group inline-grid size-4 grid-cols-1">
-  <input type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-{brand} checked:bg-{brand} indeterminate:border-{brand} indeterminate:bg-{brand} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-{brand} disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 dark:border-white/10 dark:bg-white/5 dark:checked:border-{brand} dark:checked:bg-{brand} dark:disabled:border-white/5 dark:disabled:bg-white/10 forced-colors:appearance-auto" />
-  <svg viewBox="0 0 14 14" fill="none" class="pointer-events-none col-start-1 row-start-1 size-7/8 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25 dark:group-has-disabled:stroke-white/25">
+  <input type="checkbox" class="col-start-1 row-start-1 appearance-none rounded-sm border border-{gray}-300 bg-white checked:border-{brand} checked:bg-{brand} indeterminate:border-{brand} indeterminate:bg-{brand} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-{brand} disabled:border-{gray}-300 disabled:bg-{gray}-100 disabled:checked:bg-{gray}-100 dark:border-white/10 dark:bg-white/5 dark:checked:border-{brand} dark:checked:bg-{brand} dark:disabled:border-white/5 dark:disabled:bg-white/10 forced-colors:appearance-auto" />
+  <svg viewBox="0 0 14 14" fill="none" class="pointer-events-none col-start-1 row-start-1 size-7/8 self-center justify-self-center stroke-white group-has-disabled:stroke-{gray}-950/25 dark:group-has-disabled:stroke-white/25">
     <path d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-not-has-checked:opacity-0" />
     <path d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-not-has-indeterminate:opacity-0" />
   </svg>
@@ -51,8 +51,8 @@ Build native controls and style state with variants. Never toggle classes from i
 
 ```html
 <span class="group inline-grid size-4 grid-cols-1">
-  <input type="radio" class="col-start-1 row-start-1 appearance-none rounded-full border border-gray-300 bg-white checked:border-{brand} checked:bg-{brand} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-{brand} disabled:border-gray-300 disabled:bg-gray-100 dark:border-white/10 dark:bg-white/5 dark:checked:border-{brand} dark:checked:bg-{brand} forced-colors:appearance-auto" />
-  <span class="pointer-events-none col-start-1 row-start-1 size-[round(down,40%,1px)] self-center justify-self-center rounded-full bg-white group-not-has-checked:opacity-0 group-has-disabled:bg-gray-400 dark:group-has-disabled:bg-white/25"></span>
+  <input type="radio" class="col-start-1 row-start-1 appearance-none rounded-full border border-{gray}-300 bg-white checked:border-{brand} checked:bg-{brand} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-{brand} disabled:border-{gray}-300 disabled:bg-{gray}-100 dark:border-white/10 dark:bg-white/5 dark:checked:border-{brand} dark:checked:bg-{brand} forced-colors:appearance-auto" />
+  <span class="pointer-events-none col-start-1 row-start-1 size-[round(down,40%,1px)] self-center justify-self-center rounded-full bg-white group-not-has-checked:opacity-0 group-has-disabled:bg-{gray}-400 dark:group-has-disabled:bg-white/25"></span>
 </span>
 ```
 

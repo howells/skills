@@ -5,9 +5,8 @@ Ownership, registration, imports and adapters. Apply the codebase's chosen bound
 ## Containment
 
 - **Each independently deployed Mastra implementation has one owner package.** Callers use its public API: the singleton or a documented bridge, not a deep export per agent, tool and workflow.
-- **The boundary is the core package, not every `@mastra/*` import.** Infra clients such as an MCP client can legitimately live elsewhere. Where a shipped scanner defines the containment set, use its calibration; a blanket ban flags deliberate patterns.
+- **The boundary is the core package, not every `@mastra/*` import.** Infra clients such as an MCP client can legitimately live elsewhere. A blanket ban flags deliberate patterns.
 - **No Mastra CLI script, `mastra.config.*`, `src/mastra/**` or `.mastra/**` outside the owner.**
-- **Code sits in domain folders:** `agents/`, `tools/`, `workflows/`, `prompts/`, `memory/`, `storage/`, `runtime/`, `observability/`, `mcp/`, `scorers/`.
 - **The singleton is spelled out.** No factory or barrel hiding which surfaces are registered; what a reader can't see, a reviewer can't check.
 - **Registries, docs and diagrams name only what is really registered.** Remove deleted entries with their callers.
 - **Heavy or optional dependencies attach where they are used,** not to an eagerly registered agent. Otherwise every route importing the singleton pulls them in and fails at module load. Check what the built route actually traced.
@@ -26,16 +25,12 @@ Ownership, registration, imports and adapters. Apply the codebase's chosen bound
 ## Agents and models
 
 - **Model policy is code-owned and role-based,** and so is every behaviour-bearing setting. The environment holds secrets, not storage mode, background switches or cost profiles. Where a codebase chose otherwise, report it as a judgement call.
-- **A test asserts no generation setting sits at the top level.** A shipped scanner may already do it.
 - **Measure reasoning behaviour for the models actually used,** not from a documented cap.
 - **Conversational agents with memory have token limiting.**
 - **Delegate with the framework's sub-agents or workflows-as-tools.** A hand-rolled delegate tool reimplements routing and hides the call from run observers.
 
 ## Tools
 
-- **Descriptions are plain language:** what it does, when to pick it, jargon glossed. The reader is a model choosing between options.
-- **Names carry no implementation detail.** A tool named for caching, connection health or the backing service teaches the model plumbing it can't act on.
 - **Tool id, filename, prompt reference, registry row and inspector name describe the same operation.** Apply the naming convention across prompts, registry and protocol output, and inspect the emitted names.
 - **Input and output schemas are shared imports.** An opaque output type only where the result genuinely is opaque, and documented.
-- **MCP annotations are present** wherever the tool surface requires them.
 - **Identity and tenancy come from authenticated context,** never caller-supplied fields. Inputs that claim external or persisted truth validate that reference.

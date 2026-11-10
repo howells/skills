@@ -1,10 +1,5 @@
 # Font guidance
 
-This is a condensed deliberate copy of the mandatory selection guidance and
-recommended faces in Typecase's font recommendations. It is bundled separately
-in Chiaroscuro, Maquette and Paste-up so each skill works when installed alone.
-Maintain these copies together when the selection policy changes.
-
 ## Selection
 
 Keep the product's existing faces unless the task requires a change. Choose a new

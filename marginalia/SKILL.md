@@ -12,6 +12,7 @@ JSDoc that teaches what the signature can't, short enough to read in a hover. Pu
 - **Teach or skip.** Document hidden behaviour: side effects, thrown errors, async, caching, lifecycle and cleanup, ordering, idempotency, units, ranges, defaults the type doesn't show, SSR or client constraints, how type parameters relate. Leave obvious exports, locals and one-line wrappers alone.
 - **Hover-sized.** One summary sentence; a second short paragraph only for behaviour or constraints. If the point isn't in the first two sentences, rewrite. Long concepts go to external docs.
 - **Read before writing.** Read the implementation and at least one caller or test; never document from the name. A stale guess is worse than no comment.
+- **Repair what's there.** Fix or replace existing JSDoc on symbols in scope when it is wrong or restates the name.
 - **TypeScript: no types in tags.** Don't repeat declared types in `@param` or `@returns`. Use `@param` only when meaning, units, defaults or callbacks aren't obvious, `@returns` only when return semantics aren't, `@typeParam` for generics whose role isn't.
 - **JavaScript: tag types are the types.** IDEs and `checkJs` read JSDoc type annotations; keep them and add missing ones.
 - **Examples only to prevent likely misuse,** and consistent with real usage.

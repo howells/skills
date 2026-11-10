@@ -9,7 +9,7 @@ Take a web interface from request to finished, working UI with a specific point 
 
 When someone asks only for a critique of a screenshot, page, frame, code or change, read [references/critique.md](references/critique.md) first, follow it and change nothing until they ask. Read each reference file with its own command.
 
-Other jobs have their own skills: design options to choose between (`maquette`), a document-scrolling app that needs a fixed shell (`armature`), every screen size (`reflow`), Paper mockups (`paste-up`), browser QA (`fieldtest`), motion craft (`zoetrope`), interface wording (`signage`), the type ramp (`typecase`), duplicated components (`componentize`). Use them when installed and the task needs that depth. This skill works without them, and they never carry the hard rules for you.
+Deeper passes live in `zoetrope` (motion), `signage` (wording), `typecase` (type ramp) and `componentize` (duplication); use them when installed. This skill works without them, and they never carry the hard rules for you.
 
 ## Hard rules
 
@@ -21,7 +21,7 @@ These hold everywhere, including work handed to a helper. Styling the product al
 4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user pointed to, and use it. A second version of an existing control is a defect.
 5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
 6. **Touch targets at least 44 by 44 CSS pixels**, reached with invisible padding rather than bulky visuals.
-7. **Look at it before calling it done.** Use the path in a real browser, then look at each whole screen on desktop and on a phone as the user would. Static checks show neither that it works nor that it looks right.
+7. **Look at it before calling it done**, in a real browser on desktop and phone (step 4).
 
 ## Machine-made tells
 
@@ -59,6 +59,8 @@ Carry the defining decisions of a supplied design or accepted review into the co
 
 Hide the machinery. Labels, navigation, statuses, empty states and errors describe the user's work: `sync failed` becomes `Updates are paused`, `agent step running` becomes `Checking the next section`. Prompt scaffolds, agent steps, model names, schema, queue states and raw diagnostics stay out of the primary UI unless they are the product's own objects; put diagnostics behind "View details" or "Copy error".
 
+Emphasise by quietening the rest: there is a ceiling on how loud something can get and no floor on how quiet the rest can go. Use the product's own imagery as one coherent set, consistent in light, ratio and crop; no image is better than stock filler or the wrong object.
+
 Before building, read the reference file for each part the work touches:
 
 - Layout, spacing, alignment, surfaces, depth, app states and navigation: [layout](references/layout.md).
@@ -69,11 +71,11 @@ Before building, read the reference file for each part the work touches:
 - Buttons, tables, dashboards, navigation, badges, avatars, icons, images, SVG and charts: [components](references/components.md).
 - A marketing or landing page: [marketing](references/marketing.md).
 - Any motion: [motion](references/motion.md).
-- Tailwind class authoring and rendering performance: [tailwind](references/tailwind.md).
+- Tailwind class authoring: [tailwind](references/tailwind.md).
 
 ### 3. Build in Tailwind v4
 
-Use the project's components and conventions before new primitives, and express decisions as utilities, variants and `@theme` tokens rather than scattered arbitrary values. Where adopting v4 would change package manifests, build config or the global CSS entry point, recommend the migration and ask first; a contained UI request never becomes a repository-wide styling migration.
+Use the project's components and conventions before new primitives, and express decisions as utilities, variants and `@theme` tokens rather than scattered arbitrary values. In a project on another styling system or Tailwind version, build in what it has; the rules hold and the class names translate. A UI request never becomes a styling migration.
 
 When the project has nothing for the job, default to these rather than hand-rolling: Base UI for accessible primitives (dialogs, popovers, menus, selects), cmdk for command menus, Sonner for toasts, input-otp for code inputs, Motion for springs, layout and exit animation, NumberFlow for animated numbers, Recharts for charts, dnd kit for drag and drop, Virtuoso for long lists, clsx for conditional classes and cva for typed variants, next-themes for flash-free theming. Never mix component libraries.
 
@@ -88,14 +90,3 @@ Then zoom out, after the first full composition and after any material change. L
 ### 5. Clean up and report
 
 Remove temporary wrappers, hidden branches, suppressions and unused imports the work introduced. Report what changed, what you exercised and what you looked at, and any limitation. Never claim the browser pass when only static checks ran.
-
-## Taste
-
-- Use authentic product content. Placeholder slogans and generic dashboard data hide design problems.
-- Use the product's own imagery as one coherent set, consistent in light, ratio and crop. No image is better than stock filler or the wrong object.
-- Sentence case for ordinary UI text. Aligned figures take tabular numerals in the body font, not mono.
-- Emphasise by quietening the rest. There is a ceiling on how loud something can get and no floor on how quiet the rest can go.
-- Every border, shadow, gradient, blur and wrapper has a job: hierarchy, grouping, affordance, state or meaning. If removing it costs nothing, remove it.
-- Align by eye where the maths looks wrong: an icon in a circle, a play triangle, text in a button.
-- In dark mode, rebuild the contrast relationships rather than inverting colours.
-- Motion needs a purpose, an origin, interruption behaviour, a frequency budget and a reduced-motion treatment. Fast feedback beats spectacle.

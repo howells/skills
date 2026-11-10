@@ -4,7 +4,7 @@ Every feature document (a tool, a screen, a form, a command, an action, a kind o
 
 Headings are sentence case. The H1 is "The {feature}" for tools, screens, and UI ("The invite form", "The toolbar", "The composer"), the bare noun or command for objects, actions, and commands ("Attachment", "Clipboard", "`init`"), and a descriptive phrase for cross-cutting concerns ("Unsaved changes", "Offline", "Configuration precedence").
 
-Section 3's five subsections are the phases of the product's unit of interaction, decided once in Phase 0 (see `product-kinds.md`): **starting**, **ending at once**, **becoming extended**, **while extended**, and **finishing**. Rename the subsection headings to the product's own words for those phases (for a form: arrive / leave untouched / begin editing / while editing / submit; for a command: invoke / exit immediately / begin running / while running / finish; for a gesture: press / release without dragging / begin dragging / while dragging / release) and keep the same five slots in the same order in every document.
+Section 3's five subsections are the phases of the product's unit of interaction, decided once in the scope step (see `product-kinds.md`): **starting**, **ending at once**, **becoming extended**, **while extended**, and **finishing**. Rename the subsection headings to the product's own words for those phases (for a form: arrive / leave untouched / begin editing / while editing / submit; for a command: invoke / exit immediately / begin running / while running / finish; for a gesture: press / release without dragging / begin dragging / while dragging / release) and keep the same five slots in the same order in every document.
 
 ---
 
@@ -62,7 +62,7 @@ What is committed, as how many undo steps or which durable records or files. Sid
 | {variant 3} | | |
 | {variant 4} | | |
 
-The rows are the product's variant axis from Phase 0 (modifier keys; the user's role and the record's state; flags, environment, and whether output is a terminal; the selected mode, attachments, and conversation state) and are the same rows in every document. Every cell filled, "No effect." where that is the answer. A sentence after the table on what changing a variant mid-interaction does (pressing or releasing a key, a role change taking effect, a flag that cannot change once running).
+The rows are the product's variant axis from the scope step (modifier keys; the user's role and the record's state; flags, environment, and whether output is a terminal; the selected mode, attachments, and conversation state) and are the same rows in every document. Every cell filled, "No effect." where that is the answer. A sentence after the table on what changing a variant mid-interaction does (pressing or releasing a key, a role change taking effect, a flag that cannot change once running).
 
 ## Cancel and interrupt
 
@@ -77,11 +77,11 @@ The rows are the product's variant axis from Phase 0 (modifier keys; the user's 
 | {The input channel changing: a second input device, autofill, a pipe closing, touch cancel} | | |
 | {Any product-specific mode that changes what happens after the interaction} | | |
 
-The rows are the product's interrupt list from Phase 0. They are the same rows in the same order in every document in the repo; rewrite them once for the product and then never vary them. The columns are the interaction's phases before and after it became extended. Every cell filled. Follow with a sentence or two on what happens *after* the interrupt (does the user stay in the feature or return to the default? is a draft kept? is partial work left on disk?) and a `> Technical note:` only if the mechanism produces a result the user would not expect.
+The rows are the product's interrupt list from the scope step. They are the same rows in the same order in every document in the repo; rewrite them once for the product and then never vary them. The columns are the interaction's phases before and after it became extended. Every cell filled. Follow with a sentence or two on what happens *after* the interrupt (does the user stay in the feature or return to the default? is a draft kept? is partial work left on disk?) and a `> Technical note:` only if the mechanism produces a result the user would not expect.
 
 ## Interactions with other systems
 
-One bold-led paragraph per cross-cutting concern, in the same order in every document: **{Permissions.}** **{History or undo.}** **{Containers or parents.}** **{Locked or readonly state.}** **{Offline and reconnection.}** **{Collaboration or multi-device.}** **{Notifications.}** **{Configuration and preferences.}** and whatever else the product has. The list and its order come from Phase 0. Include a concern even when the answer is "no interaction"; it is one line and it tells the reader the question was asked.
+One bold-led paragraph per cross-cutting concern, in the same order in every document: **{Permissions.}** **{History or undo.}** **{Containers or parents.}** **{Locked or readonly state.}** **{Offline and reconnection.}** **{Collaboration or multi-device.}** **{Notifications.}** **{Configuration and preferences.}** and whatever else the product has. The list and its order come from the scope step. Include a concern even when the answer is "no interaction"; it is one line and it tells the reader the question was asked.
 
 ## Edge cases
 

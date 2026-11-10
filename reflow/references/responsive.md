@@ -1,25 +1,13 @@
 # Responsive patterns (Tailwind v4)
 
+Written in Tailwind v4; in another styling system apply the same CSS.
+
 ## Input mode
 
 Screen size does not tell you the input. A touchscreen laptop and a tablet with a keyboard both exist. In Tailwind v4, `hover:` already applies only under `@media (hover: hover)`, so hover styles are safe; hover-only *behaviour* (a menu that opens on hover, actions revealed on hover) still needs a tap equivalent. Size by pointer with the built-in `pointer-fine:` and `pointer-coarse:` variants:
 
 ```html
 <button class="min-h-11 pointer-fine:min-h-8 pointer-fine:px-2">
-```
-
-## Safe areas
-
-`env(safe-area-inset-*)` is zero unless the viewport opts in:
-
-```html
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-```
-
-Pad fixed bars with a floor so they keep spacing on devices without insets:
-
-```css
-.footer { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
 ```
 
 ## Touch targets
@@ -63,7 +51,6 @@ A class cannot set the `open` attribute. If desktop must show the content perman
 
 ## Text and forms
 
-- A text input under 16px gets `max-sm:text-base/{lh}` so iOS does not zoom on focus.
 - Body text around 16px on phones; dense metadata can go smaller when contrast and face keep it legible.
 - Fix a cramped heading group by constraining each text element (`max-w-[32ch]`), not the wrapper with `max-w-*`.
 - `shrink-0` on icons, images, avatars and fixed-size controls that distort when squeezed.
@@ -73,4 +60,3 @@ A class cannot set the `open` attribute. If desktop must show the content perman
 - Divider-separated grids are reconfigured at each breakpoint where columns change: reset first and last padding, drop vertical dividers when collapsing to one column, add horizontal dividers between rows.
 - Wrapped logo rows and tile grids stay balanced at every breakpoint (3 + 3, not 5 + 1).
 - Radii on images and screenshots scale with the viewport: `rounded-[min(1vw,12px)]` rather than a fixed `rounded-*`.
-- Flatten wrapper panels into stacks at small sizes and let content run edge to edge where it suits; two levels of nesting rarely survive a phone.

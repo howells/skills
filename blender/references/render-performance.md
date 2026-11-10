@@ -11,7 +11,7 @@ A timer around `film.at()` plus `render.render(write_still=True)` includes updat
 ## Controlled tests
 
 - Paired comparisons hold camera, scene state, seed, colour transform and quality fixed and change one factor. Resolution tests hold samples and caching; cache tests hold resolution and samples. Separate first frame from warm frames.
-- Cover the hard cases: glazing, projection, alpha-heavy forest, dark reflective water, and transitions between scenes.
+- Cover the film's hardest views: glass, alpha-heavy foliage, dark reflections and scene transitions.
 - Compare images at aligned dimensions with an absolute metric, and look at them; small aggregate differences at sharp edges show in motion.
 - Judge noise and denoise shimmer from short native-frame-rate passages, not stills.
 - Before a final estimate, compare sample counts (e.g. 32, 64, 128) on the same views and passages; pick the fastest that keeps the approved image stable.
@@ -36,11 +36,3 @@ A timer around `film.at()` plus `render.render(write_still=True)` includes updat
 ## Estimates
 
 Count rendered frames separately from encoded ones (sampled stride plus any native-rate intervals). Weight measured per-scene costs by the film's scene mix, add chunk init, hashing, encode and verification, and report a range with the sample behind it. Don't extrapolate warm-cache rates for a runner that reloads, or cold rates for one that doesn't. Size disk from measured PNGs plus movie, lossless audio and replacements.
-
-## Case study: one multi-scene Cycles walkthrough
-
-Not universal ratios; an example of overhead hiding behind "slow rendering".
-
-- A 320×180 sampled preview of 3,972 frames took 7 h 12 m. About 92 min was system sleep; 17 runner initialisations cost ~85 s each; every chunk re-hashed 277 assets (7.6 GiB).
-- Same ten frames, five cameras, 2 samples: 320×180 at 5.93 s/frame vs 1280×720 at 6.05 s/frame. Resolution barely mattered. With persistent data on at 720p: first frame 5.37 s, next nine 1.42 s mean. Max image difference 8/255.
-- A 16-frame 720p, 6-sample check: 53.6 s of frame work inside 182.8 s elapsed, of which 55.7 s was initialisation and 73.4 s hashing.

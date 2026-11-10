@@ -1,4 +1,4 @@
 interface:
   display_name: "Reflow"
-  short_description: "Make every view work on small laptops, tablets and phones"
-  default_prompt: "Use $reflow to make every view of this app work at small-laptop, tablet and phone widths, checking each view at each size in a browser."
+  short_description: "Make a web app work on every screen, phones included"
+  default_prompt: "Use $reflow to make this web app work on every screen: check each view at small-laptop, tablet and phone sizes in a browser, fix the layouts and the phone-browser behavior, then say what still needs checking on a device."

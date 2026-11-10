@@ -10,13 +10,14 @@ Searches: `transition`, `animation`, `@keyframes`, `motion.`, `animate=`, `useSp
 
 ## What to look for
 
-- **Purpose and frequency.** Motion on keyboard actions or things hit constantly; decoration on data being read.
-- **Easing and duration.** `ease-in`, weak built-in curves on deliberate motion, interface motion over 300ms, every tooltip in a toolbar animating instead of only the first.
-- **Origin and physicality.** `scale(0)`, pure-fade entrances, anchored popovers scaling from the centre, pressables with no press state.
-- **Interruption.** Keyframes on rapidly triggered UI, fixed-duration tweens on drags, drags with no velocity-based dismissal, hard stops at boundaries.
-- **Cost.** Layout properties, `transition: all`, parent custom properties driving children, `requestAnimationFrame` loops doing what CSS could.
-- **Accessibility.** Movement with no reduced-motion variant, a reduced-motion variant that removes all feedback, ungated hover.
-- **Cohesion.** Five hand-typed near-identical curves to merge into tokens, one bouncy component in a crisp app, crossfades that double-expose, groups arriving all at once.
+Check every Never and Taste rule in SKILL.md, plus:
+
+- Every tooltip in a toolbar animating instead of only the first.
+- Pressables with no press state.
+- Fixed-duration tweens on drags, drags with no velocity-based dismissal, hard stops at boundaries.
+- `requestAnimationFrame` loops doing what CSS could.
+- A reduced-motion variant that removes all feedback.
+- Hand-typed near-identical curves to merge into tokens, crossfades that double-expose, groups arriving all at once.
 
 ## Confirm before reporting
 
@@ -42,6 +43,4 @@ For a codebase audit, add two to four missed opportunities after the table: plac
 
 Close with **Ship** (no high findings, nothing that should obviously be deleted, reduced motion handled) or **Hold** (anything high), and one line on why. "The motion here is already right" is a valid result.
 
-## After the report
-
-"Apply the fixes" authorises edits within the reviewed scope. "Create tracker items" means one item per group of findings you would fix in one sitting, written for an agent with no context and no taste: the files and current code excerpts, the exact target values inline (curve, duration, spring), the project convention to follow, what not to touch, a done-when line and the feel check. Findings never go into a file in the repo.
+Findings never go into a file in the repo.

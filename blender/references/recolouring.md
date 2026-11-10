@@ -32,7 +32,7 @@ Basis: `L(c) = L(0) + c_r(L(R) − L(0)) + c_g(L(G) − L(0)) + c_b(L(B) − L(0
 ## Scoring
 
 - **Not per-pixel relative error.** It divides by near-zero in every shadowed corner; scored that way the better method looked three times worse. Use absolute luminance error against the region's mean luminance.
-- **Refuse on a resolution mismatch.** A 420×280 basis against 480×320 passes compares unrelated pixels and returns a plausible 52.8% where the truth was a few percent. It doesn't error.
+- **Refuse on a resolution mismatch.** A basis at one resolution against passes at another compares unrelated pixels and returns a plausible number. It doesn't error.
 - **p90/p10 is not a contrast measure.** It is near scale-invariant and barely moves.
 - **A gate measuring what a region claims is blind to a region claiming nothing.** Skipping regions under 100 px is reasonable, but then a cornice reduced to 0 px passes. Keep both: a `SURVIVES` check for a declared region reduced to nothing, and an `unclaimed` mask for pixels no material declared.
 - **Prove the image could show the defect.** A boundary fault is invisible when both sides are close in tone, and harmonious schemes hide exactly that. Assert the median luminance separation of adjacent regions and refuse below a threshold.

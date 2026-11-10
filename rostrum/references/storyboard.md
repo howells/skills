@@ -9,7 +9,7 @@ Contents: what the storyboard helper gets · STORYBOARD.md template · a later c
 - The Paper file or live app for the visual truth, and live data access.
 - The rules from SKILL.md, the house look, and any earlier cut with what was wrong with it, quoted.
 - The format, length range, and whether it is silent.
-- "Make it elegant and lovely, never dense. A safe, competent board is a failure."
+- The bar: elegant and lovely, never dense. A safe, competent board is a failure.
 
 ## STORYBOARD.md
 
@@ -17,7 +17,7 @@ Contents: what the storyboard helper gets · STORYBOARD.md template · a later c
 # <Product>, the film
 
 1920 x 1080, 30 fps, <N> frames (<s> s). Silent. No title plate, no end plate: frame 0 is <first image>, frame <N-1> is <last image>. Built in Remotion from src/kit.tsx (composition `<Id>`).
-Everything on screen comes from <data files>; no score, hex or count is shown.
+Everything on screen comes from <data files>; no internal metric is shown.
 
 ## 1. The arc
 One paragraph: what the viewer sees happen, in order, and the single thread that carries

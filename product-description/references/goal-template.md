@@ -6,7 +6,7 @@
 
 # Goal: complete the {product} product description
 
-You are working in the `{repo-name}` repo. Read `README.md`, `glossary.md`, `foundations/{core-foundation}.md`, and `{area}/{pilot}.md` first. The README defines the purpose, the document template, the method, the structure, and the coverage table. The other three are the exemplars: match their depth, tone, and structure exactly. Your job is to write every document in the README's structure until the coverage table has no `not started` rows, then run a consistency pass.
+You are working in the `{repo-name}` repo. Read `README.md`, `glossary.md`, `foundations/{core-foundation}.md`, and `{area}/{pilot}.md` first. The README defines the purpose, the document template, the structure, and the coverage table. The others are the exemplars: match their depth, tone, and structure exactly. If you were handed one document, write only that one and return; "Order of work" and the done condition below are the coordinator's. The coordinator writes every document in the README's structure until the coverage table has no `not started` rows, then runs a consistency pass.
 
 ## Source of truth
 
@@ -49,7 +49,7 @@ Do not describe code. Describe what the user sees and does. Technical detail goe
 
 1. `foundations/` first, in this order: {list}. Everything else links to them.
 2. `{hardest area}/` next, all {n} documents. This is the hardest part and the bulk of the experience. Read every {state file} before starting any of them, because the states hand off to each other and the documents must agree on where one ends and the next begins. {Say which document owns which states.}
-3. The remaining `{area}/` documents, then `{area}/`, `{area}/`, `cross-cutting/`. These are independent of each other and can be drafted in parallel with subagents once the foundations and {hardest area} documents exist to link to. If you parallelize, give each subagent this prompt, the four exemplars, and the specific document to write; then review every result yourself for consistency with the glossary and the established facts above before accepting it.
+3. The remaining `{area}/` documents, then `{area}/`, `{area}/`, `cross-cutting/`. These are independent of each other and can be drafted in parallel with subagents once the foundations and {hardest area} documents exist to link to. If you parallelize, give each subagent this prompt, the exemplars, and the specific document to write; then review every result yourself for consistency with the glossary and the established facts above before accepting it.
 4. Consistency pass over the whole set: same term for the same thing everywhere, no two documents describing the same behavior differently, every relative link resolves, every document has a verification footer, every glossary term used is defined.
 5. The coordinator updates the coverage table in `README.md` as you go: `drafted` when written, never `verified` (verification by hand is a separate pass you are not doing).
 
@@ -62,4 +62,4 @@ Do not describe code. Describe what the user sees and does. Technical detail goe
 - Depth bar: follow the pilot’s evidence and useful level of detail. Completeness matters more than length. Every state, every modifier, every cancel/interrupt row must be accounted for, even if the answer is "no effect".
 - If you find that the README's structure is wrong for something you discover (a document that should be split, two that should merge), propose the change to the coordinator, who updates the structure and coverage table with its rationale.
 
-You are done when the coverage table has no `not started` rows, the consistency pass is complete, and everything is committed.
+The coordinator is done when the coverage table has no `not started` rows, the consistency pass is complete, and everything is committed.

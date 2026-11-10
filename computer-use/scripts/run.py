@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Launch local Codex Computer Use without inheriting T3's proxy home."""
+"""Launch local Codex Computer Use without inheriting a host's proxy CODEX_HOME."""
 
 import argparse
 import fcntl

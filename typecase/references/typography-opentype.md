@@ -1,8 +1,8 @@
 # Typography and OpenType
 
-How text renders inside the roles: rendering, features, tracking, leading, wrapping and loading.
+How text renders inside the roles: rendering, features, tracking and loading.
 
-Contents: rendering · OpenType features · tracking · line height · wrapping · fluid sizing · details · loading · quick reference.
+Contents: rendering · OpenType features · tracking · loading.
 
 ## Rendering
 
@@ -63,15 +63,7 @@ Per-element overrides only for a scoped need: `<code class="[font-feature-settin
 
 ## Tracking
 
-Kerning is built into the font and on by default; `font-kerning: none` is never a fix. Tracking tightens as size grows. Inter's own curve is `tracking ≈ -0.0223 + 0.185·e^(-0.1745·px)`; a stepped scale is fine:
-
-| Context | Tracking |
-| --- | --- |
-| Display above 48px | -0.02em to -0.04em |
-| Headings 24px and up | -0.01em to -0.02em |
-| Body 14–18px | 0 |
-| Small text under 12px | +0.01em to +0.02em |
-| Uppercase, where a role is sanctioned | +0.05em to +0.1em |
+Kerning is built into the font and on by default; `font-kerning: none` is never a fix. Tracking tightens as size grows. Inter's own curve is `tracking ≈ -0.0223 + 0.185·e^(-0.1745·px)`; a stepped scale is fine.
 
 Use `em`, never `px`, so tracking scales with size. Bind it to the size token so the step brings its tracking with it:
 
@@ -83,46 +75,6 @@ Use `em`, never `px`, so tracking scales with size. Bind it to the size token so
 }
 ```
 
-## Line height
-
-Unitless, so it scales with size. The ratio falls as size rises:
-
-| Size | Line height | Ratio |
-| --- | --- | --- |
-| 12px | 16px | 1.33 |
-| 14px | 20px | 1.43 |
-| 16px | 24px | 1.5 |
-| 18px | 28px | 1.56 |
-| 24px | 32px | 1.33 |
-| 30px | 36px | 1.2 |
-| 36px | 40px | 1.11 |
-| 48px+ | 1.0–1.1 | nearly solid |
-
-Tight leading is for short text. Anything that wraps to three lines or more needs 1.4 or more.
-
-## Wrapping
-
-- `text-balance` on headings and short descriptions. Never on paragraphs; it costs layout time and Chromium ignores it past six lines.
-- `text-pretty` on paragraphs keeps a lone word off the last line.
-- `text-wrap: stable` on editable text, so it does not reflow while typing.
-- `overflow-wrap: break-word` wherever a long word, URL or ID could escape its container; `whitespace-nowrap` on badges and short labels where a break looks broken.
-- `hyphens-auto` in narrow columns, with a correct `lang` attribute. Not on headlines, code or short labels.
-- Cap long-form measure at 45–75 characters (`max-w-prose` or a `ch` width).
-- Interface text stays `text-start`; justified text belongs only in deliberate editorial layouts.
-- `[hanging-punctuation:first]` hangs opening quotes into the margin in Safari.
-
-## Fluid sizing
-
-`clamp()` for display sizes, always with a minimum and a maximum: `font-size: clamp(1.5rem, 1rem + 2vw, 3rem)`. Keep body text fixed. Set sizes in `rem` so the reader's browser setting still applies.
-
-## Details
-
-- **Punctuation.** Rendered text uses `…`, en dashes in ranges (`2010–2020`), curly quotes and `&nbsp;` inside values like `10 km`. Code keeps straight quotes. Match the product's existing convention where one exists.
-- **Natural case.** Store text in natural case and set case in the role with `text-transform`, so a redesign never means rewriting copy.
-- **Underlines.** `text-underline-position: from-font` and `text-decoration-thickness: from-font`, or tune `text-underline-offset`. Never `text-decoration-skip-ink: none`.
-- **Tight containers.** `text-box: trim-both cap alphabetic` stops text sitting low in buttons and badges, as a progressive enhancement.
-- **Truncation.** `truncate` for one line; `line-clamp-3` for several. A clamped value needs a way to reach the full text.
-
 ## Loading
 
 | `font-display` | Behaviour | Use for |
@@ -132,19 +84,3 @@ Tight leading is for short text. Anything that wraps to three lines or more need
 | `block` | Brief invisible period, then swap | Short display or brand text |
 
 Preload only the one or two faces the first screen needs (`<link rel="preload" as="font" type="font/woff2" crossorigin>`). Match the fallback's metrics with `size-adjust`, `ascent-override`, `descent-override` and `line-gap-override` on a local fallback `@font-face` so the swap does not reflow; Fontaine and `next/font` calculate them. Serve `woff2`. Subset with `unicode-range` (`next/font` does it automatically). Load every weight and style the roles use: a missing face is synthesised, and `font-synthesis: none` on body text hides the symptom by breaking the fallback.
-
-## Quick reference
-
-```
-SMOOTHING        antialiased on the root; weight bump on dark 1x surfaces
-OPTICAL SIZING   auto by default; load a font with an opsz axis (Inter → InterVariable)
-text-rendering   never optimizeLegibility
-FEATURES         properties first; font-feature-settings only for cv/ss
-FIGURES          tabular-nums on anything that aligns or changes
-CODE             ligatures off
-TRACKING         em, bound to the size token, tighter as size grows
-LEADING          unitless, falls as size rises; 1.4+ for anything that wraps
-WRAP             text-balance on headings, text-pretty on paragraphs
-FLUID SIZING     clamp(min, preferred, max) for display only
-LOADING          swap for body, preload one or two faces, metric-matched fallback
-```

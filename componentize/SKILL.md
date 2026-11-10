@@ -1,6 +1,6 @@
 ---
 name: componentize
-description: "Consolidate duplicated UI into shared components, split god files or extract packages. Not for redesign (`chiaroscuro`), typography (`typecase`) or behaviour-preserving cleanup (`unslop`)."
+description: "Consolidate duplicated UI into shared components, split god files or extract packages. Not for redesign (`chiaroscuro`), typography (`typecase`), structural review (`fettle`) or behaviour-preserving cleanup (`unslop`)."
 ---
 
 # Componentize
@@ -41,12 +41,10 @@ Shared components accept `className`, leave outer margins to callers, forward re
 
 ## Splitting a god file
 
-Length alone is never the reason. Split when a file mixes responsibilities, duplicates logic, changes for unrelated reasons or has a public interface that could be smaller. Rank candidates with the scanner, then read them:
+Length alone is never the reason. Split when a file mixes responsibilities, duplicates logic, changes for unrelated reasons or has a public interface that could be smaller. Rank candidates with the scanner; its score is a lead, so read the file before deciding:
 
 ```bash
-python3 scripts/find-god-files.py /path/to/repo                  # flags score ≥ 35; ≥300 lines can list on length alone
-python3 scripts/find-god-files.py /repo --min-score 20 --duplicate-window 10
-python3 scripts/find-god-files.py /repo --include-tests --json
+python3 <this skill's directory>/scripts/find-god-files.py /path/to/repo   # --min-score N, --duplicate-window N, --include-tests, --json
 ```
 
 Split in this order, one candidate at a time, running the smallest relevant check after each: pure helpers; duplicated logic, before moving callers; hooks and state machines where state is tangled; leaf subcomponents before shells; I/O adapters away from domain logic in scripts.
@@ -57,7 +55,7 @@ Split in this order, one candidate at a time, running the smallest relevant chec
 
 ## Extracting a package
 
-Define the boundary first. In: the code, its types, styles, assets, fixtures, tests and examples. Out: routes, auth, database clients, env access, product copy, analytics, flags and old-path shims. Report hidden coupling before editing. Before extracting a package, read [references/package-extraction.md](references/package-extraction.md): public API, `exports`, dependencies and new repos. Read each reference file with its own command. Design a narrow public API before creating files.
+Define the boundary first. In: the code, its types, styles, assets, fixtures, tests and examples. Out: routes, auth, database clients, env access, product copy, analytics, flags and old-path shims. Report hidden coupling before editing. Before extracting a package, read [references/package-extraction.md](references/package-extraction.md): the styling contract, the checks before calling it done and the common failures.
 
 - Within one repo: migrate the callers and delete the old implementation.
 - To a separate repo: copy, and leave the source app untouched unless removal was asked for.
@@ -65,34 +63,12 @@ Define the boundary first. In: the code, its types, styles, assets, fixtures, te
 
 ## Migrating a collection
 
-For many charts, cards or examples moving onto one kit, read [references/collection-migration.md](references/collection-migration.md) before the first family: it covers stable baselines, family-by-family extraction and what each kind of evidence proves.
+For many charts, cards or examples moving onto one kit: capture a baseline before touching anything (fixed data, viewport, settled state) and never regenerate it from changed code. Migrate one family at a time, deriving the API from its call sites; callers keep distinct marks and semantics. Finish by searching for old imports and inline copies across the whole collection.
 
 ## Checking
 
 Check changed exports in their consumers. When shared UI moved, open the affected pages (or Storybook) and compare against before; exercise keyboard and focus on interactive primitives.
 
-Load `chiaroscuro` only for visual direction, `typecase` when the duplication is typographic. Scope stays here.
-
 ## Audit output
 
-When asked for analysis rather than changes:
-
-```markdown
-## Reuse audit
-
-### Existing shared surface
-- `path`: purpose, health, import pattern
-
-### Opportunities
-| Priority | Pattern | Evidence (file:line, call-site count, current home) | Action (reuse / adapt / extract / move / none) | Why |
-|---|---|---|---|---|
-
-### Proposed API
-- `ComponentName`: props, variants, slots, import path, server/client
-
-### Home and package plan
-- Existing package / `packages/ui` / app-local; exports and dependency changes
-
-### Risks
-- Coupling, accessibility, styling or boundary concerns
-```
+Asked for analysis rather than changes: list the existing shared surface, then opportunities ranked, each with `file:line` evidence, call-site count, action (reuse / adapt / extract / move / none), the proposed API and where it would live.

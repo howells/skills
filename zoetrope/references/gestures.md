@@ -63,17 +63,6 @@ const rubberBand = (overshoot, size, c = 0.55) =>
   (overshoot * size * c) / (size + c * Math.abs(overshoot));
 ```
 
-## Direction and depth
-
-- Intermediate frames should point at the outcome: a control that expands toward the finger telegraphs where it's going.
-- A UI surface that arrives as frosted glass animates its blur and scale together, so it reads as a material arriving rather than a fade.
-- A modal task dims what's behind it; a panel that works alongside the page keeps the page lit and uses offset or translucency instead.
-- For very fast movement, a slight stretch or blur along the direction of travel reads better than a sharp streak.
-
-## Sound and haptics
-
-When motion is paired with sound or vibration, all of it fires on the same frame, from the event that caused it (the snap, the toggle flipping), and only on moments that matter: commit, success, error, snap. Feedback on everything teaches people to ignore it.
-
 ## Reduced motion
 
 A gesture still tracks the finger under reduced motion; that's direct manipulation, not decoration. What changes is the settle: drop the overshoot, shorten the travel, or cross-fade to the end state.

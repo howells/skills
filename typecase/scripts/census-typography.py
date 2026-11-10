@@ -156,17 +156,17 @@ def base_utility(token: str) -> str:
 # `font-medium` is emphasis within a role; `font-mono` is a family variant.
 DEFAULT_SANCTIONED = ("font-medium", "font-mono", "tabular-nums", "capitalize")
 
-# The case, in the order the roles are proposed. Each entry is a name, a band of
-# px the role covers, and what it is for.
+# The case, in the order the roles are proposed. Each entry is a name (the role
+# prefix is added when reporting), a band of px the role covers, and what it is for.
 ROLE_BANDS = (
-    ("type-display", 30.0, float("inf"), "page heroes"),
-    ("type-heading", 18.0, 30.0, "section headings"),
-    ("type-body", 14.0, 18.0, "names, sentences, running copy"),
-    ("type-small", 0.0, 14.0, "metadata, labels, controls"),
+    ("display", 30.0, float("inf"), "page heroes"),
+    ("heading", 18.0, 30.0, "section headings"),
+    ("body", 14.0, 18.0, "names, sentences, running copy"),
+    ("small", 0.0, 14.0, "metadata, labels, controls"),
 )
 
 
-def propose_case(sizes: Counter[str], mono_uses: int) -> list[tuple[str, str, list[str], int]]:
+def propose_case(sizes: Counter[str], mono_uses: int, prefix: str) -> list[tuple[str, str, list[str], int]]:
     """Fold the measured size soup into four roles.
 
     Returns one entry per role that the codebase actually needs: its name, its
@@ -190,12 +190,12 @@ def propose_case(sizes: Counter[str], mono_uses: int) -> list[tuple[str, str, li
             continue
         entries.sort(key=lambda e: -e[2])
         members = [f"{token} (×{count})" for _, token, count in entries]
-        proposal.append((name, purpose, members, sum(count for _, _, count in entries)))
+        proposal.append((prefix + name, purpose, members, sum(count for _, _, count in entries)))
 
     if mono_uses:
         proposal.append(
             (
-                "type-data",
+                prefix + "data",
                 "numerics and codes; a family variant of the smallest role, not a new step",
                 [f"font-mono (×{mono_uses})"],
                 mono_uses,
@@ -462,7 +462,7 @@ def main() -> int:
         print("each of which belongs to a role rather than becoming one.")
         return 2 if skipped_files else 0
 
-    proposal = propose_case(sizes, modifiers.get("font-mono", 0))
+    proposal = propose_case(sizes, modifiers.get("font-mono", 0), args.prefix)
     if not proposal:
         print("Every size resolved to a clamp, calc or var. Read them by hand.")
         return 2 if skipped_files else 0

@@ -1,11 +1,9 @@
 ---
 name: nomen
-description: "Generate, critique and check names for products, packages, CLIs, apps or features, with domain, registry, GitHub, App Store and web conflict checks. Use when naming or renaming something. Not for interface labels (`signage`) or legal clearance."
+description: "Generate, critique and check names for products, packages, CLIs, apps or features, with domain, registry, GitHub, App Store and web conflict checks. Use when one of these needs a name or a rename. Not for interface labels (`signage`) or legal clearance."
 ---
 
 # Nomen
-
-Names for products, apps, packages, CLIs, features, teams or brands: generating them, critiquing them, checking them, and renaming.
 
 ## Rules
 
@@ -27,7 +25,7 @@ For each: why it fits, spelling or pronunciation risk, and any obvious conflict.
 
 ## Check
 
-Search the exact name and adjacent terms on the web, then wherever the name has to live: GitHub, package registries, domains, app stores. Before checking, read [references/availability.md](references/availability.md) for the commands and how to read their results.
+Search the exact name and adjacent terms on the web, then wherever the name has to live: GitHub, package registries, domains, app stores. Before checking, read [references/availability.md](references/availability.md) for the commands and how to read their results. Check the three to five strongest; replace any with a hard conflict and check the replacement.
 
 ## Output
 

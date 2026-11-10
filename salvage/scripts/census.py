@@ -112,9 +112,8 @@ def lock_paths(common, git_dirs):
 
 
 class Census:
-    def __init__(self, output, claims, exclusions):
+    def __init__(self, output, exclusions):
         self.output = output
-        self.claims = claims
         self.exclusions = exclusions
         self.repositories = {}
         self.errors = []
@@ -126,17 +125,12 @@ class Census:
         message = str(error) if isinstance(error, ObservationError) else "filesystem or process observation failed"
         self.errors.append({"path": str(path), "operation": operation, "message": message})
 
-    def ownership(self, path):
-        return [claim for claim in self.claims if within(path.resolve(), Path(claim["path"]).resolve())]
-
     def excluded_path(self, path):
-        return any(within(path.resolve(), item) for item in self.exclusions) or any(
-            claim.get("exclude", False) for claim in self.ownership(path))
+        return any(within(path.resolve(), item) for item in self.exclusions)
 
     def discover(self, path, requested_root):
         if self.excluded_path(path):
-            self.excluded.append({"path": str(path), "requestedRoot": str(requested_root),
-                                  "ownership": self.ownership(path), "protected": True})
+            self.excluded.append({"path": str(path), "requestedRoot": str(requested_root)})
             return True
         try:
             if not path.is_dir() or not os.access(path, os.R_OK | os.X_OK):
@@ -150,7 +144,6 @@ class Census:
                 record = self.repositories.setdefault(str(common), {
                     "commonGitDir": str(common), "bare": bare, "entries": [],
                     "worktrees": [], "branches": [], "stashes": [], "reflogOnlyCommits": [], "locks": [],
-                    "remoteVerification": "not performed; all ref/upstream information is local",
                 })
                 record["entries"].append({"path": str(path), "resolvedPath": str(path.resolve()),
                                            "checkout": str(checkout) if checkout else None,
@@ -175,13 +168,12 @@ class Census:
         path = Path(registered["worktree"])
         record = {"path": str(path), "head": registered.get("HEAD"), "branch": registered.get("branch"),
                   "detached": bool(registered.get("detached")), "registration": registered,
-                  "protected": True, "ownership": self.ownership(path), "dirty": [], "ignoredPaths": [],
+                  "dirty": [], "ignoredPaths": [],
                   "excluded": self.excluded_path(path), "processes": [], "activity": {}}
         outside(self.output, [path])
         if record["excluded"]:
             if not any(item["path"] == str(path) for item in self.excluded):
-                self.excluded.append({"path": str(path), "registration": "worktree",
-                                      "ownership": record["ownership"], "protected": True})
+                self.excluded.append({"path": str(path), "registration": "worktree"})
             return record, None
         try:
             if not path.is_dir() or not os.access(path, os.R_OK | os.X_OK):
@@ -219,7 +211,8 @@ class Census:
                 head = checkout["head"]
                 if head and set(head) != {"0"}:
                     heads.append(head)
-            body = read_git(path, "for-each-ref", "--format=%(refname)%00%(objectname)%00%(upstream)%00%(upstream:track)%00%(committerdate:unix)").stdout
+            body = read_git(path, "for-each-ref", "--format=%(refname)%00%(objectname)%00%(upstream)%00%(upstream:track)%00%(committerdate:unix)",
+                            "refs/heads", "refs/remotes").stdout
             for line in body.splitlines():
                 ref, sha, upstream, tracking, timestamp = line.split("\0")
                 record["branches"].append({"ref": ref, "sha": sha, "upstream": upstream or None,
@@ -231,26 +224,12 @@ class Census:
                     record["stashes"].append({"sha": sha, "ref": ref, "createdAt": int(timestamp),
                                                "originBranch": origin.group(1) if origin else None})
             record["reflogOnlyCommits"] = read_git(path, "rev-list", "--reflog", "--all", "--not", "--all", *heads).stdout.splitlines()
-            record["historyInterpretation"] = "reachability observation; hidden history is not automatically lost work"
             record["locks"] = lock_paths(common, git_dirs)
         except (ObservationError, OSError, ValueError, subprocess.TimeoutExpired) as error:
             if isinstance(error, ObservationError) and str(error).startswith("output must"):
                 raise
             self.error(path, "repository observation", error)
             record["incomplete"] = True
-
-
-def load_claims(path):
-    if not path:
-        return []
-    body = json.loads(Path(path).read_text())
-    if not isinstance(body, dict) or type(body.get("version")) is not int or body.get("version") != 1 or not isinstance(body.get("claims"), list):
-        raise ObservationError("ownership input must have version 1 and a claims list")
-    for claim in body["claims"]:
-        if (not isinstance(claim, dict) or not isinstance(claim.get("path"), str)
-                or "\0" in claim["path"] or not Path(claim["path"]).is_absolute()):
-            raise ObservationError("each ownership claim needs an absolute path")
-    return body["claims"]
 
 
 def save_private(path, data):
@@ -270,18 +249,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("roots", nargs="+", help="repository paths or containers to discover recursively")
     parser.add_argument("--output", required=True, help="new private JSON file outside every requested root")
-    parser.add_argument("--ownership", help="versioned JSON claims; evidence only, never authorisation")
     parser.add_argument("--exclude", action="append", default=[], help="explicit protected path excluded from inspection")
     args = parser.parse_args()
     roots = [Path(item).expanduser().absolute() for item in args.roots]
     output = Path(args.output).expanduser().resolve()
     try:
         outside(output, roots)
-        census = Census(output, [], [Path(item).expanduser().resolve() for item in args.exclude])
-        try:
-            census.claims = load_claims(args.ownership)
-        except (ObservationError, OSError, ValueError) as error:
-            census.error(args.ownership, "ownership input", error)
+        census = Census(output, [Path(item).expanduser().resolve() for item in args.exclude])
         process_complete = True
         try:
             census.processes = process_cwds()
@@ -302,12 +276,10 @@ def main():
             census.observe(record)
         data = {"format": "howells-repository-census", "version": 1,
                 "generatedAt": datetime.now(timezone.utc).isoformat(),
-                "snapshotSemantics": "sequential observations; complete coverage is not an atomic snapshot",
                 "coverage": {"complete": not census.errors, "requestedRoots": [str(path) for path in roots],
                              "observedRoots": observed, "errors": census.errors, "exclusions": census.excluded},
                 "processEvidence": {"complete": process_complete,
                                     "scope": "local OS working directories only; remote hosts and session custody are not observed"},
-                "ownershipInterpretation": "all checkouts remain protected; absent processes never establish abandonment",
                 "repositories": sorted(census.repositories.values(), key=lambda record: record["commonGitDir"])}
         save_private(output, data)
         state = "complete" if data["coverage"]["complete"] else "incomplete"

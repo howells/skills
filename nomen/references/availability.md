@@ -4,17 +4,24 @@ Every result is a conflict signal at the time of the lookup. Report the source a
 
 ## GitHub
 
-- `gh api "repos/OWNER/NAME"`: 200 is an existing repository; 404 means not visible to this credential, which includes private repositories.
+- `gh api users/NAME`: a result means the user or organisation handle is taken; `Not Found (HTTP 404)` means no such account. Any other error is unknown.
+- `gh api repos/OWNER/NAME`: a result is an existing repository; 404 means not visible to this credential, which includes private repositories.
 - `gh search repos NAME --limit 20` gauges how crowded the name is.
 
 ## Package registries
 
-- npm: `npm view NAME name`. Read the not-found response itself; anything else is unknown. npm also rejects names too similar to existing packages (punctuation and typo-squat rules), and spam-reserved or unpublished names 404 too.
-- PyPI: `pip index versions NAME`. Crates: `cargo search NAME`. RubyGems: `gem list -r -e NAME`.
+- npm: `npm view NAME name` prints the name when taken and `E404` when not published; anything else is unknown. npm also rejects names too similar to existing packages (punctuation and typo-squat rules), and spam-reserved or unpublished names 404 too.
+- PyPI, crates.io and RubyGems, by HTTP status (200 taken, 404 not published, anything else unknown):
+
+  ```
+  curl -s -o /dev/null -w '%{http_code}' https://pypi.org/pypi/NAME/json
+  curl -s -A name-check -o /dev/null -w '%{http_code}' https://crates.io/api/v1/crates/NAME
+  curl -s -o /dev/null -w '%{http_code}' https://rubygems.org/api/v1/gems/NAME.json
+  ```
 
 ## Domains
 
-Use an authoritative registry RDAP or registrar lookup for registration status. A live site is strong evidence the domain is in use. DNS and HTTP are evidence of use only: an empty `dig +short NAME.TLD NS` does not mean unregistered, because registered domains can lack delegation. An unregistered domain may still be reserved or premium. When signals conflict or the lookup fails, report the status as unresolved, with the evidence of use.
+Use RDAP for registration status: `curl -sL -o /dev/null -w '%{http_code}' https://rdap.org/domain/NAME.TLD` gives 200 for registered and 404 for not found; anything else is unknown, and some TLDs have no RDAP server. A live site is strong evidence the domain is in use. DNS and HTTP are evidence of use only: an empty `dig +short NAME.TLD NS` does not mean unregistered, because registered domains can lack delegation. An unregistered domain may still be reserved or premium. When signals conflict or the lookup fails, report the status as unresolved, with the evidence of use.
 
 ## App stores
 
@@ -38,4 +45,4 @@ Android: web-search `NAME site:play.google.com`.
 
 ## Crowding
 
-Product Hunt and app-store category listings show whether the space is crowded. Search trademark databases only when the user asks for that level of signal.
+Product Hunt and app-store category listings show whether the space is crowded.

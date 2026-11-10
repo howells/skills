@@ -1,51 +1,10 @@
 # Package extraction
 
-## Public API
-
-One stable import path by default:
-
-```ts
-import { Thing } from "@scope/thing";
-```
-
-Subpath exports only for deliberate public surfaces:
-
-```json
-{
-  "exports": {
-    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
-    "./styles.css": "./dist/styles.css"
-  }
-}
-```
-
-Don't export `./src/*` unless the package is explicitly a low-level toolkit.
-
-## Dependencies
-
-- `peerDependencies`: anything that must be a singleton or match the host: `react`, `react-dom`, `next`, styling runtimes, design-system packages the app controls.
-- `dependencies`: libraries the package owns internally.
-- `devDependencies`: tests, build tools, Storybook, examples, types.
-
 ## React and Tailwind packages
 
-- `"use client"` only in files that use browser APIs, state, effects, handlers or client-only libraries.
 - No app router APIs, and no `next/image` or `next/link` unless the package is explicitly Next-only.
 - State the styling contract: bundled CSS, Tailwind classes, CSS variables, style props or unstyled.
-- Tailwind v4: tell consumers to add the package to `@source`. No safelists. Ship CSS variables or a CSS entrypoint when classes alone aren't enough.
-
-## New repo shape
-
-```text
-package-name/
-├── package.json
-├── tsconfig.json
-├── src/index.ts
-├── tests/
-└── examples/
-```
-
-Add Turborepo, Storybook, Changesets or a docs app only when the package needs them.
+- Ship CSS variables or a CSS entrypoint when classes alone aren't enough. No safelists.
 
 ## Before calling it done
 

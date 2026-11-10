@@ -21,9 +21,9 @@ The same rules `chiaroscuro` applies to code, so a mockup never needs correcting
 
 ## The file
 
-A Paper URL is `https://app.paper.design/file/<fileId>/<page>/<nodeId>`, e.g. `01M1AMPBSYGK8DPDW1G5824M7K/1-0/FIE-0`. Pass the `fileId` on every file-scoped call rather than relying on whichever file was last opened. A trailing node id scopes the request to that artboard; without one the page is in scope. An untidy rest-of-file does not widen a one-board request.
+A Paper URL is `https://app.paper.design/file/<fileId>/<page>/<nodeId>`. Pass the `fileId` on every file-scoped call rather than relying on whichever file was last opened. A trailing node id scopes the request to that artboard; without one the page is in scope. An untidy rest-of-file does not widen a one-board request.
 
-Never read node ids back to the user. Name artboards by what they show.
+Name artboards by what they show.
 
 If the Paper tools are missing, say so and ask the user to connect the file (Paper Desktop runs the local MCP server). Never claim a file was inspected or edited without them.
 
@@ -35,9 +35,9 @@ A token definition is shared: check its consumers outside scope before changing 
 
 Work from the spec. With none, derive the views and states from the request, state the assumptions and draw.
 
-- **Tokens before any view**: colour names and the type scale. Parallel agents without them invent four names for one hex, and the file has to be reconciled by hand.
-- **Fonts from `get_font_family_info`**, never from memory. Fonts set from memory once needed a repair agent across a thousand nodes.
-- **One visual group per `write_html`, screenshot after each**, `finish_working_on_nodes` when a set is done. Screenshotting only at the end finds six compounded problems at once.
+- **Tokens before any view**: colour names and the type scale. Parallel agents without them invent several names for one hex.
+- **Fonts from `get_font_family_info`**, never from memory.
+- **One visual group per `write_html`, screenshot after each**, `finish_working_on_nodes` after every set, not once at the end. Screenshotting only at the end lets problems compound.
 - **After the first complete view**, zoom out, check its hierarchy, and draw the next state beside it so each action stays connected to its consequence.
 - **Borrowing another interface's look**: name the features borrowed and keep the target product's tasks, objects and states. Copying its screens can quietly replace the app being designed.
 
@@ -62,12 +62,9 @@ Before "one page with the current version of every screen" or any whole-app cons
 
 ## Checklist
 
-Each line is a correction given more than once.
-
 - **Real images**, supplied or properly sourced. Without product photography, say so; label any illustrative image.
 - **Crops chosen from the content**, subject kept, never stretched on one axis. No accidental repetition.
 - **Imagery that flatters the product.** A realistic photo can still be the wrong photo; match the audience's aspiration.
-- **Text is not interface.** Paragraphs standing in for controls fail the view, however well written.
 - **Density a stranger can parse**: someone seeing it for the first time in a meeting, with the presenter talking over it.
 - **Plain labels**: the audience's words, outcomes stated, no filler (`signage` goes deeper).
 - **Data the product can actually serve.** No invented production facts; label illustrative values.
@@ -77,8 +74,6 @@ Each line is a correction given more than once.
 
 ## Gotchas
 
-- **`get_jsx` blows the token limit constantly**, the largest share of recorded Paper errors. The error names a file holding the result; read it there, or scope with `get_node_info` and `get_computed_styles` on a subtree.
-- **`write_html` can exceed it too** when the returned subtree is large. One visual group per call keeps it under.
+- **`get_jsx` often exceeds the token limit.** The error names a file holding the result; read it there, or scope with `get_node_info` and `get_computed_styles` on a subtree.
 - **"Your Paper file is currently disconnected from the server"** means wait and retry that one call. Never rebuild work already written.
-- **`finish_working_on_nodes` is routinely skipped.** Call it when each set of nodes is done.
 - **`get_computed_styles` takes an array** of node ids, even for one node.

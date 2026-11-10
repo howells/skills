@@ -25,8 +25,7 @@ Steps, fan-out, retries, resume, storage, invocation boundaries and model loops.
 ## Retries
 
 - **Follow retry settings through the actual adapter.** Workflow `retryConfig`, per-step retries and durable-function retries govern different boundaries, and defaults differ by release.
-- **Set retries per step where idempotency differs.** A root `attempts: 0` protecting expensive work also stops a cheap idempotent step from retrying. Every zero carries its reason in a comment.
-- **Classify first.** Retry transient failures (rate limit, 5xx, socket); never configuration ones (billing, credits, quota, auth).
+- **Set retries per step where idempotency differs.** A root `attempts: 0` protecting expensive work also stops a cheap idempotent step from retrying.
 
 ## Suspend and resume
 
@@ -34,7 +33,6 @@ Steps, fan-out, retries, resume, storage, invocation boundaries and model loops.
 - **Validate resume input server-side** at the boundary that receives it, naming the expected shape. The engine claims the run before validating, and only validates where input validation is enabled; check whether a rejected payload leaves the run claimed.
 - **A caller-parameterised guard isn't in force until every call site passes it and every hop forwards it.** A stale-resume fence compared against `undefined` admits everything; a proxy forwarding only the payload drops the step id.
 - **Round-trip nullable leaves through the installed adapter.** Server-side re-encoding can drop null-valued keys. Where null and absent mean different things, use an explicit discriminant.
-- **Payloads carry human-readable names, not just ids,** and operator screens map state tokens to labels.
 - **New payload fields keep suspended runs resumable:** optional additive fields, versioning or a validated migration. This is separate from a provider's strict-output schema.
 - **Record the suspension immediately before the run parks.**
 - **Distinguish a live suspension from a dead run.** A stale heartbeat or a claimed run with no progress isn't a question awaiting an answer.
@@ -49,8 +47,7 @@ Steps, fan-out, retries, resume, storage, invocation boundaries and model loops.
 - **Know the adapter's cost model.** Per-step write cost that scales with snapshot size makes a long workflow quadratic.
 - **Share the configured provider where persistence is meant to be shared.** Deliberately separate stores are fine; an accidental duplicate instance, or a standalone memory-backed agent without its provider, is not.
 - **Missing storage config fails fast in production** where agent memory, suspended runs, kept traces and scores, schedules or cross-process state must survive.
-- **Use the project's shared pool helper.** A single-connection pool can deadlock a nested or batch operation waiting on the connection it already holds.
-- **Try start-up DDL over the connection the deploy actually uses,** or move schema initialisation out of the runtime. Specific pooler and option combinations fail. A schema tool sharing the database allow-lists runtime-owned tables so a push can't offer to drop them.
+- **Try start-up DDL over the connection the deploy actually uses,** or move schema initialisation out of the runtime. Specific pooler and option combinations fail.
 - **A storage-adapter change needs runtime acceptance:** startup, schema ownership, the deployed connection. Compilation proves no persistence.
 
 ## Invocation boundaries
@@ -61,11 +58,6 @@ A durable run is many invocations, often in different processes, on a platform t
 - **A terminal write merges into the durable log,** never replaces it; the process writing the end rarely holds what the run accumulated.
 - **A boot-time restart of active runs re-drives their steps;** check they are safe to repeat.
 - **Timeouts bound one item, not a batch.** A deadline around a whole fan-out has the reliability of its slowest call; a route whose worst case exceeds the platform ceiling needs resumable slicing.
-
-## Model calls inside runs
-
-- **A degenerate result fails at its consumer.** Check the abort signal and the expected native shape; size cardinality against the bound, not the example.
-- **When the journey requires retrieval, a schema-valid answer with no retrieval calls fails it.**
 
 ## Long agent loops
 

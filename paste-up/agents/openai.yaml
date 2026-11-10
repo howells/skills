@@ -1,7 +1,7 @@
 interface:
   display_name: "Paste-up"
   short_description: "Build and repair design files in Paper"
-  default_prompt: "Use $paste-up on this Paper file to check shared tokens, fonts, artboard layout, image crops and labels, and repair what has drifted."
+  default_prompt: "Use $paste-up to build this mockup in Paper from the spec, or to audit and repair this Paper file's tokens, fonts, artboards, crops and labels."
 dependencies:
   tools:
     - type: "mcp"

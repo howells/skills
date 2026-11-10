@@ -1,6 +1,6 @@
 ---
 name: memento
-description: "Say where this task stands from live state: the ask, done, left, branch, uncommitted files and any drift. Use on returning to a long session. Not for many sessions (`muster`) or the last reply (`what`)."
+description: "Say where this task stands from live state: the ask, done, left, branch, uncommitted files and any drift. Use on returning to a long session. Not for many sessions (`muster`)."
 ---
 
 # Memento

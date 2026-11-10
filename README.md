@@ -44,7 +44,7 @@ The integration skills (`gog` and `research`) use tools, accounts and credential
 
 ### `armature`
 
-Turn a web app that scrolls like a document into an app shell with fixed chrome and panes that scroll on their own. Not for visual polish (`chiaroscuro`).
+Turn a web app that scrolls like a document into an app shell with fixed chrome and panes that scroll on their own. Use when headers, toolbars or filters scroll out of view. Not for visual polish (`chiaroscuro`) or small-screen layout (`reflow`).
 
 Install globally for Codex:
 
@@ -64,7 +64,7 @@ npx skills@latest add howells/skills --skill ask-howells --agent codex --global
 
 ### `blender`
 
-Inspect, edit and render Blender scenes and films through the Blender MCP or headless CLI. Use for .blend files or any Blender work. Not for Remotion films (`rostrum`) or Paper (`paste-up`).
+Inspect, edit and render Blender scenes and films through the Blender MCP or headless CLI. Not for Remotion films (`rostrum`).
 
 Install globally for Codex:
 
@@ -84,7 +84,7 @@ npx skills@latest add howells/skills --skill chiaroscuro --agent codex --global
 
 ### `componentize`
 
-Consolidate duplicated UI into shared components, split god files or extract packages. Not for redesign (`chiaroscuro`), typography (`typecase`) or behaviour-preserving cleanup (`unslop`).
+Consolidate duplicated UI into shared components, split god files or extract packages. Not for redesign (`chiaroscuro`), typography (`typecase`), structural review (`fettle`) or behaviour-preserving cleanup (`unslop`).
 
 Install globally for Codex:
 
@@ -94,7 +94,7 @@ npx skills@latest add howells/skills --skill componentize --agent codex --global
 
 ### `computer-use`
 
-Control Mac apps, including signed-in Chrome, through native Codex Computer Use from Codex or Claude Code. Not for browser-only QA (`fieldtest`).
+Control Mac apps, including signed-in Chrome, with native Computer Use or a headless Codex runner. Not for browser-only QA (`fieldtest`).
 
 Install globally for Codex:
 
@@ -134,7 +134,7 @@ npx skills@latest add howells/skills --skill fieldtest --agent codex --global
 
 ### `gog`
 
-Work in Gmail, Calendar, Drive, Docs and Sheets through the authenticated gog CLI instead of Google connectors. Not for web research (`research`).
+Work in Gmail, Calendar, Drive, Docs and Sheets through the authenticated gog CLI instead of Google connectors.
 
 Install globally for Codex:
 
@@ -142,15 +142,6 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill gog --agent codex --global
 ```
 
-### `handfeel`
-
-Make a web app feel native on a phone: safe areas, viewport units, input zoom, tap and hover on touch, overscroll, the color behind Safari's bars, PWA install. Not for responsive layout (`reflow`), app shells (`armature`) or motion (`zoetrope`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill handfeel --agent codex --global
-```
 
 ### `maquette`
 
@@ -174,7 +165,7 @@ npx skills@latest add howells/skills --skill marginalia --agent codex --global
 
 ### `mastraudit`
 
-Prevent recurring Mastra failures in agents, tools, workflows, storage, Studio and MCP Apps. Use when writing, debugging or auditing Mastra code. Not for general UI review (`fieldtest`).
+Mastra mistakes that typecheck and fail at runtime, in agents, tools, workflows, storage, Studio and MCP Apps. Use when writing, debugging or auditing Mastra code.
 
 Install globally for Codex:
 
@@ -184,7 +175,7 @@ npx skills@latest add howells/skills --skill mastraudit --agent codex --global
 
 ### `memento`
 
-Say where this task stands from live state: the ask, done, left, branch, uncommitted files and any drift. Use on returning to a long session. Not for many sessions (`muster`) or the last reply (`what`).
+Say where this task stands from live state: the ask, done, left, branch, uncommitted files and any drift. Use on returning to a long session. Not for many sessions (`muster`).
 
 Install globally for Codex:
 
@@ -194,7 +185,7 @@ npx skills@latest add howells/skills --skill memento --agent codex --global
 
 ### `muster`
 
-Catch up on work across concurrent or older sessions: what's in flight, who owns it, what was decided, and a handoff when asked. Not for this task's status (`memento`), the last reply (`what`) or git conflicts and cleanup (`salvage`).
+Catch up on work across concurrent or older sessions: what's in flight, who owns it, what was decided, and a handoff when asked. Not for this task's status (`memento`) or git conflicts and cleanup (`salvage`).
 
 Install globally for Codex:
 
@@ -205,7 +196,7 @@ npx skills@latest add howells/skills --skill muster --agent codex --global
 
 ### `nomen`
 
-Generate, critique and check names for products, packages, CLIs, apps or features, with domain, registry, GitHub, App Store and web conflict checks. Use when naming or renaming something. Not for interface labels (`signage`) or legal clearance.
+Generate, critique and check names for products, packages, CLIs, apps or features, with domain, registry, GitHub, App Store and web conflict checks. Use when one of these needs a name or a rename. Not for interface labels (`signage`) or legal clearance.
 
 Install globally for Codex:
 
@@ -223,15 +214,6 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill paste-up --agent codex --global
 ```
 
-### `plimsoll`
-
-Cut checks, CI watch loops and re-planning that crowd out shipping, and keep Vercel builds on the user's machine. Use near a deadline or when nothing visible has landed. Not for codebase review (`fettle`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill plimsoll --agent codex --global
-```
 
 ### `product-description`
 
@@ -245,7 +227,7 @@ npx skills@latest add howells/skills --skill product-description --agent codex -
 
 ### `rebalance`
 
-Reprioritize a project's backlog around a goal or deadline, and flag goal work too thin to build. Not for doing the work (`implement`).
+Reprioritize a project's backlog around a goal or deadline, and flag goal work too thin to build. Not for doing the work.
 
 ```bash
 npx skills@latest add howells/skills --skill rebalance --agent codex --global
@@ -253,7 +235,7 @@ npx skills@latest add howells/skills --skill rebalance --agent codex --global
 
 ### `reflow`
 
-Make every view of a web app work on small laptops, tablets and phones, checked in a browser. Not for phone-browser behavior (`handfeel`) or QA reports (`fieldtest`).
+Make a web app responsive and at home on mobile: layouts on small laptops, tablets and phones, overflow, touch targets, safe areas, input zoom, tap and hover on a phone, Safari bar color, PWA install. Not for app shells (`armature`), motion (`zoetrope`) or QA reports (`fieldtest`).
 
 Install globally for Codex:
 
@@ -263,7 +245,7 @@ npx skills@latest add howells/skills --skill reflow --agent codex --global
 
 ### `research`
 
-Research a question from primary sources and earlier notes at quick, standard or deep depth, and hand back one cited answer. Use to research, compare options, check docs or API facts, enrich records, or as a research sub-agent. Not for searching this codebase or browser QA (`fieldtest`).
+Research a question from primary sources and earlier notes and hand back one cited answer. Use to research, compare options, check docs or API facts, enrich records, or as a research sub-agent. Not for searching this codebase or browser QA (`fieldtest`).
 
 Install globally for Codex:
 
@@ -285,7 +267,7 @@ Feedback that arrives from a bot, PR or agent loads it implicitly. To ask for an
 
 ### `rostrum`
 
-Make product films in Remotion, from storyboard to a cut that plays on a phone. Use when asked for a video, film or movie of a product, a new cut of one, or sound for it. Not for web animation (`zoetrope`) or on-screen words alone (`signage`).
+Make product films in Remotion, from storyboard to a cut that plays on a phone. Use for a product video, a new cut of one, or sound for it. Not for web animation (`zoetrope`) or on-screen words alone (`signage`).
 
 Install globally for Codex:
 
@@ -327,7 +309,7 @@ Claude Code's bundled `/simplify` edits a diff for reuse and efficiency; `fettle
 
 ### `typecase`
 
-Replace a UI codebase's scattered font utilities with a few named type roles and a scanner that holds them, and choose the faces. Use when text sizes have multiplied or a type ramp needs designing. Not for visual direction (`chiaroscuro`) or wording (`signage`).
+Replace scattered Tailwind font utilities with a few named type roles and a scanner that holds them, and choose the faces. Use when text sizes have multiplied or a type ramp needs designing. Not for visual direction (`chiaroscuro`) or wording (`signage`).
 
 Install globally for Codex:
 
@@ -345,19 +327,10 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill unslop --agent codex --global
 ```
 
-### `what`
-
-Re-explain only the previous reply in three plain lines: what happened, where things stand, what's next. No new facts. Not task status (`memento`) or session recovery (`muster`).
-
-Install globally for Codex:
-
-```bash
-npx skills@latest add howells/skills --skill what --agent codex --global
-```
 
 ### `zoetrope`
 
-Build, review, find, cut or name web animation, and fix dropped frames. Use when motion feels slow, off, overdone or janky. Not for static polish (`chiaroscuro`), films (`rostrum`) or QA (`fieldtest`).
+Build, review, suggest or cut web animation and drag gestures, and fix dropped frames. Use when motion feels slow, off, overdone or janky. Not for static polish (`chiaroscuro`), films (`rostrum`) or QA (`fieldtest`).
 
 Install globally for Codex:
 
@@ -390,7 +363,7 @@ Removed on 2026-10-08:
 
 | Skill | Where its work went |
 | --- | --- |
-| `foreman` | Nothing. It existed to keep the expensive model planning while cheaper subagents wrote the code; that cost pressure has gone. `plimsoll` still governs process weight. |
+| `foreman` | Nothing. It existed to keep the expensive model planning while cheaper subagents wrote the code; that cost pressure has gone. |
 
 Moved or removed on 2026-09-24:
 
@@ -416,7 +389,15 @@ Merged on 2026-11-05:
 | Skill | Where its work went |
 | --- | --- |
 | `web-research` | `research`, which reaches the web through Fieldwork instead of its own Exa and Tavily scripts. |
-| `selvedge` | `handfeel`, which covers the color behind Safari's bars along with the rest of mobile-web feel. |
+| `selvedge` | `reflow`, which covers the color behind Safari's bars along with the rest of phone-browser behavior. |
 | `fail-fast` | `failfast`, renamed, with test-only code and mock rules added. |
 | `simplify` | `fettle`, renamed so Claude Code's bundled `/simplify` no longer shadows it. |
 | `next` | Removed; deliver tracked work with `implement` from `mattpocock/skills`. |
+
+Merged or removed on 2026-11-10:
+
+| Skill | Where its work went |
+| --- | --- |
+| `handfeel` | `reflow`, which now covers phone-browser behavior as well as responsive layout. Update `reflow`, then run `npx skills@latest remove handfeel --global --yes`. |
+| `plimsoll` | Removed; current models no longer need the process-weight brake. |
+| `what` | Removed. |

@@ -135,7 +135,7 @@ RULES = [
         "compatibility",
         "medium",
         re.compile(r"\b(?:backwards?|compat(?:ibility)?|legacy|deprecated|deprecation|migration|old[-_ ]?api)\b", re.I),
-        "Check for a supported permanent contract or an owned temporary migration before proposing removal.",
+        "Check for a supported permanent contract before removing.",
     ),
     Rule(
         "alias-fallback",
@@ -177,7 +177,7 @@ RULES = [
         "compatibility",
         "medium",
         re.compile(r"\b(?:TODO|FIXME|HACK|XXX)\b.*\b(?:fallback|legacy|compat|migration|temporary|remove)\b", re.I),
-        "Temporary compatibility notes need an owner and removal condition or should be resolved now.",
+        "Temporary compatibility is not kept: migrate once and delete the old path.",
     ),
 ]
 
@@ -197,9 +197,10 @@ def parse_args() -> argparse.Namespace:
         help="Include Markdown documentation files. They are skipped by default.",
     )
     parser.add_argument(
-        "--fail-on",
+        "--min-severity",
         choices=["medium", "high"],
-        help="Exit non-zero when findings at or above this severity are present.",
+        default="high",
+        help="Print findings at or above this severity. Default: high.",
     )
     parser.add_argument(
         "--max-file-bytes",
@@ -320,9 +321,9 @@ def severity_rank(severity: str) -> int:
     return {"low": 1, "medium": 2, "high": 3}[severity]
 
 
-def print_text(findings: list[Finding]) -> None:
+def print_text(findings: list[Finding], min_severity: str) -> None:
     if not findings:
-        print("No fallback smells found.")
+        print(f"No fallback smells found at {min_severity} severity or above.")
         return
 
     counts: dict[str, int] = {}
@@ -348,6 +349,8 @@ def main() -> int:
     coverage: dict = {}
     try:
         findings = scan(root, args.include_tests, args.include_docs, args.max_file_bytes, coverage)
+        threshold = severity_rank(args.min_severity)
+        findings = [finding for finding in findings if severity_rank(finding.severity) >= threshold]
     except OSError as error:
         print(f"Scan incomplete: {error}", file=sys.stderr)
         return 2
@@ -356,15 +359,11 @@ def main() -> int:
     if args.json:
         print(json.dumps([asdict(finding) for finding in findings], indent=2))
     elif findings or not incomplete:
-        print_text(findings)
+        print_text(findings, args.min_severity)
     if incomplete:
         print("Scan coverage is empty or incomplete; no clean verdict.", file=sys.stderr)
         return 2
 
-    if args.fail_on:
-        threshold = severity_rank(args.fail_on)
-        if any(severity_rank(finding.severity) >= threshold for finding in findings):
-            return 1
     return 0
 
 

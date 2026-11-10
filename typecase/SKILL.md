@@ -1,6 +1,6 @@
 ---
 name: typecase
-description: "Replace a UI codebase's scattered font utilities with a few named type roles and a scanner that holds them, and choose the faces. Use when text sizes have multiplied or a type ramp needs designing. Not for visual direction (`chiaroscuro`) or wording (`signage`)."
+description: "Replace scattered Tailwind font utilities with a few named type roles and a scanner that holds them, and choose the faces. Use when text sizes have multiplied or a type ramp needs designing. Not for visual direction (`chiaroscuro`) or wording (`signage`)."
 ---
 
 # Typecase
@@ -9,7 +9,7 @@ A compositor sets from the compartments in the case. **Every piece of text takes
 
 Shape is size, weight, family, tracking, leading and case. Colour, alignment, wrapping and truncation are not shape and stay free.
 
-Agents size text by picking a plausible utility for the element in front of them, and nothing notices that the last file chose differently. One codebase reached 169 distinct combinations across 867 usages, including a micro-size soup of 9/10/10.5/11/12/13px, with no single wrong commit. **A rule nobody checks does not hold**, so the job ends with a scanner in CI.
+Agents size text by picking a plausible utility for the element in front of them, and nothing notices that the last file chose differently. **A rule nobody checks does not hold**, so the job ends with a scanner in CI.
 
 ## Rules
 
@@ -37,9 +37,9 @@ Defaults for the roles, to depart from with a reason:
 
 ## Where the case lives
 
-Define it once, in the stylesheet that imports Tailwind or a file `@import`ed into it, as either component classes (`.type-body { @apply … }` in `@layer components`) or theme tokens (`--text-body` in `@theme`, used as `text-body`). Pick one per codebase. A separately bundled stylesheet (a CSS module, a Vue, Svelte or Astro style block, some route sheets) has no theme in scope and needs `@reference`. Where the house style writes custom classes with `@apply`, read [`references/apply-rule.md`](references/apply-rule.md) before converting any CSS: it covers `@reference`, the motion exclusion and utilities whose names lie.
+Define it once, in the stylesheet that imports Tailwind or a file `@import`ed into it, as either component classes (`.type-body { @apply … }` in `@layer components`) or theme tokens (`--text-body` in `@theme`, used as `text-body`). Pick one per codebase. A separately bundled stylesheet (a CSS module, a Vue, Svelte or Astro style block, some route sheets) has no theme in scope and needs `@reference`. A missing `@reference` normally fails the build, but `@apply` inside a consuming package's own `@layer` can emit nothing: check one role's computed style before migrating.
 
-Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing or changing a face, read [`references/font-recommendations.md`](references/font-recommendations.md). Before setting OpenType features, optical sizing, rendering, wrapping or font loading, read [`references/typography-opentype.md`](references/typography-opentype.md). Read each reference file with its own command.
+Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing or changing a face, read [`references/font-recommendations.md`](references/font-recommendations.md). Before setting OpenType features, optical sizing, rendering or font loading, read [`references/typography-opentype.md`](references/typography-opentype.md).
 
 ## Steps
 
@@ -53,26 +53,14 @@ For an audit or proposal, stop after step 4 and return the census and mapping. A
 
    `--json` gives every location for the migration. It is lexical: it does not scan `@apply` inside Vue, Svelte or Astro style blocks, and it cannot resolve dynamic class expressions, so check those by hand. Exit 2 means coverage was incomplete, not that the census is clean.
 2. **Read the jobs.** For each combination, open two or three uses and write down what the text is doing there: row title, table header, form hint, stat figure. The census sees tokens, not jobs, and a role named from its size alone is a guess.
-3. **Design the case** from those jobs, using the census's proposal as a starting shape and the rules above. Name each role by its job. State the count and why.
+3. **Design the case** from those jobs, using the census's proposal as a starting shape and the rules above. Name each role by its job. State the count and why. If the task includes choosing or changing a face, do it here from `references/font-recommendations.md`, and load every weight the roles use (rule 6).
 4. **Write the mapping:** every combination the census found and the role it becomes, with the nearer role chosen where a value falls between two. Reviewers check the diff against this table.
 5. **Define the case** with a comment saying a scanner enforces it.
 6. **Name the sanctioned modifiers** and the one dimension each may change: `font-medium` for emphasis, `font-mono` for family, `capitalize` for casing a data value, `tabular-nums` for figures. None changes size, leading or tracking. Everything else typographic belongs to a role.
 7. **Migrate** by the mapping, a whole file at a time. A file half on the case is worse than one consistently raw.
-8. **Install the scanner.** Use the project's existing typography lint rule if it really covers class attributes, `cn`/`cva`-style calls and size maps. Otherwise read [`references/gates.md`](references/gates.md) first for the two shapes, the token list and the normalisation that stops sizes slipping past. Wire it into CI. An unreached root reports clean, so plant one violation per root, confirm it is named with `file:line`, and restore it.
+8. **Install the scanner.** Read [`references/scanner.md`](references/scanner.md) first; use the project's existing typography rule only if it covers that token list and those call sites, otherwise write one. Wire it into CI. An unreached root reports clean, so plant one violation per root, confirm it is named with `file:line`, and restore it.
 9. **Look at the migrated screens** on desktop and a phone. The small end goes wrong in place: across a 21-row table a one-step size difference lets numerals dominate rows they should annotate. Settle doubts with `getComputedStyle` on live elements.
 10. **Report** combinations before and after, the roles and why that many, files migrated, the scanner, and any exceptions with owner and reason.
-
-## What the scanner forbids
-
-Outside the file that defines the case:
-
-- sizes: `text-xs` … `text-9xl`, `text-[13px]`, `text-[clamp(…)]`, `text-(length:--x)`, `text-sm/6`;
-- weights: `font-thin` … `font-black`, `font-[450]`, except the sanctioned emphasis weight;
-- families: `font-sans`, `font-serif`, `font-display`, `font-[Inter]`, and `font-mono` except as sanctioned;
-- all `tracking-*` and `leading-*`;
-- `uppercase` and `lowercase`.
-
-Arbitrary text colours (`text-[#hex]`, `text-[var(--x)]`, `text-[oklch(…)]`, `text-[color:…]`) are colour and must pass, or the first false positive gets the scanner switched off.
 
 ## Exceptions
 

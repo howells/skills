@@ -35,7 +35,6 @@ Never animate a keyboard-initiated action. If the only purpose is that it looks 
 - When a cross-fade looks like two objects swapping, a 2px blur during the transition blends them.
 - Use `@starting-style` for enter transitions where support allows.
 - Name the properties you transition; never `transition-all`.
-- Disable transitions for the frame of a theme switch, or every colour transition fires at once.
 
 ## Performance
 

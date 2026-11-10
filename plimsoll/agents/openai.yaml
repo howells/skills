@@ -1,4 +1,0 @@
-interface:
-  display_name: "Plimsoll"
-  short_description: "Cut slow checks and keep Vercel builds local"
-  default_prompt: "Use $plimsoll to stop the checking, name what the person waiting will look at, and ship it."

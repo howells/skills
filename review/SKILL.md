@@ -10,8 +10,6 @@ Outside opinions are leads, not orders. Check each claim against the code before
 - **Receive**: feedback from a PR bot, reviewer, agent or person is to be assessed or addressed.
 - **Ask**: an independent model opinion is wanted, named or not. Its reply then goes through Receive.
 
-An ordinary diff, branch or PR review with no outside model is `code-review`.
-
 ## Receive feedback
 
 - **Verify before changing anything.** Reviewers, human or bot, are often wrong, stale or missing context. Read the code the comment points at, at HEAD: bots cite lines on older commits that may have moved or already been fixed.
@@ -47,15 +45,13 @@ One or two sentences each. Mark anything you could not check as unverified.
 `review <model> <question or scope>` in the host's skill syntax:
 
 ```text
-$review fable challenge this architecture decision
-$review sol check this change against the acceptance criteria
-$review muse review this plan's assumptions
-$review astra find where this diff breaks the retry contract
+review fable challenge this architecture decision
+review sol check this change against the acceptance criteria
+review muse review this plan's assumptions
+review astra find where this diff breaks the retry contract
 ```
 
-In Claude Code, `/review` is also the bundled alias for `/code-review`. If the host picks that one, read this skill's `SKILL.md` and follow it ([name resolution](https://code.claude.com/docs/en/skills#resolve-skills-that-share-a-name)).
-
-Model names are case-insensitive; `wonder` is `muse`. Any other name: stop and say so rather than substituting. With none named, pick Fable for a judgement call, Astra for a question the repository can settle, or Sol for a bounded check against stated criteria, and say which.
+Model names are case-insensitive; `wonder` is `muse`. Any other name: resolve it in the matching provider's catalogue; if none has it, say so. Never substitute. With none named, pick Fable for a judgement call, Astra for a question the repository can settle, or Sol for a bounded check against stated criteria, and say which.
 
 | Argument | Model family | CLI route |
 | --- | --- | --- |
@@ -83,13 +79,17 @@ Give it a fresh context holding only the brief; never resume the author's sessio
 
 ### Send
 
-Prefer the harness's own delegation, such as T3 Code's `delegate_task`: the user can watch the thread and the harness reports completion. Before delegating that way, read [references/delegation.md](references/delegation.md). Use the provider's CLI only when the harness cannot run the chosen model, and read its file before the run. Read each reference file with its own command.
+Take the first route that can run the chosen model:
+
+1. A native subagent, when it is the same provider, can be set to the chosen model and starts without this conversation's history.
+2. In T3 Code, `delegate_task`, after reading [references/t3.md](references/t3.md): the user can watch the thread and the harness reports completion.
+3. Otherwise the provider's CLI, after reading its file:
 
 - Fable or Opus: [references/claude.md](references/claude.md)
 - Sol or Astra: [references/codex.md](references/codex.md)
 - Muse or Wonder: [references/muse.md](references/muse.md)
 
-For a CLI run, build argv as a list and pass the brief on stdin or in a temporary file, never interpolated into a shell string. Keep temporary files outside the repository. Cap each run at 30 minutes and kill its process group on timeout. macOS has no GNU `timeout`, so use Python's `subprocess.Popen(..., start_new_session=True)` with `communicate(timeout=1800)` and `os.killpg`.
+For a CLI run, build argv as a list and pass the brief on stdin or in a temporary file, never interpolated into a shell string. Keep temporary files outside the repository. Cap each run at 30 minutes and kill its process group on timeout. macOS has no GNU `timeout`, so use Python's `subprocess.Popen(..., start_new_session=True)` with `communicate(timeout=1800)` and `os.killpg`. The CLI needs network and its own config directory: request that permission for the command up front, and don't report a sandbox denial as a provider failure. Run it as a background command where the host caps foreground ones.
 
 A started run is not a review. Count it only when it finishes cleanly with a non-empty final answer from the selected model; if the route reports no model identity, say it is unverified. Report authentication, quota, billing, rate-limit, unavailable-model and permission failures and stop. Retry once for a transport or server error, after the first run has stopped.
 

@@ -1,4 +1,4 @@
 interface:
   display_name: "Zoetrope"
   short_description: "Build, review, trim and debug web animation"
-  default_prompt: "Use $zoetrope to build, review, find or remove web motion, or diagnose why an animation drops frames."
+  default_prompt: "Use $zoetrope to build, review, suggest or remove web motion and drag gestures, or fix an animation that drops frames."

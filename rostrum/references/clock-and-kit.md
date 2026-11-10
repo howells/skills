@@ -136,8 +136,8 @@ Anything that measures text in the DOM (lift-outs, underlines under a word, `@re
 Every cut stays registered, so any earlier cut can be re-rendered.
 
 ```tsx
-<Composition id="Basis" component={Film} durationInFrames={TOTAL} fps={FPS} width={1920} height={1080} />
-<Composition id="Basis2" component={Film2} durationInFrames={TOTAL2} fps={FPS} width={1920} height={1080} />
+<Composition id="Film" component={Film} durationInFrames={TOTAL} fps={FPS} width={1920} height={1080} />
+<Composition id="Film2" component={Film2} durationInFrames={TOTAL2} fps={FPS} width={1920} height={1080} />
 ```
 
 A later cut imports the earlier kit and data rather than editing them; a change that would alter an earlier cut goes in the new cut's folder.
@@ -149,5 +149,4 @@ A later cut imports the earlier kit and data rather than editing them; a change 
 - Use `<Img>` and `staticFile()`; a plain `<img>` can be captured before it loads.
 - Footage and sound: `<Video>` and `<Audio>` from `@remotion/media`. Trim with `trimBefore` and `trimAfter` in frames; `startFrom` and `endAt` are the old names.
 - `@remotion/three`: `<ThreeCanvas>` needs `width` and `height`; never use `useFrame()`, drive everything from the frame. Render with `--gl=angle --concurrency=1`.
-- A stale bundle renders old frames. Rebundle after every edit before rendering stills from it.
 - `npx remotion ffmpeg` and `npx remotion ffprobe` exist when ffmpeg isn't installed. Use `-fps_mode vfr`, not the deprecated `-vsync`.

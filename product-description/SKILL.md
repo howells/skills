@@ -12,7 +12,7 @@ Treat the product as a large state chart the user moves through with input. Desc
 ## Outputs
 
 ```
-README.md            purpose, conventions, document template, method, structure, coverage table
+README.md            purpose, conventions, document template, structure, coverage table
 goal.md              standing instructions for every drafter: reading order, established facts, rules
 glossary.md          the vocabulary; source of truth for every term of art
 AGENTS.md            "Read README.md, then goal.md. The coverage table in README.md is the work list."
@@ -22,7 +22,7 @@ verification/        README.md (protocol) + one checklist per cluster of documen
 bug-triage.md        every suspected defect, deduplicated, with repro, cause, severity, decision needed
 ```
 
-The outputs live in a standalone git repo.
+The outputs live in their own git repo: the path the user names, otherwise `{source-repo}-description` beside the source repo.
 
 ## 1. Scope
 
@@ -38,7 +38,7 @@ Then find where interaction state lives (state machines, reducers, controllers, 
 
 ## 2. Scaffold
 
-Read each template before writing its file. README.md from [references/README-template.md](references/README-template.md): its structure section lists every expected document grouped by how the user meets it (foundations, product areas, cross-cutting concerns), never by package. Then glossary.md from [references/glossary-guide.md](references/glossary-guide.md), goal.md from [references/goal-template.md](references/goal-template.md), and the two one-line entry files. Commit.
+Read each template before writing its file. README.md from [references/README-template.md](references/README-template.md): its structure section lists every expected document grouped by how the user meets it (foundations, product areas, cross-cutting concerns), never by package. Then glossary.md from [references/glossary-guide.md](references/glossary-guide.md), goal.md from [references/goal-template.md](references/goal-template.md), and the two one-line entry files. goal.md's writing rules bind the coordinator's own documents too. Commit.
 
 ## 3. Pilot, foundations, hardest area: yourself, in order
 
@@ -71,15 +71,3 @@ Read [references/bug-triage-template.md](references/bug-triage-template.md) firs
 ## Resuming
 
 Read AGENTS.md, README.md, goal.md, glossary.md and the pilot. If the source commit has moved, ask whether new documents cite the new commit or the repo stays pinned; never mix silently. Add a new feature to the structure and coverage table before writing it, then its checklist and triage entries with the next free IDs. Never renumber a checklist or triage ID once used.
-
-## Writing rules (carry into goal.md)
-
-- Describe the experience, not the code: "the form stays disabled until the server answers", not "the mutation sets isPending". Mechanism goes in a `> Technical note:` only when it changes what the user would expect.
-- Sentence-case headings. Direct and concrete; no hedging or marketing.
-- State surprising behaviour plainly, with the reason if the code gives one. If it looks like a bug, say so in open questions.
-- Variants and interrupts go in tables split by phase, every cell filled.
-- Link rather than repeat; foundations own thresholds and definitions.
-- One Mermaid `stateDiagram-v2` per interaction, limited to states the user passes through.
-- Footer: `## Open questions and verification`, a bullet list, then `Source inspected: {repo} commit \`{sha}\`.` and `Runtime verification: {not run, or environment/date and linked results}.`
-- What code and tests can't settle goes in open questions; don't guess, don't block.
-- Commit per document or group: `docs: add {path}`, `docs: revise {path}`.

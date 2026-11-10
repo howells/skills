@@ -6,7 +6,7 @@ Model-facing contracts and provider compatibility. Provider constraints apply to
 
 Use `structuredOutput: { schema }` and consume the native `response.object`, completed stream object or workflow `run.output`. Validate through the canonical domain schema at the consumer. Chat stays text.
 
-Brace extraction, fence stripping, `JSON.parse(response.text)`, object-to-text-to-object round trips and filling omitted fields hide the failing boundary. Throw, or return a declared failure variant the caller handles. A refusal, abort, truncation or validation failure never becomes an empty result, fabricated score or default fact. A deliberate fallback carries its substitution status to the consumer.
+A refusal, abort, truncation or validation failure never becomes an empty result, fabricated score or default fact. A deliberate fallback carries its substitution status to the consumer.
 
 Model-facing and domain schemas can differ for a documented provider restriction, with an explicit, validated mapping. Don't weaken the domain schema or use `unknown` to mask a missing output contract.
 

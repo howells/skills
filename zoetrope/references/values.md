@@ -16,8 +16,6 @@ Walk down the list and stop at the first that fits.
 | Springs, gestures, shared-layout moves, exits after unmount | Motion (`motion/react`) |
 | A whole-page or route change | The View Transitions API, where supported |
 
-`requestAnimationFrame` loops compete with the page's other main-thread work. CSS and the Web Animations API can hand suitable motion to the compositor.
-
 ## Properties
 
 - Prefer `transform` and `opacity`. They avoid relayout and usually composite.
@@ -26,8 +24,6 @@ Walk down the list and stop at the first that fits.
 - Anchored origins: Base UI exposes `--transform-origin`; Radix exposes `--radix-<component>-content-transform-origin`.
 - `translate()` percentages are relative to the element: `translateY(100%)` hides a sheet or notice fully whatever its height. Prefer them to pixel offsets.
 - `opacity: 0` alone still takes clicks and stays in the accessibility tree. Hide the element properly at rest.
-
-In Motion, keep the readable `x`, `y`, `scale` and `rotate` props by default. When motion must survive a busy main thread, a full transform string (`animate={{ transform: "translateX(120px)" }}`) can take WAAPI's accelerated path.
 
 ## Easing
 
@@ -76,7 +72,7 @@ Think in two numbers: how quickly it arrives and how much it overshoots. In Moti
 | A settle after a flick or throw | `{ type: "spring", visualDuration: 0.35, bounce: 0.15 }` up to `bounce: 0.25` |
 | Playful product, rare moment | `bounce` up to 0.3 |
 
-Physical parameters (`mass`, `stiffness`, `damping`) don't map onto the duration and bounce API; if a library needs them, start from `{ mass: 1, stiffness: 100, damping: 10 }` and check the actual settle for visible bounce.
+Physical parameters (`mass`, `stiffness`, `damping`) don't map onto the duration and bounce API; if a library needs them, start from `{ mass: 1, stiffness: 100, damping: 20 }`, which is critically damped, and lower the damping only where bounce is earned.
 
 A spring sampled into a CSS `linear()` easing can't carry velocity through an interruption; use a real spring wherever the motion can be interrupted. A value that follows the pointer decoratively is smoothed with `useSpring`, not bound straight to the pointer.
 

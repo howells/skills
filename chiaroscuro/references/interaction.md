@@ -16,7 +16,7 @@ Design every state an element has; keyboard users never see hover.
 | Error | `aria-invalid:` styles |
 
 - Hover only enhances. Nothing works by hover alone, and nothing static gets a `hover:` state.
-- Static rows, cards and surfaces swap hover colour instantly. Controls may use `transition-colors` or `transition-shadow`, never `transition-all`.
+- Static rows, cards and surfaces swap hover colour instantly. Controls may use `transition-colors` or `transition-shadow`.
 - No dead zones: anything that looks clickable is, across its whole row. Menu items use `py-*`, not `space-y-*`, so the gaps are clickable.
 - `select-none` on buttons and tabs; `pointer-events-none` on decorative overlays.
 
@@ -34,7 +34,7 @@ Design every state an element has; keyboard users never see hover.
 - Show press feedback on pointer-down and commit on pointer-up. Dragging off the target before release cancels; dragging back re-arms. Native `:active` plus `click` does this; custom pointer handlers must reproduce it.
 - Require about 10px of movement before committing a drag to a direction. Pay the double-tap delay only where double-tap exists.
 - `touch-manipulation` on controls; `-webkit-tap-highlight-color: transparent` where a control draws its own pressed state.
-- Never disable zoom (`maximum-scale`, `user-scalable`). Use `interactive-widget=resizes-content` in the viewport meta as progressive enhancement; Safari ignores it, so fixed bottom actions must survive the keyboard overlaying them.
+- Use `interactive-widget=resizes-content` in the viewport meta as progressive enhancement; Safari ignores it, so fixed bottom actions must survive the keyboard overlaying them.
 - Carousels are native scrolling tracks with `scroll-snap`. Set `touch-action: pan-y pinch-zoom` only when script implements the horizontal drag. Never block page scroll or pull-to-refresh with `preventDefault` on `touchmove`.
 - Every drag (reordering, resizing) has a single-pointer alternative and a keyboard path. Swipe actions always have a visible fallback, such as a menu item. During a drag, `select-none`; `inert` only on a decorative drag preview or content the drag makes unavailable.
 - `overscroll-contain` on scrolling dialogs, drawers, menus and side panels.

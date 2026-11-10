@@ -27,7 +27,6 @@
     "./failfast",
     "./fieldtest",
     "./gog",
-    "./handfeel",
     "./maquette",
     "./marginalia",
     "./mastraudit",
@@ -35,7 +34,6 @@
     "./muster",
     "./nomen",
     "./paste-up",
-    "./plimsoll",
     "./product-description",
     "./rebalance",
     "./reflow",
@@ -47,7 +45,6 @@
     "./fettle",
     "./typecase",
     "./unslop",
-    "./what",
     "./zoetrope"
   ]
 }

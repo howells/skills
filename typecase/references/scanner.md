@@ -1,10 +1,8 @@
 # Scanners
 
-Contents: existing rules · the token list · normalising tokens · shape 1 oxlint plugin · shape 2 test · scoping the roots · CSS files.
+Contents: the token list · normalising tokens · shape 1 oxlint plugin · shape 2 test · root lists · CSS files.
 
-Use an existing project typography rule when it covers the required syntax. Inspect its configuration and enable it with the agreed role classes and sanctioned modifiers. Verify coverage for `className`/`class`, class-composition calls and size maps; a familiar rule name is not evidence of coverage.
-
-Otherwise choose one of the shapes below. The bundled lexical census helps inventory debt, but a lint rule should use AST scoping so comments, documentation and unrelated string props do not become violations. Align the governed namespace with the migration: colour, alignment and wrapping remain outside typography unless explicitly included.
+A lint rule should use AST scoping so comments, documentation and unrelated string props do not become violations.
 
 ## Writing your own
 
@@ -32,7 +30,7 @@ const LEADING         = /^leading-(?:[\w.-]+|\[[^\]]+\]|\(--[\w-]+\))$/u;
 const CASE            = /^(uppercase|lowercase)$/u;
 ```
 
-These patterns include custom-property shorthand, arbitrary values and negative tracking. Cover examples such as `leading-(--line-height)`, `leading-[calc(1em+2px)]`, `tracking-(--tracking)` and `-tracking-2` in scanner checks.
+Skip the sanctioned modifiers before matching, and skip the file that defines the roles.
 
 Match against the normalised token from the next section, which is why there is no pattern here for `text-sm/6` - it arrives as `text-sm`.
 
@@ -70,8 +68,6 @@ function baseUtility(token) {
 
 Two orderings carry the bugs. Stripping a leading `!` before the colon split misses `hover:!text-xl`, which is how v3 spells an important utility under a variant. Resetting `lastSlash` at each top-level colon matters too: without it, `group-hover:text-sm/6` keeps a slash index from before the variant boundary.
 
-`text-(length:--my-size)` is v4 shorthand for `text-[length:var(--my-size)]`, so it is always a size and needs its own pattern - `^text-\(length:--[\w-]+\)$` - alongside the bracket form. Arbitrary weights and families (`font-[450]`, `font-[Inter]`) are shape too, and a weight pattern listing only the named steps misses them.
-
 ## Shape 1: oxlint plugin
 
 `scripts/oxlint-plugins/no-inline-typography.mjs`, reporting on the JSX attribute node so the message lands on the line.
@@ -88,14 +84,18 @@ The last two are where a component library keeps most of its type utilities. A s
 Name the fix in the message, so the reader does not have to look the case up:
 
 ```js
-if (NAMED_TEXT_SIZE.test(base) || ARBITRARY_SIZE.test(base)) {
-  return `inline font size "${base}" - use one of the roles (type-display / type-heading / type-body / type-small; type-data for numeric text)`;
-}
-if (FONT_WEIGHT.test(base)) {
-  return `inline font weight "${base}" - weight is part of the display, heading, body or small role`;
-}
-if (LEADING.test(base)) {
-  return `inline line-height "${base}" - the role already sets leading; delete it`;
+const SHAPE = {
+  "font size": [NAMED_TEXT_SIZE, ARBITRARY_SIZE, VARIABLE_SIZE],
+  "font weight": [FONT_WEIGHT],
+  "font family": [FONT_FAMILY],
+  "tracking": [TRACKING],
+  "line-height": [LEADING],
+  "case": [CASE],
+};
+for (const [kind, patterns] of Object.entries(SHAPE)) {
+  if (patterns.some((pattern) => pattern.test(base))) {
+    return `inline ${kind} "${base}" - the role sets it; use type-display / type-heading / type-body / type-small (type-data for numeric text)`;
+  }
 }
 ```
 
@@ -124,21 +124,13 @@ const QUOTED     = /(?<quote>["'`])(?<fragment>(?:(?!\k<quote>)[\s\S])*?)\k<quot
 
 Anchoring `CLASS_FN` on `className=` is the common mistake: it reads `className={cn("text-sm")}` and misses the `cva` variant table in the file above it. Key each quoted run by its position so a call nested inside an attribute counts once.
 
-Exceptions go in a `Set` of paths beside a comment naming the reason and the ADR:
+Exceptions go in a `Set` of paths beside a comment naming the reason:
 
 ```ts
-const EXCEPTIONS = new Set(["app/editorial/animated-figure.tsx"]);
+const EXCEPTIONS = new Set(["app/charts/axis-label.tsx"]);
 ```
 
-## Scoping the roots
-
-Every shape needs a root list, and an unreached root produces the same clean output as a covered one. Plant a violation and confirm the scanner names it:
-
-```
-apps/storybook/stories/button.stories.tsx:76  text-sm → use `type-body`
-```
-
-Then restore. Do this once per root, on install and whenever the roots change.
+## Root lists
 
 Where a sibling scanner already keeps a root list - an arbitrary-colour check, a drift check - read it rather than writing a second one. Two separately maintained lists that should agree is a defect waiting for one of them to be updated alone.
 

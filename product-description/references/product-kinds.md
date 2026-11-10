@@ -43,7 +43,7 @@ CRUD apps, dashboards, settings, checkout, admin panels, content management.
 - **Cross-cutting:** permissions and roles, validation and error display, unsaved changes, undo, optimistic updates and rollback, offline, notifications and toasts, search and filter state in the URL, localization, accessibility, side effects the user can notice (emails, webhooks).
 - **Foundations:** the data model in user terms (what a record is, what "saved" means, what is shared), auth and roles, navigation (routes, URL state, what is restored), dirty and saved, notifications.
 - **Pilot:** a small form with a submit and a validation rule (rename dialog, profile, invite). **Hardest:** the main editor or list-detail flow, where records are created, edited and moved between states.
-- **Verification:** devices are browser and viewport, role, network condition, and a second account in a second browser. Use the environment and permitted actions recorded in Phase 0; a throwaway production account does not authorize emails, payments, invites, publishing or shared-data changes. Devtools' network tab shows what a submit sent, the application tab what was stored.
+- **Verification:** devices are browser and viewport, role, network condition, and a second account in a second browser. Use the environment and permitted actions recorded in the scope step; a throwaway production account does not authorize emails, payments, invites, publishing or shared-data changes. Devtools' network tab shows what a submit sent, the application tab what was stored.
 
 ## Command-line tool
 

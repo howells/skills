@@ -1,4 +1,4 @@
 interface:
   display_name: "Computer Use"
-  short_description: "Control Mac apps with native Codex Computer Use"
+  short_description: "Control Mac apps with native Computer Use"
   default_prompt: "Use $computer-use to control the requested Mac app natively and check the result on screen."

@@ -6,13 +6,11 @@ disable-model-invocation: true
 
 # Ask Howells
 
-Nobody remembers thirty-odd skills. Describe where you are, and this names what to type next.
-
 ## Rules
 
 1. **Recommend, then stop.** Answer with the route and the exact first invocation, in the host's syntax (`/chiaroscuro` in Claude Code, `$chiaroscuro` in Codex). Don't start the work, open the files or fire the skill.
 2. **Open a skill before making a claim about it.** The map below is a summary. Before saying anything load-bearing about what a skill does - that it covers a case, skips a step, or makes another unnecessary - read that skill's `SKILL.md` from where it is installed. Where the map and a `SKILL.md` disagree, the `SKILL.md` is right.
-3. **Explicit-only skills are missing from the list, not from the machine.** `fettle` and this router don't appear in the skill list an agent is given. Check the install directory before reporting any skill as absent.
+3. **Explicit-only skills are missing from the list, not from the machine.** `fettle` and this router don't appear in the skill list an agent is given. Check the install directory before reporting any skill as absent. A skill from another repo (`implement`, `code-review`, `howells-lint`, `linear`, `starling`) is optional: check it is installed before giving its invocation, and if it isn't, say which repo ships it.
 4. **When two skills are close, give the test that separates them** - usually one concrete question - and say why the other one is wrong here.
 5. **When nothing fits, say so.** This map covers this collection only. Don't stretch a skill to cover a situation it wasn't written for.
 
@@ -21,11 +19,10 @@ Nobody remembers thirty-odd skills. Describe where you are, and this names what 
 ### Shipping tracked work
 
 - **The backlog is out of order for a goal or deadline** → `rebalance`. It reprioritises and stops before any code.
-- **Deliver an item** → `implement`, which ships with `mattpocock/skills` rather than this collection. One fresh task per item.
-- **Reading or writing tracker items directly** → `linear`, which ships with the `howells/linearcli` repo rather than this collection.
-- **Checks, polls or re-planning are crowding out anything visible** → `plimsoll`. It applies inside every route here.
+- **Deliver an item** → `implement` where installed (from `mattpocock/skills`). One fresh task per item.
+- **Reading or writing tracker items directly** → `linear` where installed (from `howells/linearcli`).
 
-Route: `rebalance` → `implement`, repeated. `plimsoll` whenever delivery stalls.
+Route: `rebalance`, then deliver each item.
 
 ### Building UI
 
@@ -33,8 +30,7 @@ Route: `rebalance` → `implement`, repeated. `plimsoll` whenever delivery stall
 - **One settled direction, whether a page, component or region** → `chiaroscuro`.
 - **A screenshot, page or frame that feels off, visual critique only** → `chiaroscuro`. It names what's off and asks; it changes nothing until asked.
 - **The app scrolls like a document and should behave like an app** → `armature`.
-- **It breaks on laptops, tablets or phones** → `reflow`.
-- **It works on a phone but feels like a website: safe areas, input zoom, tap, hover, Safari's bar colors, installed app** → `handfeel`.
+- **It breaks on laptops, tablets or phones, or works on a phone but feels like a website: safe areas, viewport units, input zoom, touch, overscroll, Safari's bars, PWA install** → `reflow`.
 - **Raw font utilities have multiplied** → `typecase`.
 - **Labels, buttons, headings or empty states read badly** → `signage`.
 - **Duplicated components, or a file doing too many jobs** → `componentize`.
@@ -47,15 +43,13 @@ Route for a new page: `maquette` when options are wanted, otherwise `chiaroscuro
 
 ### Code quality
 
-- **Review a branch or PR against its spec and repo standards** → `code-review`, from `mattpocock/skills`.
-- **Review the structure of a diff or whole codebase** → `fettle`. It reports; fixing needs asking for.
+- **Review a branch or PR against its spec and repo standards** → `code-review` where installed (from `mattpocock/skills`).
+- **Review the structure of a diff or whole codebase** → `fettle`. It reports numbered clusters, then fixes the ones you pick. A focus (`security`, `performance`, `state machines`) narrows it.
 - **A diff reads machine-written** → `unslop`. Behaviour stays the same.
 - **Errors swallowed, fallbacks hiding failures** → `failfast`, including test-only code and mocks in production. Behaviour changes on purpose.
-- **Setting up lint** → `howells-lint`, which ships with the `howells/lint` package repo rather than this collection.
+- **Setting up lint** → `howells-lint` where installed (from `howells/lint`).
 - **Exported APIs need hover docs** → `marginalia`.
 - **Any Mastra code** → `mastraudit`, before writing and before calling it done.
-
-Route: `fettle` → the skill each finding points at.
 
 ### A second opinion
 
@@ -63,7 +57,6 @@ Route: `fettle` → the skill each finding points at.
 
 ### Lost the thread
 
-- **The last reply didn't land** → `what`.
 - **Where this task stands** → `memento`.
 - **Work in flight across concurrent sessions, an older project's purpose, or a cross-session handoff** → `muster`.
 - **Git merge or rebase conflicts, or work stranded in worktrees, stashes or unpushed branches** → `salvage`. Run `muster` first if you don't know what's still live.
@@ -77,24 +70,17 @@ Route: `fettle` → the skill each finding points at.
 
 ### Accounts and tools
 
-`gog` (Google Workspace), `research` (questions answered from primary sources, through Fieldwork), `blender` (3D scenes), `computer-use` (native macOS app control through the configured Codex runtime, invoked from Codex or Claude Code). An explicit choice of native Computer Use also owns Chrome control; ordinary browser-only QA stays with `fieldtest`. `linear` and `starling` ship with their CLIs, in `howells/linearcli` and `howells/starlingcli`.
+`gog` (Google Workspace), `research` (questions answered from primary sources, through Fieldwork when configured), `blender` (3D scenes), `computer-use` (native macOS app control, Chrome included, through the session's native Computer Use tools, with a headless Codex runner as fallback; ordinary browser-only QA stays with `fieldtest`). Where installed, `linear` and `starling` ship with their CLIs, in `howells/linearcli` and `howells/starlingcli`.
 
 ## Close pairs
 
 | Pair | The test |
 | --- | --- |
-| `maquette` / `chiaroscuro` | Is the direction still open, so you want options to choose between? Yes: `maquette`. |
 | `chiaroscuro` / `armature` | Is the problem how it looks, or what scrolls? Scrolling: `armature`. |
 | `chiaroscuro` / `zoetrope` | Is the question how it looks still, or how it moves? Moves: `zoetrope`. |
-| `zoetrope` / `rostrum` | Does it move in a live page, or in a rendered video? Video: `rostrum`. |
-| `reflow` / `handfeel` | Does the layout adapt across sizes, or does the phone treat the page like a website? Phone behavior: `handfeel`. |
 | `reflow` / `fieldtest` | Do you want it fixed at every size, or a report of what's wrong? Fixed: `reflow`. |
-| `unslop` / `failfast` | Should behaviour stay exactly the same? Yes: `unslop`. |
 | `unslop` / `fettle` | Cleaning a diff, or judging its structure? Judging: `fettle`. |
-| `deslop` / `signage` | Paragraphs, or words on a control? Controls: `signage`. |
 | `review` / `fettle` | Feedback to act on or an independent opinion on a bounded question, or a structural health review? Feedback or opinion: `review`. |
-| `what` / `memento` / `muster` | The last reply, this task, or many tasks. |
-| `rebalance` / `implement` | Deciding the order, or doing the work? Doing: `implement`. |
 
 ## Output
 

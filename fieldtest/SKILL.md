@@ -14,11 +14,11 @@ Test the app as rendered software and report what the browser shows. Report only
 - **Findings come from what rendered.** A break predicted from code or a schema is labelled inferred and goes under Residual risk.
 - **Measure the intended page and viewport.** Read back `location.href`, `innerWidth` and `innerHeight` after navigating or resizing; a number from the wrong page or size is worse than none.
 - **Use real clicks and wait for the end state.** Programmatic clicks skip hit-testing, pointer-events and overlays. An element appearing, or a fixed sleep, is not the flow finishing.
-- **Aim checks so they could fail.** A boundary between two near-identical tones proves nothing, and checking what a page declares misses what it leaves undeclared.
+- **Aim checks so they could fail.** Measure contrast on the text's real background, and look for what is missing (unlabelled controls, no focus ring, no error state), not only whether what is declared validates.
 
 ## Browser
 
-Use the browser the user or host names. Otherwise use Playwriter when available: it drives the user's own Chrome, so signed-in and localhost pages render as the user sees them. Read [references/browser-session.md](references/browser-session.md) before the first command for the fallback order, Playwriter session mechanics and dev-server rules. Read each reference file with its own command.
+Use the browser the user or host names; otherwise read [references/browser-session.md](references/browser-session.md) before the first command for the fallback order, Playwriter session mechanics and dev-server rules. Read each reference file with its own command.
 
 ## Run
 
@@ -29,24 +29,15 @@ Use the browser the user or host names. Otherwise use Playwriter when available:
 5. For broad or visual work, check ~375px and ~1440px, plus keyboard focus and accessible names on primary controls.
 6. Async flows: start A, then B before A completes. A late A must not overwrite B, replay, or clear a current error.
 7. Embedded apps: test inside the real host. A standalone demo covers only itself.
-8. Record the primary flow when the tool can record its own actions.
 
 A focused regression covers the affected route and one adjacent state.
 
-- **Try to break it**: before a stress test (asked to break it or find edge cases, or a full test that touches forms, lists or async flows), read [references/stress-test.md](references/stress-test.md).
+- **Try to break it**: before a stress test (asked to break it or find edge cases), read [references/stress-test.md](references/stress-test.md).
 - **Returned content**: before judging images, search results, generated content or a set of examples the page returns, read [references/output-quality.md](references/output-quality.md). A working control does not make its output useful.
 
 ## Lens
 
-Use the user's persona, else pick one:
-
-- **First-time user**: what is this, what do I do next, can I recover from a mistake.
-- **Designer**: hierarchy, spacing, type, interaction states.
-- **Operator**: repeated work, density, tables, filters, bulk actions.
-- **Demo presenter**: a safe first screen, awkward waits, fragile steps.
-- **Responsive auditor**: overflow, tap targets, sticky overlap, narrow dialogs and tables.
-
-A lens shapes where you look; findings still need evidence.
+Given a persona, test as them and name it in the report. A lens shapes where you look; findings still need evidence.
 
 ## Report
 
@@ -60,10 +51,9 @@ Fewer, better findings, leading the report. Each has route, what happened, why i
 ## Fieldtest Report
 
 Target: [URL]
-Lens: [persona]
+Lens: [persona, when one was given]
 Browser: [tool | not browser-verified]
 Viewports: [sizes]
-Recordings: [paths, or none]
 
 ## Findings
 ### High
@@ -74,6 +64,6 @@ Recordings: [paths, or none]
 ## Residual Risk
 ```
 
-If nothing meaningful turned up, say so and list what was tested. A stress test adds the Stress table from `references/stress-test.md`.
+If nothing meaningful turned up, say so and list what was tested.
 
 When asked to fix: reproduce first, change the smallest code path, and re-test in the browser. Don't fix what you could not reproduce.

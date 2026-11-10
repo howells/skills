@@ -1,15 +1,13 @@
 ---
 name: zoetrope
-description: "Build, review, find, cut or name web animation, and fix dropped frames. Use when motion feels slow, off, overdone or janky. Not for static polish (`chiaroscuro`), films (`rostrum`) or QA (`fieldtest`)."
+description: "Build, review, suggest or cut web animation and drag gestures, and fix dropped frames. Use when motion feels slow, off, overdone or janky. Not for static polish (`chiaroscuro`), films (`rostrum`) or QA (`fieldtest`)."
 ---
 
 # Zoetrope
 
-Motion that feels right was allowed to exist for a reason, then built from a few exact ingredients. Most interfaces need less of it than they have.
-
 ## Pick the job, then read its file
 
-Read [references/values.md](references/values.md) and the job's file before doing anything else, each with its own command. Values holds the curves, durations and springs; the job file holds the method and the output.
+Read the job's file before doing anything else. Build, gesture, review and find also read [references/values.md](references/values.md), which holds the curves, durations and springs. Read each file with its own command.
 
 | The request | Job | Read |
 | --- | --- | --- |
@@ -19,9 +17,8 @@ Read [references/values.md](references/values.md) and the job's file before doin
 | "what should animate", "where could motion help" | Find | [references/find.md](references/find.md) |
 | "feels slow", "too much animation", "tone the motion down" | Remove | [references/remove.md](references/remove.md) |
 | Jank, stutter, dropped frames, `will-change`, which property or driver is cheaper | Diagnose | [references/performance.md](references/performance.md) |
-| "what's it called when…" | Name | [references/vocabulary.md](references/vocabulary.md) only |
 
-A review covers the current diff unless the user names a path or the whole codebase. Review, find and diagnose report and change nothing until asked. Remove edits, but only to subtract.
+A review covers the current diff unless the user names a path or the whole codebase. Asked to review, audit or suggest: report only. Asked to improve or fix: apply the findings in the same run and report what changed. Remove only subtracts.
 
 ## Should it animate
 
@@ -67,4 +64,4 @@ An expanding model or diagram that shows how parts relate is a purpose. Keep the
 
 ## Feel is checked by watching
 
-When the result depends on feel (a spring's settle, a crossfade, opacity against height in a list), say so and give the check: slow it to 10-25% in the browser's animation panel and step frame by frame; run gestures on a real phone loaded from the machine's local IP; turn on reduced motion in the rendering settings and walk the same path. Code alone can't settle feel, so don't guess a number.
+When the result depends on feel (a spring's settle, a crossfade, opacity against height in a list), say so and give the check: slow it to 10-25% and step through the midpoints (the browser's animation panel, or `document.getAnimations().forEach(a => a.playbackRate = 0.1)` from a browser tool); run gestures on a real phone loaded from the machine's local IP; turn on reduced motion in the rendering settings and walk the same path. Code alone can't settle feel, so don't guess a number.

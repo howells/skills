@@ -14,15 +14,10 @@ Versions, observability, tests and evaluations: the checks that catch Mastra fai
 - **User-visible progress comes from domain events or workflow state,** never exporter flush timing, or progress vanishes when export is slow.
 - **Transient progress chunks have a durable record alongside,** or a refresh loses them.
 - **Register progress sinks from a module every bundle loads.** Registered from the app bundle alone, a separate worker bundle persists nothing, silently.
-- **Order cross-process appends to one log with a database lock,** reading every written value from the locked row. A promise chain can't order two processes.
-- **Every caught error logs its cause,** even where the user sees only a class name.
-- **Lifecycle and observability writes project their returned columns;** otherwise each step drags the whole row back, multiplied by fan-out.
-- **Measure time from the queries the engine actually issues,** not a hand-written model of them.
 - **Telemetry carries correlation id, model id, model role, duration and an actionable stage,** with bounded sampling, payload size, cardinality and redaction. A telemetry failure never fails a good run.
 
 ## Tests
 
-- **Test the named failure at its real boundary.** A suite asserting generated shapes can be green over a broken path.
 - **Durable changes get round-trip evidence,** including refused writes or oversized payloads when those are the risk.
 - **One bounded smoke test covers the critical path** against the real singleton.
 - **Registration changes run the repo's gate over generated manifests, capability schemas and count pins;** a package's own tests miss them.
@@ -43,7 +38,6 @@ Scorers judge completed behaviour; processors change it during execution. A gree
 - **Define expectations independently of the current answer,** across different briefs, including the disputed adverse case: missing required use, absent fact, duplicate identity, sparse filter, later-page exhaustion, a near match failing a hard threshold.
 - **Keep factual checks deterministic:** retrieved identifiers, distinct producers, counts, limits, exclusions, duplicates, cursors, stop reasons. Use model judgement only for bounded interpretation.
 - **Carry required conditions from the request through to the final prose.** A count score can pass an answer that drops the requested use. Unknown evidence stays unknown.
-- **Provenance isn't accuracy.** A source label records origin; a sales channel isn't necessarily the manufacturer.
 - **Count unique tool calls by call id.** Cumulative snapshots repeat calls; duplicated telemetry isn't repeated execution.
 - **Keep unscorable, failed, aborted and substituted results as explicit counts,** so a strong average can't hide a hard failure.
 - **Durable evaluation means records readable after a reconnect,** checked in Studio or the API. In-memory wiring isn't acceptance.
@@ -56,4 +50,3 @@ Public source: [Mastra evals](https://mastra.ai/docs/evals/overview).
 - **Inspect the run's own output** (ledger, persisted document), not only its terminal status.
 - **Secrets reach the actual runtime.** A task runner can drop an otherwise supplied secret.
 - **API evidence proves the API path;** an interactive feature needs its host journey. Source tests don't prove repaired stored data, and a deployed fix is checked by reading the endpoint's version.
-- **Record the measured failure and the fix on the owning tracker item.** Add reusable prevention to this skill with its version applicability, not the incident's incidental numbers.

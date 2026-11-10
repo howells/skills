@@ -1,6 +1,6 @@
 # Testing on a device
 
-Read when checking fixes. A desktop browser with a phone-sized window or device toolbar does not draw Safari's bars, safe areas or the keyboard, and has no real touch.
+A desktop browser with a phone-sized window or device toolbar does not draw Safari's bars, safe areas or the keyboard, and has no real touch.
 
 ## What each environment shows
 
@@ -37,5 +37,3 @@ For each changed state, in portrait and once in landscape:
 3. Scroll to both ends and pull past them: no refresh, no rubber-banding of a fixed shell.
 4. Look at the top and bottom edges: nothing under the notch or home indicator, no band of the wrong color around the bars.
 5. Open an installed copy if the app installs.
-
-Report what you opened and on what. Anything not opened is unchecked.

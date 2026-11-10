@@ -58,30 +58,7 @@ Every feature document follows the same skeleton, so documents are comparable an
 
 Item 5 matters most. Asking the same interrupt questions of every feature is how gaps and inconsistencies are found.
 
-### Method
-
-For each document:
-
-1. Read {where the interaction state lives} and the relevant {domain objects}.
-2. Read the matching tests in {test directory}; {the ones that read as specifications} are close to executable specifications of the edge cases.
-3. Draft the document.
-4. Try anything ambiguous {in the running product: URL, binary or account}. Tests settle what happens; the running product settles how it feels, what is visible mid-interaction, and the timing.
-5. Record the inspected source commit separately from runtime-verification results.
-
-### Verification
-
-Drafting reads the code; verification watches the product. The `verification/` directory holds one checklist per cluster of documents, each item a single observable claim with setup, steps, expected result, a priority, and the device it needs. A tester runs them {on the surface}, records `pass`, `fail`, or `blocked` in the Result column, and files every failure in `bug-triage.md` with the item's ID. A document moves from `drafted` to `verified` in the coverage table only when every P1 and P2 claim was directly exercised and observed, and passed or has a reproduced failure recorded in triage. Code inspection or mocked assertions alone do not qualify; visual claims require rendered inspection.
-
-`bug-triage.md` is the other half: every behavior the documents flagged as a likely defect, deduplicated, with reproduction steps, the reason in the code, a severity, and the decision the product team needs to make. Entries confirmed {in the running product} carry a Status line.
-
-### Order of work
-
-1. **Pilot: {the pilot feature}.** Small and self-contained; settles the template, tone and depth.
-2. **Foundations: {the input model / the core model}.** Everything else refers to it.
-3. **{The hardest area}.** The bulk of the experience, written third so the template is proven.
-4. **Everything else.** Drafted in parallel once two exemplars exist, then a consistency pass and a verification pass across the set.
-
-Progress is tracked in the [coverage table](#coverage) below.
+Method and order of work: [goal.md](goal.md). Verification protocol: [verification/README.md](verification/README.md). Progress is tracked in the [coverage table](#coverage) below.
 
 ### Scope decisions
 

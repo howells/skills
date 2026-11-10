@@ -13,15 +13,15 @@ No one's work is lost in git. Two jobs:
 ## Rules
 
 - **Never destroy the only copy.** Rescue first, delete last. Record every SHA before changing anything, and copy uncommitted work somewhere private; a SHA preserves only commits.
-- **Don't abort, reset or force-push your way out of trouble.** `--abort`, `reset --hard`, `checkout .` and `checkout --conflict` discard work recorded nowhere; a force push can overwrite someone else's. Do them only when asked, or abort an operation you started by mistake before resolving anything.
+- **Don't abort, reset or force-push your way out of trouble.** `--abort`, `reset --hard`, `checkout .`, `git clean`, `stash drop` and `worktree remove --force` discard work recorded nowhere; a force push can overwrite someone else's. Do them only when asked, or abort an operation you started by mistake before resolving anything.
 - **Do git writes yourself, from where you stand.** Don't hand branch, worktree or stash changes to a helper; it cannot see who else is in the tree. Inside a worktree, don't run git against the shared checkout.
-- **Push recovered work only when asked** or when standing policy covers it.
+- **Push recovered work only when asked** or when standing policy covers it: `git push <remote> <sha>:refs/heads/salvage/<name>`, no `--force`, never the default branch.
 
 ## What gets lost
 
 Rescue in this order:
 
-1. Uncommitted changes in a removed worktree. No reflog, no recovery.
+1. Uncommitted and ignored files in a worktree about to be removed. No reflog, no recovery.
 2. A detached HEAD carrying commits. On no ref, so the next `gc` takes it.
 3. Stash entries. One `git stash clear` from gone.
 4. Unpushed commits. The reflog holds them about 90 days, on one machine.
@@ -33,17 +33,17 @@ Every worktree, branch and stash lands in one. Anything you cannot place is in f
 
 - **In flight.** Someone may be using it. Report it with the owner and touch nothing.
 - **At risk.** Holds content that exists nowhere else. Rescue it, then re-sort.
-- **Safe.** Every commit reachable from the pushed default branch, ignored content accounted for, nothing running in it. Only this bucket is removed.
+- **Safe.** Every commit reachable from the pushed default branch, ignored content accounted for, nothing running in it. Only this bucket is removed. A stash is never safe.
 
 ## Steps
 
-1. **Census, read-only.** One repo unless the user asked for more; propose a machine-wide sweep rather than widening mid-run. Run `python3 scripts/census.py <repo> --output <new-private-file>.json` (see Scripts). It covers worktrees, branches (upstream, ahead/behind, merged), stashes and unreachable reflog commits.
+1. **Census, read-only.** One repo unless the user asked for more; propose a machine-wide sweep rather than widening mid-run. Run `python3 scripts/census.py <repo> --output <new-private-file>.json` (see Script). It covers worktrees, branches (upstream, local ahead/behind), stashes and reflog-only commits. It does not fetch or judge merged; that is Proving "safe".
 2. **Work out who owns what** (below), then sort into buckets and name every at-risk item.
 3. **Rescue, additively.** No deletion and no overwriting an existing ref.
    - **Detached HEAD:** `git branch salvage/<name> <sha>`.
    - **Dirty worktree you own:** commit the selected files as WIP on a recovery branch. Leave credentials out.
    - **Stash:** don't use `git stash branch`; it can drop the stash and leave changes uncommitted. Instead: `git worktree add -b <recovery-branch> <path> <stash-sha>^1`, then `git stash apply --index <stash-sha>` there, commit, and check the staged and untracked files all came across. Leave the stash in the list.
-4. **Remove only the safe bucket,** worktrees before their branches, recording each SHA as you go.
+4. **Remove only the safe bucket,** local only, recording each SHA first: `git worktree remove <path>` (never `--force`; if it refuses, the tree is not safe), then `git branch -d`, or `-D` only for a squash merge proven under Proving "safe". Never drop a stash, delete a remote branch, or run `git clean`, `git gc`, `git reflog expire` or `git worktree prune` unless asked for that exact item.
 5. **Report** (below).
 
 ## Who owns a worktree
@@ -68,12 +68,9 @@ An unnamed `salvage/` branch gets deleted next month by whoever tidies up. For e
 - **Squash and rebase merges defeat ancestry,** and `git cherry` and patch-ids mislead too. Ask the forge for the merged PR's head, match it to the current branch tip, and confirm the merge landed on the pushed default branch; commits after that head are unmerged. If equivalence cannot be shown, keep the branch.
 - **A pushed branch is a copy, not integration.** It can be deleted remotely. The bar is the pushed default branch.
 
-## Scripts
+## Script
 
-Both take `--help`.
-
-- [scripts/census.py](scripts/census.py) is read-only. `--output` must be a new file outside every scanned repo. `--ownership` takes `{"version": 1, "claims": [{"path": "/abs/path", ...}]}`; claims are evidence, not permission. `--exclude PATH` skips a protected path. A non-zero exit means the census is incomplete. Its output is coverage, not a safe-to-delete verdict.
-- [scripts/integrate.py](scripts/integrate.py) publishes one exact commit, only when the push is authorised. `--intent integrate` fast-forwards the server's default branch; `--intent preserve --destination-ref <ref>` pushes a named feature or `refs/salvage/` ref, never the default (`--expected-old absent` for a new one). `--expected-old` is the remote SHA you observed. If the remote moved, inspect it; don't retry.
+[scripts/census.py](scripts/census.py) is read-only and takes `--help`. The path is relative to this skill's directory, beside `SKILL.md`. It needs `git`, `python3` and `lsof`. `--output` must be a new file outside every scanned repo. `--exclude PATH` skips a protected path. A non-zero exit means the census is incomplete; if process observation is the only error, carry on and treat every worktree as occupied. Its output is coverage, not a safe-to-delete verdict.
 
 ## Report
 

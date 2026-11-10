@@ -1,6 +1,6 @@
 # Touch and viewport fixes
 
-Contents: hover, tap highlight, viewport units, input zoom and keyboard, tap delay and press feedback, overscroll, safe areas, selection, gestures, never ship.
+Contents: hover, tap highlight, viewport units, input zoom and keyboard, tap delay and press feedback, overscroll, safe areas, selection, gestures, text inflation.
 
 ## Hover stays after a tap
 
@@ -39,7 +39,7 @@ This removes the only feedback the browser gave, so every tappable element needs
 
 iOS Safari zooms the page when focus lands on a field whose text is under 16px and does not zoom back. This is why people reach for `maximum-scale=1`, which is the wrong fix: it blocks pinch zoom too.
 
-Find each `input`, `textarea` and `select` style below 16px and raise it to 16px. Leave larger fields alone; a blanket `font-size: 16px` shrinks them. Do not gate it behind `(pointer: coarse)`: the zoom follows the font size, not the pointer.
+Find each `input`, `textarea` and `select` style below 16px and raise it to 16px (Tailwind `text-base`) at every width. Leave larger fields alone; a blanket `font-size: 16px` shrinks them. Do not gate it behind `(pointer: coarse)` or a breakpoint: the zoom follows the font size, not the pointer or the screen, and a phone in landscape is wider than `sm`.
 
 Set the keyboard on the field: `inputmode="numeric"` for codes, `"decimal"` for amounts, `type="email"` and `type="tel"` for those fields, `autocapitalize="none"` and `autocorrect="off"` on usernames and codes, `enterkeyhint="send"`, `"search"` or `"done"` so the return key says what it does. Do not autofocus on touch screens: it opens the keyboard unasked.
 
@@ -62,7 +62,7 @@ Feedback on release: a button that only changes on `click` responds when the fin
 Scrolling past the top refreshes the page on Android Chrome and rubber-bands the whole page on iOS. That suits a document and breaks an app with its own scrollers, a drawer dragged down, or a canvas.
 
 ```css
-html, body { overscroll-behavior: none; }
+html { overscroll-behavior: none; }
 .sheet-content { overflow-y: auto; overscroll-behavior: contain; }
 ```
 
@@ -88,7 +88,7 @@ Without `viewport-fit=cover` every `env(safe-area-inset-*)` is `0px`. A fixed he
 .page { padding-inline: max(1rem, env(safe-area-inset-left)) max(1rem, env(safe-area-inset-right)); }
 ```
 
-Check all four insets in landscape, both ways round. Once the page paints under the bars, the colors behind them need setting (step 4 of the skill).
+Check all four insets in landscape, both ways round. Once the page paints under the bars, the colors behind them need setting: read `safari-bars.md`.
 
 ## Selection and callouts
 
@@ -110,17 +110,12 @@ Use the app's own class names for controls. Ordinary content links keep selectio
 
 Prefer a native track: `scroll-snap-type: x mandatory` on the track and `scroll-snap-align: start` on slides. The browser's physics beat a hand-written spring and `touch-action` becomes unnecessary. When script implements the drag, use `touch-action: pan-y pinch-zoom` so vertical scroll and zoom still work.
 
-## Never ship
+## Text inflates in landscape
 
-| Never | Instead |
-| --- | --- |
-| `user-scalable=no` or `maximum-scale=1` | Raise fields below 16px |
-| Ungated `:hover` | `@media (hover: hover) and (pointer: fine)` |
-| `100vh` for a shell or bottom-pinned UI | `100dvh` |
-| `100dvh` on a hero | `100svh` |
-| Press feedback on `click` only | `:active` or `pointerdown` |
-| `touchmove` with `preventDefault()` to stop overscroll | `overscroll-behavior` |
-| `user-select: none` on `body` | Controls only |
-| `touch-action: none` on something users must scroll past | `pan-x` or `pan-y` |
-| `env(safe-area-inset-*)` without `viewport-fit=cover` | Add the meta tag |
-| User-agent sniffing to detect touch | `(hover)` and `(pointer)` queries |
+iOS Safari enlarges text it judges too small when the phone rotates, which breaks a layout sized for its own type.
+
+```css
+html { -webkit-text-size-adjust: 100%; }
+```
+
+Use `100%`, never `none`, which stops text scaling with zoom in older browsers.

@@ -1,27 +1,18 @@
 # Rhetorical tells
 
-Contents: openers · sentence structures · commentary · endings and rhythm · word level · formatting · portability test · limits.
+Contents: openers · sentence structures · commentary · endings and rhythm · word level · formatting · limits.
 
 Tells found in essays, newsletters, social posts and announcements, where the writer
 stages a point before stating it. `signs-of-ai-writing.md` covers the encyclopaedic
 register; this file covers the persuasive one.
 
-These are clues, not proof of authorship: weigh clusters. People wrote every one of
-these patterns before any model did, and in casual or spoken-register writing several
-of them are ordinary voice, so read the register before cutting.
+People wrote every one of these patterns before any model did, and in casual or
+spoken-register writing several of them are ordinary voice, so read the register
+before cutting. `SKILL.md` holds the crutch-phrase list and the portability test.
 
 Each entry gives the pattern, some watch phrases, and the default edit.
 
 ## Openers
-
-### Throat-clearing
-
-A phrase that announces a point is coming.
-
-- "Here's the thing", "Here's why", "Here's what I mean", "It turns out",
-  "Let me be clear", "The real issue is", "Can we talk about".
-
-Edit: delete the announcement and start at the point.
 
 ### Faux-insight setups
 
@@ -46,9 +37,7 @@ Edit: state the answer as a sentence. "Churn fell 40%."
 
 ### Staged contrasts
 
-`signs-of-ai-writing.md` lists the "not just X, but Y" family and its reversed form,
-"Y rather than X", which is common in recent output. The same move turns up in other
-forms:
+Other forms of the "not just X, but Y" move in `signs-of-ai-writing.md`:
 
 - "X isn't the problem. Y is."
 - "It feels like X. It's actually Y."
@@ -102,15 +91,6 @@ sentence.
 
 ## Commentary on the prose
 
-### Emphasis crutches
-
-A phrase that tells the reader how much weight to give the last sentence.
-
-- "Let that sink in", "Full stop", "Period", "Read that again",
-  "I'll say it again".
-
-Edit: delete. (If the sentence before needs the help, make it more specific.)
-
 ### Interpretive commentary
 
 The writer steps outside the subject to tell the reader what to notice.
@@ -147,7 +127,7 @@ aphorism in its place. If the piece needs closure, add a plain next step.
 - every paragraph built setup, elaboration, punchline,
 - every paragraph ending on a short emphatic line.
 
-A newer variant is even length across the whole piece: most sentences between 8 and
+A variant is even length across the whole piece: most sentences between 8 and
 20 words, none much longer, and nothing but commas and full stops between them.
 `signs-of-ai-writing.md` gives the measurable check under "Narrow sentence-length
 band".
@@ -158,16 +138,6 @@ needs: a semicolon between related clauses, brackets for an aside, a long senten
 a qualification.
 
 ## Word level
-
-### Filler phrases
-
-Cut when they delay the point.
-
-- "it's worth noting", "it's important to note", "at its core",
-  "at the end of the day", "when it comes to", "in today's world",
-  "in a world where", "the reality is", "in terms of", "going forward".
-
-Occasional wordy constructions such as "in order to" are ordinary syntax, not tells. Keep them when they suit the writer's rhythm and meaning.
 
 ### Empty intensifiers
 
@@ -190,21 +160,10 @@ never wholesale.
 | circle back | return to |
 | moving forward | next, from now on |
 
-Vocabulary that clusters in generated marketing and product copy. "Leverage" now also
-sits in the era lists in `signs-of-ai-writing.md`; the rest are additional: utilize,
+Vocabulary that clusters in generated marketing and product copy: leverage, utilize,
 robust, seamless, streamline, empower, elevate, harness, unlock, realm, paramount,
 transformative, game-changing, cutting-edge, ever-evolving. Judge these by density
 (one "robust" in a technical document is ordinary English).
-
-### Weak verb phrases
-
-| Written | Say |
-| --- | --- |
-| made a decision | decided |
-| has the ability to | can |
-| is able to | can |
-| provides support for | supports |
-| conducted an analysis of | analysed |
 
 ## Formatting
 
@@ -216,12 +175,6 @@ transformative, game-changing, cutting-edge, ever-evolving. Judge these by densi
 Edit: let the format follow the content. Merge short sections and turn fragmentary
 bullets back into sentences.
 
-## The portability test
-
-Move the sentence, unchanged, into a piece about a different company, person or
-product. If it still fits, it says nothing about this one, and should be cut or
-replaced with a fact, mechanism or consequence the draft already contains.
-
 ## Limits
 
 These rules stop short of several absolutes, on purpose:
@@ -231,7 +184,3 @@ These rules stop short of several absolutes, on purpose:
 - A list of three is fine when there are three things.
 - A lone em dash, adverb or short sentence is ordinary writing.
 - Second person suits instructions and is wrong for many other genres.
-- Do not score a draft. Name the pattern, quote the line, give the edit.
-- Do not cut voice. A point of view, a sentence giving why something matters along with
-  the reason, plain verbs, true superlatives and dry wit belong to the writer.
-  `SKILL.md` lists what to keep.

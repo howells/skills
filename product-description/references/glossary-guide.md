@@ -1,6 +1,6 @@
 # Glossary guide
 
-`glossary.md` is the source of truth for every term of art. A document that uses a word the glossary does not define, or uses it differently, has a consistency bug. Expect it to grow to dozens of terms over the course of the build.
+`glossary.md` is the source of truth for every term of art. A document that uses a word the glossary does not define, or uses it differently, has a consistency bug.
 
 ## Shape
 

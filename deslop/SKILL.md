@@ -5,7 +5,7 @@ description: "Rewrite prose that reads as machine-written or inflated: vague att
 
 # Deslop
 
-Find the tells that make prose read as generated, and rewrite towards specific, direct, verifiable sentences in the writer's own voice. Tells are clues, not proof of authorship.
+Find the tells that make prose read as generated, and rewrite towards specific, direct, verifiable sentences in the writer's own voice.
 
 ## Rules
 
@@ -13,7 +13,7 @@ Find the tells that make prose read as generated, and rewrite towards specific, 
 - **Never invent** a fact, figure, example, name, quotation or source to make a sentence specific. Use what the draft and its sources hold; where they hold nothing, cut the sentence or list the gap under `Residual risk`.
 - **Quotations stay verbatim.** Flag a concern or offer a separately labelled paraphrase.
 - **Keep the meaning, not the cadence.**
-- **Authorship needs a cluster.** One tell, a detector score, perfect grammar, a formal register, a lone dash or triplet prove nothing. Weigh counter-signals: text from before November 2022, an author who can explain their choices, plain verbs, true superlatives, idiosyncratic syntax. When the user says a model wrote it, skip authorship entirely and go straight to the edit.
+- **No authorship verdicts.** A tell is a reason to edit, never evidence of who wrote it. Edit clusters; one tell, perfect grammar or a formal register is ordinary writing.
 - **Interface strings go to `signage`**: labels, headings, buttons, status lines, empty states. In code, review only comments, docstrings and docs.
 
 ## Look first for
@@ -35,7 +35,7 @@ Clusters of:
 - a sharp register shift between sections (a pasted-in passage);
 - leaked tool markers (`oaicite`, `turn0search0`, `[cite: 1]`, `grok_card`, `【29†L582-L589】`, `[web:1]`), `utm_source` parameters, broken citations, placeholder markup.
 
-Before reviewing encyclopaedic, reference or report prose, read [`references/signs-of-ai-writing.md`](references/signs-of-ai-writing.md); it also gives the sentence-length check and the indicators that do not work. Before reviewing essays, newsletters, posts or announcements, read [`references/rhetorical-tells.md`](references/rhetorical-tells.md). Before judging invented people, places or companies, read [`references/slop-names.md`](references/slop-names.md). Read each reference file with its own command.
+Read [`references/signs-of-ai-writing.md`](references/signs-of-ai-writing.md) before editing prose that reports: docs, READMEs, reports, reference and encyclopaedic text. Read [`references/rhetorical-tells.md`](references/rhetorical-tells.md) before editing prose that argues or sells: essays, posts, newsletters, announcements, PR descriptions. Before judging invented people, places or companies, read [`references/slop-names.md`](references/slop-names.md). Read each reference file with its own command.
 
 ## Rewriting
 
@@ -89,11 +89,4 @@ When citations look generated, check that links resolve and support the claim, t
 
 ## Output
 
-For a review:
-
-1. `Observed tells:` the patterns, with the exact phrases.
-2. `Why they matter:` what they do to the prose.
-3. `Rewrite:` a surgical edit or a clean replacement.
-4. `Residual risk:` sourcing, citation, markup or factual issues for a human.
-
-For a check or audit without a rewrite, give each pattern's name, the quoted line and the edit in a few words; no score and no verdict on authorship. For a short rewrite request, give a one-line note and the revised text.
+Edit files in place; for pasted text, return the revised text. Then list the tells changed (pattern and exact phrase) and, only if any, `Residual risk:` sourcing, citation or factual gaps for a human. Asked only to check: the list without the rewrite.

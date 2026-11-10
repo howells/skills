@@ -1,11 +1,11 @@
 ---
 name: gog
-description: "Work in Gmail, Calendar, Drive, Docs and Sheets through the authenticated gog CLI instead of Google connectors. Not for web research (`research`)."
+description: "Work in Gmail, Calendar, Drive, Docs and Sheets through the authenticated gog CLI instead of Google connectors."
 ---
 
 # GOG
 
-Use the installed `gog` CLI for Google services, not Google connectors. Its help and `gog schema <command path> --json` are authoritative; check them before an unfamiliar command rather than guessing flags.
+Use the installed `gog` CLI for Google services, not Google connectors. Its help and `gog schema <command path> --json` are authoritative; check them before an unfamiliar command rather than guessing flags. If `gog` isn't on PATH, say so and stop.
 
 ```bash
 gog --account <email> --json --no-input --wrap-untrusted --readonly <command>

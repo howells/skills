@@ -89,6 +89,6 @@ Done when every state from step 1 calls `setEdges` with its two colors.
 ## 4. Check
 
 - In a desktop browser, narrow and wide, screenshot every state: each strip must blend with the background next to it and cover no content. Device emulation does not draw Safari's bars, so this checks only that nothing looks wrong.
-- On an iPhone in Safari, or in the iOS Simulator (it draws the bars), open each state, move between them without scrolling, and scroll where the colors change. Until this is done, report the bands as unchecked.
+- On an iPhone in Safari, or in the iOS Simulator (it draws the bars), open each state, move between them without scrolling, and scroll where the colors change.
 
-Report the edge map from step 1, the files changed, and which states were checked on a device.
+Include the edge map from step 1 in the report.

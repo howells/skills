@@ -1,15 +1,17 @@
 ---
 name: mastraudit
-description: "Prevent recurring Mastra failures in agents, tools, workflows, storage, Studio and MCP Apps. Use when writing, debugging or auditing Mastra code. Not for general UI review (`fieldtest`)."
+description: "Mastra mistakes that typecheck and fail at runtime, in agents, tools, workflows, storage, Studio and MCP Apps. Use when writing, debugging or auditing Mastra code."
 ---
 
 # Mastraudit
 
 Mastra's APIs move fast and its expensive mistakes typecheck. Prevent them where the code makes them. The reference files describe recurring failure classes, not universal semantics: confirm against the installed version before flagging one.
 
+An audit-only request permits source reading and safe local checks, not model calls, workflow runs, storage writes or deploys. Rank findings blocking, should fix or noted, each with `file:line`, consequence and fix.
+
 ## Before changing code
 
-1. **Use the installed version, not memory.** Resolve each `@mastra/*` package from the package that calls it, including the CLI and storage and engine adapters; a manifest range or catalog entry isn't the installed version. Read that version's types and embedded docs, then a configured local vendor mirror (which can describe a newer release). Fall back to published docs and say so. Check model ids against a provider registry.
+1. **Use the installed version, not memory.** From the package that makes the call, read `node_modules/@mastra/<pkg>/package.json` for the version and check every option you write against its `.d.ts` files and, where shipped, `dist/docs/references/*.md`. This covers the CLI and the storage and engine adapters too; a manifest range or catalog entry isn't the installed version. Fall back to published docs only when nothing is installed, and say so.
 2. **Follow the working precedent.** Find the existing bridge, storage provider, model policy and domain operation. Name the execution lane (plain agent, durable workflow, Studio chat, HTTP or stdio MCP) and what constructs and registers it. Before changing ownership, registration or imports, read [references/structure.md](references/structure.md).
 3. **Set the contract and the bounds.** Output shape, explicit failure and completion states, the identifiers that cross each step, and limits on output, steps, elapsed time and retries. Before writing a tool or structured output, read [references/contracts.md](references/contracts.md); before a workflow, state, storage or a long loop, read [references/execution.md](references/execution.md). Read each reference file with its own command.
 
@@ -27,7 +29,7 @@ Mastra's APIs move fast and its expensive mistakes typecheck. Prevent them where
 - **A retry re-runs the whole step body,** writes included. Make side effects idempotent by natural key, set retries per step, and never retry billing, quota or auth failures.
 - **Don't fire-and-forget a workflow from a request handler** on a platform that freezes after the response; the run shows as running forever. Use the after-response primitive, await it, or hand it to a durable engine.
 - **No state crosses invocations through process memory.** Module-level maps read by `onError`, finalizers or reconcilers are empty in the process that runs them.
-- **No in-memory storage fallback where state must outlive the process.** Where nothing must, the in-memory warning isn't a finding; provisioning storage just to silence it has caused an incident.
+- **No in-memory storage fallback where state must outlive the process.** Where nothing must, the in-memory warning isn't a finding; don't provision storage just to silence it.
 - **Memory is opt-in per surface.** Routers, classifiers and one-shot structured calls don't carry it.
 - **Enforce with the call, not the prompt.** `toolChoice` and the tool map are the contract. Never branch on a value scanned out of model narration.
 - **Saving a watched file reloads Studio and kills in-flight generations.** Hold edits during a timed run, and count reloads separately from model failures.
@@ -51,4 +53,4 @@ Reproduce once, minimally, before blaming a provider, changing a dependency or a
 
 Exercise the changed journey in its real host: a visible feature through its UI or MCP host, a durable one by reading its stored output and resuming it. Read the dev-server log for framework error ids even on a pass. Before writing tests or evals, read [references/evidence.md](references/evidence.md).
 
-Report the installed versions, what ran where, and what stayed unverified. An audit-only request permits source reading and safe local checks, not model calls, workflow runs, storage writes or deploys; rank findings blocking, should fix or noted, each with `file:line`, consequence and fix.
+Report the installed versions, what ran where, and what stayed unverified.

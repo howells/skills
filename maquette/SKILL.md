@@ -12,7 +12,7 @@ When the user already gave a direction, or asked to match or extend an existing 
 ## Hard Rules
 
 1. **Exploration runs only in development.** Guard the selection, compare mode and picker together, not only the visible picker. Outside development the host renders `Current` and ignores the `maquette` URL key, so production is unchanged until the user chooses.
-2. **Directions differ on a named axis:** structure, density, emphasis, type, voice or interaction model. Two that differ only in accent colour or copy are one direction; replace one.
+2. **Directions differ on a named axis:** structure, density, emphasis, type, voice or interaction model. Two that differ only in accent colour or copy are one direction. Vary one primary axis and let the rest follow: a dense direction needing a smaller type step is coherence, not a second axis. If two converge while building, cut one and say so; two distinct directions beat five padded ones.
 3. **One source of truth.** All directions share content, data, state, events and validation. Never fork an API call, loader, mutation or business rule. Vary presentation only.
 4. **Every direction is complete.** Real content at the real item count, the whole piece and its core path working. No fragment, mood board, lorem ipsum or dead button.
 5. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting. Proper acronyms keep their capitals.
@@ -33,7 +33,7 @@ Read the piece, its shell, tokens and real content. The product's density and vo
 
 ### 2. Name the set
 
-Before any code, write down `Current` and the new directions, each with a name and an axis position. Three directions for a component or region, five for a page; never more than five unless asked.
+Before any code, write down `Current` and the new directions, each with a name and an axis position. Three directions; up to five when asked.
 
 Name each by its visible idea (`Ledger`, `Index`, `Rail`), never `A`, `B` or an abstract adjective. Picker labels, URL keys and the final question use the same names. For a new route, `Current` is a conservative baseline built from the product's shell, components and tokens.
 
@@ -55,7 +55,7 @@ return <Direction model={sharedModel} actions={sharedActions} />
 
 ### 4. Mount the picker
 
-Before building `DirectionPicker`, read [references/picker.md](references/picker.md): URL contract, keys, framework gotchas, markup and compare mode. Read each reference file with its own command. It is review tooling with a fixed look, never styled with the project's tokens, or it becomes part of the design being judged.
+`DirectionPicker` is review tooling with a fixed look, never styled with the project's tokens, or it becomes part of the design being judged. Before building it, read [references/picker.md](references/picker.md): URL contract, keys, framework gotchas, markup and compare mode. Read each reference file with its own command.
 
 - **Switch** (always): one direction at a time, full size, instant.
 - **Compare** (component or region only): every direction side by side at its real width. A page is judged by switching, never in thumbnails, because spacing and scale are what is being chosen.
@@ -76,9 +76,3 @@ If the user wants another round, delete the rejected directions, keep the picker
 4. Search for `DirectionPicker`, `maquette` and every rejected direction name; leftovers hide in imports and styles. The diff from the start holds the chosen direction and nothing else.
 
 If the user asks to keep the picker, keep it and the directions and say what remains.
-
-## Gotchas
-
-- Near-identical directions teach nothing. If two converge while building, cut one and say so; two distinct directions beat five padded ones.
-- Vary one primary axis and let the rest follow. A dense direction needing a smaller type step is coherence, not a second axis.
-- Judging on a blank route hides the real neighbours and data.

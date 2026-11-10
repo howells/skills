@@ -9,7 +9,7 @@ A hidden fallback turns a bug into wrong output nobody sees. Leave one canonical
 
 ## Rules
 
-1. **No fallback without a real reason:** a product requirement, a supported external contract, or a temporary migration with an owner. Everything else becomes a required input, a validation error or a deleted path. Missing docs don't make deletion safe; check for a supported caller first.
+1. **No fallback without a real reason:** a product requirement or a supported external contract (permanent; no removal date). Old stored data is migrated once and the old path deleted in the same change. Everything else becomes a required input, a validation error or a deleted path. Missing docs don't make deletion safe; check for a supported caller first.
 2. **Fail at the boundary, specifically.** Validate external input with a schema, check required config at startup, throw on impossible internal states.
 3. **Never swallow.** No empty `catch`, no `catch` that returns fake success, no optional import that quietly degrades a required feature. Rethrow with context or handle a named, expected error.
 4. **Production code doesn't know about tests.** No `isTest` or `NODE_ENV === "test"` branches, test-only methods or exports, or stub data on a production path. Test observable behaviour through the public interface. When isolation needs a double, inject it through an argument production would also use; builders, cleanup and doubles live in test utilities.
@@ -18,14 +18,14 @@ A hidden fallback turns a bug into wrong output nobody sees. Leave one canonical
 
 ## Workflow
 
-1. Scan for fallbacks (path relative to this skill's directory):
+1. Scope: the path the user names, else the directories the diff touches; the whole repo only when asked. Scan it:
 
    ```bash
-   python3 scripts/scan-fallbacks.py /path/to/repo   # --json, --include-tests, --fail-on medium|high
+   python3 <this skill's directory>/scripts/scan-fallbacks.py <path>
    ```
 
-   It lists places to look, not verdicts. It does not find test-only code or mocks: read `references/tests.md` before editing those. Read each reference file with its own command.
-2. Decide each finding: **remove** (no live caller or contract), **require** (config or a dependency the code can't work without), **validate** (boundary input) or **keep** (say why). Before changing an env schema, optional import, alias or migration, read `references/remediation.md`.
+   It prints high-severity leads, not verdicts; add `--min-severity medium` only for files you are already editing. It does not find test-only code or mocks: read `references/tests.md` before editing those.
+2. Decide each lead: **remove** (no live caller or contract), **require** (config or a dependency the code can't work without), **validate** (boundary input) or **keep** (say why). `legacy`, `deprecated`, `compat` and `migration` are leads, not proof: confirm no supported caller needs the path. Tests that pass only because a default masks missing setup get explicit fixtures.
 3. Remove the fallback and move callers and tests to the canonical path. Where a fallback becomes an error, test that the error fires.
 4. Run the repo's checks. Report the fallbacks you kept and why.
 
@@ -38,12 +38,4 @@ const apiKey = process.env.OPENAI_API_KEY || "dev-key"; // remove
 const apiKey = env.OPENAI_API_KEY;                       // use
 ```
 
-With no schema, validate at the configuration boundary using the project's conventions; don't add a package for it. Direct `process.env` reads belong only in env schema modules, generated env wiring, system keys such as `NODE_ENV` and `CI`, and documented migration hatches.
-
-## Compatibility
-
-Compatibility required by a public API, protocol or supported behaviour is permanent and needs no removal date. Temporary compatibility needs an owner and a removal point. Mark it with `TODO`, `FIXME` or `HACK` so the scanner finds it; a bare `// Compatibility:` comment is not flagged.
-
-```ts
-// TODO(compat): remove once API clients stop sending `workspaceId`.
-```
+With no schema, validate at the configuration boundary using the project's conventions; don't add a package for it. Direct `process.env` reads belong only in env schema modules, generated env wiring and system keys such as `NODE_ENV` and `CI`. Never log the raw environment.

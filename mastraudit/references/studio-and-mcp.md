@@ -18,7 +18,6 @@ Running Studio, reading its failures, cross-package imports and inline MCP Apps.
 ## Execution lanes and processors
 
 - **Plain generation, thread chat and a durable adapter can take different paths.** An adapter may mutate the agent it wraps; if it reroutes thread runtime, give it a dedicated Agent definition. Verify the lane through both generation and the real chat endpoint, with logs and trace correlation.
-- **An adapter that reads the singleton is not a safe dependency for constructing it.** A private execution variant may need explicit storage injection rather than another Mastra instance.
 - **Studio's registry, detail endpoint and rendered list can disagree about processors.** Check the hook methods and confirm invocation at the provider boundary; don't add a dummy hook to make a UI count agree.
 
 ## Inline app contract
@@ -37,6 +36,6 @@ A plain Studio JSON tool form may have no custom field or async picker hook; an 
 
 ## Acceptance in the host
 
-Use real records whose identities expose assumptions, such as a brand id that differs from its URL slug. Check images, record links, selected identities, empty and error states, pagination exhaustion, a revised choice, dimensions and horizontal overflow. A host-owned accessibility violation such as a missing parent-iframe title belongs to the host; guest HTML can't fix it.
+Use real records whose identities expose assumptions. Check images, record links, selected identities, empty and error states, pagination exhaustion, a revised choice, dimensions and horizontal overflow. A host-owned accessibility violation such as a missing parent-iframe title belongs to the host; guest HTML can't fix it.
 
 A saved Studio result proves saved rendering, a fresh agent call proves current invocation, a local preview proves that web host, and installation proves none of them. Report each separately.

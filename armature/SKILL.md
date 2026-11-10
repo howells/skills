@@ -1,6 +1,6 @@
 ---
 name: armature
-description: "Turn a web app that scrolls like a document into an app shell with fixed chrome and panes that scroll on their own. Not for visual polish (`chiaroscuro`)."
+description: "Turn a web app that scrolls like a document into an app shell with fixed chrome and panes that scroll on their own. Use when headers, toolbars or filters scroll out of view. Not for visual polish (`chiaroscuro`) or small-screen layout (`reflow`)."
 ---
 
 # Armature
@@ -21,6 +21,8 @@ Usual causes:
 
 Routes that already own their panes are the standard the rest are brought up to.
 
+Then search for what depends on the window scrolling: `window.scroll*` and `scrollY`, scroll listeners, `IntersectionObserver` without a `root`, virtualised or infinite lists, route-change scroll resets, anchor links, `sticky` offsets. Each is re-pointed at its pane.
+
 ## 2. The shell
 
 Adapt this default to the product:
@@ -29,7 +31,7 @@ Adapt this default to the product:
 2. Every route fills the frame and declares its own scroll regions, with the product's scroll-area component if it has one. A route has at most a fixed toolbar row, one primary scrolling pane, and side panes that are fixed or scroll on their own.
 3. Titles, counts and primary actions live in the chrome or toolbar and never scroll away. If routes can already place content in the chrome, extend that mechanism rather than adding a second.
 4. One shared toolbar-plus-panes primitive in the product's UI package or app layer, used on every route instead of hand-rolled flex.
-5. Below the desktop breakpoint, panes collapse into one scrolling column with a sticky toolbar.
+5. Below the desktop breakpoint the frame releases: the fixed height and clipping apply only from that breakpoint up, and the document scrolls as one column under a sticky toolbar.
 
 ## 3. Each route
 
@@ -45,13 +47,13 @@ Size the subject to its pane; remove fixed pixel heights and square boxes.
 ## 4. Finish
 
 - Pane padding and toolbar height come from a few spacing tokens.
-- One divider between panes: a single hairline in the border token. No cards inside cards; nested radii are concentric.
+- One divider between panes: a single hairline in the border token.
 - A scrolling pane shows a top hairline or faint shadow only once it has scrolled, so fixed rows read as chrome.
 - Loading, empty and error states render inside their pane, so the frame never jumps when data arrives.
 - Each scroll region has an accessible name, tab order follows the panes in reading order, a skip link lands on the main region, and panes keep their scroll position on back navigation.
 
 ## 5. Check in a browser
 
-At 1440 × 900 and 1280 × 720, on every route in scope, `document.scrollingElement.scrollHeight` equals `clientHeight`, and with each primary pane scrolled to the bottom the chrome, toolbar and fixed panes are still fully visible. At 390 × 844, check the single column and sticky toolbar. Look at the result: the user's subject should lead, with controls quiet around it.
+At 1440 × 900 and 1280 × 720, on every route in scope, `document.scrollingElement.scrollHeight` equals `clientHeight`, and with each primary pane scrolled to the bottom the chrome, toolbar and fixed panes are still fully visible. At 390 × 844, check the single column and sticky toolbar. Exercise everything that depended on the window scrolling. Look at the result: the user's subject should lead, with controls quiet around it.
 
 Report the cause of the scrolling, the shell as adapted, the routes changed, and anything left out of scope.

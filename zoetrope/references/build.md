@@ -3,6 +3,7 @@
 1. Decide whether it animates (SKILL.md). If not, say why and give the instant alternative.
 2. Pick the tool, properties, curve and duration, or a spring, from `values.md`. Start from a recipe below when one matches; swap in the project's primitives and tokens.
 3. Write the code with its reduced-motion variant, hover gating, and interruption behaviour for anything that can fire twice quickly.
+4. Load the changed view and trigger the motion, including a second trigger mid-flight. Slow CSS and Web Animations motion with `document.getAnimations().forEach(a => a.playbackRate = 0.1)` and screenshot a midpoint. Say what you ran; with no browser available, say the motion is unchecked.
 
 Output the code, then at most three lines:
 

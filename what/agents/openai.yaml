@@ -1,4 +1,0 @@
-interface:
-  display_name: "What"
-  short_description: "Rewrite the last reply in plain language"
-  default_prompt: "Use $what to rewrite your last reply as three plain-language lines: what happened, where things stand, and what comes next."

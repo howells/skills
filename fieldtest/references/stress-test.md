@@ -11,12 +11,12 @@ Contents: Rules · Map the screen · Content · Behaviour · Environment · Sign
 - **Enter data through the app's real boundary**: form fields, URL params, fixtures, stubbed responses. Don't edit markup or CSS to fake a break.
 - **Hostile input can write before submit.** Autosave and remote validation fire on typing and blur, so apply the destination rule in `SKILL.md` before the first keystroke, or skip the case and say so.
 - **Use `example.com`, `example.org` or `.test`** for emails and URLs.
-- **A predicted break is not a finding.** Only what rendered and misbehaved is Broken or Ugly; a risk read from code or a schema is labelled inferred.
+- **A predicted break is not a finding.** Only what rendered and misbehaved is a finding; a risk read from code or a schema is labelled inferred.
 - **Put the browser back.** Restore viewport, zoom, font size, throttling, offline and emulation after each case; it is often the user's own Chrome.
 
 ## Map the screen
 
-Before attacking, list each value the screen renders or accepts: source, type, limit, optional or not. Include counts in headers, relative times, badge and status text, labels that come from data, tooltips, images, and the list length itself. Read limits from schemas, migrations, API types and `maxLength`. Where front end and back end disagree (50 in the form, 255 in the column), report it as Fragile.
+Before attacking, list each value the screen renders or accepts: source, type, limit, optional or not. Include counts in headers, relative times, badge and status text, labels that come from data, tooltips, images, and the list length itself. Read limits from schemas, migrations, API types and `maxLength`. Where front end and back end disagree (50 in the form, 255 in the column), note it under Residual Risk.
 
 ## Content
 
@@ -45,7 +45,7 @@ Pick the rows that match the fields. Spread different failures across the first 
 
 ## Environment
 
-Run the stressed content at each of these.
+Run the content that came closest to breaking at 320px and 200% zoom; the others only where the app supports them.
 
 - Real container width, then 320px, then 2560px.
 - Browser zoom 200% and raised root font size: text grows, boxes must not clip it.
@@ -57,33 +57,13 @@ Run the stressed content at each of these.
 
 | What you see | Usual cause |
 | --- | --- |
-| Avatar or icon squashed to an oval | Flex child shrinking; needs `flex-shrink: 0` |
-| Text overflows its box | Flex or grid child with `min-width: auto` |
-| Email or URL runs past the edge | No break opportunity; needs `overflow-wrap: anywhere` |
-| Trailing menu or button pushed off screen | Middle content took all the space |
-| Badge wraps to two lines | Badge allowed to shrink |
-| Last row cut mid-glyph | Fixed height with no scroll or fade |
 | Wrong initials or a replacement glyph (`�`) | Slicing code units instead of grapheme clusters |
-| Orphaned dash or blank line | Placeholder rendered for a missing optional field |
-| "1 members" | Hardcoded plural |
-| `NaN`, `undefined`, `1284`, `0.30000000000000004` | Raw value rendered without formatting or a null guard |
 | Numbers jitter as they change | Proportional figures |
 | Clipped Vietnamese or Thai marks | Tight line-height with `overflow: hidden` |
-| Truncated text with no way to read it | Ellipsis with no tooltip or detail view |
 | Raw `<b>`, `&amp;` or `**` on screen, or script runs | Wrong escaping layer |
-| Double submit creates two records | No in-flight guard or idempotency |
-| Spinner never ends, or input vanishes after an error | Missing failure path |
-| 1,000 rows stutter | Nothing virtualised or paginated |
 
 ## Report
 
-Add a Stress section to the report. One row per break, worst first.
-
-- **Broken**: content unreadable, action unreachable, wrong data shown or lost.
-- **Ugly**: readable but visibly wrong.
-- **Fragile**: fine today, one realistic step from breaking (no limit, no fallback).
-
-| # | Severity | Where | Input or condition | What happened | Evidence | Likely cause |
-| --- | --- | --- | --- | --- | --- | --- |
+Stress findings go in the main report under the same severities, each naming the input or condition. Missing limits and mismatches read from code go under Residual Risk.
 
 Add decisions that have more than one right answer (truncate or wrap, paginate or virtualise) with a recommendation, and list what held up so a clean result shows the attack was real. "Everything survived" with the cases tried is a complete report.

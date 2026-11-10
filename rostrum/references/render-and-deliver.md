@@ -18,14 +18,14 @@ Around a fast event (a burst, many items arriving), sheet every frame, not every
 ## Draft and final renders
 
 - Draft: `--scale=0.5 --crf=20 --concurrency=8 --log=error`.
-- Final: `npx remotion render <Id> out/render.mp4 --codec=h264 --crf=18 --log=error`; for a final with fine type or texture, `--crf=12 --x264-preset=slow`.
+- Final: `npx remotion render <Id> out/render.mp4 --log=error` (codec and CRF come from `remotion.config.ts`); for a final with fine type or texture, `--crf=12 --x264-preset=slow`.
 - 4K from a 1080p composition: `--scale=2 --crf=16`.
 - Motion blur on fast moves: render the moving layer at 8 sub-frame offsets as its own composition, average each group into `public/blur/` with a script, and draw those frames in the film. Rerun it after any change to that motion. Stacking blur samples live at render time is what loses WebGL contexts.
-- Name outputs by film and version (`made-of-v3.mp4`, `basis-4-en-us.mp4`, `agentic5-silent-v2.mp4`). Before re-rendering over a file someone has seen, keep it as `-backup-<date>`.
+- Name outputs by film and version (`<film>-v3.mp4`, `<film>-silent-v2.mp4`). Before re-rendering over a file someone has seen, keep it as `-backup-<date>`.
 
 ## The phone-safe file
 
-A film that won't play on the user's phone isn't delivered ("Can't see any video on my phone"). Remux the render with the index at the front, then check it:
+A film that won't play on the user's phone isn't delivered. Remux the render with the index at the front, then check it:
 
 ```bash
 ffmpeg -v error -y -i out/render.mp4 -c copy -movflags +faststart out/<film>-vN.mp4
@@ -46,5 +46,5 @@ WebGL effects (`@remotion/effects`, light leaks, color correction, `three`) need
 
 ## Delivery
 
-1. Upload the phone-safe file with the `stow` skill and give the user the link; without it, give the local path. That is how they watch it.
-2. If they asked for it in a deck or a site, use `wiredeck` or copy it to the site's public folder.
+1. Upload the phone-safe file with the `stow` skill if installed and give the user the link; without it, give the local path. That is how they watch it.
+2. If they asked for it in a deck or a site, use `wiredeck` if installed, or copy it to the site's public folder.

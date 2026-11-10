@@ -27,6 +27,7 @@ Grep the bundled docs before trusting memory of `bpy`: `<checkout>/mcp/blmcp/dat
 | CLI subprocess (`*_for_cli`) | 120 s | `blmcp/tools_helpers/blender_cli.py` |
 | Screenshot payload | 1 MiB − 2 KiB, ×3/4 for base64 | screenshot toolcode |
 | Claude Code tool timeout | `MCP_TOOL_TIMEOUT` in `~/.claude/settings.json` | typically 120 s |
+| Codex tool timeout | `tool_timeout_sec` under `[mcp_servers.blender]` in `~/.codex/config.toml` | default 60 s |
 
 There is no response-size limit, and that absence is the bug below.
 
@@ -63,13 +64,3 @@ def check_is_finished():
         return None
     return {"rows": _state["rows"][:40], "total": len(_state["rows"])}
 ```
-
-## Why the render tools leave settings behind
-
-Both `render_*_to_path` tools restore their temporary settings only through the deferred checker, and the poller drops a disconnected client without running it. A render that outlives the client timeout leaves the temporary settings in the scene; a later save writes them into the user's file. The maintainer: *"Saving while rendering will then save using the temporary settings."*
-
-Snapshot before rendering: `scene.render.filepath`, `resolution_percentage`, `resolution_x`, `resolution_y`, `use_simplify`, `simplify_subdivision_render`, and the engine's sample and denoise settings (Cycles: `scene.cycles.samples`, `scene.cycles.use_denoising`).
-
-## Why `*_for_cli` deadlocks
-
-They pass no `stdin`, so the child Blender inherits the MCP client's live JSON-RPC pipe. They cannot corrupt the source (`synced_blend_for_cli` writes a `copy=True` snapshot), but they leave the numbered snapshot beside it and return nothing.

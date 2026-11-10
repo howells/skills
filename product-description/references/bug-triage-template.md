@@ -1,6 +1,6 @@
 # Bug triage template
 
-`bug-triage.md` collects every suspected defect raised anywhere in the documents (bodies and "Open questions" sections), deduplicated by root cause, written up so a product team can decide each one without re-reading the documents. Expect the open questions across the set to collapse to roughly half as many entries once merged.
+`bug-triage.md` collects every suspected defect raised anywhere in the documents (bodies and "Open questions" sections), deduplicated by root cause, written up so a product team can decide each one without re-reading the documents.
 
 ## Building it
 

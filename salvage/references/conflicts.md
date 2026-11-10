@@ -5,8 +5,7 @@ For a merge, rebase, cherry-pick, revert or stash apply or pop that stopped on c
 ## Rules
 
 - **Copy before anything that rewrites the tree, index or operation:** `checkout --conflict`, `--ours`/`--theirs`, `--abort`, `reset`, `stash drop`. Copy conflicted and already-resolved paths outside the checkout; SHAs don't hold a resolution in progress. `git checkout --conflict=diff3 -- <file>` recreates the markers over your edits and unstages the file.
-- **Abort only when asked,** or when you started the operation by mistake and resolved nothing. `git rebase --abort` discards every commit already replayed. A stash conflict has no abort: `git reset --merge` undoes the apply and the stash stays listed.
-- **Force-push only when asked,** as `git push --force-with-lease=<branch>:<recorded-remote-sha> <remote> <branch>`, never to the default branch. If the lease fails, someone pushed: fetch and integrate; don't retry with a new SHA.
+- **Aborting and force-pushing follow the rule in `SKILL.md`.** `git rebase --abort` discards every commit already replayed. A stash conflict has no abort: `git reset --merge` undoes the apply and the stash stays listed. A requested force push is `git push --force-with-lease=<branch>:<recorded-remote-sha> <remote> <branch>`, never the default branch; if the lease fails, fetch and integrate.
 
 ## Before resolving
 

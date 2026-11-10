@@ -54,12 +54,9 @@ class ScannerCoverage(unittest.TestCase):
             data = json.loads(result.stdout)
             self.assertEqual(data['candidateCount'], 64)
             self.assertEqual(len(data['candidates']), 64)
-            self.assertEqual(data['returnedCandidateCount'], 64)
             self.assertEqual(data['duplicateGroupCount'], 27)
             self.assertEqual(len(data['duplicateBlocks']), 27)
-            self.assertEqual(data['returnedDuplicateGroupCount'], 27)
             self.assertEqual(max(len(g['matches']) for g in data['duplicateBlocks']), 12)
-            self.assertFalse(data['truncated'])
             text = cli(script, root, '--min-score', 0, '--max-files', 1)
             self.assertIn('63 more candidates', text.stdout)
             self.assertIn('17 more groups', text.stdout)
@@ -74,8 +71,8 @@ class ScannerCoverage(unittest.TestCase):
     def test_real_scans_report_coverage_and_find_a_fallback(self):
         with tempfile.TemporaryDirectory() as directory:
             Path(directory, "config.ts").write_text('export const key = process.env.KEY || "fallback";')
-            fallback = cli("failfast/scripts/scan-fallbacks.py", directory, "--json", "--fail-on", "high")
-            self.assertEqual(fallback.returncode, 1)
+            fallback = cli("failfast/scripts/scan-fallbacks.py", directory, "--json", "--min-severity", "high")
+            self.assertEqual(fallback.returncode, 0, fallback.stderr)
             self.assertTrue(any(item["rule"] == "env-default" for item in json.loads(fallback.stdout)))
             self.assertIn("Scanned 1", fallback.stderr)
             component = cli("componentize/scripts/find-god-files.py", directory, "--json")
@@ -245,7 +242,7 @@ class SkillGateContracts(unittest.TestCase):
 
 def load_tests(loader, tests, pattern):
     sys.dont_write_bytecode = True
-    tests.addTests(loader.discover(str(ROOT / "salvage/scripts"), pattern="test_*.py"))
+    tests.addTests(loader.discover(str(ROOT / "scripts"), pattern="test_*.py"))
     return tests
 
 

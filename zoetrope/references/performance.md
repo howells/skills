@@ -61,4 +61,4 @@ An expensive paint on a blurred or filtered element can justify testing layer pr
 
 Record dropped frames, long tasks, layout and paint in DevTools Performance; use the Animations panel for timing. When the claim is about a phone, reproduce on a mid-range phone over remote debugging: desktop CPU throttling doesn't model a weak GPU or limited GPU memory, and a smooth laptop preview proves nothing about the device.
 
-For each finding give the element and `file:line`, the cause, the exact before and after, and whether it rests on the code, a measurement in this browser, or the device. Order by cost: layout before paint, motion on a busy main thread before idle motion. The report is the result; apply fixes when asked.
+For each finding give the element and `file:line`, the cause, the exact before and after, and whether it rests on the code, a measurement in this browser, or the device. Order by cost: layout before paint, motion on a busy main thread before idle motion. Apply the fix when the request was to fix it.

@@ -1,6 +1,6 @@
 ---
 name: blender
-description: "Inspect, edit and render Blender scenes and films through the Blender MCP or headless CLI. Use for .blend files or any Blender work. Not for Remotion films (`rostrum`) or Paper (`paste-up`)."
+description: "Inspect, edit and render Blender scenes and films through the Blender MCP or headless CLI. Not for Remotion films (`rostrum`)."
 ---
 
 # Blender
@@ -10,20 +10,19 @@ Two ways in, and they are not interchangeable:
 - **Live MCP**: an add-on inside the user's running Blender. Their viewport, their unsaved edits, their file. Use it for inspection and for edits the user asked for in the open scene.
 - **Headless**: `blender --factory-startup -b file.blend --python script.py -- args`. Its own process, nothing shared. Renders, long sweeps and batch work go here, on an explicit copy.
 
-Never replace the user's open file with a headless result without reconciling their live edits.
+Never replace the user's open file with a headless result without reconciling their live edits. With no Blender MCP tools in the session, work headless on a copy and say the live scene wasn't touched.
 
 ## Rules
 
-1. **Open the render before saying anything about it.** Read the actual PNG, then say what you see. Every serious failure here has the same shape: a measurement passes, a confident report goes out, and the defect is plainly visible on screen. Canonical case: a containment test cleared eight plants of a room; the render showed the room full of them. The test read base vertices; particle instancing put 9,225 instances inside.
+1. **Open the render before saying anything about it.** Read the actual PNG, then say what you see. Every serious failure here has the same shape: a measurement passes, a confident report goes out, and the defect is plainly visible on screen. A containment test that reads base vertices clears a room that particle instancing has filled.
 2. **Measure evaluated geometry and instances, never `ob.data` or raw `bound_box`** (code below). A scene reporting 86 objects can be 9,000 instances.
 3. **Fail the script, don't print the number.** A check that matters raises (`raise SystemExit("REFUSING: ...")`); a printed value gets rationalised.
 4. **The MCP sandbox does not protect the file.** It blocks only quit and factory/userpref resets. `save_mainfile`, `open_mainfile` and `revert_mainfile` run. Don't save, open, revert or reload the user's file unless asked.
-5. **The MCP render tools rewrite scene settings and may not restore them.** `render_viewport_to_path` sets `render.filepath`; `render_thumbnail_to_path` also changes resolution, simplify and samples. Restoration only runs if the client is still connected. Snapshot those properties before rendering, restore them yourself, compare before any save, and if you can't restore, say so and don't save. Never leave `render.filepath` pointing at a scratch directory.
+5. **The MCP render tools rewrite scene settings and may not restore them.** `render_viewport_to_path` sets `render.filepath`; `render_thumbnail_to_path` also changes resolution, simplify and samples. Restoration only runs if the client is still connected. Before rendering, snapshot `scene.render.filepath`, `resolution_percentage`, `resolution_x`, `resolution_y`, `use_simplify`, `simplify_subdivision_render` and the engine's sample and denoise settings (Cycles: `scene.cycles.samples`, `scene.cycles.use_denoising`); restore them yourself, compare before any save, and if you can't restore, say so and don't save. Never leave `render.filepath` pointing at a scratch directory.
 6. **Never call the `*_for_cli` MCP tools.** They deadlock on the MCP pipe, time out at 120 s, return nothing and leave a stray `<name>_mcp_0001.blend`. Run `blender -b` from the shell. To snapshot the open scene: `bpy.ops.wm.save_as_mainfile(filepath=abs_path, copy=True)`, then confirm `bpy.data.filepath` is unchanged.
 7. **Page every MCP response.** Above roughly 260–330 KB the add-on silently truncates: you get `Empty response from Blender` or `Unterminated string`, not an error about size. Return counts plus a slice, aggregate inside Blender, or write JSON to `bpy.app.tempdir` and return the path. Never conclude "the scene has nothing" from an empty result.
-8. **Long renders go headless**, not through the MCP.
 
-Prefer the dedicated MCP tools (`get_objects_summary`, `get_object_detail_summary`, `get_blendfile_summary_*`, `render_*_to_path`, `get_screenshot_of_window_as_image`, `search_api_docs`) over `execute_blender_code`. Inside it, assign a JSON-serialisable dict to `result`.
+Inside `execute_blender_code`, assign a JSON-serialisable dict to `result`.
 
 Before installing or debugging the server, after a timeout, or before an operation that takes minutes (the `check_is_finished` deferred contract), read [references/mcp-server.md](references/mcp-server.md). Read each reference file with its own command.
 
@@ -69,7 +68,7 @@ When the render doesn't match the viewport, check:
 - Blender 5.x sky is `MULTIPLE_SCATTERING` (was `NISHITA`), with `aerosol_density`.
 - For a real sun position use NOAA, minding the branch: `azimuth = (azimuth + 180.0) if hour_angle > 0.0 else (540.0 - azimuth)`. Check against published sunrise/sunset for the site and date.
 - One fixed window may not admit direct sun across the whole requested sequence; check the site's sun path against the opening's orientation and say so rather than chase it.
-- Closed curtains cancel a beam; separating the panels took a sunlit fraction from 2.2% to 7.3%.
+- Closed curtains cancel a beam.
 
 ## Headless
 

@@ -6,7 +6,7 @@ Contents: Behaviour · Framework gotchas · Markup and styles · Compare mode
 
 ## Behaviour
 
-- **Guard the whole exploration branch,** not only the picker: `process.env.NODE_ENV === 'development'` in Next.js, `import.meta.env.DEV` in Vite. Outside development, render `Current` whatever the URL says.
+- **Guard:** `process.env.NODE_ENV === 'development'` in Next.js, `import.meta.env.DEV` in Vite.
 - **URL key `maquette`:** `?maquette=ledger`, so refreshes, screenshots and links land on the same direction. Absent selects `current`; `all` is compare mode (component or region only). Any other value renders a tooling error naming the valid keys, never an undefined component.
 - Switch with `history.replaceState`, without a reload and without resetting shared state.
 - One `<button type="button">` per direction with `aria-pressed`. Without `type="button"` a picker inside a form submits it.
