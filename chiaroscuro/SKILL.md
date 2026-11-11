@@ -16,12 +16,13 @@ Deeper passes live in `zoetrope` (motion), `signage` (wording), `typecase` (type
 These hold everywhere, including work handed to a helper. Styling the product already has is not an exception: fix it inside the scope and mention it outside. Only an explicit instruction from the user overrides a rule.
 
 1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting, never for labels or headings. Proper acronyms keep their capitals.
-2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. In product UI, headings name things; they don't headline them or introduce a section. Keep only consent, constraints and error recovery.
-3. **Four to six type styles, in chosen faces.** Use the product's named roles. A new size or weight needs a job no existing role does. Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing one, read [references/font-guidance.md](references/font-guidance.md) and choose from its recommendations.
-4. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user pointed to, and use it. A second version of an existing control is a defect.
-5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
-6. **Touch targets at least 44 by 44 CSS pixels**, reached with invisible padding rather than bulky visuals.
-7. **Look at it before calling it done**, in a real browser on desktop and phone (step 4).
+2. **No numbered items, and no dot or stripe as ornament.** Options, categories, features, cards, sections and steps go by name alone: no `01`, `1.`, `#1`, `Step 1` or numbered circle in front, beside or above. A numeral appears only as data (a rank, a count, a position such as `2 of 4`) or in an ordered list inside running text. A label, heading or list item starts with its own words, with no coloured dot or bullet before it; a dot marks real live state. A card or tile shows selection, status or category with a fill, a ring or an icon, never a stripe down one side.
+3. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. In product UI, headings name things; they don't headline them or introduce a section. Keep only consent, constraints and error recovery.
+4. **Four to six type styles, in chosen faces.** Use the product's named roles. A new size or weight needs a job no existing role does. Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing one, read [references/font-guidance.md](references/font-guidance.md) and choose from its recommendations.
+5. **Reuse before you build.** Find the existing component, shell, header or control that does the job, in this product and in any package or project the user pointed to, and use it. A second version of an existing control is a defect.
+6. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
+7. **Touch targets at least 44 by 44 CSS pixels**, reached with invisible padding rather than bulky visuals.
+8. **Look at it before calling it done**, in a real browser on desktop and phone (step 4).
 
 ## Machine-made tells
 
@@ -31,9 +32,8 @@ These make an interface look generated rather than designed. Leave them out unle
 - Decorative gradients, purple or multicolour gradients, glows, blurs beyond `blur-xl`, grain or noise laid over the page.
 - The editorial default: a cream or parchment ground, terracotta accent and big serif display headline. Its "technical" twin: tinted near-black with an acid-green or neon accent. Indigo as the accent by reflex.
 - A headline where a name belongs ("Your week, at a glance"), one word of it picked out in colour or italic, a filler sentence under every heading.
-- Numbered section labels (`01 / Capabilities`), `Step 1` or `Phase 01` as the label, word-dash labels (`Fast - built for teams`), dotted metadata strings (`Design · 4 min · Updated today`), `→` appended to links and buttons.
-- Ornamental pills, coloured dots before labels (a dot is for real live state), version stamps, city and local-time strips, scroll prompts, hairlines and grid lines drawn for atmosphere.
-- A thick coloured stripe on one side of a rounded card. Status belongs in an icon, label or fill.
+- Word-dash labels (`Fast - built for teams`), dotted metadata strings (`Design · 4 min · Updated today`), `→` appended to links and buttons.
+- Ornamental pills, version stamps, city and local-time strips, scroll prompts, hairlines and grid lines drawn for atmosphere.
 - A fake product preview built from styled divs, a hero built around one oversized metric, emoji as icons, placeholder copy.
 - Hero, features, testimonials, CTA by reflex; everything centred.
 - Emphasis everywhere: most things bold, coloured, badged or raised, so nothing leads.
@@ -83,7 +83,7 @@ Build stable states, not just a stable first frame. Reserve room for labels and 
 
 ### 4. Look, then refine
 
-Run the real app at the exact route and exercise the changed path on desktop and phone, including the states, content and input methods the change affects.
+Run the real app at the exact route and exercise the changed path on desktop and phone, including the states, content and input methods the change affects. Search the changed files for `uppercase`, `tracking-`, `font-mono`, `border-l-`, `border-s-`, `rounded-full`, `list-decimal`, `padStart` and `index + 1`, and clear every hit against rules 1 and 2.
 
 Then zoom out, after the first full composition and after any material change. Look at the whole viewport and successive states together. What draws the eye first: the user's subject, or the controls around it? Is the next action apparent? Fix the biggest compositional problem before polishing details, and recompose when local fixes have left the whole incoherent. Before refining, read [references/critique.md](references/critique.md) and run its lenses against your own screen.
 

@@ -41,7 +41,7 @@ Contents: grouping and spacing · alignment · long content and overflow · surf
 - One light source, from above. Highlights, inner edges and shadows agree with it.
 - Draw edges that change with hover, focus or selection as rings (`ring-1 ring-black/5`, an inset shadow); they take no layout space. Keep `border border-transparent` under a shadow ring so forced-colours mode still draws an edge. A semi-transparent border needs `bg-clip-padding`. Never a strong border and a strong shadow together.
 - Concentric radii: outer = inner + padding (+ border). Past about 24px of padding, treat the layers as separate shapes. Enforce it with variables: `rounded-(--r) p-(--p)` outside, `rounded-[calc(var(--r)-var(--p))]` inside.
-- An accent border must encode something: severity on an alert, the current navigation item, a category. Never add one to make a card feel finished.
+- An accent edge has two jobs: severity on an alert and the current navigation item. Everything else, selected cards and category tiles included, takes a fill or a ring.
 - Translucent chrome is for chrome that moving content passes behind; otherwise use a solid fill. Never stack translucent layers. Text on translucency gets more contrast and a little more weight. Where content meets a sticky header, a short masked fade reads better than a hard divider. Honour reduced transparency (raise opacity, drop blur) and `contrast-more:` (near-solid fill, defined edge):
 
   ```css

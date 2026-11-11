@@ -16,12 +16,13 @@ When the user already gave a direction, or asked to match or extend an existing 
 3. **One source of truth.** All directions share content, data, state, events and validation. Never fork an API call, loader, mutation or business rule. Vary presentation only.
 4. **Every direction is complete.** Real content at the real item count, the whole piece and its core path working. No fragment, mood board, lorem ipsum or dead button.
 5. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono is for literal code, identifiers and values whose characters need inspecting. Proper acronyms keep their capitals.
-6. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. Keep only consent, constraints and error recovery.
-7. **Four to six type styles, in chosen faces.** Use the product's named roles. Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing one, read [references/font-guidance.md](references/font-guidance.md) and choose from it.
-8. **Reuse before you build.** Use the existing component, shell, header or control, in this product or any package the user pointed to. A second version of an existing control is a defect.
-9. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density. Touch targets at least 44 by 44 CSS pixels.
+6. **No numbered items, and no dot or stripe as ornament.** Options, categories, features, cards, sections and steps go by name alone: no `01`, `1.`, `#1`, `Step 1` or numbered circle in front, beside or above. A numeral appears only as data (a rank, a count, a position such as `2 of 4`) or in an ordered list inside running text. A label, heading or list item starts with its own words, with no coloured dot or bullet before it; a dot marks real live state. A card or tile shows selection, status or category with a fill, a ring or an icon, never a stripe down one side.
+7. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed. Replace it with a label, a control, a value or nothing. Keep only consent, constraints and error recovery.
+8. **Four to six type styles, in chosen faces.** Use the product's named roles. Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing one, read [references/font-guidance.md](references/font-guidance.md) and choose from it.
+9. **Reuse before you build.** Use the existing component, shell, header or control, in this product or any package the user pointed to. A second version of an existing control is a defect.
+10. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density. Touch targets at least 44 by 44 CSS pixels.
 
-Rules 5 to 9 are `chiaroscuro`'s. Directions differ within them, never by breaking them.
+Rules 5 to 10 are `chiaroscuro`'s. Directions differ within them, never by breaking them.
 
 ## Workflow
 

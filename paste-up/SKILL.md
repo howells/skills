@@ -12,12 +12,13 @@ Paper is where the design happens before code, and the specification the code an
 The same rules `chiaroscuro` applies to code, so a mockup never needs correcting for them later. The product's existing styling is no exception: fix it inside scope, report it outside. Only an explicit instruction from the user overrides one.
 
 1. **No small caps, tracked uppercase or decorative mono.** No eyebrows, kickers, section labels, chips or table headings in capitals. Mono only for literal code, identifiers and values whose characters need inspecting. Acronyms keep their capitals.
-2. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed; replace it with a label, a control, a value or nothing. Headings name things; they do not headline them. Keep only consent, constraints and error recovery.
-3. **Four to six type styles, in chosen faces.** Use the product's named roles; a new size or weight needs a job no role does. Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing one, read [references/font-guidance.md](references/font-guidance.md) and choose from its recommendations. Read each reference file with its own command.
-4. **Reuse before you build.** Use the existing component, shell, header or control, in this product or any package the user points to. A second version of an existing control is a defect.
-5. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
-6. **Touch targets at least 44 by 44 CSS pixels.**
-7. **Look at the whole screen, desktop and phone.** Walk the boards in order as the user would. Read computed styles for caps, letter spacing and mono; a screenshot hides them.
+2. **No numbered items, and no dot or stripe as ornament.** Options, categories, features, cards, sections and steps go by name alone: no `01`, `1.`, `#1`, `Step 1` or numbered circle in front, beside or above. A numeral appears only as data (a rank, a count, a position such as `2 of 4`) or in an ordered list inside running text. A label, heading or list item starts with its own words, with no coloured dot or bullet before it; a dot marks real live state. A card or tile shows selection, status or category with a fill, a ring or an icon, never a stripe down one side.
+3. **No prose where interface belongs.** A paragraph explaining a screen means the screen has failed; replace it with a label, a control, a value or nothing. Headings name things; they do not headline them. Keep only consent, constraints and error recovery.
+4. **Four to six type styles, in chosen faces.** Use the product's named roles; a new size or weight needs a job no role does. Never use Instrument Serif, Playfair Display, Poppins, Montserrat, Roboto or Arial for a new face. Before choosing one, read [references/font-guidance.md](references/font-guidance.md) and choose from its recommendations. Read each reference file with its own command.
+5. **Reuse before you build.** Use the existing component, shell, header or control, in this product or any package the user points to. A second version of an existing control is a defect.
+6. **One of each.** One corner-radius scale with concentric nesting, one icon family at one stroke weight, one control height per density.
+7. **Touch targets at least 44 by 44 CSS pixels.**
+8. **Look at the whole screen, desktop and phone.** Walk the boards in order as the user would. Read computed styles for caps, letter spacing and mono; a screenshot hides them.
 
 ## The file
 
