@@ -12,8 +12,8 @@ Issues live in Linear (howells, SKI). See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
-Default triage labels. See `docs/agents/triage-labels.md`.
+Default triage labels. See `~/Sites/home/docs/agents/triage-labels.md`.
 
 ### Domain docs
 
-Single-context. See `docs/agents/domain.md`.
+Single-context. See `~/Sites/home/docs/agents/domain.md`.
