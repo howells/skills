@@ -8,7 +8,7 @@ No plans or task reports in the repo.
 
 ### Issue tracker
 
-Issues live in Linear (howells, SKI). See `docs/agents/issue-tracker.md`.
+Linear, workspace `howells`, team `SKI`. See `~/Sites/home/docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
