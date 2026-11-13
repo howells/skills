@@ -40,7 +40,7 @@ The marketplace also carries the `fiction` plugin. Don't install the plugin alon
 
 ## Skills
 
-The integration skills (`gog` and `research`) use tools, accounts and credentials configured by the installing user. They include no account inventory or private repository dependency. Installing a skill does not provision access. The other skills may require their named applications or CLIs, as documented inside each skill.
+The integration skills (`browse`, `gog` and `research`) use tools, accounts and credentials configured by the installing user. They include no account inventory or private repository dependency. Installing a skill does not provision access. The other skills may require their named applications or CLIs, as documented inside each skill.
 
 ### `armature`
 
@@ -70,6 +70,16 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill blender --agent codex --global
+```
+
+### `browse`
+
+Drive the user's real Chromium browser, with its logins, tabs and extensions, through the browse extension and MCP server. Use for logged-in or JS-heavy sites, forms, screenshots, recordings, HAR capture, and handing logins, 2FA or payments back to the user. Not for QA reports (`fieldtest`) or native Mac apps (`computer-use`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill browse --agent codex --global
 ```
 
 ### `chiaroscuro`

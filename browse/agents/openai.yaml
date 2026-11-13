@@ -1,0 +1,4 @@
+interface:
+  display_name: "browse"
+  short_description: "Drive the user's real browser through browse"
+  default_prompt: "Use $browse to do this in my real browser, with my existing logins."

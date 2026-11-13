@@ -70,7 +70,7 @@ Route for a new page: `maquette` when options are wanted, otherwise `chiaroscuro
 
 ### Accounts and tools
 
-`gog` (Google Workspace), `research` (questions answered from primary sources, through Fieldwork when configured), `blender` (3D scenes), `computer-use` (native macOS app control, Chrome included, through the session's native Computer Use tools, with a headless Codex runner as fallback; ordinary browser-only QA stays with `fieldtest`). Where installed, `linear` and `starling` ship with their CLIs, in `howells/linearcli` and `howells/starlingcli`.
+`browse` (the user's real browser, with their logins, through the browse extension), `gog` (Google Workspace), `research` (questions answered from primary sources, through Fieldwork when configured), `blender` (3D scenes), `computer-use` (native macOS app control, Chrome included, through the session's native Computer Use tools, with a headless Codex runner as fallback; ordinary browser-only QA stays with `fieldtest`). Where installed, `linear` and `starling` ship with their CLIs, in `howells/linearcli` and `howells/starlingcli`.
 
 ## Close pairs
 
