@@ -47,4 +47,4 @@ WebGL effects (`@remotion/effects`, light leaks, color correction, `three`) need
 ## Delivery
 
 1. Upload the phone-safe file with the `stow` skill if installed and give the user the link; without it, give the local path. That is how they watch it.
-2. If they asked for it in a deck or a site, use `wiredeck` if installed, or copy it to the site's public folder.
+2. If they asked for it in a deck, place it in the Paper deck with `paste-up`. For a site, copy it to the site's public folder.
