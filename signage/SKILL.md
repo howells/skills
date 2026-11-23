@@ -15,43 +15,48 @@ Cite them by number in findings, so a reviewer sees the pattern rather than the 
 
 **Vocabulary the audience does not have**
 
-1. **Internal nouns on screen.** A domain term, table, service or architecture word promoted to a label. `Entities` for customers, `Ingestion` for import, `Resolver` for search.
-2. **Invented words for ordinary things.** If the industry has a word, use it, even when it is duller.
-3. **A verb nobody performs.** `Ingest`, `Surface`, `Reconcile`, `Materialise`, `Leverage`, `Unlock`. People add, save, send, check, open, compare, use.
-4. **Abstraction as a label.** `Intelligence`, `Signal`, `Context`, `Governance`, `Journey` where a concrete noun names the thing; `Seamless` and `Frictionless` where nothing is named at all. Keep a term of art the audience already uses: provenance in archives, signal in audio tools.
-5. **Naming the evidence instead of the fact.** `Vector-matched result` for `Closest match`. Where a market requires the derivation disclosed, put it in the value, not the label.
+1. **Internal nouns on screen.** A domain term, table, service, architecture word or raw field key promoted to a label. `Entities` for customers, `Ingestion` for import, `Resolver` for search, `created_at` or `sku_status` printed as stored.
+2. **The brief's words on the screen.** The shorthand of the conversation or spec that produced the interface is not copy: a working title, a target year, a codename, a team or programme name, a concept from the design discussion. A brief that calls a background job "the gardener" gets `The gardener tidied 12 notes` on screen; a brief aiming at "next year's product" gets the year printed on a slide. Show what the shorthand stands for, in the audience's words, or leave it out.
+3. **Invented words for ordinary things.** If the industry has a word, use it, even when it is duller. Capitalising an ordinary noun into a house term is the same tell: `the Collective` for members, `Drops` for releases, `the Vault` for saved files.
+4. **A verb nobody performs.** `Ingest`, `Surface`, `Reconcile`, `Materialise`, `Leverage`, `Unlock`. People add, save, send, check, open, compare, use.
+5. **Abstraction as a label.** `Intelligence`, `Signal`, `Context`, `Governance`, `Journey` where a concrete noun names the thing; `Seamless` and `Frictionless` where nothing is named at all. Keep a term of art the audience already uses: provenance in archives, signal in audio tools.
+6. **Naming the evidence instead of the fact.** `Vector-matched result` for `Closest match`. Where a market requires the derivation disclosed, put it in the value, not the label.
 
 **Prose where a label belongs**
 
-6. **A sentence doing a label's job.** `This page names three products` → `3 products`.
-7. **Shouted declarations.** `THE TWO SOURCES DISAGREE`. Caps turn a status into a headline about the system's reasoning.
-8. **Explanatory subtext under every element.** A caption explaining the thing above it admits the label failed. Fix the label and cut the caption; keep distinct help, consent, constraints and error recovery.
-9. **Dimmed sentences standing in for UI.** A grey note is not a state, a control or an empty state.
-10. **Scaffolding copy.** `Three ways forward:`, `Here's what we found:`, `Overview`, `Getting started` over content that is neither.
+7. **A sentence doing a label's job.** `This page names three products` → `3 products`.
+8. **Shouted declarations.** `THE TWO SOURCES DISAGREE`. Caps turn a status into a headline about the system's reasoning.
+9. **Explanatory subtext under every element.** A caption explaining the thing above it admits the label failed. Fix the label and cut the caption; keep distinct help, consent, constraints and error recovery.
+10. **Dimmed sentences standing in for UI.** A grey note is not a state, a control or an empty state.
+11. **Scaffolding copy.** `Three ways forward:`, `Here's what we found:`, `Overview`, `Getting started` over content that is neither.
+12. **Teaser headings.** A slide, section or story heading that withholds its point: `The setup`, `What happened`, `Mixed results`, `Comment in place`. State the point: `Sign-ups fell 20% after the price change`. A heading that needs the body to make sense has failed.
 
 **Sentences no human would say**
 
-11. **Template-assembled strings.** `A Running Shoe in Blue, for Road, feeling light, in a blue colourway, for Runners.` Every slot filled, no sentence, a fact said twice. Judge generated strings as strings and fix the template.
-12. **Portentous compression.** `The engine reads every ledger through one governed layer, before the view settles.` Grammatical and unsayable.
-13. **Metaphor where a direct statement belongs.** `A dial worth turning` for `Sample size`, `Earns its keep` for `Still in use`. The figure displays the writer, makes the user decode it mid-task, and drags in connotations nobody chose. Wordplay and a knowing voice fail the same way. When a literal phrase exists, use it.
-14. **Rule-of-three cadence and the closing flourish** in tooltips, body copy and empty states. Three real options are a list; three parallel clauses with nothing behind them are the tell.
+13. **Template-assembled strings.** `A Running Shoe in Blue, for Road, feeling light, in a blue colourway, for Runners.` Every slot filled, no sentence, a fact said twice. Judge generated strings as strings and fix the template.
+14. **Portentous compression.** `The engine reads every ledger through one governed layer, before the view settles.` Grammatical and unsayable. Clipped compression fails the same way: `Who reorders for this?`, `Shown to 30% buyers asked`. Write the full sentence a person would say, then shorten only what stays clear.
+15. **Metaphor where a direct statement belongs.** `A dial worth turning` for `Sample size`, `Earns its keep` for `Still in use`. The figure displays the writer, makes the user decode it mid-task, and drags in connotations nobody chose. Wordplay and a knowing voice fail the same way. When a literal phrase exists, use it.
+16. **Performed voice.** Copy straining to be warm, earnest or charming: `Speak your mind` for `Record`, `How are we doing?` as a section heading, a receipt that reads `Lovingly packed by: the team`. Be relaxed and plain; warmth comes from saying the right thing, not from decoration.
+17. **Rule-of-three cadence and the closing flourish** in tooltips, body copy and empty states. Three real options are a list; three parallel clauses with nothing behind them are the tell.
 
 **Typographic tells**
 
-15. **Case drift.** Sentence case is the default; where the product uses title case for an element type, hold it across every instance. `Save Changes` beside `Discard changes` reads as sloppy.
-16. **Emoji, decorative status glyphs and box-drawing** on any user-facing surface.
+18. **Case drift.** Sentence case is the default; where the product uses title case for an element type, hold it across every instance. `Save Changes` beside `Discard changes` reads as sloppy.
+19. **Emoji, decorative status glyphs and box-drawing** on any user-facing surface.
+20. **Italic sprawl.** Italic emphasis covers one to three words, rarely, never a whole headline or sentence. A heading with one word picked out in italic or colour on every slide is decoration, not emphasis.
 
 **Labels that disagree**
 
-17. **Several labels for one action or object.** `Get in touch`, `Let's talk` and `Contact us` on one page; `Archive` in the menu and `Move to storage` in the toast. One thing gets one word everywhere.
+21. **Several labels for one action or object.** `Get in touch`, `Let's talk` and `Contact us` on one page; `Archive` in the menu and `Move to storage` in the toast. One thing gets one word everywhere. When unifying, pick the word that cannot be misread out of context: `agent` alone can read as a person, `support bot` cannot.
 
 **Narrating the machinery, and hedging**
 
-18. **How the system knows instead of what is true.** A value is `stated by`, a tool `returned`, a size `was derived from the drawing`. `No size is stated. It was derived from the drawing.` → `Estimated 120 × 60 cm`. `Stated by 412 of 9,870 records` → `412 have one`, when the denominator does not change the decision. Keep a qualifier that changes the value's meaning, certainty or coverage. Show the mechanism only when it is the point, in one plain clause.
-19. **Clerical and courtroom register.** `States`, `attests`, `cites`, `is recorded as`, `per the source`, `Source ·`. Use `has`, `says`, `from`, `is`.
-20. **Hedges and accounting qualifiers.** `Four of the six returned`, `where available`, `in most cases`, `nothing is guessed silently`. A qualifier stays only when it changes what the reader does next.
-21. **A line under a heading that repeats it.** Cut it or make it say the next thing.
-22. **A placeholder that repeats its label.** Show a format or a real example (`name@example.com`), or nothing. Helper text says why something is asked, not what the field is.
+22. **How the system knows instead of what is true.** A value is `stated by`, a tool `returned`, a size `was derived from the drawing`. `No size is stated. It was derived from the drawing.` → `Estimated 120 × 60 cm`. `Stated by 412 of 9,870 records` → `412 have one`, when the denominator does not change the decision. Keep a qualifier that changes the value's meaning, certainty or coverage. Show the mechanism only when it is the point, in one plain clause.
+23. **The system as a character.** The product, its data or its personas answer, observe, speak or step forward: `Answered by Acme`, `Our engine noticed`, `Two reviewers step forward`. Say what the value is and where it came from: `Spotted by Acme` → `Taken from the product photo`.
+24. **Clerical and courtroom register.** `States`, `attests`, `cites`, `is recorded as`, `per the source`, `Source ·`. Use `has`, `says`, `from`, `is`.
+25. **Hedges and accounting qualifiers.** `Four of the six returned`, `where available`, `in most cases`, `nothing is guessed silently`. A qualifier stays only when it changes what the reader does next.
+26. **A line under a heading that repeats it.** Cut it or make it say the next thing.
+27. **A placeholder that repeats its label.** Show a format or a real example (`name@example.com`), or nothing. Helper text says why something is asked, not what the field is.
 
 ## Strings with a job
 

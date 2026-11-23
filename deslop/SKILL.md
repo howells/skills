@@ -13,6 +13,8 @@ Find the tells that make prose read as generated, and rewrite towards specific, 
 - **Never invent** a fact, figure, example, name, quotation or source to make a sentence specific. Use what the draft and its sources hold; where they hold nothing, cut the sentence or list the gap under `Residual risk`.
 - **Quotations stay verbatim.** Flag a concern or offer a separately labelled paraphrase.
 - **Keep the meaning, not the cadence.**
+- **Write for the reader, not the brief.** The shorthand of the conversation that produced the draft (a working title, a target year, a codename, a programme or team name, a concept from the planning) stays out unless the reader already uses it. Say what it stands for.
+- **Drafts sent under someone's name read whole.** No clipped fragments or bare slots: `Around [dates] works` → `I'm free on [day] at [time] for the call.` Mark each gap so it cannot be missed, inside a sentence that already reads.
 - **No authorship verdicts.** A tell is a reason to edit, never evidence of who wrote it. Edit clusters; one tell, perfect grammar or a formal register is ordinary writing.
 - **Interface strings go to `signage`**: labels, headings, buttons, status lines, empty states. In code, review only comments, docstrings and docs.
 
@@ -26,11 +28,13 @@ Clusters of:
 - negative parallelisms: `not just X, but Y` and the reversed `Y rather than X`;
 - openers that announce a point or claim a lone insight: `Here's the thing`, `What most people get wrong`;
 - staged delivery: a colon reveal (`The surprising part: nobody measured it`), several denials before the claim, stacked fragments;
-- an abstraction doing what a person did (`the decision emerged`, `the data tells us`);
+- an abstraction doing what a person did (`the decision emerged`, `the data tells us`), or a product, dataset or persona that answers, observes or speaks (`the dashboard believes`, `the model noticed`);
+- verdict words that do not say in what sense: `the only option that works`, `the argument holds`, `the pitch lands`. Say what it does or what it showed;
+- headings that tease instead of stating the point (`The setup`, `Mixed results`), and clipped compression nobody would say aloud (`Who reorders for this?`);
 - sentences that state importance and withhold the content (`The implications are significant`), and commentary on the prose itself (`Let that sink in`, `As we'll see`);
 - a closing line that restates the point as an aphorism; `Despite its X, faces challenges` endings; bolt-on `Future prospects` sections;
 - even rhythm: most sentences 8–20 words, almost none over 30, nothing but commas and full stops;
-- assistant formatting: Markdown leakage, bold sprawl, title case drift, curly quotes against a straight-quote house style, ornamental lists;
+- assistant formatting: Markdown leakage, bold sprawl, italic emphasis on more than a word or three, title case drift, curly quotes against a straight-quote house style, ornamental lists;
 - stock invented names, or a whole cast of them (one is not a tell);
 - a sharp register shift between sections (a pasted-in passage);
 - leaked tool markers (`oaicite`, `turn0search0`, `[cite: 1]`, `grok_card`, `【29†L582-L589】`, `[web:1]`), `utm_source` parameters, broken citations, placeholder markup.
