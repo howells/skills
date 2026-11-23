@@ -74,7 +74,7 @@ npx skills@latest add howells/skills --skill blender --agent codex --global
 
 ### `browse`
 
-Drive the user's real Chromium browser, with its logins, tabs and extensions, through the browse extension and MCP server. Use for logged-in or JS-heavy sites, forms, screenshots, recordings, HAR capture, and handing logins, 2FA or payments back to the user. Not for QA reports (`fieldtest`) or native Mac apps (`computer-use`).
+Drive the user's real Chromium browser, with its logins, tabs and extensions, through the browse extension and MCP server. Use for logged-in or JS-heavy sites, forms, screenshots, demo videos and recordings, HAR capture, and handing logins, 2FA or payments back to the user. Not for QA reports (`fieldtest`) or native Mac apps (`computer-use`).
 
 Install globally for Codex:
 
