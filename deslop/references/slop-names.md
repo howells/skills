@@ -13,8 +13,8 @@ The lists drift; treat them as a snapshot.
   Petrova, Shah, Sharma, Martinez, Finch, Solis; for an English setting Hargreaves,
   Hartley, Ashworth, Whitby.
 - **Full names:** Elara Voss, Marcus Chen, Sarah Chen, Elena Vasquez, Amara Okafor,
-  Priya Shah, Priya Sharma, Aris Thorne, Lena Petrova. Surnames hold while first
-  names drift, so "Marcus Williams" or "Victoria Chen" leaves the tell in place.
+  Priya Shah, Priya Sharma, Aris Thorne, Lena Petrova. Surnames stay while first
+  names change, so "Marcus Williams" or "Victoria Chen" leaves the tell in place.
 - **Places:** Eldoria, Aethelgard, Eldora, Whispering Woods.
 - **Sets:** a name, a trade and a place arriving together (Elias, lighthouse keeper):
   keeper, baker, mayor, clockmaker, fisherman or librarian, in a lighthouse, village

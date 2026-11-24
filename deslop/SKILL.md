@@ -10,7 +10,7 @@ Find the tells that make prose read as generated, and rewrite towards specific, 
 ## Rules
 
 - **Keep the writer.** Before editing, note what is theirs: vocabulary, bluntness, humour, hedges that express real doubt, digressions, the level of polish. Keep it. Cut in proportion to the tells, and never flatten strong human prose because it is polished. An opinionated, lively draft stays opinionated and lively.
-- **Never invent** a fact, figure, example, name, quotation or source to make a sentence specific. Use what the draft and its sources hold; where they hold nothing, cut the sentence or list the gap under `Residual risk`.
+- **Never invent** a fact, figure, example, name, quotation or source to make a sentence specific. Use what the draft and its sources contain; where they say nothing, cut the sentence or list the gap under `Residual risk`.
 - **Quotations stay verbatim.** Flag a concern or offer a separately labelled paraphrase.
 - **Keep the meaning, not the cadence.**
 - **Write for the reader, not the brief.** The shorthand of the conversation that produced the draft (a working title, a target year, a codename, a programme or team name, a concept from the planning) stays out unless the reader already uses it. Say what it stands for.
@@ -79,6 +79,7 @@ Mannered prose puts a figure where a statement belongs: `a dial worth turning` f
 In formal and technical prose, delete these on sight; they assert rigour or candour instead of showing it. In casual writing, `honestly` and `let's be real` can be voice; leave them.
 
 - **`load-bearing`**, in any combination. Say what the thing does.
+- **`holds`** for anything a hand isn't holding, in every register, casual included: `the rule holds`, `the argument holds`, `whatever you ask for holds`, `the page holds the list`, `the sources hold nothing`. Say what it does: `still applies`, `is right`, `stays in place`, `lists`, `contains`, `says`. Check your own rewrite for it too; it is a common substitute for a cut verdict word.
 - **The honesty family:** `keep (it / us / the model) honest`, `the honest part`, `to be honest`, `honestly`, `honest about its limits`, `the honest answer`. State the limitation.
 - **Self-framing:** `to its credit`, `the hard truth`, `the uncomfortable truth`, `let's be real`, `make no mistake`.
 - **Announcements:** `here's the thing`, `here's why`, `it turns out`, `let me be clear`, `the real issue is`.

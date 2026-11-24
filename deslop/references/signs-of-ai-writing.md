@@ -10,7 +10,7 @@ words keep the American spelling models emit; search for them as written.
 **Regression to the mean.** The root of most content tells: the specific, unusual
 fact gets swapped for generic, positive, important-sounding description, so
 "inventor of the first train-coupling device" becomes "a revolutionary titan of
-industry". Ask whether the description could be more specific; if the sources hold
+industry". Ask whether the description could be more specific; if the sources give
 the fact, put it back, otherwise cut or flag.
 
 **Inflated significance.** The subject is important, pivotal, enduring or part of a
@@ -94,7 +94,7 @@ Fix by varying length where the content allows; never chop to fit a band.
   (bold lead-in, colon, text).
 - Bare bullet characters (•, –, emoji) or typed "1." where the host has list markup.
 - Heading errors: repeating the title, skipped levels, every section top-level,
-  headings holding only other headings. Emoji before headings or bullets.
+  headings with only other headings under them. Emoji before headings or bullets.
 - Small tables that should be prose.
 - Curly quotes against a straight-quote house style, or both mixed. Weak alone.
 - **Punctuation monotony:** commas and full stops only, no semicolons, colons,
@@ -139,7 +139,7 @@ Fix by varying length where the content allows; never chop to fit a band.
 - Tracking parameters on links: `utm_source=openai`, `utm_source=chatgpt.com`,
   `utm_source=copilot.com`, `referrer=grok.com`. Strip the parameter and check the
   link supports the claim.
-- Several dead links no archive holds; bad ISBN checksums; DOIs that fail or point
+- Several dead links no archive has; bad ISBN checksums; DOIs that fail or point
   elsewhere; book citations without pages or with pages that do not support the
   claim.
 

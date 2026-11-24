@@ -8,7 +8,7 @@ register; this file covers the persuasive one.
 
 People wrote every one of these patterns before any model did, and in casual or
 spoken-register writing several of them are ordinary voice, so read the register
-before cutting. `SKILL.md` holds the crutch-phrase list and the portability test.
+before cutting. `SKILL.md` has the crutch-phrase list and the portability test.
 
 Each entry gives the pattern, some watch phrases, and the default edit.
 
