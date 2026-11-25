@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dial"
+  short_description: "Build a live-control lab tool to dial in visuals"
+  default_prompt: "Use $dial to build an isolated /lab tool with live controls and JSON config export so I can dial this in by eye, then harvest the keeper into production."

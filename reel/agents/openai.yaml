@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reel"
+  short_description: "Short looping UI and motion clips for timelines"
+  default_prompt: "Use $reel to package this UI or motion work as a crisp, muted, looping clip for X, a launch post or a changelog, composing browse, rostrum and zoetrope."

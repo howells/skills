@@ -1,0 +1,4 @@
+interface:
+  display_name: "Launch"
+  short_description: "Pre-launch ship check and mechanical defect fixes"
+  default_prompt: "Use $launch to run a pre-launch ship check across all nine lanes, apply mechanical fixes directly, and report a Ship / Not yet verdict with remaining device and human checks."

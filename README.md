@@ -74,7 +74,7 @@ npx skills@latest add howells/skills --skill blender --agent codex --global
 
 ### `browse`
 
-Drive the user's real Chromium browser, with its logins, tabs and extensions, through the browse extension and MCP server. Use for logged-in or JS-heavy sites, forms, screenshots, demo videos and recordings, HAR capture, and handing logins, 2FA or payments back to the user. Not for QA reports (`fieldtest`) or native Mac apps (`computer-use`).
+Drive the user's real Chromium browser (logins, tabs, extensions) via the browse MCP: logged-in/JS sites, forms, screenshots, recordings, HAR capture, and 2FA/payment handoffs. Not for QA (`fieldtest`) or native Mac apps (`computer-use`).
 
 Install globally for Codex:
 
@@ -122,6 +122,16 @@ Install globally for Codex:
 npx skills@latest add howells/skills --skill deslop --agent codex --global
 ```
 
+### `dial`
+
+Build a dev-only /lab tool with live controls and JSON export to tune visuals, motion or a vibe. Not for UI options (`maquette`).
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill dial --agent codex --global
+```
+
 ### `failfast`
 
 Remove fallbacks and swallowed errors that hide failures, and test-only code or mocks in production. Use when a failure is hidden, tests assert on mocks or a test needs production hooks. Not for test-first work (`tdd`), behaviour-preserving cleanup (`unslop`) or required compatibility.
@@ -150,6 +160,16 @@ Install globally for Codex:
 
 ```bash
 npx skills@latest add howells/skills --skill gog --agent codex --global
+```
+
+### `launch`
+
+Pre-launch web-app sweep across nine lanes: fixes mechanical blockers and gives a Ship verdict. Not for QA (`fieldtest`) or redesign.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill launch --agent codex --global
 ```
 
 
@@ -241,6 +261,16 @@ Reprioritize a project's backlog around a goal or deadline, and flag goal work t
 
 ```bash
 npx skills@latest add howells/skills --skill rebalance --agent codex --global
+```
+
+### `reel`
+
+Package UI and motion work as short, looping clips for X, launch posts and changelogs, composing `browse`, `rostrum` and `zoetrope`.
+
+Install globally for Codex:
+
+```bash
+npx skills@latest add howells/skills --skill reel --agent codex --global
 ```
 
 ### `reflow`

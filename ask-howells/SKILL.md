@@ -27,6 +27,7 @@ Route: `rebalance`, then deliver each item.
 ### Building UI
 
 - **Options to choose between, for a page, component or region** → `maquette`: live variants in the app, switch or compare, keep one, delete the rest.
+- **Prompting keeps missing a visual, shader, motion or generative artifact, or you only have a vibe and want live knobs** → `dial`: isolated `/lab/<slug>` tool with live controls and JSON config export, then harvest into production.
 - **One settled direction, whether a page, component or region** → `chiaroscuro`.
 - **A screenshot, page or frame that feels off, visual critique only** → `chiaroscuro`. It names what's off and asks; it changes nothing until asked.
 - **The app scrolls like a document and should behave like an app** → `armature`.
@@ -36,8 +37,10 @@ Route: `rebalance`, then deliver each item.
 - **Duplicated components, or a file doing too many jobs** → `componentize`.
 - **Motion: should it animate, build it, review it, find where it should move, cut it back, name an effect, or diagnose stutter** → `zoetrope`. Includes preserving identity through expanding models and diagrams.
 - **See it running and find what's wrong, including the usefulness of returned images or results** → `fieldtest`. Reports only unless asked to fix.
+- **Pre-launch ship check before going live or demoing** → `launch`. Sweeps nine lanes, applies mechanical fixes directly and returns a Ship / Not yet verdict with remaining device and human checks.
 - **The design lives in a Paper file** → `paste-up`.
 - **A product film or video, a new cut of one, or sound for it** → `rostrum`. It sends motion, look and words to `zoetrope`, `chiaroscuro` and `signage`.
+- **A short, muted, looping clip of UI or motion work for X, a launch post or a changelog** → `reel`. Composes `browse`, `rostrum` and `zoetrope`.
 
 Route for a new page: `maquette` when options are wanted, otherwise `chiaroscuro`; then `armature` if it needs an app shell → `reflow` → `signage` → `fieldtest`.
 
@@ -78,7 +81,10 @@ Route for a new page: `maquette` when options are wanted, otherwise `chiaroscuro
 | --- | --- |
 | `chiaroscuro` / `armature` | Is the problem how it looks, or what scrolls? Scrolling: `armature`. |
 | `chiaroscuro` / `zoetrope` | Is the question how it looks still, or how it moves? Moves: `zoetrope`. |
+| `maquette` / `dial` | Comparing discrete UI directions, or tuning continuous parameters / exploring a generative vibe? Knobs or vibe: `dial`. |
 | `reflow` / `fieldtest` | Do you want it fixed at every size, or a report of what's wrong? Fixed: `reflow`. |
+| `fieldtest` / `launch` | Exploratory browser QA report, or a whole-app pre-launch sweep that fixes mechanical blockers? Pre-launch sweep: `launch`. |
+| `rostrum` / `reel` | Full narrative product film (45–100 s, storyboard, sound), or a short looping UI/motion clip for a feed? Short clip: `reel`. |
 | `unslop` / `fettle` | Cleaning a diff, or judging its structure? Judging: `fettle`. |
 | `review` / `fettle` | Feedback to act on or an independent opinion on a bounded question, or a structural health review? Feedback or opinion: `review`. |
 

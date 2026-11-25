@@ -1,6 +1,6 @@
 ---
 name: browse
-description: Drive the user's real Chromium browser, with its logins, tabs and extensions, through the browse extension and MCP server. Use for logged-in or JS-heavy sites, forms, screenshots, demo videos and recordings, HAR capture, and handing logins, 2FA or payments back to the user. Not for QA reports (`fieldtest`) or native Mac apps (`computer-use`).
+description: "Drive the user's real Chromium browser (logins, tabs, extensions) via the browse MCP: logged-in/JS sites, forms, screenshots, recordings, HAR capture, and 2FA/payment handoffs. Not for QA (`fieldtest`) or native Mac apps (`computer-use`)."
 ---
 
 # browse
